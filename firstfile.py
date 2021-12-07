@@ -164,10 +164,10 @@ class EditorCanvas(tk.Frame):
         x -= 5
         self.add_map(Point(x,y))
         
-    def add_map(self, pos=Point(200,200), fn_name="fn", ins=["int", "int"], outs=["int", "int"]):
+    def add_map(self, pos=Point(200,200), fn_name="map", ins=["int", "int"], outs=["int", "int"]):
         count = str(self.map_count)
         fn = Function(fn_name, ins, outs)
-        map1 = MapData(self.canvas, pos=pos, name="map"+count, fn=fn)
+        map1 = MapData(self.canvas, pos=pos, name=fn_name+str(count), fn=fn)
         self.map_count += 1
         self.register_object(map1)
         

@@ -1,3 +1,5 @@
+from tkinter.font import names
+from Label import Label
 from MapNode import *
 from Function import Function
 from ObjectHierarchy.Object import Object
@@ -27,6 +29,8 @@ class MapData(Object):
 
         for index, _ in enumerate(self.fn.output_types):
             children.append(MapOutputNode(self.canvas, self, index, offset=self.abs_pos()))
+            
+        children.append(Label(self.canvas, self, self.name, offset=self.abs_pos())) 
 
         return children
     

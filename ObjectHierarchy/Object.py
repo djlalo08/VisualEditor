@@ -5,6 +5,7 @@ class Object:
     def __init__( 
             self, canvas, 
             pos=Point(0,0), offset=Point(0,0), 
+            single_point_position=False,
             parent=None, constrained_to_parent=False, 
             children=None, 
             width=0, height=0, 
@@ -14,6 +15,7 @@ class Object:
         self.canvas = canvas
         self.pos = pos
         self.offset = offset
+        self.single_point_position = single_point_position
         self.children = children if children is not None else []
         self.parent = parent
         self.constrained_to_parent = constrained_to_parent
@@ -38,7 +40,11 @@ class Object:
         raise NotImplementedError("build_obj must overridden but is not")
     
     def update(self):
-        self.canvas.coords(self.id, self.abs_pos().around(self.width, self.height))
+        newPos = self.abs_pos().around(self.width, self.height)
+        if self.single_point_position: 
+            newPos = self.abs_pos().unpack()
+            
+        self.canvas.coords(self.id, newPos)
         for child in self.children:
             child.offset = self.abs_pos()
             child.update()
