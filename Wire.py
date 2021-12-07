@@ -1,6 +1,6 @@
 import Utils as u
 from Point import Point
-from Object import Object
+from ObjectHierarchy.Object import Object
 from WireNode import WireNode
 from WireSegment import WireSegment
 from Tree import Node

@@ -1,6 +1,5 @@
 from Point import Point
-from Selectable import Selectable
-from Tree import Node
+from ObjectHierarchy.Selectable import Selectable
 
 class MapNode(Selectable):
     def __init__(self, canvas, parent, index, is_input_node=True, width=10, height=10, **kwargs) -> None:

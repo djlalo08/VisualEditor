@@ -1,7 +1,6 @@
-from Point import Point
 from MapNode import *
 from Function import Function
-from Object import Object
+from ObjectHierarchy.Object import Object
 from Tree import Node
 
 class MapData(Object):

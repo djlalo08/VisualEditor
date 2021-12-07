@@ -1,6 +1,4 @@
-from Point import Point
-from Object import Object
-from Selectable import Selectable
+from ObjectHierarchy.Selectable import Selectable
 
 class WireNode(Selectable):
     def __init__(self, canvas, wire, index, width=10, height=10, **kwargs) -> None:

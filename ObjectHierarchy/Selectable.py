@@ -1,4 +1,4 @@
-from Object import Object
+from ObjectHierarchy.Object import Object
 
 class Selectable(Object):
     def __init__(self, canvas, is_selected=False, **kwargs) -> None:
