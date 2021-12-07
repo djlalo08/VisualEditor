@@ -34,6 +34,7 @@ class Node:
             reduced_children.append(reduced_child)
         return reduced_children
 
+    #TODO this is definitely in the wrong place
     def reduce(self, vars):
         if self.value == 'root':
             self.get_reduced_children(vars)

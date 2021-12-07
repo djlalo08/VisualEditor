@@ -13,11 +13,11 @@ from Point import *
     - Make enum for selection modes
     - Data flow is messyish
     
-#TODO add functionality to map modal
 #TODO add writing directly to java files
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
 #TODO build standard library over java wrappers
 #TODO implement proper class typing
+#TODO switch to uing strictly typed python
 #TODO implement ability to run code inside editor
 '''
 
@@ -115,7 +115,6 @@ class EditorCanvas(tk.Frame):
             case "select":
                 newSelection.select()
 
-
     def register_object(self, object):
         self.object_id_map[object.id] = object
         for child in object.children:
@@ -163,9 +162,10 @@ class EditorCanvas(tk.Frame):
         x -= 5
         self.add_map(Point(x,y))
         
-    def add_map(self, pos):
+    def add_map(self, pos=Point(200,200), fn_name="fn", ins=["int", "int"], outs=["int", "int"]):
         count = str(self.map_count)
-        map1 = MapData(self.canvas, pos=pos, name="map"+count)
+        fn = Function(fn_name, ins, outs)
+        map1 = MapData(self.canvas, pos=pos, name="map"+count, fn=fn)
         self.map_count += 1
         self.register_object(map1)
         
@@ -173,8 +173,9 @@ class EditorCanvas(tk.Frame):
         self.mode = "connect"
         
     def open_map_modal(self, event):
-        MapModal(self.canvas)
-
+        pos = Point(*self.canvas.winfo_pointerxy())
+        MapModal(self, pos)
+        
     def to_ast(self, event=None):
         outValues = map(lambda out: out.get_value(), self.outs)
         program = Node("root", list(outValues))
@@ -188,10 +189,6 @@ class EditorCanvas(tk.Frame):
         print(footer)
         #TODO: for each of the outs, crawl brackwards until all is resolved
         pass
-    
-    
-
-    
 
 if __name__ == "__main__":
     root = tk.Tk()
