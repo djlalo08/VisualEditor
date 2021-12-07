@@ -179,9 +179,10 @@ class EditorCanvas(tk.Frame):
         outValues = map(lambda out: out.get_value(), self.outs)
         program = Node("root", list(outValues))
         reduced = program.reduce(([],set()))
-        header = "public static Object[] example(Object[] in){"
+        header = '''public static Object[] example(Object[] in){
+        Object[] out = new Object[''' + str(len(self.outs)) + '''];'''
         fn_decls = '\n\t'.join(reduced)
-        footer = "\treturn out;\n }"
+        footer = "\treturn out;\n}"
         print(header)
         print('\t' + fn_decls)
         print(footer)

@@ -56,7 +56,7 @@ class Node:
                 arg_list = ", ".join(map(Node.child_string, children)) if children is not None else ""
                 (var_decs, var_names) = vars
                 if name_str not in var_names:
-                    var_decs.append(name_str+ " = " + fn_name + "(" + arg_list + ");")
+                    var_decs.append("Object[] " + name_str+ " = " + fn_name + "(" + arg_list + ");")
                     var_names.add(name_str)
                 return (name_str, index)
             raise TypeError("The type of object is wrong: " + self.value)

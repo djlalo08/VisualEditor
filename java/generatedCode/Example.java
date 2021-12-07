@@ -1,15 +1,21 @@
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Example{
 
-    public static List<Object> addUser(int addUserIn1, int addUserIn2){
-        List<Object> add_result_1 = add(addUserIn1, addUserIn2);
-        int add_result_1_var_1 = (int) add_result_1.get(0);
-        List<Object> returns = new LinkedList<>();
-        returns.add(add_result_1_var_1);
-        return returns;
+    public static Object[] example(Object[] in){
+        Object[] out = new Object[2];
+        Object[] fn_1 = fn(in[0], in[1]);
+        out[0] = fn_1[0];
+        out[1] = fn_1[1];
+        return out;
+    }
+
+    public static Object[] fn(Object...in){
+        Object[] out = new Object[2];
+        out[0] = in[0];
+        out[1] = (int)in[0] + (int)in[1];
+        return out;
     }
 
     public static List<Object> add(int a, int b){
@@ -17,9 +23,12 @@ public class Example{
     }
     
     public static void main(String[] args) {
-        List<Object> result = addUser(23, 46);
-        int value = (int) result.get(0);
-        System.out.println(value);
+        Object[] in = new Object[2];
+        in[0] = 20;
+        in[1] = 20;
+        Object[] out = example(in);
+        for (Object o: out)
+            System.out.println(o);
     }
 
 }
