@@ -35,6 +35,7 @@ class EditorCanvas(tk.Frame):
         self.outs = []
 
         self.add_in_wire()
+        self.add_in_wire()
         self.add_out_wire()
 
         self.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
@@ -120,7 +121,7 @@ class EditorCanvas(tk.Frame):
     def add_in_wire(self, event=None):
         i = len(self.ins)
         y = i*30+200
-        points = [Point(30, y), Point(80, y), Point(130, y)]
+        points = [Point(30, y), Point(80, y), Point(230, y)]
         wire = InputWire(self.canvas, points=points, index=i)
         self.ins += [wire]
         self.register_object(wire)
@@ -132,7 +133,7 @@ class EditorCanvas(tk.Frame):
     def add_out_wire(self, event=None):
         i = len(self.outs)
         y = i*30+200
-        points = [Point(canvas_width-30, y), Point(canvas_width-80, y), Point(canvas_width-130, y)]
+        points = [Point(canvas_width-30, y), Point(canvas_width-80, y), Point(canvas_width-230, y)]
         wire = OutputWire(self.canvas, points=points, index=i)
         self.outs += [wire]
         self.register_object(wire)
