@@ -26,6 +26,10 @@ class Node:
         for child in self.children:
             state = child.map_df(fn, state)
         return state
+    
+    # def reduce(self, fn, vars):
+        # if len(self.value) == 3:
+            
         
 '''
 a = Node("A") 

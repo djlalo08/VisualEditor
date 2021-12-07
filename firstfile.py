@@ -23,62 +23,40 @@ from Point import *
             Note that all ins are considered to already be bound (they are fn args)
             e.g. 
             ('out', 0, 'out0')
-                ('fn', 1, 'fn1')
-                  ('in', 0, 'in0')
-                  ('in', 1, 'in1')
+                ('fn', 1, 0)
+                  ('in', 0)
+                  ('in', 1)
 
                 |       |       |
                 V       V       V
 
-            ('out', 0, 'out0')
-                ('fn', 1, 'fn1')
-                  'in0'
-                  'in1'
+            ('out', 0)
+                ('fn', 1, 0)
+                  in || 0
+                  in || 1
 
                 |       |       |
                 V       V       V
 
-            ('out', 0, 'out0')
-                fn1 = fn('in0', 'in1')
+            ('out', 0)
+                fn1 = || 0
+
+            vars = { fn1 = fn(in[0], in[1])}
 
                 |       |       |
                 V       V       V
 
-            ('out', 0, 'out0')
-                fn1 = fn('in0', 'in1')
-
-                |       |       |
-                V       V       V
-
-            ('out', 0, 'out0')
-                fn1 = fn('in0', 'in1')
-
-                |       |       |
-                V       V       V
-
-            out0 = fn1
-            fn1 = fn('in0', 'in1')
+            out[0] = fn1[0]
             
+            vars = { fn1 = fn(in[0], in[1])}
 
             ex2:
             ('out', 0)
-              ('fn', 23)
-                ('fn', 1)
+              ('fn', 23, 0)
+                ('fn', 1, 0)
                   ('in', 0)
                   ('in', 1)
-                ('fn', 1)
-                  ('in', 0)
-                  ('in', 1)
-
-                |       |       |
-                V       V       V
-
-            ('out', 0)
-              ('fn', 23)
-                ('fn', 1)
-                  in0
-                  in1
-                ('fn', 1)
+                ('fn', 1, 0)
                   ('in', 0)
                   ('in', 1)
 
@@ -86,11 +64,25 @@ from Point import *
                 V       V       V
 
             ('out', 0)
-              ('fn', 23)
-                fn1 = fn(in0, in1)
-                ('fn', 1)
+              ('fn', 23, 0)
+                ('fn', 1, 0)
+                  in || 0
+                  in || 1
+                ('fn', 1, 0)
                   ('in', 0)
                   ('in', 1)
+
+                |       |       |
+                V       V       V
+
+            ('out', 0)
+              ('fn', 23, 0)
+                fn1 || 0
+                ('fn', 1, 0)
+                  ('in', 0)
+                  ('in', 1)
+                  
+            vars = { fn1 = fn(in[0], in[1])}
 
                 |       |       |
                 V       V       V
@@ -99,26 +91,95 @@ from Point import *
         and that value is already in our table, so we just replace it with the var name
 
             ('out', 0)
-              ('fn', 23)
-                fn1 = fn(in0, in1)
-                fn1
+              ('fn', 23, 0)
+                fn1 || 0
+                fn1 || 0
+
+            vars = { fn1 = fn(in0, in1)}
 
                 |       |       |
                 V       V       V
 
             ('out', 0)
-              fn1 = fn(in0, in1)
-              fn23 = fn(fn1, fn1)
+              fn23 || 0
+
+            vars = { 
+                fn1 = fn(in[0], in[1])
+                fn23 = fn(fn1[0], fn1[0])
+            }
 
                 |       |       |
                 V       V       V
 
-            fn1 = fn(in0, in1)
-            fn23 = fn(fn1, fn1)
-            out0 = fn23
             
-            Out sets seld to fn23 because that is the last value
+            out[0] = fn23[0]
 
+            vars = { 
+                fn1 = fn(in[0], in[1])
+                fn23 = fn(fn1[0], fn1[0])
+            }
+        
+        ex 3:
+        ('out', 0)
+          ('fn', 1, 0)
+            ('in', 0)
+            ('in', 1)
+        ('out', 1)
+          ('fn', 1, 1)
+            ('in', 0)
+            ('in', 1)
+
+                |       |       |
+                V       V       V
+
+        ('out', 0)
+          ('fn', 1, 0)
+            in || 0
+            in || 1
+        ('out', 1)
+          ('fn', 1, 1)
+            ('in', 0)
+            ('in', 1)
+
+                |       |       |
+                V       V       V
+
+        ('out', 0)
+            fn1 || 0
+        ('out', 1)
+          ('fn', 1, 1)
+            ('in', 0)
+            ('in', 1)
+              
+        vars = { fn1=fn(in[0], in[1])}      
+
+                |       |       |
+                V       V       V
+
+        out[0] = fn1[0]
+        ('out', 1)
+          ('fn', 1, 1)
+            ('in', 0)
+            ('in', 1)
+              
+        vars = { fn1=fn(in[0], in[1])}      
+
+                |       |       |
+                V       V       V
+
+        out[0] = fn1[0]
+        ('out', 1)
+            fn1 || 1
+              
+        vars = { fn1=fn(in[0], in[1])}      
+
+                |       |       |
+                V       V       V
+
+        out[0] = fn1[0]
+        out[1] = fn1[1]
+              
+        vars = { fn1=fn(in[0], in[1]) }      
 '''
 
 

@@ -14,6 +14,7 @@ class Wire(Object):
         self.id = self.canvas.create_line(Point(0,0).around(1,1))
         self.children = self.nodes + self.wires
         self.bound_to = None
+        self.bind_index = 0
         self.tags = tags
 
     def create_wire(self, points):

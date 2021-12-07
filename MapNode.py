@@ -1,6 +1,6 @@
-from Object import Object
 from Point import Point
 from Selectable import Selectable
+from Tree import Node
 
 class MapNode(Selectable):
     def __init__(self, canvas, parent, index, is_input_node=True, width=10, height=10, **kwargs) -> None:
@@ -28,11 +28,14 @@ class MapNode(Selectable):
             self.parent.ins[self.index] = wire_node.wire
         else:
             wire_node.wire.bound_to= self
+            wire_node.bind_index = self.index
             self.parent.outs[self.index] = wire_node.wire
         self.update()
         
     def get_value(self):
-        return self.parent.get_value()
+        parent = self.parent.get_value()
+        parent.value = (parent.value[0], parent.value[1], self.index)
+        return parent
     
     def get_outline(self):
         return "red" if self.is_selected else "black"
