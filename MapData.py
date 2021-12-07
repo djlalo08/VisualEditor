@@ -37,4 +37,4 @@ class MapData(Object):
             input_val = input.get_value()
             in_values.append(input_val)
             
-        return Node(self.fn, in_values)
+        return Node((self.fn.name, self.id), in_values)

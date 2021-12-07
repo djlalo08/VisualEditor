@@ -157,8 +157,7 @@ class EditorCanvas(tk.Frame):
         
     def add_map(self, pos):
         count = str(self.map_count)
-        fn = Function("fn"+count)
-        map1 = MapData(self.canvas, pos=pos, name="map"+count, fn=fn)
+        map1 = MapData(self.canvas, pos=pos, name="map"+count)
         self.map_count += 1
         self.register_object(map1)
         
@@ -167,7 +166,8 @@ class EditorCanvas(tk.Frame):
     
     def to_ast(self, event=None):
         outValues = map(lambda out: out.get_value(), self.outs)
-        for value in outValues: print(value)
+        program = Node("root", list(outValues))
+        print(program)
         
         #TODO: for each of the outs, crawl brackwards until all is resolved
         pass

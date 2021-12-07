@@ -48,7 +48,7 @@ class InputWire(Wire):
         super().__init__(canvas, **kwargs) 
         
     def get_value(self):
-        return Node("in-" + str(self.index))
+        return Node(("in", self.index))
 
 class OutputWire(Wire):
     def __init__(self, canvas, index=0, **kwargs) -> None:
@@ -56,4 +56,4 @@ class OutputWire(Wire):
         super().__init__(canvas, **kwargs) 
 
     def get_value(self):
-        return Node("out-" + str(self.index), [super().get_value()])
+        return Node(("out", self.index), [super().get_value()])
