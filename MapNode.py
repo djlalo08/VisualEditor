@@ -34,7 +34,7 @@ class MapNode(Selectable):
         
     def get_value(self):
         parent = self.parent.get_value()
-        parent.value = (parent.value[0], parent.value[1], self.index)
+        parent.value = (parent.value, self.index)
         return parent
     
     def get_outline(self):

@@ -27,9 +27,44 @@ class Node:
             state = child.map_df(fn, state)
         return state
     
-    # def reduce(self, fn, vars):
-        # if len(self.value) == 3:
+    def get_reduced_children(self, vars):
+        reduced_children = []
+        for child in self.children:
+            reduced_child = child.reduce(vars)
+            reduced_children.append(reduced_child)
+        return reduced_children
+
+    def reduce(self, vars):
+        if self.value == 'root':
+            self.get_reduced_children(vars)
+            return vars[0]
+        if len(self.value) == 2:
+            (name, index) = self.value
+            if name == 'in':
+                children = self.get_reduced_children(vars)
+                return (name, index)
+            if name == 'out':
+                children = self.get_reduced_children(vars)
+                assert len(children) == 1
+                (child_name, child_index) = children[0]
+                vars[0].append('out[' + str(index) + "] = " + child_name + "[" + str(child_index) + "];")
+                return None
+            if len(name) == 2:
+                (fn_name, fn_id) = name
+                name_str = fn_name+"_"+str(fn_id)
+                children = self.get_reduced_children(vars)
+                arg_list = ", ".join(map(Node.child_string, children)) if children is not None else ""
+                (var_decs, var_names) = vars
+                if name_str not in var_names:
+                    var_decs.append(name_str+ " = " + fn_name + "(" + arg_list + ");")
+                    var_names.add(name_str)
+                return (name_str, index)
+            raise TypeError("The type of object is wrong: " + self.value)
             
+    @staticmethod
+    def child_string(child):
+        (name, index) = child
+        return name + "[" + str(index) + "]"
         
 '''
 a = Node("A") 
