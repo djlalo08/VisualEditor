@@ -1,5 +1,6 @@
 import tkinter as tk
 from MapData import *
+from MapModal import MapModal
 from Wire import Wire, InputWire, OutputWire
 from Point import *
 
@@ -191,6 +192,7 @@ class EditorCanvas(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
 
+        self.root = parent
         self.canvas = tk.Canvas(width=canvas_width, height=400, background="gray")
         self.canvas.pack(fill="both", expand=True)
 
@@ -220,6 +222,7 @@ class EditorCanvas(tk.Frame):
         parent.bind('<KeyPress-o>', self.add_out_wire) # o for out
         parent.bind('<KeyPress-O>', self.remove_out_wire)
         parent.bind('<KeyPress-m>', self.add_map_event) #m for map
+        parent.bind('<KeyPress-M>', self.open_map_modal) #m for map
         parent.bind('<KeyPress-e>', self.to_ast) #e for evaluate
         parent.bind('<KeyPress-d>', self.detach_wire) #d for detach
 
@@ -332,13 +335,10 @@ class EditorCanvas(tk.Frame):
         
     def connect_mode(self, event):
         self.mode = "connect"
+        
+    def open_map_modal(self, event):
+        MapModal(self.canvas)
 
-    @staticmethod
-    def bind_variables(value, state):
-        if len(value) == 2:
-            pass
-            
-    
     def to_ast(self, event=None):
         outValues = map(lambda out: out.get_value(), self.outs)
         program = Node("root", list(outValues))
@@ -351,6 +351,8 @@ class EditorCanvas(tk.Frame):
         print(footer)
         #TODO: for each of the outs, crawl brackwards until all is resolved
         pass
+    
+    
 
     
 
