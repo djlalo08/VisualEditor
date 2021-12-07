@@ -15,13 +15,15 @@ from Point import *
     
 #TODO add writing directly to java files
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
+    - Ability to save fns I've made. Need an encoding for map
 #TODO build standard library over java wrappers
 #TODO implement proper class typing
 #TODO switch to uing strictly typed python
 #TODO implement ability to run code inside editor
 '''
 
-canvas_width = 600
+canvas_width = 1500
+canvas_height = 1000
     
 class EditorCanvas(tk.Frame):
 
@@ -29,7 +31,7 @@ class EditorCanvas(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self.root = parent
-        self.canvas = tk.Canvas(width=canvas_width, height=400, background="gray")
+        self.canvas = tk.Canvas(width=canvas_width, height=canvas_height, background="gray")
         self.canvas.pack(fill="both", expand=True)
 
         self._drag_data = {"pos": Point(0,0), "item": None}
