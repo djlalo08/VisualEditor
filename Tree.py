@@ -19,6 +19,13 @@ class Node:
         for child in self.children:
             child.depth = self.depth + 1
             child.update_depths()
+            
+    def map_df(self, fn, initial_state):
+        state = initial_state
+        self.value = fn(self.value, state)
+        for child in self.children:
+            state = child.map_df(fn, state)
+        return state
         
 '''
 a = Node("A") 

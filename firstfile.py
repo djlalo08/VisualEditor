@@ -13,7 +13,114 @@ from Point import *
     - Data flow is a mess
 
 #TODO more work on code generation
+    how it will work:
+        1) build bottom-up map -- like bfs, but starting at the bottom
+        1.5) Collect all ins to be able to build method
+        2) Do bottom-up map on tree, for each element You come across -- check if it has been added to state. If not, make a new var for it. Make it a 3-tuple: ('name', #, 'var_name')
+        3) Do a df-reduce on the map -- wires are replaced with their var names, maps take their children (all var names now) and replace selves with a line of text: 
+            If a var has already been bound, rather than writing x =x, just delete it
+            Keep track of all bindings
+            Note that all ins are considered to already be bound (they are fn args)
+            e.g. 
+            ('out', 0, 'out0')
+                ('fn', 1, 'fn1')
+                  ('in', 0, 'in0')
+                  ('in', 1, 'in1')
+
+                |       |       |
+                V       V       V
+
+            ('out', 0, 'out0')
+                ('fn', 1, 'fn1')
+                  'in0'
+                  'in1'
+
+                |       |       |
+                V       V       V
+
+            ('out', 0, 'out0')
+                fn1 = fn('in0', 'in1')
+
+                |       |       |
+                V       V       V
+
+            ('out', 0, 'out0')
+                fn1 = fn('in0', 'in1')
+
+                |       |       |
+                V       V       V
+
+            ('out', 0, 'out0')
+                fn1 = fn('in0', 'in1')
+
+                |       |       |
+                V       V       V
+
+            out0 = fn1
+            fn1 = fn('in0', 'in1')
+            
+
+            ex2:
+            ('out', 0)
+              ('fn', 23)
+                ('fn', 1)
+                  ('in', 0)
+                  ('in', 1)
+                ('fn', 1)
+                  ('in', 0)
+                  ('in', 1)
+
+                |       |       |
+                V       V       V
+
+            ('out', 0)
+              ('fn', 23)
+                ('fn', 1)
+                  in0
+                  in1
+                ('fn', 1)
+                  ('in', 0)
+                  ('in', 1)
+
+                |       |       |
+                V       V       V
+
+            ('out', 0)
+              ('fn', 23)
+                fn1 = fn(in0, in1)
+                ('fn', 1)
+                  ('in', 0)
+                  ('in', 1)
+
+                |       |       |
+                V       V       V
+
+        This step happens the way it does because next thing we look at is ('fn',1)
+        and that value is already in our table, so we just replace it with the var name
+
+            ('out', 0)
+              ('fn', 23)
+                fn1 = fn(in0, in1)
+                fn1
+
+                |       |       |
+                V       V       V
+
+            ('out', 0)
+              fn1 = fn(in0, in1)
+              fn23 = fn(fn1, fn1)
+
+                |       |       |
+                V       V       V
+
+            fn1 = fn(in0, in1)
+            fn23 = fn(fn1, fn1)
+            out0 = fn23
+            
+            Out sets seld to fn23 because that is the last value
+
 '''
+
 
 
 canvas_width = 600
@@ -164,14 +271,22 @@ class EditorCanvas(tk.Frame):
         
     def connect_mode(self, event):
         self.mode = "connect"
+
+    @staticmethod
+    def bind_variables(value, state):
+        if len(value) == 2:
+            pass
+            
     
     def to_ast(self, event=None):
         outValues = map(lambda out: out.get_value(), self.outs)
         program = Node("root", list(outValues))
+        # program.map_df(EditorCanvas.bind_variables, ())
         print(program)
         
         #TODO: for each of the outs, crawl brackwards until all is resolved
         pass
+    
 
 if __name__ == "__main__":
     root = tk.Tk()
