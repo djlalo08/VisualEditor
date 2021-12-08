@@ -10,7 +10,7 @@ class WireNode(Selectable):
         return self.canvas.create_oval(
             self.abs_pos().around(self.width, self.height),
             outline="black",
-            fill="green",
+            fill="#2B9E42",
             tags=("wire", "selectable", "draggable"),
         )
         

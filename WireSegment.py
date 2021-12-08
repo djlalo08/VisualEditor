@@ -10,7 +10,7 @@ class WireSegment(Object):
        return self.canvas.create_line(
             self.start.unpack(), self.end.unpack(),
             width = 5,
-            fill = 'green',
+            fill = '#8AA153',
             tags={"wire",}
         )
         

@@ -1,17 +1,20 @@
 from Point import Point
 from ObjectHierarchy.Selectable import Selectable
 
+height = 15
+width = 15
+
 class MapNode(Selectable):
-    def __init__(self, canvas, id_map, parent, index, is_input_node=True, width=10, height=10, **kwargs) -> None:
+    def __init__(self, canvas, id_map, parent, index, is_input_node=True, **kwargs) -> None:
         super().__init__(canvas, id_map, parent=parent, constrained_to_parent=True, width=width, height=height, **kwargs)
         self.index = index
         self.is_input_node = is_input_node
         
     def build_obj(self):
-        return self.canvas.create_oval(
+        return self.canvas.create_rectangle(
             self.abs_pos().around(self.width, self.height),
             outline="black",
-            fill="blue",
+            fill="white",
             tags=("draggable", "map_node", "selectable"),
         )
         
@@ -28,7 +31,7 @@ class MapNode(Selectable):
         if self.is_input_node:
             self.parent.ins[self.index] = wire_node.wire
         else:
-            wire_node.wire.bound_to= self
+            wire_node.wire.bound_to = self
             wire_node.bind_index = self.index
             self.parent.outs[self.index] = wire_node.wire
         self.update()
@@ -45,12 +48,12 @@ class MapInputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
         index = args[3]
         par_width = args[2].width
-        pos = Point(-par_width/2, index*30-20)
+        pos = Point(-par_width/2+10, index*(height+5)+10)
         super().__init__(*args, is_input_node=True, pos=pos, **kwargs)
 
 class MapOutputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
         index = args[3]
         par_width = args[2].width
-        pos = Point(par_width/2, index*30-20)
+        pos = Point(par_width/2-10, index*(height+5)+10)
         super().__init__(*args, is_input_node=False, pos=pos, **kwargs)

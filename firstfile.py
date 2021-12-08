@@ -16,19 +16,29 @@ import pickle
         On second thought, though, wire should be movable when You pan...
     - Make enum for selection modes
     - Data flow is messyish
+    - Everything is totally crazy after making save work
     
 #TODO add writing directly to java files
 #TODO need to refactor parents and children in general. In general,
     Objects can have more than one parent and more than one type of child.
     I'm thinking something like parent/child is a list of tuples, where 1st elem is name, second is value(s)
     e.g. parent = [('wire', wire), ('bound-to', bound_to)]
+    ^^ This above sounds sort of complicated... there must be a better way
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
     -Add outs support for saving
 #TODO build standard library over java wrappers
 #TODO constants support
 #TODO implement proper class typing
-#TODO switch to uing strictly typed python
+    - Make types, including lists, etc
+#TODO switch to using strictly typed python
 #TODO implement ability to run code inside editor
+#TODO ui/ux leaves A LOT to be desired
+    - Should be able to extend nodes in cables
+    - Boxes should look nicer
+    - I can start adding in some syntactic sugar (custom icons for certain operations)
+    - m makes another of most recent map
+    - map selection is not a modal, but a dropdown pop-up with type-able filter (eventually, filtered by type of fns too)
+
 '''
 
 canvas_width = 1500
@@ -40,7 +50,8 @@ class EditorCanvas(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self.root = parent
-        self.canvas = tk.Canvas(width=canvas_width, height=canvas_height, background="gray")
+        # self.canvas = tk.Canvas(width=canvas_width, height=canvas_height, background="#f5ecce")
+        self.canvas = tk.Canvas(width=canvas_width, height=canvas_height, background="white")
         self.canvas.pack(fill="both", expand=True)
 
         self._drag_data = {"pos": Point(0,0), "item": None}
