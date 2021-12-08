@@ -20,6 +20,8 @@ class MapNode(Selectable):
         self.canvas.itemconfig(self.id, outline=self.get_outline())
         
     def add_wire_node(self, wire_node):
+        if self.is_input_node and len(self.children) > 0:
+            return 
         self.children.append(wire_node)
         wire_node.pos = Point(0,0)
         wire_node.parent = self

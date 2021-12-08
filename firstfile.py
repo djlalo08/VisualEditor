@@ -18,16 +18,21 @@ import pickle
     - Data flow is messyish
     
 #TODO add writing directly to java files
+#TODO need to refactor parents and children in general. In general,
+    Objects can have more than one parent and more than one type of child.
+    I'm thinking something like parent/child is a list of tuples, where 1st elem is name, second is value(s)
+    e.g. parent = [('wire', wire), ('bound-to', bound_to)]
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
     -Add outs support for saving
 #TODO build standard library over java wrappers
+#TODO constants support
 #TODO implement proper class typing
 #TODO switch to uing strictly typed python
 #TODO implement ability to run code inside editor
 '''
 
-canvas_width = 600
-canvas_height = 400
+canvas_width = 1500
+canvas_height = 1000
     
 class EditorCanvas(tk.Frame):
 
@@ -75,8 +80,7 @@ class EditorCanvas(tk.Frame):
         self.add_out_wire()
 
     def open_modal(self, event):
-        # OpenModal(self)
-        self.load_file("save")
+        OpenModal(self)
         
     def load_file(self, name):
         with open('lib/'+name, 'rb') as file:
@@ -100,8 +104,7 @@ class EditorCanvas(tk.Frame):
                 item.prep_from_save_for_use(self.canvas, self.id_map) 
         
     def save_modal(self, event):
-        # SaveModal(self)
-        self.save_as("save")
+        SaveModal(self)
 
     def save_as(self, name):
         with open('lib/'+name, 'wb') as file:
@@ -212,7 +215,7 @@ class EditorCanvas(tk.Frame):
         (x,y) = self.canvas.winfo_pointerxy()
         y -= 60
         x -= 5
-        wire = Wire(self.canvas, [Point(x, y), Point(x+50, y)])
+        wire = Wire(self.canvas, self.id_map, points=[Point(x, y), Point(x+50, y)])
         self.register_object(wire)
         self.camera.children.append(wire)
         
