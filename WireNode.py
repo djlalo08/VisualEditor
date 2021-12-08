@@ -1,9 +1,8 @@
 from ObjectHierarchy.Selectable import Selectable
 
 class WireNode(Selectable):
-    def __init__(self, canvas, id_map, wire, index, width=10, height=10, **kwargs) -> None:
+    def __init__(self, canvas, id_map, wire, width=10, height=10, **kwargs) -> None:
         super().__init__(canvas, id_map, width=width, height=height, constrained_to_parent=True, **kwargs) 
-        self.index = index
         self.wire = wire
         
     def build_obj(self):
@@ -19,15 +18,8 @@ class WireNode(Selectable):
 
     def update(self):
         super().update()
-        self._update_wire_segments()
         self.wire.to_front()
         self.canvas.itemconfig(self.id, outline=self.get_outline())
-
-    def _update_wire_segments(self):
-        (a, b) = self.wire.get_wire_segments_for_node(self.index)
-
-        a != None and a.update_end(self.abs_pos())
-        b != None and b.update_start(self.abs_pos())
         
     def get_outline(self):
         return "red" if self.is_selected else "black"

@@ -18,17 +18,16 @@ class Wire(Object):
 
     def create_wire(self, points):
         (wires, nodes) = ([], [])
-        for a, b in u.pairwise(points):
-            wires.append(WireSegment(self.canvas, self.id_map, a, b, parent=self))
-
-        for index, point in enumerate(points):
-            nodes.append(WireNode(self.canvas, self.id_map, self, index, pos=point))
+        for point in points:
+            nodes.append(WireNode(self.canvas, self.id_map, self, pos=point))
+        for a, b in u.pairwise(nodes):
+            wire = WireSegment(self.canvas, self.id_map, a, b, parent=self)
+            wires.append(wire)
+            a.children.append(wire)
+            b.children.append(wire)
+        for node in nodes:
+            self.canvas.tag_raise(node.id) 
         return (wires,nodes)
-    
-    def get_wire_segments_for_node(self, node_index):
-        a = None if node_index <= 0 else self.wires[node_index-1]
-        b = None if node_index >= len(self.wires) else self.wires[node_index]
-        return (a, b)
     
     def build_obj(self):
         return self.canvas.create_line(Point(0,0).around(1,1))

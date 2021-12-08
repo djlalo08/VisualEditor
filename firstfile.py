@@ -5,10 +5,14 @@ from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Camera import Camera
 from Wire import Wire, InputWire, OutputWire
+from WireNode import WireNode
+from WireSegment import WireSegment
 from Point import *
 import pickle
 
 '''
+#TODO make canvas and id_map global. This will make everything much easier, including saving
+    object registration should take place inside Object class
 #TODO clean up
     - Tags should be nicer and maybe classes (Selectable, Object, etc) should include them
     - Wire.py is a bit unruly. Maybe it should be more of a proper Object. 
@@ -70,8 +74,10 @@ class EditorCanvas(tk.Frame):
         self.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
         self.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
         self.canvas.tag_bind("draggable", "<B1-Motion>", self.drag)
+        self.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
 
         parent.bind('<KeyPress-c>', self.connect_mode) #c for connect
+        parent.bind('<KeyPress-j>', self.wire_edit_mode) #j for connect
         parent.bind('<KeyPress-w>', self.add_free_wire) #w for wire
         parent.bind('<KeyPress-i>', self.add_in_wire) #i for in
         parent.bind('<KeyPress-I>', self.remove_in_wire)
@@ -113,6 +119,9 @@ class EditorCanvas(tk.Frame):
 
             for item in items:
                 item.prep_from_save_for_use(self.canvas, self.id_map) 
+            
+            for item in items:
+                item.update()
         
     def save_modal(self, event):
         SaveModal(self)
@@ -201,6 +210,7 @@ class EditorCanvas(tk.Frame):
         y = i*30+200
         points = [Point(30, y), Point(80, y), Point(250, y)]
         wire = InputWire(self.canvas, self.id_map, points=points, index=i)
+        wire.update()
         self.ins += [wire]
         self.register_object(wire)
         self.camera.children.append(wire)
@@ -214,6 +224,7 @@ class EditorCanvas(tk.Frame):
         y = i*30+200
         points = [Point(canvas_width-30, y), Point(canvas_width-80, y), Point(canvas_width-250, y)]
         wire = OutputWire(self.canvas, self.id_map, points=points, index=i)
+        wire.update()
         self.outs += [wire]
         self.register_object(wire)
         self.camera.children.append(wire)
@@ -227,6 +238,7 @@ class EditorCanvas(tk.Frame):
         y -= 60
         x -= 5
         wire = Wire(self.canvas, self.id_map, points=[Point(x, y), Point(x+50, y)])
+        wire.update()
         self.register_object(wire)
         self.camera.children.append(wire)
         
@@ -245,9 +257,34 @@ class EditorCanvas(tk.Frame):
     def connect_mode(self, event):
         self.mode = "connect"
         
+    def wire_edit_mode(self, event):
+        self.mode = "wire_edit"
+
     def open_map_modal(self, event):
         pos = Point(*self.canvas.winfo_pointerxy())
         MapModal(self, pos)
+        
+    def add_wire_node(self, event):
+        if self.mode != "wire_edit":
+            return
+        id = self.canvas.find_closest(event.x, event.y)[0]
+        wire_segment = self.id_map[id]
+        parent = wire_segment.parent
+        node = WireNode(self.canvas, self.id_map, parent, pos=Point(event.x, event.y))
+        self.id_map[node.id] = node
+        b = wire_segment.b 
+        new_wiresegment = WireSegment(self.canvas, self.id_map, node, b, parent=parent)
+        self.id_map[new_wiresegment.id] = new_wiresegment
+        wire_segment.b = node
+        b.children.remove(wire_segment)
+        b.children.append(new_wiresegment)
+        node.children.append(new_wiresegment)
+        node.children.append(wire_segment)
+        node.update()
+        self.canvas.tag_raise(node.id)
+        parent.nodes.append(node)
+        parent.children.append(node)
+        self.mode = "select"
         
     def to_ast(self, event=None):
         outValues = map(lambda out: out.get_value(), self.outs)

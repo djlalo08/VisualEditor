@@ -1,26 +1,34 @@
 from ObjectHierarchy.Object import Object
 
 class WireSegment(Object):
-    def __init__(self, canvas, id_map, start, end, **kwargs) -> None:
-        self.start = start
-        self.end = end
+    def __init__(self, canvas, id_map, a, b, **kwargs) -> None:
+        self.a = a
+        self.b = b
         super().__init__(canvas, id_map, **kwargs)
         
     def build_obj(self):
-       return self.canvas.create_line(
-            self.start.unpack(), self.end.unpack(),
+         
+        return self.canvas.create_line(
+            0,0,0,0,
             width = 5,
             fill = '#8AA153',
-            tags={"wire",}
+            tags=("wire", "wire_segment")
         )
         
-    def update_start(self, new_start):
-        self.start = new_start
-        self.update()
-
-    def update_end(self, new_end):
-        self.end = new_end
-        self.update()
-        
     def update(self):
-        self.canvas.coords(self.id, self.start.x, self.start.y, self.end.x, self.end.y)
+        self.canvas.coords(self.id, *self.a.abs_pos().unpack(), *self.b.abs_pos().unpack())
+        
+    def prep_for_save(self):
+        super().prep_for_save()
+        if self.a:
+            self.a = self.a.id
+        if self.b:
+            self.b = self.b.id
+
+    def prep_from_save_for_use(self, canvas, id_map):
+        super().prep_from_save_for_use(canvas, id_map)
+        if self.a:
+            self.a = id_map[self.a]
+        if self.b:
+            self.b = id_map[self.b]
+    
