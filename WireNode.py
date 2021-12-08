@@ -1,8 +1,8 @@
 from ObjectHierarchy.Selectable import Selectable
 
 class WireNode(Selectable):
-    def __init__(self, canvas, wire, index, width=10, height=10, **kwargs) -> None:
-        super().__init__(canvas, width=width, height=height, constrained_to_parent=True, **kwargs) 
+    def __init__(self, canvas, id_map, wire, index, width=10, height=10, **kwargs) -> None:
+        super().__init__(canvas, id_map, width=width, height=height, constrained_to_parent=True, **kwargs) 
         self.index = index
         self.wire = wire
         
@@ -31,3 +31,13 @@ class WireNode(Selectable):
         
     def get_outline(self):
         return "red" if self.is_selected else "black"
+    
+    def prep_for_save(self):
+        super().prep_for_save()
+        if self.wire:
+            self.wire = self.wire.id
+
+    def prep_from_save_for_use(self, canvas, id_map):
+        super().prep_from_save_for_use(canvas, id_map)
+        if self.wire:
+            self.wire = id_map[self.wire]

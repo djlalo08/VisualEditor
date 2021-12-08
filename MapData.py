@@ -1,4 +1,3 @@
-from tkinter.font import names
 from Label import Label
 from MapNode import *
 from Function import Function
@@ -6,8 +5,8 @@ from ObjectHierarchy.Object import Object
 from Tree import Node
 
 class MapData(Object):
-    def __init__(self, canvas, width=100, height=100, ins=None, outs=None, fn=Function(), name="name", **kwargs) -> None:
-        super().__init__(canvas, width=width, height=height, **kwargs)
+    def __init__(self, *args, width=100, height=100, ins=None, outs=None, fn=Function(), name="name", **kwargs) -> None:
+        super().__init__(*args, width=width, height=height, **kwargs)
         self.fn = fn
         self.name = name
         self.ins = ins if ins != None else [None]*len(fn.input_types)
@@ -25,12 +24,12 @@ class MapData(Object):
     def _create_children(self):
         children = []
         for index, _ in enumerate(self.fn.input_types):
-            children.append(MapInputNode(self.canvas, self, index, offset=self.abs_pos()))
+            children.append(MapInputNode(self.canvas, self.id_map, self, index, offset=self.abs_pos()))
 
         for index, _ in enumerate(self.fn.output_types):
-            children.append(MapOutputNode(self.canvas, self, index, offset=self.abs_pos()))
+            children.append(MapOutputNode(self.canvas, self.id_map, self, index, offset=self.abs_pos()))
             
-        children.append(Label(self.canvas, self, self.name, offset=self.abs_pos())) 
+        children.append(Label(self.canvas, self.id_map, self, self.name, offset=self.abs_pos())) 
 
         return children
     

@@ -1,8 +1,8 @@
 from ObjectHierarchy.Object import Object
 
 class Selectable(Object):
-    def __init__(self, canvas, is_selected=False, **kwargs) -> None:
-        super().__init__(canvas, **kwargs)
+    def __init__(self, *args, is_selected=False, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
         self.is_selected = is_selected
         
     def select(self):

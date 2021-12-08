@@ -3,7 +3,7 @@ from Point import Point
 class Object:
     
     def __init__( 
-            self, canvas, 
+            self, canvas, id_map,
             pos=Point(0,0), offset=Point(0,0), 
             single_point_position=False,
             parent=None, constrained_to_parent=False, 
@@ -22,6 +22,8 @@ class Object:
         self.width = width
         self.height = height
         self.id = self.build_obj()
+        self.id_map = id_map
+        id_map[self.id] = self
 
     def move(self, delta):
         if self.parent is not None and self.constrained_to_parent:
@@ -51,3 +53,18 @@ class Object:
             
     def __repr__(self) -> str:
         return self.id
+    
+    def prep_for_save(self):
+        self.canvas = None
+        if self.parent:
+            self.parent = self.parent.id
+        if self.children:
+            self.children = list(map(lambda c: c.id, self.children))
+        
+    def prep_from_save_for_use(self, canvas, id_map):
+        self.canvas = canvas
+        self.id_map = id_map
+        if self.parent:
+            self.parent = id_map[self.parent]
+        if self.children:
+            self.children = list(map(lambda c_id: id_map[c_id], self.children))

@@ -1,8 +1,12 @@
 import tkinter as tk
 from MapData import *
 from MapModal import MapModal
+from SaveModal import SaveModal
+from OpenModal import OpenModal
+from Camera import Camera
 from Wire import Wire, InputWire, OutputWire
 from Point import *
+import pickle
 
 '''
 #TODO clean up
@@ -16,6 +20,7 @@ from Point import *
 #TODO add writing directly to java files
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
     - Ability to save fns I've made. Need an encoding for map
+    - Save modal
 #TODO build standard library over java wrappers
 #TODO implement proper class typing
 #TODO switch to uing strictly typed python
@@ -37,15 +42,16 @@ class EditorCanvas(tk.Frame):
         self._drag_data = {"pos": Point(0,0), "item": None}
         self.selected = None
         self.mode = "select"
-        self.object_id_map = {}
+        self.id_map = {}
         self.map_count = 0
         self.ins = []
         self.outs = []
+        self.camera = Camera(self.canvas, self.id_map)
 
-        self.add_map(Point(300,220))
-        self.add_in_wire()
-        self.add_in_wire()
-        self.add_out_wire()
+        # self.add_map(Point(300,220))
+        # self.add_in_wire()
+        # self.add_in_wire()
+        # self.add_out_wire()
 
         self.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
         self.canvas.tag_bind("selectable", '<ButtonPress-1>', self.select_item)
@@ -63,10 +69,50 @@ class EditorCanvas(tk.Frame):
         parent.bind('<KeyPress-M>', self.open_map_modal) #m for map
         parent.bind('<KeyPress-e>', self.to_ast) #e for evaluate
         parent.bind('<KeyPress-d>', self.detach_wire) #d for detach
+        parent.bind('<KeyPress-s>', self.save_modal)#s for save
+        parent.bind('<KeyPress-g>', self.open_modal)#g for get
+        
+    def open_modal(self, event):
+        # OpenModal(self)
+        self.load_file("save")
+        
+    def load_file(self, name):
+        with open('lib/'+name, 'rb') as file:
+            num_items = pickle.load(file)
+            items = []
+            for _ in range(num_items):
+                item = pickle.load(file)
+                item.canvas = self.canvas
+                items.append(item)
+            for item in items:
+                try:
+                    item.id = item.build_obj()
+                    self.id_map[item.id] = item
+                    item.id_map = self.id_map
+                    print("success. Item id: ", item.id)
+                except AttributeError:
+                    print("Failure. Tried to rebuild an obj with no build fn")
+            for item in items:
+                item.prep_from_save_for_use(self.canvas, self.id_map) 
+        
+    def save_modal(self, event):
+        # SaveModal(self)
+        self.save_as("save")
+
+    def save_as(self, name):
+        with open('lib/'+name, 'wb') as file:
+            pickle.dump(len(self.id_map), file)
+            for key, value in self.id_map.items():
+                value.prep_for_save()
+            for key in self.id_map:
+                obj = self.id_map.get(key)
+                pickle.dump(obj, file)
+            for key, value in self.id_map.items():
+                value.prep_from_save_for_use(self.canvas, self.id_map)
 
     def drag_start(self, event):
         id = self.canvas.find_closest(event.x, event.y)[0]
-        self._drag_data["item"] = self.object_id_map[id]
+        self._drag_data["item"] = self.id_map[id]
         self._drag_data["pos"] = Point(event.x, event.y)
 
     def drag_stop(self, event):
@@ -91,13 +137,13 @@ class EditorCanvas(tk.Frame):
         if not maps:
             return
 
-        map_node = self.object_id_map.get(maps[0])
+        map_node = self.id_map.get(maps[0])
         map_node.add_wire_node(self._drag_data["item"])
         
     def select_item(self, event):
         oldSelected = self.selected
         id = self.canvas.find_closest(event.x, event.y)[0]
-        self.selected = self.object_id_map[id]
+        self.selected = self.id_map[id]
 
         if self.selected == oldSelected:
             self.selected = None
@@ -118,12 +164,12 @@ class EditorCanvas(tk.Frame):
                 newSelection.select()
 
     def register_object(self, object):
-        self.object_id_map[object.id] = object
+        self.id_map[object.id] = object
         for child in object.children:
             self.register_object(child)
             
     def deregister_object(self, object):
-        self.object_id_map[object.id] = None
+        self.id_map[object.id] = None
         for child in object.children:
             self.deregister_object(child)
             
@@ -131,9 +177,10 @@ class EditorCanvas(tk.Frame):
         i = len(self.ins)
         y = i*30+200
         points = [Point(30, y), Point(80, y), Point(250, y)]
-        wire = InputWire(self.canvas, points=points, index=i)
+        wire = InputWire(self.canvas, self.id_map, points=points, index=i)
         self.ins += [wire]
         self.register_object(wire)
+        self.camera.children.append(wire)
         
     def remove_in_wire(self, event):
         # TODO
@@ -143,9 +190,10 @@ class EditorCanvas(tk.Frame):
         i = len(self.outs)
         y = i*30+200
         points = [Point(canvas_width-30, y), Point(canvas_width-80, y), Point(canvas_width-250, y)]
-        wire = OutputWire(self.canvas, points=points, index=i)
+        wire = OutputWire(self.canvas, self.id_map, points=points, index=i)
         self.outs += [wire]
         self.register_object(wire)
+        self.camera.children.append(wire)
 
     def remove_out_wire(self, event):
         # TODO
@@ -157,6 +205,7 @@ class EditorCanvas(tk.Frame):
         x -= 5
         wire = Wire(self.canvas, [Point(x, y), Point(x+50, y)])
         self.register_object(wire)
+        self.camera.children.append(wire)
         
     def add_map_event(self, event=None):
         (x,y) = self.canvas.winfo_pointerxy()
@@ -165,11 +214,10 @@ class EditorCanvas(tk.Frame):
         self.add_map(Point(x,y))
         
     def add_map(self, pos=Point(200,200), fn_name="map", ins=["int", "int"], outs=["int", "int"]):
-        count = str(self.map_count)
         fn = Function(fn_name, ins, outs)
-        map1 = MapData(self.canvas, pos=pos, name=fn_name+str(count), fn=fn)
-        self.map_count += 1
-        self.register_object(map1)
+        map = MapData(self.canvas, self.id_map, pos=pos, name=fn_name, fn=fn)
+        self.register_object(map)
+        self.camera.children.append(map)
         
     def connect_mode(self, event):
         self.mode = "connect"
