@@ -19,16 +19,15 @@ import pickle
     
 #TODO add writing directly to java files
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
-    - Ability to save fns I've made. Need an encoding for map
-    - Save modal
+    -Add outs support for saving
 #TODO build standard library over java wrappers
 #TODO implement proper class typing
 #TODO switch to uing strictly typed python
 #TODO implement ability to run code inside editor
 '''
 
-canvas_width = 1500
-canvas_height = 1000
+canvas_width = 600
+canvas_height = 400
     
 class EditorCanvas(tk.Frame):
 
@@ -48,10 +47,7 @@ class EditorCanvas(tk.Frame):
         self.outs = []
         self.camera = Camera(self.canvas, self.id_map)
 
-        # self.add_map(Point(300,220))
-        # self.add_in_wire()
-        # self.add_in_wire()
-        # self.add_out_wire()
+        # self.add_some_stuff()
 
         self.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
         self.canvas.tag_bind("selectable", '<ButtonPress-1>', self.select_item)
@@ -72,6 +68,12 @@ class EditorCanvas(tk.Frame):
         parent.bind('<KeyPress-s>', self.save_modal)#s for save
         parent.bind('<KeyPress-g>', self.open_modal)#g for get
         
+    def add_some_stuff(self):
+        self.add_map(Point(300,220))
+        self.add_in_wire()
+        self.add_in_wire()
+        self.add_out_wire()
+
     def open_modal(self, event):
         # OpenModal(self)
         self.load_file("save")
@@ -84,14 +86,16 @@ class EditorCanvas(tk.Frame):
                 item = pickle.load(file)
                 item.canvas = self.canvas
                 items.append(item)
+
             for item in items:
-                try:
-                    item.id = item.build_obj()
-                    self.id_map[item.id] = item
-                    item.id_map = self.id_map
-                    print("success. Item id: ", item.id)
-                except AttributeError:
-                    print("Failure. Tried to rebuild an obj with no build fn")
+                item.id = item.build_obj()
+                self.id_map[item.id] = item
+                item.id_map = self.id_map
+                print("success. Item id: ", item.id)
+
+            out_ids = pickle.load(file)
+            self.outs = list(map(lambda o_id: self.id_map[o_id], out_ids))
+
             for item in items:
                 item.prep_from_save_for_use(self.canvas, self.id_map) 
         
@@ -107,8 +111,13 @@ class EditorCanvas(tk.Frame):
             for key in self.id_map:
                 obj = self.id_map.get(key)
                 pickle.dump(obj, file)
+
+            o_ids = list(map(lambda o: o.id, self.outs))
+            pickle.dump(o_ids, file)
+
             for key, value in self.id_map.items():
                 value.prep_from_save_for_use(self.canvas, self.id_map)
+
 
     def drag_start(self, event):
         id = self.canvas.find_closest(event.x, event.y)[0]
