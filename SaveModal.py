@@ -1,17 +1,34 @@
+import pickle
 import tkinter as tk
+from Canvas import Canvas
 
 class SaveModal(tk.Toplevel):
-    def __init__(self, root) -> None:
-        super().__init__(root)
-        self.root = root
+    def __init__(self) -> None:
+        super().__init__(Canvas.root)
         self.fn_name = tk.StringVar()
         self.save_modal()
 
     def submit(self):
         fn_name = self.fn_name.get()
-        self.root.save_as(fn_name)
+        self.save_as(fn_name)
         self.destroy()
             
+    @staticmethod
+    def save_as(name):
+        with open('lib/'+name, 'wb') as file:
+            pickle.dump(len(Canvas.id_map), file)
+            for key, value in Canvas.id_map.items():
+                value.prep_for_save()
+            for key in Canvas.id_map:
+                obj = Canvas.id_map.get(key)
+                pickle.dump(obj, file)
+
+            o_ids = list(map(lambda o: o.id, Canvas.outs))
+            pickle.dump(o_ids, file)
+
+            for key, value in Canvas.id_map.items():
+                value.prep_from_save_for_use(Canvas.canvas, Canvas.id_map)
+
     def save_modal(self):
         self.title("Save Map As:")
         self.geometry("460x100")

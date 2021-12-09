@@ -1,10 +1,12 @@
 import tkinter as tk
 from Point import Point
+from Canvas import Canvas
+from Function import Function
+from MapData import MapData
 
 class MapModal(tk.Toplevel):
-    def __init__(self, root, cursorPos=Point(200,200)) -> None:
-        super().__init__(root)
-        self.root = root
+    def __init__(self, cursorPos=Point(200,200)) -> None:
+        super().__init__(Canvas.root)
         self.cursorPos = cursorPos
         self.fn_name = tk.StringVar()
         self.ins = tk.StringVar()
@@ -15,9 +17,14 @@ class MapModal(tk.Toplevel):
         fn_name = self.fn_name.get()
         ins = self.ins.get().split(",")
         outs = self.outs.get().split(",")
-        self.root.add_map(self.cursorPos, fn_name, ins, outs)
+        self.add_map(self.cursorPos, fn_name, ins, outs)
         self.destroy()
             
+    @staticmethod
+    def add_map(pos=Point(200,200), fn_name="map", ins=["int", "int"], outs=["int", "int"]):
+        fn = Function(fn_name, ins, outs)
+        MapData(pos=pos, name=fn_name, fn=fn)
+        
     def new_map_modal(self):
         self.title("Set map info")
         self.geometry("460x180")

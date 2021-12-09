@@ -70,7 +70,7 @@ class Bindings:
         Canvas.root.bind('<KeyPress-e>', self.to_ast) #e for evaluate
         Canvas.root.bind('<KeyPress-d>', self.detach_wire) #d for detach
         Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
-        Canvas.root.bind('<KeyPress-g>', self.open_modal)#g for get
+        Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
         
     def add_some_stuff(self):
         self.add_map(Point(300,220))
@@ -79,50 +79,10 @@ class Bindings:
         self.add_out_wire()
 
     def open_modal(self, event):
-        OpenModal(self)
-        
-    def load_file(self, name):
-        with open('lib/'+name, 'rb') as file:
-            num_items = pickle.load(file)
-            items = []
-            for _ in range(num_items):
-                item = pickle.load(file)
-                item.canvas = Canvas.canvas
-                items.append(item)
-
-            for item in items:
-                item.id = item.build_obj()
-                Canvas.id_map[item.id] = item
-                item.id_map = Canvas.id_map
-                print("success. Item id: ", item.id)
-
-            out_ids = pickle.load(file)
-            Canvas.outs = list(map(lambda o_id: Canvas.id_map[o_id], out_ids))
-
-            for item in items:
-                item.prep_from_save_for_use(Canvas.canvas, Canvas.id_map) 
-            
-            for item in items:
-                item.update()
+        OpenModal()
         
     def save_modal(self, event):
-        SaveModal(self)
-
-    def save_as(self, name):
-        with open('lib/'+name, 'wb') as file:
-            pickle.dump(len(Canvas.id_map), file)
-            for key, value in Canvas.id_map.items():
-                value.prep_for_save()
-            for key in Canvas.id_map:
-                obj = Canvas.id_map.get(key)
-                pickle.dump(obj, file)
-
-            o_ids = list(map(lambda o: o.id, Canvas.outs))
-            pickle.dump(o_ids, file)
-
-            for key, value in Canvas.id_map.items():
-                value.prep_from_save_for_use(Canvas.canvas, Canvas.id_map)
-
+        SaveModal()
 
     def drag_start(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
@@ -195,7 +155,6 @@ class Bindings:
         wire.update()
         Canvas.ins += [wire]
         self.register_object(wire)
-        Canvas.camera.children.append(wire)
         
     def remove_in_wire(self, event):
         # TODO
@@ -209,7 +168,6 @@ class Bindings:
         wire.update()
         Canvas.outs += [wire]
         self.register_object(wire)
-        Canvas.camera.children.append(wire)
 
     def remove_out_wire(self, event):
         # TODO
@@ -222,19 +180,12 @@ class Bindings:
         wire = Wire(points=[Point(x, y), Point(x+50, y)])
         wire.update()
         self.register_object(wire)
-        Canvas.camera.children.append(wire)
         
     def add_map_event(self, event=None):
         (x,y) = Canvas.canvas.winfo_pointerxy()
         y -= 60
         x -= 5
-        self.add_map(Point(x,y))
-        
-    def add_map(self, pos=Point(200,200), fn_name="map", ins=["int", "int"], outs=["int", "int"]):
-        fn = Function(fn_name, ins, outs)
-        map = MapData(pos=pos, name=fn_name, fn=fn)
-        self.register_object(map)
-        Canvas.camera.children.append(map)
+        MapModal.add_map(Point(x,y))
         
     def connect_mode(self, event):
         Canvas.mode = "connect"
@@ -244,7 +195,7 @@ class Bindings:
 
     def open_map_modal(self, event):
         pos = Point(*Canvas.canvas.winfo_pointerxy())
-        MapModal(self, pos)
+        MapModal(pos)
         
     def add_wire_node(self, event):
         if Canvas.mode != "wire_edit":
