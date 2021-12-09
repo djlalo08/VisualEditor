@@ -13,7 +13,6 @@ class Object:
             **_
     ) -> None:
 
-        self.canvas = Canvas.canvas
         self.pos = pos
         self.offset = offset
         self.single_point_position = single_point_position
@@ -24,7 +23,6 @@ class Object:
         self.width = width
         self.height = height
         self.id = self.build_obj()
-        self.id_map = Canvas.id_map
         Canvas.id_map[self.id] = self
 
     def move(self, delta):
@@ -48,7 +46,7 @@ class Object:
         if self.single_point_position: 
             newPos = self.abs_pos().unpack()
             
-        self.canvas.coords(self.id, newPos)
+        Canvas.canvas.coords(self.id, newPos)
         for child in self.children:
             child.offset = self.abs_pos()
             child.update()
@@ -57,15 +55,12 @@ class Object:
         return self.id
     
     def prep_for_save(self):
-        self.canvas = None
         if self.parent:
             self.parent = self.parent.id
         if self.children:
             self.children = list(map(lambda c: c.id, self.children))
         
     def prep_from_save_for_use(self, canvas, id_map):
-        self.canvas = canvas
-        self.id_map = id_map
         if self.parent:
             self.parent = id_map[self.parent]
         if self.children:

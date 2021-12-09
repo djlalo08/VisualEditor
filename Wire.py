@@ -1,6 +1,7 @@
 import Utils as u
 from Point import Point
 from ObjectHierarchy.Object import Object
+from Canvas import Canvas
 from WireNode import WireNode
 from WireSegment import WireSegment
 from Tree import Node
@@ -26,11 +27,11 @@ class Wire(Object):
             a.children.append(wire)
             b.children.append(wire)
         for node in nodes:
-            self.canvas.tag_raise(node.id) 
+            Canvas.canvas.tag_raise(node.id) 
         return (wires,nodes)
     
     def build_obj(self):
-        return self.canvas.create_line(Point(0,0).around(1,1))
+        return Canvas.canvas.create_line(Point(0,0).around(1,1))
     
     def get_value(self):
         if self.bound_to == None:
@@ -40,9 +41,9 @@ class Wire(Object):
     
     def to_front(self):
         for wire in self.wires:
-            self.canvas.tag_raise(wire.id)
+            Canvas.canvas.tag_raise(wire.id)
         for node in self.nodes:
-            self.canvas.tag_raise(node.id)
+            Canvas.canvas.tag_raise(node.id)
 
     def prep_for_save(self):
         super().prep_for_save()

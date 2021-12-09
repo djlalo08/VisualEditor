@@ -1,4 +1,5 @@
 from ObjectHierarchy.Selectable import Selectable
+from Canvas import Canvas
 
 class WireNode(Selectable):
     def __init__(self, wire, width=10, height=10, **kwargs) -> None:
@@ -6,7 +7,7 @@ class WireNode(Selectable):
         self.wire = wire
         
     def build_obj(self):
-        return self.canvas.create_oval(
+        return Canvas.canvas.create_oval(
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="#2B9E42",
@@ -19,7 +20,7 @@ class WireNode(Selectable):
     def update(self):
         super().update()
         self.wire.to_front()
-        self.canvas.itemconfig(self.id, outline=self.get_outline())
+        Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
         
     def get_outline(self):
         return "red" if self.is_selected else "black"

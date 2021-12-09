@@ -12,7 +12,7 @@ class MapNode(Selectable):
         self.is_input_node = is_input_node
         
     def build_obj(self):
-        return self.canvas.create_rectangle(
+        return Canvas.canvas.create_rectangle(
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="white",
@@ -21,7 +21,7 @@ class MapNode(Selectable):
         
     def update(self):
         super().update()
-        self.canvas.itemconfig(self.id, outline=self.get_outline())
+        Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
         
     def add_wire_node(self, wire_node):
         if self.is_input_node and len(self.children) > 0:

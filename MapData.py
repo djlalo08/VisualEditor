@@ -15,7 +15,7 @@ class MapData(Object):
         self.children = self._create_children()
         
     def build_obj(self):
-        return self.canvas.create_rectangle(
+        return Canvas.canvas.create_rectangle(
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="#E7B680",

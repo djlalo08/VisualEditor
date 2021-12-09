@@ -1,4 +1,5 @@
 from ObjectHierarchy.Object import Object
+from Canvas import Canvas
 
 class Label(Object):
     def __init__(self, parent, name, **kwargs) -> None:
@@ -7,4 +8,4 @@ class Label(Object):
         
     def build_obj(self):
         pos = self.abs_pos().unpack()
-        return self.canvas.create_text(pos, text=self.name, fill="black", font=('Helvetica 10 bold'))
+        return Canvas.canvas.create_text(pos, text=self.name, fill="black", font=('Helvetica 10 bold'))

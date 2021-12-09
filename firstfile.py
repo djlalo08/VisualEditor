@@ -137,16 +137,6 @@ class Bindings:
             case "select":
                 newSelection.select()
 
-    def register_object(self, object):
-        Canvas.id_map[object.id] = object
-        for child in object.children:
-            self.register_object(child)
-            
-    def deregister_object(self, object):
-        Canvas.id_map[object.id] = None
-        for child in object.children:
-            self.deregister_object(child)
-            
     def add_in_wire(self, event=None):
         i = len(Canvas.ins)
         y = i*30+200
@@ -154,7 +144,6 @@ class Bindings:
         wire = InputWire(points=points, index=i)
         wire.update()
         Canvas.ins += [wire]
-        self.register_object(wire)
         
     def remove_in_wire(self, event):
         # TODO
@@ -167,7 +156,6 @@ class Bindings:
         wire = OutputWire(points=points, index=i)
         wire.update()
         Canvas.outs += [wire]
-        self.register_object(wire)
 
     def remove_out_wire(self, event):
         # TODO
@@ -179,7 +167,6 @@ class Bindings:
         x -= 5
         wire = Wire(points=[Point(x, y), Point(x+50, y)])
         wire.update()
-        self.register_object(wire)
         
     def add_map_event(self, event=None):
         (x,y) = Canvas.canvas.winfo_pointerxy()
@@ -230,5 +217,3 @@ class Bindings:
         print(header)
         print('\t' + fn_decls)
         print(footer)
-        #TODO: for each of the outs, crawl brackwards until all is resolved
-        pass
