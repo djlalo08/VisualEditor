@@ -50,6 +50,7 @@ class Bindings:
     def set_bindings(self):
 
         # self.add_some_stuff()
+
         Canvas.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
         Canvas.canvas.tag_bind("selectable", '<ButtonPress-1>', self.select_item)
         Canvas.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
@@ -190,7 +191,7 @@ class Bindings:
         i = len(Canvas.ins)
         y = i*30+200
         points = [Point(30, y), Point(80, y), Point(250, y)]
-        wire = InputWire(Canvas.canvas, Canvas.id_map, points=points, index=i)
+        wire = InputWire(points=points, index=i)
         wire.update()
         Canvas.ins += [wire]
         self.register_object(wire)
@@ -204,7 +205,7 @@ class Bindings:
         i = len(Canvas.outs)
         y = i*30+200
         points = [Point(Canvas.canvas_width-30, y), Point(Canvas.canvas_width-80, y), Point(Canvas.canvas_width-250, y)]
-        wire = OutputWire(Canvas.canvas, Canvas.id_map, points=points, index=i)
+        wire = OutputWire(points=points, index=i)
         wire.update()
         Canvas.outs += [wire]
         self.register_object(wire)
@@ -218,7 +219,7 @@ class Bindings:
         (x,y) = Canvas.canvas.winfo_pointerxy()
         y -= 60
         x -= 5
-        wire = Wire(Canvas.canvas, Canvas.id_map, points=[Point(x, y), Point(x+50, y)])
+        wire = Wire(points=[Point(x, y), Point(x+50, y)])
         wire.update()
         self.register_object(wire)
         Canvas.camera.children.append(wire)
@@ -231,7 +232,7 @@ class Bindings:
         
     def add_map(self, pos=Point(200,200), fn_name="map", ins=["int", "int"], outs=["int", "int"]):
         fn = Function(fn_name, ins, outs)
-        map = MapData(Canvas.canvas, Canvas.id_map, pos=pos, name=fn_name, fn=fn)
+        map = MapData(pos=pos, name=fn_name, fn=fn)
         self.register_object(map)
         Canvas.camera.children.append(map)
         
@@ -251,10 +252,10 @@ class Bindings:
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
         wire_segment = Canvas.id_map[id]
         parent = wire_segment.parent
-        node = WireNode(Canvas.canvas, Canvas.id_map, parent, pos=Point(event.x, event.y))
+        node = WireNode(parent, pos=Point(event.x, event.y))
         Canvas.id_map[node.id] = node
         b = wire_segment.b 
-        new_wiresegment = WireSegment(Canvas.canvas, Canvas.id_map, node, b, parent=parent)
+        new_wiresegment = WireSegment(node, b, parent=parent)
         Canvas.id_map[new_wiresegment.id] = new_wiresegment
         wire_segment.b = node
         b.children.remove(wire_segment)

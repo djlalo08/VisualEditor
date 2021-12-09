@@ -1,8 +1,8 @@
 from ObjectHierarchy.Selectable import Selectable
 
 class WireNode(Selectable):
-    def __init__(self, canvas, id_map, wire, width=10, height=10, **kwargs) -> None:
-        super().__init__(canvas, id_map, width=width, height=height, constrained_to_parent=True, **kwargs) 
+    def __init__(self, wire, width=10, height=10, **kwargs) -> None:
+        super().__init__(width=width, height=height, constrained_to_parent=True, **kwargs) 
         self.wire = wire
         
     def build_obj(self):

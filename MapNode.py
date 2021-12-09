@@ -1,12 +1,13 @@
 from Point import Point
 from ObjectHierarchy.Selectable import Selectable
+from Canvas import Canvas
 
 height = 15
 width = 15
 
 class MapNode(Selectable):
-    def __init__(self, canvas, id_map, parent, index, is_input_node=True, **kwargs) -> None:
-        super().__init__(canvas, id_map, parent=parent, constrained_to_parent=True, width=width, height=height, **kwargs)
+    def __init__(self, parent, index, is_input_node=True, **kwargs) -> None:
+        super().__init__(parent=parent, constrained_to_parent=True, width=width, height=height, **kwargs)
         self.index = index
         self.is_input_node = is_input_node
         
@@ -46,14 +47,14 @@ class MapNode(Selectable):
 
 class MapInputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
-        index = args[3]
-        par_width = args[2].width
+        index = args[1]
+        par_width = args[0].width
         pos = Point(-par_width/2+10, index*(height+5)+10)
         super().__init__(*args, is_input_node=True, pos=pos, **kwargs)
 
 class MapOutputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
-        index = args[3]
-        par_width = args[2].width
+        index = args[1]
+        par_width = args[0].width
         pos = Point(par_width/2-10, index*(height+5)+10)
         super().__init__(*args, is_input_node=False, pos=pos, **kwargs)

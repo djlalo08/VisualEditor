@@ -19,9 +19,9 @@ class Wire(Object):
     def create_wire(self, points):
         (wires, nodes) = ([], [])
         for point in points:
-            nodes.append(WireNode(self.canvas, self.id_map, self, pos=point))
+            nodes.append(WireNode(self, pos=point))
         for a, b in u.pairwise(nodes):
-            wire = WireSegment(self.canvas, self.id_map, a, b, parent=self)
+            wire = WireSegment(a, b, parent=self)
             wires.append(wire)
             a.children.append(wire)
             b.children.append(wire)

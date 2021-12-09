@@ -1,9 +1,10 @@
 from Point import Point
+from Canvas import Canvas
 
 class Object:
     
     def __init__( 
-            self, canvas, id_map,
+            self, 
             pos=Point(0,0), offset=Point(0,0), 
             single_point_position=False,
             parent=None, constrained_to_parent=False, offset_off_parent=Point(0,0),
@@ -12,7 +13,7 @@ class Object:
             **_
     ) -> None:
 
-        self.canvas = canvas
+        self.canvas = Canvas.canvas
         self.pos = pos
         self.offset = offset
         self.single_point_position = single_point_position
@@ -23,8 +24,8 @@ class Object:
         self.width = width
         self.height = height
         self.id = self.build_obj()
-        self.id_map = id_map
-        id_map[self.id] = self
+        self.id_map = Canvas.id_map
+        Canvas.id_map[self.id] = self
 
     def move(self, delta):
         if self.parent is not None and self.constrained_to_parent:

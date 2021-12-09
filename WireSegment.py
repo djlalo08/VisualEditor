@@ -2,10 +2,10 @@ from ObjectHierarchy.Object import Object
 from Canvas import Canvas
 
 class WireSegment(Object):
-    def __init__(self, canvasx, id_map, a, b, **kwargs) -> None:
+    def __init__(self, a, b, **kwargs) -> None:
         self.a = a
         self.b = b
-        super().__init__(Canvas.canvas, id_map, **kwargs)
+        super().__init__(**kwargs)
         
     def build_obj(self):
 

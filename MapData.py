@@ -25,12 +25,12 @@ class MapData(Object):
     def _create_children(self):
         children = []
         for index, _ in enumerate(self.fn.input_types):
-            children.append(MapInputNode(self.canvas, self.id_map, self, index, offset=self.abs_pos(), offset_off_parent=Point(0,-self.height/2+5)))
+            children.append(MapInputNode(self, index, offset=self.abs_pos(), offset_off_parent=Point(0,-self.height/2+5)))
 
         for index, _ in enumerate(self.fn.output_types):
-            children.append(MapOutputNode(self.canvas, self.id_map, self, index, offset=self.abs_pos(), offset_off_parent=Point(0,-self.height/2+5)))
+            children.append(MapOutputNode(self, index, offset=self.abs_pos(), offset_off_parent=Point(0,-self.height/2+5)))
             
-        children.append(Label(self.canvas, self.id_map, self, self.name, offset=self.abs_pos())) 
+        children.append(Label(self, self.name, offset=self.abs_pos())) 
 
         return children
     
