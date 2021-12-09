@@ -7,21 +7,26 @@ class Object:
             self, 
             pos=Point(0,0), offset=Point(0,0), 
             single_point_position=False,
-            parent=None, constrained_to_parent=False, offset_off_parent=Point(0,0),
             children=None, 
+            parent=None, constrained_to_parent=False, offset_off_parent=Point(0,0),
             width=0, height=0, 
             **_
     ) -> None:
 
         self.pos = pos
         self.offset = offset
+
         self.single_point_position = single_point_position
+
         self.children = children if children is not None else []
+
         self.parent = parent
         self.constrained_to_parent = constrained_to_parent
         self.offset_off_parent = offset_off_parent
+
         self.width = width
         self.height = height
+
         self.id = self.build_obj()
         Canvas.id_map[self.id] = self
 

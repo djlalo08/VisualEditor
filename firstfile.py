@@ -1,13 +1,12 @@
 from Canvas import Canvas
-from MapData import *
 from MapModal import MapModal
 from SaveModal import SaveModal
 from OpenModal import OpenModal
+from Tree import Node
 from Wire import Wire, InputWire, OutputWire
 from WireNode import WireNode
 from WireSegment import WireSegment
-from Point import *
-import pickle
+from Point import Point
 
 '''
 #TODO make canvas and id_map global. This will make everything much easier, including saving
@@ -72,8 +71,11 @@ class Bindings:
         Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
         Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
         
+        
+
+
     def add_some_stuff(self):
-        self.add_map(Point(300,220))
+        MapModal.add_map(Point(300,220))
         self.add_in_wire()
         self.add_in_wire()
         self.add_out_wire()
@@ -128,13 +130,12 @@ class Bindings:
             oldSelected.deselect()
 
     def do_selection_action(self, newSelection, oldSelection):
-        match Canvas.mode:
-            case "connect":
+        if Canvas.mode == "connect":
                 newPos = newSelection.abs_pos()
                 delta= newPos - oldSelection.abs_pos()
                 oldSelection.move(delta)
                 Canvas.mode = "select"
-            case "select":
+        if Canvas.mode == "select":
                 newSelection.select()
 
     def add_in_wire(self, event=None):
