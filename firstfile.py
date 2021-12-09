@@ -1,9 +1,8 @@
-import tkinter as tk
+from Canvas import Canvas
 from MapData import *
 from MapModal import MapModal
 from SaveModal import SaveModal
 from OpenModal import OpenModal
-from Camera import Camera
 from Wire import Wire, InputWire, OutputWire
 from WireNode import WireNode
 from WireSegment import WireSegment
@@ -45,50 +44,32 @@ import pickle
 
 '''
 
-canvas_width = 1500
-canvas_height = 1000
     
-class EditorCanvas(tk.Frame):
+class Bindings:
 
-    def __init__(self, parent):
-        tk.Frame.__init__(self, parent)
-
-        self.root = parent
-        # self.canvas = tk.Canvas(width=canvas_width, height=canvas_height, background="#f5ecce")
-        self.canvas = tk.Canvas(width=canvas_width, height=canvas_height, background="white")
-        self.canvas.pack(fill="both", expand=True)
-
-        self._drag_data = {"pos": Point(0,0), "item": None}
-        self.selected = None
-        self.mode = "select"
-        self.id_map = {}
-        self.map_count = 0
-        self.ins = []
-        self.outs = []
-        self.camera = Camera(self.canvas, self.id_map)
+    def set_bindings(self):
 
         # self.add_some_stuff()
+        Canvas.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
+        Canvas.canvas.tag_bind("selectable", '<ButtonPress-1>', self.select_item)
+        Canvas.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
+        Canvas.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
+        Canvas.canvas.tag_bind("draggable", "<B1-Motion>", self.drag)
+        Canvas.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
 
-        self.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
-        self.canvas.tag_bind("selectable", '<ButtonPress-1>', self.select_item)
-        self.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
-        self.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
-        self.canvas.tag_bind("draggable", "<B1-Motion>", self.drag)
-        self.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
-
-        parent.bind('<KeyPress-c>', self.connect_mode) #c for connect
-        parent.bind('<KeyPress-j>', self.wire_edit_mode) #j for connect
-        parent.bind('<KeyPress-w>', self.add_free_wire) #w for wire
-        parent.bind('<KeyPress-i>', self.add_in_wire) #i for in
-        parent.bind('<KeyPress-I>', self.remove_in_wire)
-        parent.bind('<KeyPress-o>', self.add_out_wire) # o for out
-        parent.bind('<KeyPress-O>', self.remove_out_wire)
-        parent.bind('<KeyPress-m>', self.add_map_event) #m for map
-        parent.bind('<KeyPress-M>', self.open_map_modal) #m for map
-        parent.bind('<KeyPress-e>', self.to_ast) #e for evaluate
-        parent.bind('<KeyPress-d>', self.detach_wire) #d for detach
-        parent.bind('<KeyPress-s>', self.save_modal)#s for save
-        parent.bind('<KeyPress-g>', self.open_modal)#g for get
+        Canvas.root.bind('<KeyPress-c>', self.connect_mode) #c for connect
+        Canvas.root.bind('<KeyPress-j>', self.wire_edit_mode) #j for connect
+        Canvas.root.bind('<KeyPress-w>', self.add_free_wire) #w for wire
+        Canvas.root.bind('<KeyPress-i>', self.add_in_wire) #i for in
+        Canvas.root.bind('<KeyPress-I>', self.remove_in_wire)
+        Canvas.root.bind('<KeyPress-o>', self.add_out_wire) # o for out
+        Canvas.root.bind('<KeyPress-O>', self.remove_out_wire)
+        Canvas.root.bind('<KeyPress-m>', self.add_map_event) #m for map
+        Canvas.root.bind('<KeyPress-M>', self.open_map_modal) #m for map
+        Canvas.root.bind('<KeyPress-e>', self.to_ast) #e for evaluate
+        Canvas.root.bind('<KeyPress-d>', self.detach_wire) #d for detach
+        Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
+        Canvas.root.bind('<KeyPress-g>', self.open_modal)#g for get
         
     def add_some_stuff(self):
         self.add_map(Point(300,220))
@@ -105,20 +86,20 @@ class EditorCanvas(tk.Frame):
             items = []
             for _ in range(num_items):
                 item = pickle.load(file)
-                item.canvas = self.canvas
+                item.canvas = Canvas.canvas
                 items.append(item)
 
             for item in items:
                 item.id = item.build_obj()
-                self.id_map[item.id] = item
-                item.id_map = self.id_map
+                Canvas.id_map[item.id] = item
+                item.id_map = Canvas.id_map
                 print("success. Item id: ", item.id)
 
             out_ids = pickle.load(file)
-            self.outs = list(map(lambda o_id: self.id_map[o_id], out_ids))
+            Canvas.outs = list(map(lambda o_id: Canvas.id_map[o_id], out_ids))
 
             for item in items:
-                item.prep_from_save_for_use(self.canvas, self.id_map) 
+                item.prep_from_save_for_use(Canvas.canvas, Canvas.id_map) 
             
             for item in items:
                 item.update()
@@ -128,170 +109,170 @@ class EditorCanvas(tk.Frame):
 
     def save_as(self, name):
         with open('lib/'+name, 'wb') as file:
-            pickle.dump(len(self.id_map), file)
-            for key, value in self.id_map.items():
+            pickle.dump(len(Canvas.id_map), file)
+            for key, value in Canvas.id_map.items():
                 value.prep_for_save()
-            for key in self.id_map:
-                obj = self.id_map.get(key)
+            for key in Canvas.id_map:
+                obj = Canvas.id_map.get(key)
                 pickle.dump(obj, file)
 
-            o_ids = list(map(lambda o: o.id, self.outs))
+            o_ids = list(map(lambda o: o.id, Canvas.outs))
             pickle.dump(o_ids, file)
 
-            for key, value in self.id_map.items():
-                value.prep_from_save_for_use(self.canvas, self.id_map)
+            for key, value in Canvas.id_map.items():
+                value.prep_from_save_for_use(Canvas.canvas, Canvas.id_map)
 
 
     def drag_start(self, event):
-        id = self.canvas.find_closest(event.x, event.y)[0]
-        self._drag_data["item"] = self.id_map[id]
-        self._drag_data["pos"] = Point(event.x, event.y)
+        id = Canvas.canvas.find_closest(event.x, event.y)[0]
+        Canvas._drag_data["item"] = Canvas.id_map[id]
+        Canvas._drag_data["pos"] = Point(event.x, event.y)
 
     def drag_stop(self, event):
-        self._drag_data["item"] = None
-        self._drag_data["pos"] = Point(0,0)
+        Canvas._drag_data["item"] = None
+        Canvas._drag_data["pos"] = Point(0,0)
 
     def drag(self, event):
-        delta = Point(event.x, event.y) - self._drag_data["pos"]
-        self._drag_data["item"].move(delta)
-        self._drag_data["pos"] = Point(event.x, event.y)
+        delta = Point(event.x, event.y) - Canvas._drag_data["pos"]
+        Canvas._drag_data["item"].move(delta)
+        Canvas._drag_data["pos"] = Point(event.x, event.y)
         
     def detach_wire(self, event):
         try:
-            self.selected.detach()
+            Canvas.selected.detach()
         except AttributeError:
             pass
         
     def release_node(self, event):
         overlap_range = Point(event.x, event.y).around(5,5)
-        all_overlapping = self.canvas.find_overlapping(*overlap_range)
-        maps = list(filter(lambda x: "map_node" in self.canvas.gettags(x), all_overlapping))
+        all_overlapping = Canvas.canvas.find_overlapping(*overlap_range)
+        maps = list(filter(lambda x: "map_node" in Canvas.canvas.gettags(x), all_overlapping))
         if not maps:
             return
 
-        map_node = self.id_map.get(maps[0])
-        map_node.add_wire_node(self._drag_data["item"])
+        map_node = Canvas.id_map.get(maps[0])
+        map_node.add_wire_node(Canvas._drag_data["item"])
         
     def select_item(self, event):
-        oldSelected = self.selected
-        id = self.canvas.find_closest(event.x, event.y)[0]
-        self.selected = self.id_map[id]
+        oldSelected = Canvas.selected
+        id = Canvas.canvas.find_closest(event.x, event.y)[0]
+        Canvas.selected = Canvas.id_map[id]
 
-        if self.selected == oldSelected:
-            self.selected = None
+        if Canvas.selected == oldSelected:
+            Canvas.selected = None
         else:
-            self.do_selection_action(self.selected, oldSelected)
+            self.do_selection_action(Canvas.selected, oldSelected)
 
         if oldSelected:
             oldSelected.deselect()
 
     def do_selection_action(self, newSelection, oldSelection):
-        match self.mode:
+        match Canvas.mode:
             case "connect":
                 newPos = newSelection.abs_pos()
                 delta= newPos - oldSelection.abs_pos()
                 oldSelection.move(delta)
-                self.mode = "select"
+                Canvas.mode = "select"
             case "select":
                 newSelection.select()
 
     def register_object(self, object):
-        self.id_map[object.id] = object
+        Canvas.id_map[object.id] = object
         for child in object.children:
             self.register_object(child)
             
     def deregister_object(self, object):
-        self.id_map[object.id] = None
+        Canvas.id_map[object.id] = None
         for child in object.children:
             self.deregister_object(child)
             
     def add_in_wire(self, event=None):
-        i = len(self.ins)
+        i = len(Canvas.ins)
         y = i*30+200
         points = [Point(30, y), Point(80, y), Point(250, y)]
-        wire = InputWire(self.canvas, self.id_map, points=points, index=i)
+        wire = InputWire(Canvas.canvas, Canvas.id_map, points=points, index=i)
         wire.update()
-        self.ins += [wire]
+        Canvas.ins += [wire]
         self.register_object(wire)
-        self.camera.children.append(wire)
+        Canvas.camera.children.append(wire)
         
     def remove_in_wire(self, event):
         # TODO
         pass
 
     def add_out_wire(self, event=None):
-        i = len(self.outs)
+        i = len(Canvas.outs)
         y = i*30+200
-        points = [Point(canvas_width-30, y), Point(canvas_width-80, y), Point(canvas_width-250, y)]
-        wire = OutputWire(self.canvas, self.id_map, points=points, index=i)
+        points = [Point(Canvas.canvas_width-30, y), Point(Canvas.canvas_width-80, y), Point(Canvas.canvas_width-250, y)]
+        wire = OutputWire(Canvas.canvas, Canvas.id_map, points=points, index=i)
         wire.update()
-        self.outs += [wire]
+        Canvas.outs += [wire]
         self.register_object(wire)
-        self.camera.children.append(wire)
+        Canvas.camera.children.append(wire)
 
     def remove_out_wire(self, event):
         # TODO
         pass
     
     def add_free_wire(self, event):
-        (x,y) = self.canvas.winfo_pointerxy()
+        (x,y) = Canvas.canvas.winfo_pointerxy()
         y -= 60
         x -= 5
-        wire = Wire(self.canvas, self.id_map, points=[Point(x, y), Point(x+50, y)])
+        wire = Wire(Canvas.canvas, Canvas.id_map, points=[Point(x, y), Point(x+50, y)])
         wire.update()
         self.register_object(wire)
-        self.camera.children.append(wire)
+        Canvas.camera.children.append(wire)
         
     def add_map_event(self, event=None):
-        (x,y) = self.canvas.winfo_pointerxy()
+        (x,y) = Canvas.canvas.winfo_pointerxy()
         y -= 60
         x -= 5
         self.add_map(Point(x,y))
         
     def add_map(self, pos=Point(200,200), fn_name="map", ins=["int", "int"], outs=["int", "int"]):
         fn = Function(fn_name, ins, outs)
-        map = MapData(self.canvas, self.id_map, pos=pos, name=fn_name, fn=fn)
+        map = MapData(Canvas.canvas, Canvas.id_map, pos=pos, name=fn_name, fn=fn)
         self.register_object(map)
-        self.camera.children.append(map)
+        Canvas.camera.children.append(map)
         
     def connect_mode(self, event):
-        self.mode = "connect"
+        Canvas.mode = "connect"
         
     def wire_edit_mode(self, event):
-        self.mode = "wire_edit"
+        Canvas.mode = "wire_edit"
 
     def open_map_modal(self, event):
-        pos = Point(*self.canvas.winfo_pointerxy())
+        pos = Point(*Canvas.canvas.winfo_pointerxy())
         MapModal(self, pos)
         
     def add_wire_node(self, event):
-        if self.mode != "wire_edit":
+        if Canvas.mode != "wire_edit":
             return
-        id = self.canvas.find_closest(event.x, event.y)[0]
-        wire_segment = self.id_map[id]
+        id = Canvas.canvas.find_closest(event.x, event.y)[0]
+        wire_segment = Canvas.id_map[id]
         parent = wire_segment.parent
-        node = WireNode(self.canvas, self.id_map, parent, pos=Point(event.x, event.y))
-        self.id_map[node.id] = node
+        node = WireNode(Canvas.canvas, Canvas.id_map, parent, pos=Point(event.x, event.y))
+        Canvas.id_map[node.id] = node
         b = wire_segment.b 
-        new_wiresegment = WireSegment(self.canvas, self.id_map, node, b, parent=parent)
-        self.id_map[new_wiresegment.id] = new_wiresegment
+        new_wiresegment = WireSegment(Canvas.canvas, Canvas.id_map, node, b, parent=parent)
+        Canvas.id_map[new_wiresegment.id] = new_wiresegment
         wire_segment.b = node
         b.children.remove(wire_segment)
         b.children.append(new_wiresegment)
         node.children.append(new_wiresegment)
         node.children.append(wire_segment)
         node.update()
-        self.canvas.tag_raise(node.id)
+        Canvas.canvas.tag_raise(node.id)
         parent.nodes.append(node)
         parent.children.append(node)
-        self.mode = "select"
+        Canvas.mode = "select"
         
     def to_ast(self, event=None):
-        outValues = map(lambda out: out.get_value(), self.outs)
+        outValues = map(lambda out: out.get_value(), Canvas.outs)
         program = Node("root", list(outValues))
         reduced = program.reduce(([],set()))
         header = '''public static Object[] example(Object[] in){
-        Object[] out = new Object[''' + str(len(self.outs)) + '''];'''
+        Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];'''
         fn_decls = '\n\t'.join(reduced)
         footer = "\treturn out;\n}"
         print(header)
@@ -299,8 +280,3 @@ class EditorCanvas(tk.Frame):
         print(footer)
         #TODO: for each of the outs, crawl brackwards until all is resolved
         pass
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    EditorCanvas(root).pack(fill="both", expand=True)
-    root.mainloop()

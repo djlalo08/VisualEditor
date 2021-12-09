@@ -1,13 +1,14 @@
 from ObjectHierarchy.Object import Object
+from Canvas import Canvas
 
 class WireSegment(Object):
-    def __init__(self, canvas, id_map, a, b, **kwargs) -> None:
+    def __init__(self, canvasx, id_map, a, b, **kwargs) -> None:
         self.a = a
         self.b = b
-        super().__init__(canvas, id_map, **kwargs)
+        super().__init__(Canvas.canvas, id_map, **kwargs)
         
     def build_obj(self):
-         
+
         return self.canvas.create_line(
             0,0,0,0,
             width = 5,
