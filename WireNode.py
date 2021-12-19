@@ -3,9 +3,9 @@ from ObjectHierarchy.Selectable import Selectable
 import Canvas as C
 
 class WireNode(Selectable):
-    def __init__(self, wire, width=10, height=10, **kwargs) -> None:
+    def __init__(self, wire_ref, width=10, height=10, **kwargs) -> None:
         super().__init__(width=width, height=height, constrained_to_parent=True, **kwargs) 
-        self.wire = wire
+        self.wire_ref = wire_ref
         
     def build_obj(self):
         return C.Canvas.canvas.create_oval(
@@ -20,7 +20,7 @@ class WireNode(Selectable):
 
     def update(self):
         super().update()
-        self.wire.to_front()
+        self.wire_ref.obj.to_front()
         C.Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
         
     def get_outline(self):
@@ -28,10 +28,6 @@ class WireNode(Selectable):
     
     def prep_for_save(self):
         super().prep_for_save()
-        if self.wire:
-            self.wire = self.wire.id
 
     def prep_from_save_for_use(self, canvas, id_map):
         super().prep_from_save_for_use(canvas, id_map)
-        if self.wire:
-            self.wire = id_map[self.wire]

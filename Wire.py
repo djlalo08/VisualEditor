@@ -1,4 +1,5 @@
 from __future__ import annotations
+from ObjectHierarchy.ObjectReference import ObjectReference
 import Utils as u
 from Point import Point
 from ObjectHierarchy.Object import Object
@@ -12,57 +13,45 @@ class Wire(Object):
     def __init__(self, *args, points=[], tags={}, **kwargs) -> None:
         super().__init__(*args, **kwargs)
         self.points = points
-        self.bound_to = None
+        self.bound_to_ref: ObjectReference = None #TODO find out which type bound to is
         self.bind_index = 0
         self.tags = tags
-        (self.wires, self.nodes) = self.create_wire(points)
-        self.children = self.nodes + self.wires
+        (self.wire_refs, self.node_refs) = self.create_wire(points)
+        self.children_refs = self.node_refs + self.wire_refs
 
     def create_wire(self, points):
-        (wires, nodes) = ([], [])
+        (wire_refs, node_refs) = ([], [])
         for point in points:
-            nodes.append(WireNode(self, pos=point))
-        for a, b in u.pairwise(nodes):
-            wire = WireSegment(a, b, parent=self)
-            wires.append(wire)
-            a.children.append(wire)
-            b.children.append(wire)
-        for node in nodes:
+            node_refs.append(WireNode(self.ref, pos=point).ref)
+        for a, b in u.pairwise(node_refs):
+            wire_ref = WireSegment(a, b, parent_ref=self).ref
+            wire_refs.append(wire_ref)
+            a.obj.children_refs.append(wire_ref)
+            b.obj.children_refs.append(wire_ref)
+        for node in node_refs:
             C.Canvas.canvas.tag_raise(node.id) 
-        return (wires,nodes)
+        return (wire_refs,node_refs)
     
     def build_obj(self):
         return C.Canvas.canvas.create_line(Point(0,0).around(1,1))
     
     def get_value(self):
-        if self.bound_to == None:
+        if self.bound_to_ref == None:
             print("There is a wire in use that has no input")
             return None
-        return self.bound_to.get_value() 
+        return self.bound_to_ref.obj.get_value() 
     
     def to_front(self):
-        for wire in self.wires:
+        for wire in self.wire_refs:
             C.Canvas.canvas.tag_raise(wire.id)
-        for node in self.nodes:
+        for node in self.node_refs:
             C.Canvas.canvas.tag_raise(node.id)
 
     def prep_for_save(self):
         super().prep_for_save()
-        if self.wires:
-            self.wires = list(map(lambda w: w.id, self.wires))
-        if self.nodes:
-            self.nodes = list(map(lambda n: n.id, self.nodes))
-        if self.bound_to:
-            self.bound_to = self.bound_to.id
 
     def prep_from_save_for_use(self, canvas, id_map):
         super().prep_from_save_for_use(canvas, id_map)
-        if self.wires:
-            self.wires = list(map(lambda w_id: id_map[w_id], self.wires))
-        if self.nodes:
-            self.nodes= list(map(lambda n_id: id_map[n_id], self.nodes))
-        if self.bound_to:
-            self.bound_to = id_map[self.bound_to]
 
 class InputWire(Wire):
     def __init__(self, *args, index=0, **kwargs) -> None:

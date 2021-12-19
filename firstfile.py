@@ -192,21 +192,21 @@ class Bindings:
             return
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
         wire_segment = Canvas.id_map[id]
-        parent = wire_segment.parent
-        node = WireNode(parent, pos=Point(event.x, event.y))
+        parent_ref = wire_segment.parent_ref
+        node = WireNode(parent_ref, pos=Point(event.x, event.y))
         Canvas.id_map[node.id] = node
-        b = wire_segment.b 
-        new_wiresegment = WireSegment(node, b, parent=parent)
+        b_ref = wire_segment.b
+        new_wiresegment = WireSegment(node, b_ref, parent_ref=parent_ref)
         Canvas.id_map[new_wiresegment.id] = new_wiresegment
         wire_segment.b = node
-        b.children.remove(wire_segment)
-        b.children.append(new_wiresegment)
-        node.children.append(new_wiresegment)
-        node.children.append(wire_segment)
+        b_ref.obj.children_refs.remove(wire_segment.ref)
+        b_ref.obj.children_refs.append(new_wiresegment.ref)
+        node.children_refs.append(new_wiresegment.ref)
+        node.children_refs.append(wire_segment.ref)
         node.update()
         Canvas.canvas.tag_raise(node.id)
-        parent.nodes.append(node)
-        parent.children.append(node)
+        parent_ref.obj.nodes_refs.append(node.ref)
+        parent_ref.obj.children_refs.append(node.ref)
         Canvas.mode = "select"
         
     def to_ast(self, event=None):

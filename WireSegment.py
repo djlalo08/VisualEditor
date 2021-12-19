@@ -1,11 +1,13 @@
 from __future__ import annotations
 from ObjectHierarchy.Object import Object
 import Canvas as C
+from ObjectHierarchy.ObjectReference import ObjectReference
+from WireNode import WireNode
 
 class WireSegment(Object):
-    def __init__(self, a, b, **kwargs) -> None:
-        self.a = a
-        self.b = b
+    def __init__(self, a:ObjectReference[WireNode], b:ObjectReference[WireNode], **kwargs) -> None:
+        self.a: ObjectReference[WireNode] = a
+        self.b: ObjectReference[WireNode] = b
         super().__init__(**kwargs)
         
     def build_obj(self):
@@ -18,19 +20,11 @@ class WireSegment(Object):
         )
         
     def update(self):
-        C.Canvas.canvas.coords(self.id, *self.a.abs_pos().unpack(), *self.b.abs_pos().unpack())
+        C.Canvas.canvas.coords(self.id, *self.a.obj.abs_pos().unpack(), *self.b.obj.abs_pos().unpack())
         
     def prep_for_save(self):
         super().prep_for_save()
-        if self.a:
-            self.a = self.a.id
-        if self.b:
-            self.b = self.b.id
 
     def prep_from_save_for_use(self, canvas, id_map):
         super().prep_from_save_for_use(canvas, id_map)
-        if self.a:
-            self.a = id_map[self.a]
-        if self.b:
-            self.b = id_map[self.b]
     

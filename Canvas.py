@@ -12,10 +12,10 @@ class Canvas(tk.Frame):
     canvas = None
 
     _drag_data = {"pos": Point(0,0), "item": None}
-    selected = None
+    selected : O.Object = None
     mode = "select"
     id_map: dict[int, O.Object]= {}
-    map_count = 0
+    map_count : int = 0
     ins: list[InputWire] = []
     outs: list[OutputWire] = []
         

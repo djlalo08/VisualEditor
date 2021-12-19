@@ -1,11 +1,13 @@
+from __future__ import annotations
+import MapData
 from ObjectHierarchy.Object import Object
 from Canvas import Canvas
 from ObjectHierarchy.ObjectReference import ObjectReference
 
 class Label(Object):
-    def __init__(self, parent: ObjectReference, name, **kwargs) -> None:
+    def __init__(self, parent_ref: ObjectReference[MapData.MapData], name, **kwargs) -> None:
         self.name = name
-        super().__init__(parent=parent, single_point_position=True, constrained_to_parent=True, **kwargs)
+        super().__init__(parent_ref=parent_ref, single_point_position=True, constrained_to_parent=True, **kwargs)
         
     def build_obj(self):
         pos = self.abs_pos().unpack()
