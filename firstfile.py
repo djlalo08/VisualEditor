@@ -36,6 +36,8 @@ from Point import Point
     - Make types, including lists, etc
 #TODO switch to using strictly typed python
     - This will solve our saving issue: things like children, and parent can be typed as ObjectReference, which hold integers but can use id_map to get the actual referred object.
+    - Fix saving to accoun for new objectRef system
+    - Switch to dataclass impls for classes to make the code nicer and add more type hints
 #TODO implement ability to run code inside editor
 #TODO ui/ux leaves A LOT to be desired
     - Should be able to extend nodes in cables
