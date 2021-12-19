@@ -50,11 +50,11 @@ class MapInputNode(MapNode):
         index = args[1]
         par_width = args[0].width
         pos = Point(-par_width/2+10, index*(height+5)+10)
-        super().__init__(*args, is_input_node=True, pos=pos, **kwargs)
+        super().__init__(*args, is_input_node=True, pos=pos, **kwargs) #type: ignore
 
 class MapOutputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
         index = args[1]
         par_width = args[0].width
         pos = Point(par_width/2-10, index*(height+5)+10)
-        super().__init__(*args, is_input_node=False, pos=pos, **kwargs)
+        super().__init__(*args, is_input_node=False, pos=pos, **kwargs) #type: ignore

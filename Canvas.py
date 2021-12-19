@@ -1,5 +1,8 @@
+from __future__ import annotations
 import tkinter as tk
+import ObjectHierarchy.Object as O
 from Point import Point
+from Wire import InputWire, OutputWire
 
 
 class Canvas(tk.Frame):
@@ -11,10 +14,10 @@ class Canvas(tk.Frame):
     _drag_data = {"pos": Point(0,0), "item": None}
     selected = None
     mode = "select"
-    id_map = {}
+    id_map: dict[int, O.Object]= {}
     map_count = 0
-    ins = []
-    outs = []
+    ins: list[InputWire] = []
+    outs: list[OutputWire] = []
         
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)

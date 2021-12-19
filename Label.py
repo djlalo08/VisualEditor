@@ -1,8 +1,9 @@
 from ObjectHierarchy.Object import Object
 from Canvas import Canvas
+from ObjectHierarchy.ObjectReference import ObjectReference
 
 class Label(Object):
-    def __init__(self, parent, name, **kwargs) -> None:
+    def __init__(self, parent: ObjectReference, name, **kwargs) -> None:
         self.name = name
         super().__init__(parent=parent, single_point_position=True, constrained_to_parent=True, **kwargs)
         

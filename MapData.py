@@ -1,8 +1,12 @@
+from __future__ import annotations
 from Label import Label
-from MapNode import *
+from MapNode import MapInputNode, MapOutputNode
 from Function import Function
 from ObjectHierarchy.Object import Object
 from Tree import Node
+from ObjectHierarchy.ObjectReference import ObjectReference
+from Canvas import Canvas
+from Point import Point
 
 class MapData(Object):
     def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", **kwargs) -> None:
@@ -22,8 +26,8 @@ class MapData(Object):
             tags=("draggable", ),
         )
 
-    def _create_children(self):
-        children = []
+    def _create_children(self) -> list[ObjectReference]:
+        children : list[ObjectReference] = []
         for index, _ in enumerate(self.fn.input_types):
             children.append(MapInputNode(self, index, offset=self.abs_pos(), offset_off_parent=Point(0,-self.height/2+5)))
 

@@ -9,8 +9,10 @@ from WireSegment import WireSegment
 from Point import Point
 
 '''
-#TODO make canvas and id_map global. This will make everything much easier, including saving
-    object registration should take place inside Object class
+#TODO BUGS
+    - Can't save file that has been loaded?
+    - When using c-mode to jump a map to a wire, if map is in front of wire, program freaks out
+
 #TODO clean up
     - Tags should be nicer and maybe classes (Selectable, Object, etc) should include them
     - Wire.py is a bit unruly. Maybe it should be more of a proper Object. 
@@ -18,7 +20,7 @@ from Point import Point
         On second thought, though, wire should be movable when You pan...
     - Make enum for selection modes
     - Data flow is messyish
-    - Everything is totally crazy after making save work
+    - Clean up save/load
     
 #TODO add writing directly to java files
 #TODO need to refactor parents and children in general. In general,
@@ -33,10 +35,10 @@ from Point import Point
 #TODO implement proper class typing
     - Make types, including lists, etc
 #TODO switch to using strictly typed python
+    - This will solve our saving issue: things like children, and parent can be typed as ObjectReference, which hold integers but can use id_map to get the actual referred object.
 #TODO implement ability to run code inside editor
 #TODO ui/ux leaves A LOT to be desired
     - Should be able to extend nodes in cables
-    - Boxes should look nicer
     - I can start adding in some syntactic sugar (custom icons for certain operations)
     - m makes another of most recent map
     - map selection is not a modal, but a dropdown pop-up with type-able filter (eventually, filtered by type of fns too)
