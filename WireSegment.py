@@ -1,5 +1,6 @@
+from __future__ import annotations
 from ObjectHierarchy.Object import Object
-from Canvas import Canvas
+import Canvas as C
 
 class WireSegment(Object):
     def __init__(self, a, b, **kwargs) -> None:
@@ -9,7 +10,7 @@ class WireSegment(Object):
         
     def build_obj(self):
 
-        return Canvas.canvas.create_line(
+        return C.Canvas.canvas.create_line(
             0,0,0,0,
             width = 5,
             fill = '#8AA153',
@@ -17,7 +18,7 @@ class WireSegment(Object):
         )
         
     def update(self):
-        Canvas.canvas.coords(self.id, *self.a.abs_pos().unpack(), *self.b.abs_pos().unpack())
+        C.Canvas.canvas.coords(self.id, *self.a.abs_pos().unpack(), *self.b.abs_pos().unpack())
         
     def prep_for_save(self):
         super().prep_for_save()

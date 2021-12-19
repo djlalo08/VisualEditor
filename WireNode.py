@@ -1,5 +1,6 @@
+from __future__ import annotations
 from ObjectHierarchy.Selectable import Selectable
-from Canvas import Canvas
+import Canvas as C
 
 class WireNode(Selectable):
     def __init__(self, wire, width=10, height=10, **kwargs) -> None:
@@ -7,7 +8,7 @@ class WireNode(Selectable):
         self.wire = wire
         
     def build_obj(self):
-        return Canvas.canvas.create_oval(
+        return C.Canvas.canvas.create_oval(
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="#2B9E42",
@@ -20,7 +21,7 @@ class WireNode(Selectable):
     def update(self):
         super().update()
         self.wire.to_front()
-        Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
+        C.Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
         
     def get_outline(self):
         return "red" if self.is_selected else "black"
