@@ -16,18 +16,8 @@ class SaveModal(tk.Toplevel):
     @staticmethod
     def save_as(name):
         with open('lib/'+name, 'wb') as file:
-            pickle.dump(len(Canvas.id_map), file)
-            for key, value in Canvas.id_map.items():
-                value.prep_for_save()
-            for key in Canvas.id_map:
-                obj = Canvas.id_map.get(key)
-                pickle.dump(obj, file)
-
-            o_ids = list(map(lambda o: o.id, Canvas.outs))
-            pickle.dump(o_ids, file)
-
-            for key, value in Canvas.id_map.items():
-                value.prep_from_save_for_use(Canvas.canvas, Canvas.id_map)
+            pickle.dump(Canvas.id_map, file)
+            pickle.dump(Canvas.out_refs, file)
 
     def save_modal(self):
         self.title("Save Map As:")

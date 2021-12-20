@@ -46,12 +46,9 @@ class Wire(Object):
             C.Canvas.canvas.tag_raise(wire.id)
         for node in self.node_refs:
             C.Canvas.canvas.tag_raise(node.id)
-
-    def prep_for_save(self):
-        super().prep_for_save()
-
-    def prep_from_save_for_use(self, canvas, id_map):
-        super().prep_from_save_for_use(canvas, id_map)
+    
+    def get_all_references(self) -> list[ObjectReference]:
+        return super().get_all_references() + [self.bound_to_ref]
 
 class InputWire(Wire):
     def __init__(self, *args, index=0, **kwargs) -> None:

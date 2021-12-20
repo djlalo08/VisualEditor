@@ -15,4 +15,3 @@ class Label(Object):
     def build_obj(self):
         pos = self.abs_pos().unpack()
         return Canvas.canvas.create_text(pos, text=self.name, fill="black", font=('Helvetica 10 bold'))
-    

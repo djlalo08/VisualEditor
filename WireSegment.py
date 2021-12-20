@@ -21,10 +21,6 @@ class WireSegment(Object):
         
     def update(self):
         C.Canvas.canvas.coords(self.id, *self.a.obj.abs_pos().unpack(), *self.b.obj.abs_pos().unpack())
-        
-    def prep_for_save(self):
-        super().prep_for_save()
 
-    def prep_from_save_for_use(self, canvas, id_map):
-        super().prep_from_save_for_use(canvas, id_map)
-    
+    def get_all_references(self) -> list[ObjectReference]:
+        return super().get_all_references() + [self.a, self.b]

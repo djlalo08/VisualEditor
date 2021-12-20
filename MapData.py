@@ -45,3 +45,6 @@ class MapData(Object):
             in_values.append(input_val)
             
         return Node((self.fn.name, self.id), in_values)
+    
+    def get_all_references(self) -> list[ObjectReference]:
+        return super().get_all_references() + self.in_refs + self.out_refs

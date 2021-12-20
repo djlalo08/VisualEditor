@@ -34,6 +34,9 @@ class Object:
     def build_obj(self):
         raise NotImplementedError("build_obj must overridden but is not")
     
+    def get_all_references(self) -> list[OR.ObjectReference]:
+        return [self.parent_ref, *self.children_refs]
+
     def update(self):
         newPos = self.abs_pos().around(self.width, self.height)
         if self.single_point_position: 
@@ -46,13 +49,7 @@ class Object:
             
     def __repr__(self) -> str:
         return self.id
-    
-    def prep_for_save(self):
-        pass
-        
-    def prep_from_save_for_use(self, canvas, id_map):
-        pass
-            
+
     def to_ref(self) -> OR.ObjectReference[Self]:
         return OR.ObjectReference(self.id)
 

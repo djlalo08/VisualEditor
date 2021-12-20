@@ -25,9 +25,3 @@ class WireNode(Selectable):
         
     def get_outline(self):
         return "red" if self.is_selected else "black"
-    
-    def prep_for_save(self):
-        super().prep_for_save()
-
-    def prep_from_save_for_use(self, canvas, id_map):
-        super().prep_from_save_for_use(canvas, id_map)

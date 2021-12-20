@@ -143,24 +143,24 @@ class Bindings:
                 newSelection.select()
 
     def add_in_wire(self, event=None):
-        i = len(Canvas.ins)
+        i = len(Canvas.in_refs)
         y = i*30+200
         points = [Point(30, y), Point(80, y), Point(250, y)]
         wire = InputWire(points=points, index=i)
         wire.update()
-        Canvas.ins += [wire]
+        Canvas.in_refs += [wire.ref]
         
     def remove_in_wire(self, event):
         # TODO
         pass
 
     def add_out_wire(self, event=None):
-        i = len(Canvas.outs)
+        i = len(Canvas.out_refs)
         y = i*30+200
         points = [Point(Canvas.canvas_width-30, y), Point(Canvas.canvas_width-80, y), Point(Canvas.canvas_width-250, y)]
         wire = OutputWire(points=points, index=i)
         wire.update()
-        Canvas.outs += [wire]
+        Canvas.out_refs += [wire.ref]
 
     def remove_out_wire(self, event):
         # TODO
@@ -212,11 +212,11 @@ class Bindings:
         Canvas.mode = "select"
         
     def to_ast(self, event=None):
-        outValues = map(lambda out: out.get_value(), Canvas.outs)
+        outValues = map(lambda out: out.obj.get_value(), Canvas.out_refs)
         program = Node("root", list(outValues))
         reduced = program.reduce(([],set()))
         header = '''public static Object[] example(Object[] in){
-        Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];'''
+        Object[] out = new Object[''' + str(len(Canvas.out_refs)) + '''];'''
         fn_decls = '\n\t'.join(reduced)
         footer = "\treturn out;\n}"
         print(header)
