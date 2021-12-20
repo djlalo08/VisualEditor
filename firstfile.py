@@ -29,14 +29,12 @@ from Point import Point
     e.g. parent = [('wire', wire), ('bound-to', bound_to)]
     ^^ This above sounds sort of complicated... there must be a better way
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
-    -Add outs support for saving
 #TODO build standard library over java wrappers
 #TODO constants support
 #TODO implement proper class typing
     - Make types, including lists, etc
 #TODO switch to using strictly typed python
     - This will solve our saving issue: things like children, and parent can be typed as ObjectReference, which hold integers but can use id_map to get the actual referred object.
-    - Fix saving to accoun for new objectRef system
     - Switch to dataclass impls for classes to make the code nicer and add more type hints
 #TODO implement ability to run code inside editor
 #TODO ui/ux leaves A LOT to be desired
@@ -44,7 +42,11 @@ from Point import Point
     - I can start adding in some syntactic sugar (custom icons for certain operations)
     - m makes another of most recent map
     - map selection is not a modal, but a dropdown pop-up with type-able filter (eventually, filtered by type of fns too)
-
+    - Make code point from top to bottom, rather than left to right (maybe code direction is a setting?)
+#TODO LAMBDAS!!!
+    - Need to make fns first class first (i.e. they are valid args)
+    - Make the ui such that all kinds of things can be _inside_ (input) MapNode and MapNode should resize accordingly
+#TODO stream (see notes on Monday.com) to which variables can be saved
 '''
 
     

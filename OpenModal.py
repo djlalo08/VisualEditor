@@ -22,6 +22,20 @@ class OpenModal(tk.Toplevel):
 
         Canvas.id_map = id_map
         Canvas.out_refs = out_ids
+        
+        # TODO: Note this might be fragile. Not certain yet, 
+        # but it's possible that if we begin to delete items 
+        # this saving schema won't work anymore, since the gaps 
+        # will cause a mismatch between id numbers and order of 
+        # creation.
+
+        # Idea: a bit memory inefficient, but could work at first -- 
+        # don't delete items, just make them invisible and unusable
+        # This is a quick workaround but will create problems 
+        # (like with out-wires, for example). But it does prevent
+        # the mismatch error.
+
+
         '''
         old_to_new_id = {}
         object_references = {}
