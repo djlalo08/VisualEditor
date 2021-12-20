@@ -1,8 +1,10 @@
+from dataclasses import dataclass, field
+
+@dataclass
 class Function:
-    def __init__(self, name="fn", input_types=["int", "int"], output_types=["int", "int"]) -> None:
-        self.input_types = input_types
-        self.output_types = output_types
-        self.name = name
+    name: str = "fn"
+    input_types:  list[str] = field(default_factory=lambda: ["int", "int"])
+    output_types: list[str] = field(default_factory=lambda: ["int", "int"])
         
     def __str__(self) -> str:
         return self.name

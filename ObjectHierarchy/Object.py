@@ -1,36 +1,23 @@
 from __future__ import annotations
+from dataclasses import dataclass, field
 from typing_extensions import Self
 from Point import Point
 import Canvas as C
 import ObjectHierarchy.ObjectReference as OR
 
+@dataclass
 class Object:
+    pos: Point = Point(0,0) 
+    offset: Point = Point(0,0) 
+    single_point_position: bool = False
+    children_refs: list[OR.ObjectReference] = field(default_factory=list)
+    parent_ref: OR.ObjectReference = None
+    constrained_to_parent: bool = False
+    offset_off_parent: Point = Point(0,0)
+    width: int = 0
+    height: int = 0
     
-    def __init__( 
-            self, 
-            pos: Point =Point(0,0), 
-            offset: Point =Point(0,0), 
-            single_point_position: bool = False,
-            children_refs: list[OR.ObjectReference]= None, 
-            parent_ref: OR.ObjectReference = None, constrained_to_parent: bool = False, offset_off_parent: Point = Point(0,0),
-            width: int = 0, height: int =0, 
-            **_
-    ) -> None:
-
-        self.pos: Point = pos
-        self.offset: Point = offset
-
-        self.single_point_position = single_point_position
-
-        self.children_refs : list[OR.ObjectReference] = children_refs if children_refs is not None else []
-
-        self.parent_ref : OR.ObjectReference = parent_ref
-        self.constrained_to_parent = constrained_to_parent
-        self.offset_off_parent = offset_off_parent
-
-        self.width = width
-        self.height = height
-
+    def __post_init__(self):
         self.id = self.build_obj()
         C.Canvas.id_map[self.id] = self
 

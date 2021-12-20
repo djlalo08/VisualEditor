@@ -34,7 +34,7 @@ class MapData(Object):
         for index, _ in enumerate(self.fn.output_types):
             children.append(MapOutputNode(self.ref, index, offset=self.abs_pos(), offset_off_parent=Point(0,-self.height/2+5)).ref)
             
-        children.append(Label(self, self.name, offset=self.abs_pos()).ref) 
+        children.append(Label(parent_ref=self.ref, name=self.name, offset=self.abs_pos()).ref) 
 
         return children
     

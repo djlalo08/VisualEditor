@@ -2,12 +2,13 @@ from __future__ import annotations
 from typing import Generic, TypeVar
 import Canvas as C
 import ObjectHierarchy.Object as O
+from misc.dataclassStuff.dataclasses_copy import dataclass
 
 T = TypeVar('T')
 
+@dataclass
 class ObjectReference(Generic[T]):
-    def __init__(self, id: int) -> None:
-        self.id = id
+    id : int
 
     def get_obj(self) -> T:
         return C.Canvas.id_map[self.id]
