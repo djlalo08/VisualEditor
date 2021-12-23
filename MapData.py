@@ -9,12 +9,12 @@ from Canvas import Canvas
 from Point import Point
 
 class MapData(Object):
-    def __init__(self, *args, width=100, in_refs=None, out_refs=None, fn=Function(), name="name", **kwargs) -> None:
+    def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", **kwargs) -> None:
         self.fn = fn
         self.name = name
-        self.in_refs = in_refs if in_refs != None else [None]*len(fn.input_types)
-        self.out_refs = out_refs if out_refs != None else [None]*len(fn.output_types)
-        self.height = max(len(self.in_refs), len(self.out_refs))*20+10
+        self.ins = ins if ins != None else [None]*len(fn.input_types)
+        self.outs = outs if outs != None else [None]*len(fn.output_types)
+        self.height = max(len(self.ins), len(self.outs))*20+10
         super().__init__(*args, width=width, height=self.height, **kwargs)
         self.children_refs = self._create_children()
         
@@ -40,11 +40,11 @@ class MapData(Object):
     
     def get_value(self):
         in_values = []
-        for input in self.in_refs:
-            input_val = input.obj.get_value()
+        for input in self.ins:
+            input_val = input.get_value()
             in_values.append(input_val)
             
         return Node((self.fn.name, self.id), in_values)
     
     def get_all_references(self) -> list[ObjectReference]:
-        return super().get_all_references() + self.in_refs + self.out_refs
+        return super().get_all_references() + self.ins + self.outs

@@ -1,11 +1,12 @@
 from __future__ import annotations
 from ObjectHierarchy.Selectable import Selectable
 import Canvas as C
+import Wire as W
 
 class WireNode(Selectable):
-    def __init__(self, wire_ref, width=10, height=10, **kwargs) -> None:
+    def __init__(self, wire, width=10, height=10, **kwargs) -> None:
         super().__init__(width=width, height=height, constrained_to_parent=True, **kwargs) 
-        self.wire_ref = wire_ref
+        self.wire: W.Wire = wire
         
     def build_obj(self):
         return C.Canvas.canvas.create_oval(
@@ -20,7 +21,7 @@ class WireNode(Selectable):
 
     def update(self):
         super().update()
-        self.wire_ref.obj.to_front()
+        self.wire.to_front()
         C.Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
         
     def get_outline(self):

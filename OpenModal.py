@@ -18,10 +18,10 @@ class OpenModal(tk.Toplevel):
     def load_file(name):
         with open('lib/'+name, 'rb') as file:
             id_map: dict[int, Object]= pickle.load(file)
-            out_ids = pickle.load(file)
+            outs = pickle.load(file)
 
         Canvas.id_map = id_map
-        Canvas.out_refs = out_ids
+        Canvas.outs = outs
         
         # TODO: Note this might be fragile. Not certain yet, 
         # but it's possible that if we begin to delete items 
@@ -65,9 +65,6 @@ class OpenModal(tk.Toplevel):
         '''
         for obj in Canvas.id_map.values():
             obj.build_obj()
-
-        for obj in Canvas.id_map.values():
-            obj.update()
 
         for obj in Canvas.id_map.values():
             obj.update()

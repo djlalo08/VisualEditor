@@ -45,8 +45,12 @@ from Point import Point
     - Make code point from top to bottom, rather than left to right (maybe code direction is a setting?)
 #TODO LAMBDAS!!!
     - Need to make fns first class first (i.e. they are valid args)
+        Ideas about passing fns. All maps must have all of their ins connected to work (maybe some exceptions for optional args or something like that)
+        
     - Make the ui such that all kinds of things can be _inside_ (input) MapNode and MapNode should resize accordingly
 #TODO stream (see notes on Monday.com) to which variables can be saved
+    - Input wires can be read (like stream) from just a box with their name, output wires can just be saved to (I think this bad style maybe tho)
+    - Output to fn can be treated as final result, in which case, there is a visual cue to that
 '''
 
     
@@ -76,9 +80,6 @@ class Bindings:
         Canvas.root.bind('<KeyPress-d>', self.detach_wire) #d for detach
         Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
         Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
-        
-        
-
 
     def add_some_stuff(self):
         MapModal.add_map(Point(300,220))
@@ -145,24 +146,22 @@ class Bindings:
                 newSelection.select()
 
     def add_in_wire(self, event=None):
-        i = len(Canvas.in_refs)
+        i = len(Canvas.ins)
         y = i*30+200
         points = [Point(30, y), Point(80, y), Point(250, y)]
         wire = InputWire(points=points, index=i)
-        wire.update()
-        Canvas.in_refs += [wire.ref]
+        Canvas.ins += [wire]
         
     def remove_in_wire(self, event):
         # TODO
         pass
 
     def add_out_wire(self, event=None):
-        i = len(Canvas.out_refs)
+        i = len(Canvas.outs)
         y = i*30+200
         points = [Point(Canvas.canvas_width-30, y), Point(Canvas.canvas_width-80, y), Point(Canvas.canvas_width-250, y)]
         wire = OutputWire(points=points, index=i)
-        wire.update()
-        Canvas.out_refs += [wire.ref]
+        Canvas.outs += [wire]
 
     def remove_out_wire(self, event):
         # TODO
@@ -194,31 +193,34 @@ class Bindings:
     def add_wire_node(self, event):
         if Canvas.mode != "wire_edit":
             return
-        id = Canvas.canvas.find_closest(event.x, event.y)[0]
-        wire_segment = Canvas.id_map[id]
-        parent_ref = wire_segment.parent_ref
-        node = WireNode(parent_ref, pos=Point(event.x, event.y))
-        Canvas.id_map[node.id] = node
-        b_ref = wire_segment.b
-        new_wiresegment = WireSegment(node, b_ref, parent_ref=parent_ref)
-        Canvas.id_map[new_wiresegment.id] = new_wiresegment
-        wire_segment.b = node
-        b_ref.obj.children_refs.remove(wire_segment.ref)
-        b_ref.obj.children_refs.append(new_wiresegment.ref)
-        node.children_refs.append(new_wiresegment.ref)
-        node.children_refs.append(wire_segment.ref)
-        node.update()
-        Canvas.canvas.tag_raise(node.id)
-        parent_ref.obj.nodes_refs.append(node.ref)
-        parent_ref.obj.children_refs.append(node.ref)
+        wire_segment_id = Canvas.canvas.find_closest(event.x, event.y)[0] #TODO update [0] with instead looping over all closest and finding first that is a wire
+        selected_wire_segment: WireSegment = Canvas.id_map[wire_segment_id]
+
+        parent_wire = selected_wire_segment.parent_ref
+
+        new_node = WireNode(parent_wire, pos=Point(event.x, event.y))
+
+        selected_segments_old_b_ref = selected_wire_segment.b
+        new_wiresegment = WireSegment(a=new_node.ref, b=selected_segments_old_b_ref, parent_ref=parent_wire)
+
+        selected_wire_segment.b = new_node.ref
+        selected_segments_old_b_ref.obj.children_refs.remove(selected_wire_segment.ref)
+        selected_segments_old_b_ref.obj.children_refs.append(new_wiresegment.ref)
+
+        new_node.children_refs.append(new_wiresegment.ref)
+        new_node.children_refs.append(selected_wire_segment.ref)
+        new_node.update()
+
+        parent_wire.children_refs.append(new_node.ref)
+
         Canvas.mode = "select"
         
     def to_ast(self, event=None):
-        outValues = map(lambda out: out.obj.get_value(), Canvas.out_refs)
+        outValues = map(lambda out: out.get_value(), Canvas.outs)
         program = Node("root", list(outValues))
         reduced = program.reduce(([],set()))
         header = '''public static Object[] example(Object[] in){
-        Object[] out = new Object[''' + str(len(Canvas.out_refs)) + '''];'''
+        Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];'''
         fn_decls = '\n\t'.join(reduced)
         footer = "\treturn out;\n}"
         print(header)

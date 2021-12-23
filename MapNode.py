@@ -33,11 +33,11 @@ class MapNode(Selectable):
         wire_node.pos = Point(0,0)
         wire_node.parent_ref = self.ref
         if self.is_input_node:
-            self.parent_ref.obj.in_refs[self.index] = wire_node.wire_ref
+            self.parent_ref.obj.ins[self.index] = wire_node.wire
         else:
-            wire_node.wire_ref.obj.bound_to_ref = self.ref
+            wire_node.wire.bound_to_ref = self.ref
             wire_node.bind_index = self.index
-            self.parent_ref.obj.out_refs[self.index] = wire_node.wire_ref
+            self.parent_ref.obj.outs[self.index] = wire_node.wire
         self.update()
         
     def get_value(self):
