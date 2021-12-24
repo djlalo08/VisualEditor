@@ -26,6 +26,8 @@ class MapNode(Selectable):
         left, top, right, bottom = 0,0,0,0
         for child_ref in self.children_refs:
             child: Object = child_ref.obj
+            if isinstance(child, WireNode):
+                continue
             c_left, c_top, c_right, c_bottom = child.pos.around(child.width,child.height)
             left = min(c_left, left)
             top = min(c_top, top)

@@ -22,7 +22,10 @@ class WireNode(Selectable):
     def update(self):
         super().update()
         self.wire.to_front()
-        C.Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
+        C.Canvas.canvas.itemconfig(self.id, outline=self.get_outline(), fill=self.get_fill())
         
     def get_outline(self):
         return "red" if self.is_selected else "black"
+    
+    def get_fill(self):
+        return "black" if self.parent_ref else "#2B9E42" 
