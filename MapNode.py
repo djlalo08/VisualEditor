@@ -23,6 +23,21 @@ class MapNode(Selectable):
         )
         
     def update(self):
+        left, top, right, bottom = 0,0,0,0
+        for child_ref in self.children_refs:
+            child: Object = child_ref.obj
+            c_left, c_top, c_right, c_bottom = child.pos.around(child.width,child.height)
+            left = min(c_left, left)
+            top = min(c_top, top)
+            right = max(c_right, right)
+            bottom = max(c_bottom, bottom)
+        new_width = (right - left) + height
+        new_height = (bottom - top) + width
+        if new_width != self.width or new_height != self.height:
+            self.width = new_width
+            self.height = new_height
+            self.parent_ref.obj.update()
+
         super().update()
         Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
         
@@ -47,17 +62,13 @@ class MapNode(Selectable):
     
     def get_outline(self):
         return "red" if self.is_selected else "black"
+    
 
 class MapInputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
-        index = args[1]
-        par_width = args[0].obj.width
-        pos = Point(-par_width/2+10, index*(height+5)+10)
-        super().__init__(*args, is_input_node=True, pos=pos, **kwargs) #type: ignore
+        super().__init__(*args, is_input_node=True, **kwargs) #type: ignore
+
 
 class MapOutputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
-        index = args[1]
-        par_width = args[0].obj.width
-        pos = Point(par_width/2-10, index*(height+5)+10)
-        super().__init__(*args, is_input_node=False, pos=pos, **kwargs) #type: ignore
+        super().__init__(*args, is_input_node=False, **kwargs) #type: ignore

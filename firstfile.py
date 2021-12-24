@@ -1,5 +1,7 @@
 from Canvas import Canvas
+from MapData import MapData
 from MapModal import MapModal
+from MapNode import MapInputNode, MapNode
 from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import Node
@@ -10,7 +12,6 @@ from Point import Point
 
 '''
 #TODO BUGS
-    - Can't save file that has been loaded?
     - When using c-mode to jump a map to a wire, if map is in front of wire, program freaks out
 
 #TODO clean up
@@ -63,10 +64,12 @@ class Bindings:
         Canvas.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
         Canvas.canvas.tag_bind("selectable", '<ButtonPress-1>', self.select_item)
         Canvas.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
+        Canvas.canvas.tag_bind("map_node", "<ButtonPress-2>", self.expand_node)
         Canvas.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
         Canvas.canvas.tag_bind("draggable", "<B1-Motion>", self.drag)
         Canvas.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
 
+        Canvas.root.bind('<ButtonPress-2>', self.print_cursor)
         Canvas.root.bind('<KeyPress-c>', self.connect_mode) #c for connect
         Canvas.root.bind('<KeyPress-j>', self.wire_edit_mode) #j for connect
         Canvas.root.bind('<KeyPress-w>', self.add_free_wire) #w for wire
@@ -80,6 +83,9 @@ class Bindings:
         Canvas.root.bind('<KeyPress-d>', self.detach_wire) #d for detach
         Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
         Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
+        
+    def print_cursor(self, event):
+        print(event.x, event.y)
 
     def add_some_stuff(self):
         MapModal.add_map(Point(300,220))
@@ -107,6 +113,26 @@ class Bindings:
         Canvas._drag_data["item"].move(delta)
         Canvas._drag_data["pos"] = Point(event.x, event.y)
         
+        self.drag_map_into_node(event)
+        
+    def drag_map_into_node(self, event):
+        data_map = Canvas._drag_data["item"]
+        if not isinstance(data_map, MapData):
+            return
+        data_map_corners = data_map.abs_pos().around(data_map.width,data_map.height)
+        nearby_ids = Canvas.canvas.find_enclosed(*data_map_corners)
+        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
+        overlapping_in_nodes = filter(lambda obj: isinstance(obj, MapInputNode), overlappers)
+        overlapping_non_child_in_nodes = list(filter(lambda node: not node.parent_ref.obj == data_map, overlapping_in_nodes))
+
+        if len(overlapping_non_child_in_nodes) == 0:
+            return
+        node = overlapping_non_child_in_nodes[0]
+        data_map.parent_ref = node.ref
+        data_map.pos = Point(0,0) 
+        node.children_refs.append(data_map.ref)
+        node.update()
+        
     def detach_wire(self, event):
         try:
             Canvas.selected.detach()
@@ -122,6 +148,19 @@ class Bindings:
 
         map_node = Canvas.id_map.get(maps[0])
         map_node.add_wire_node(Canvas._drag_data["item"])
+                
+    def expand_node(self,event):
+        print(event.x, event.y)
+        print(Point(1,2))
+        nearby_ids = Canvas.canvas.find_closest(event.x, event.y, halo=10)
+        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
+        overlapping_nodes = list(filter(lambda obj: isinstance(obj, MapNode), overlappers))
+        if not len(overlapping_nodes) == 0:
+            node = overlapping_nodes[0]
+            print("abs", node.abs_pos())
+            print("offset", node.offset)
+            print("offset_off_par", node.offset_off_parent)
+            print("pos", node.pos)
         
     def select_item(self, event):
         oldSelected = Canvas.selected
@@ -147,7 +186,7 @@ class Bindings:
 
     def add_in_wire(self, event=None):
         i = len(Canvas.ins)
-        y = i*30+200
+        y = i*20+200
         points = [Point(30, y), Point(80, y), Point(250, y)]
         wire = InputWire(points=points, index=i)
         Canvas.ins += [wire]
@@ -158,7 +197,7 @@ class Bindings:
 
     def add_out_wire(self, event=None):
         i = len(Canvas.outs)
-        y = i*30+200
+        y = i*20+200
         points = [Point(Canvas.canvas_width-30, y), Point(Canvas.canvas_width-80, y), Point(Canvas.canvas_width-250, y)]
         wire = OutputWire(points=points, index=i)
         Canvas.outs += [wire]
