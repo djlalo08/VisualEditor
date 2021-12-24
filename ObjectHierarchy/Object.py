@@ -47,6 +47,12 @@ class Object:
             child_ref.obj.offset = self.abs_pos()
             child_ref.obj.update()
             
+    def get_all_descendants(self):
+        descendants = [self]
+        for child_ref in self.children_refs:
+            descendants += child_ref.obj.get_all_descendants()
+        return descendants
+            
     def __repr__(self) -> str:
         return self.id
 

@@ -53,7 +53,9 @@ class MapData(Object):
         in_heights, out_heights = 0,0
         max_x_in, max_x_out, label_width = 0,0,0
         end_padding = 7
+        end_padding_x = 5
         padding = 5
+        text_padding = 5
         
         for child_ref in self.children_refs:
             child = child_ref.obj
@@ -75,7 +77,7 @@ class MapData(Object):
         else:
            self.height = out_heights + padding*(out_nodes-1)
         self.height += 2*end_padding
-        self.width = max_x_out + max_x_in + label_width + 40
+        self.width = max_x_out + max_x_in + label_width + 2*text_padding + 2*end_padding_x
 
         start_y = -self.height/2 + end_padding
         in_y, out_y = start_y, start_y
@@ -87,15 +89,16 @@ class MapData(Object):
             child = child_ref.obj
             if isinstance(child, MapInputNode):
                 in_y += child.height/2
-                child.pos = Point(in_x, in_y)
+                x = in_x + child.width/2 - text_padding
+                child.pos = Point(x, in_y)
                 in_y += child.height/2 + padding
             elif isinstance(child, MapOutputNode):
                 out_y += child.height/2
                 child.pos = Point(out_x, out_y)
                 out_y += child.height/2 + padding
             elif isinstance(child, Label):
-                # child.pos = 
-                pass
+                x = out_x - first_out.width/2 - label_width/2 - padding
+                child.pos = Point(x,0)
 
 
         return super().update()

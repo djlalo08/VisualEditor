@@ -88,16 +88,16 @@ class Bindings:
         print(event.x, event.y)
 
     def add_some_stuff(self):
-        MapModal.add_map(Point(300,220))
+        self.modal = MapModal.add_map(Point(300,220))
         self.add_in_wire()
         self.add_in_wire()
         self.add_out_wire()
 
     def open_modal(self, event):
-        OpenModal()
+        self.modal = OpenModal()
         
     def save_modal(self, event):
-        SaveModal()
+        self.modal = SaveModal()
 
     def drag_start(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
@@ -122,12 +122,20 @@ class Bindings:
         data_map_corners = data_map.abs_pos().around(data_map.width,data_map.height)
         nearby_ids = Canvas.canvas.find_enclosed(*data_map_corners)
         overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
-        overlapping_in_nodes = filter(lambda obj: isinstance(obj, MapInputNode), overlappers)
-        overlapping_non_child_in_nodes = list(filter(lambda node: not node.parent_ref.obj == data_map, overlapping_in_nodes))
+        overlapping_in_nodes = list(filter(lambda obj: isinstance(obj, MapInputNode), overlappers))
+        map_descs = data_map.get_all_descendants()
+        for descendant in map_descs:
+            if descendant in overlapping_in_nodes:
+                overlapping_in_nodes.remove(descendant)
+                
+        for node in overlapping_in_nodes:
+            node_descendants = node.get_all_descendants()
+            if data_map in node_descendants:
+                overlapping_in_nodes.remove(node)
 
-        if len(overlapping_non_child_in_nodes) == 0:
+        if len(overlapping_in_nodes) == 0:
             return
-        node = overlapping_non_child_in_nodes[0]
+        node = overlapping_in_nodes[0]
         data_map.parent_ref = node.ref
         data_map.pos = Point(0,0) 
         node.children_refs.append(data_map.ref)
