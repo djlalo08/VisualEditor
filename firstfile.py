@@ -194,8 +194,8 @@ class Bindings:
 
     def add_in_wire(self, event=None):
         i = len(Canvas.ins)
-        y = i*20+200
-        points = [Point(30, y), Point(80, y), Point(250, y)]
+        x = i*20+200
+        points = [Point(x, 30), Point(x, 80), Point(x, 250)]
         wire = InputWire(points=points, index=i)
         Canvas.ins += [wire]
         
@@ -205,8 +205,8 @@ class Bindings:
 
     def add_out_wire(self, event=None):
         i = len(Canvas.outs)
-        y = i*20+200
-        points = [Point(Canvas.canvas_width-30, y), Point(Canvas.canvas_width-80, y), Point(Canvas.canvas_width-250, y)]
+        x = i*20+200
+        points = [Point(x, Canvas.canvas_height-30), Point(x, Canvas.canvas_height-80), Point(x, Canvas.canvas_height-250)]
         wire = OutputWire(points=points, index=i)
         Canvas.outs += [wire]
 
@@ -218,7 +218,7 @@ class Bindings:
         (x,y) = Canvas.canvas.winfo_pointerxy()
         y -= 60
         x -= 5
-        wire = Wire(points=[Point(x, y), Point(x+50, y)])
+        wire = Wire(points=[Point(x, y), Point(x, y+50)])
         wire.update()
         
     def add_map_event(self, event=None):

@@ -50,56 +50,57 @@ class MapData(Object):
     def update(self):
         first_in, first_out = None, None
         in_nodes, out_nodes = 0,0
-        in_heights, out_heights = 0,0
-        max_x_in, max_x_out, label_width = 0,0,0
-        end_padding = 7
+        in_widths, out_widths = 0,0
+        max_y_in, max_y_out, label_width = 0,0,0
+        label_height = 5
         end_padding_x = 5
-        padding = 5
-        text_padding = 5
+        end_padding_y = 5
+        label_padding_y = 10
+        padding_x = 7
         
         for child_ref in self.children_refs:
             child = child_ref.obj
             if isinstance(child, MapInputNode):
                 first_in = child if first_in == None else first_in
-                max_x_in = max(max_x_in, child.width)
-                in_heights += child.height
+                max_y_in = max(max_y_in, child.height)
+                in_widths += child.width
                 in_nodes += 1
             elif isinstance(child, MapOutputNode):
                 first_out = child if first_out == None else first_out
-                max_x_out = max(max_x_out, child.width)
-                out_heights += child.height
+                max_y_out = max(max_y_out, child.height)
+                out_widths += child.width
                 out_nodes += 1
             elif isinstance(child, Label):
                 label_width = len(child.name)*5.7
 
-        if in_heights > out_heights:
-           self.height = in_heights + padding*(in_nodes-1)
+        if in_widths > out_widths:
+           self.width = in_widths + padding_x*(in_nodes-1)
         else:
-           self.height = out_heights + padding*(out_nodes-1)
-        self.height += 2*end_padding
-        self.width = max_x_out + max_x_in + label_width + 2*text_padding + 2*end_padding_x
+           self.width = out_widths + padding_x*(out_nodes-1)
+        self.width = max(self.width, label_width)
+        self.width += 2*end_padding_x
+        self.height = max_y_out + max_y_in + label_height + 2*end_padding_y + 2*label_padding_y
 
-        start_y = -self.height/2 + end_padding
-        in_y, out_y = start_y, start_y
+        start_x = -self.width/2 + end_padding_x
+        in_x, out_x = start_x, start_x
 
-        x_size = self.width/2-10
-        in_x, out_x = -x_size, x_size
+        y_size = self.height/2 - end_padding_y - label_padding_y
+        in_y, out_y = -y_size, y_size
 
         for child_ref in self.children_refs:
             child = child_ref.obj
             if isinstance(child, MapInputNode):
-                in_y += child.height/2
-                x = in_x + child.width/2 - text_padding
-                child.pos = Point(x, in_y)
-                in_y += child.height/2 + padding
+                in_x += child.width/2
+                y = in_y + child.height/2 - label_padding_y
+                child.pos = Point(in_x, y)
+                in_x += child.width/2 + padding_x
             elif isinstance(child, MapOutputNode):
-                out_y += child.height/2
+                out_x += child.width/2
                 child.pos = Point(out_x, out_y)
-                out_y += child.height/2 + padding
+                out_x += child.width/2 + padding_x
             elif isinstance(child, Label):
-                x = out_x - first_out.width/2 - label_width/2 - padding
-                child.pos = Point(x,0)
-
+                y = out_y - first_out.height/2 - label_height/2 - label_padding_y
+                child.pos = Point(0,y)
 
         return super().update()
     
