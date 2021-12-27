@@ -143,7 +143,7 @@ class Bindings:
         data_map.pos = data_map.abs_pos()
         data_map.offset = Point(0,0)
         parent_map_ref.obj.update()
-        # data_map.update()
+        data_map.update()
          
 
     def drag_map_into_node(self, event):
