@@ -65,3 +65,12 @@ class Object:
     @property
     def ref(self) -> OR.ObjectReference[Self]:
         return self.to_ref()
+    
+    @property
+    def corners(self) -> list[int]:
+        return self.abs_pos().around(self.width, self.height)
+        
+    def to_front(self) ->None:
+        C.Canvas.canvas.tag_raise(self.id)
+        for child_ref in self.children_refs:
+            child_ref.obj.to_front()

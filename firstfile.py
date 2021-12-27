@@ -105,6 +105,8 @@ class Bindings:
         Canvas._drag_data["pos"] = Point(event.x, event.y)
 
     def drag_stop(self, event):
+        self.drag_map_out_of_node(event)
+
         Canvas._drag_data["item"] = None
         Canvas._drag_data["pos"] = Point(0,0)
 
@@ -115,12 +117,40 @@ class Bindings:
         
         self.drag_map_into_node(event)
         
+    def drag_map_out_of_node(self, event):
+        data_map = Canvas._drag_data["item"]
+        if not isinstance(data_map, MapData):
+            return False
+        
+        parent_map_ref = data_map.parent_ref
+        if parent_map_ref is None:
+            return False
+        
+
+        inside_parent = Canvas.canvas.find_enclosed(*parent_map_ref.obj.corners)
+        is_inside_parent = False
+        for item_id in inside_parent:
+            item = Canvas.id_map[item_id]
+            if item == data_map:
+                is_inside_parent = True 
+                break 
+
+        if is_inside_parent:
+            return False
+
+        parent_map_ref.obj.children_refs.remove(data_map.ref)
+        data_map.parent_ref = None
+        data_map.pos = data_map.abs_pos()
+        data_map.offset = Point(0,0)
+        parent_map_ref.obj.update()
+        # data_map.update()
+         
+
     def drag_map_into_node(self, event):
         data_map = Canvas._drag_data["item"]
         if not isinstance(data_map, MapData):
             return
-        data_map_corners = data_map.abs_pos().around(data_map.width,data_map.height)
-        nearby_ids = Canvas.canvas.find_enclosed(*data_map_corners)
+        nearby_ids = Canvas.canvas.find_enclosed(*data_map.corners)
         overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
         overlapping_in_nodes = list(filter(lambda obj: isinstance(obj, MapInputNode), overlappers))
         map_descs = data_map.get_all_descendants()
@@ -138,6 +168,7 @@ class Bindings:
         node = overlapping_in_nodes[0]
         data_map.parent_ref = node.ref
         data_map.pos = Point(0,0) 
+        data_map.to_front()
         node.children_refs.append(data_map.ref)
         node.update()
         
