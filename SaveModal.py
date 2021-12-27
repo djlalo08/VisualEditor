@@ -7,8 +7,9 @@ class SaveModal(tk.Toplevel):
         super().__init__(Canvas.root)
         self.fn_name = tk.StringVar()
         self.save_modal()
+        self.bind('<Return>', self.submit)
 
-    def submit(self):
+    def submit(self, event):
         fn_name = self.fn_name.get()
         self.save_as(fn_name)
         self.destroy()

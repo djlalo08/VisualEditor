@@ -8,7 +8,7 @@ class OpenModal(tk.Toplevel):
         super().__init__(Canvas.root)
         self.fn_name = tk.StringVar()
         self.open_modal()
-        self.bind('<Enter>', self.submit)
+        self.bind('<Return>', self.submit)
 
         
     def submit(self, event):

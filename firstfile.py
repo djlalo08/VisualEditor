@@ -144,7 +144,6 @@ class Bindings:
         data_map.offset = Point(0,0)
         parent_map_ref.obj.update()
         data_map.update()
-         
 
     def drag_map_into_node(self, event):
         data_map = Canvas._drag_data["item"]

@@ -12,8 +12,9 @@ class MapModal(tk.Toplevel):
         self.ins = tk.StringVar()
         self.outs = tk.StringVar()
         self.new_map_modal()
+        self.bind('<Return>', self.submit)
 
-    def submit(self):
+    def submit(self, event):
         fn_name = self.fn_name.get()
         ins = self.ins.get().split(",")
         outs = self.outs.get().split(",")
