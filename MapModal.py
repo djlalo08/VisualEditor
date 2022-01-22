@@ -11,20 +11,21 @@ class MapModal(tk.Toplevel):
         self.fn_name = tk.StringVar()
         self.ins = tk.StringVar()
         self.outs = tk.StringVar()
+        self.hide_outs = tk.BooleanVar()
         self.new_map_modal()
         self.bind('<Return>', self.submit)
 
-    def submit(self, event):
+    def submit(self, event=None):
         fn_name = self.fn_name.get()
         ins = self.ins.get().split(",")
         outs = self.outs.get().split(",")
-        self.add_map(self.cursorPos, fn_name, ins, outs)
+        self.add_map(self.cursorPos, fn_name, ins, outs, self.hide_outs.get())
         self.destroy()
             
     @staticmethod
-    def add_map(pos=Point(200,200), fn_name="map", ins=["int", "int"], outs=["int", "int"]):
+    def add_map(pos=Point(200,200), fn_name="map", ins=["int"], outs=["int"], hide_outs=False):
         fn = Function(fn_name, ins, outs)
-        MapData(pos=pos, name=fn_name, fn=fn)
+        MapData(pos=pos, name=fn_name, fn=fn, hide_outs=hide_outs)
         
     def new_map_modal(self):
         self.title("Set map info")
@@ -38,5 +39,8 @@ class MapModal(tk.Toplevel):
 
         out_label = tk.Label(self, text = "outs").place(x = 40, y = 100)  
         outs = tk.Entry(self, width = 30, textvariable=self.outs).place(x = 110, y = 100)  
+
+        out_label = tk.Label(self, text = "hide_outs").place(x = 40, y = 140)  
+        outs = tk.Checkbutton(self, width = 30, variable=self.hide_outs).place(x = 110, y = 140)  
 
         submit_button = tk.Button(self, text = "Give me a map!", command=self.submit).place(x = 250, y = 140)

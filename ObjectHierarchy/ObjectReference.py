@@ -2,6 +2,7 @@ from __future__ import annotations
 from typing import Generic, TypeVar
 import Canvas as C
 import ObjectHierarchy.Object as O
+from Tree import Node
 from misc.dataclassStuff.dataclasses_copy import dataclass
 
 T = TypeVar('T')
@@ -19,4 +20,3 @@ class ObjectReference(Generic[T]):
     @property
     def obj(self) -> T:
         return self.get_obj()
-    

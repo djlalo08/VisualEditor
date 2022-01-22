@@ -1,3 +1,6 @@
+from typing import Tuple
+
+
 class Node:
     def __init__(self, value=None, children=[], parent=None, depth=0) -> None:
         self.value = value
@@ -12,13 +15,18 @@ class Node:
         self.update_depths()
         children_strings = []
         for child in self.children:
-            children_strings.append('\n' + "  "*child.depth + str(child))
+            if isinstance(child, Tuple): child = child[0]
+            child_depth = child.depth if child is not None else 0 
+            children_strings.append('\n' + "  "*child_depth + str(child))
         return ''.join(children_strings)
     
     def update_depths(self):
         for child in self.children:
-            child.depth = self.depth + 1
-            child.update_depths()
+            if isinstance(child, Tuple): child = child[0]
+            if child is None: continue
+            if isinstance(child, Node):
+                child.depth = self.depth + 1
+                child.update_depths()
             
     def map_df(self, fn, initial_state):
         state = initial_state

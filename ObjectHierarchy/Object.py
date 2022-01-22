@@ -54,7 +54,7 @@ class Object:
         return descendants
             
     def __repr__(self) -> str:
-        return self.id
+        return str(self.id)
 
     def to_ref(self) -> OR.ObjectReference[Self]:
         return OR.ObjectReference(self.id)

@@ -12,7 +12,7 @@ class Wire:
     
     def __init__(self, *args, points=[], tags={}, **kwargs) -> None:
         super().__init__(*args, **kwargs)
-        self.bound_to_ref: ObjectReference = None #TODO find out which type bound to is
+        self.value_ref: ObjectReference = None #TODO find out which type bound to is
         self.bind_index = 0
         self.children_refs = self.create_wire(points)
         self.update()
@@ -30,18 +30,18 @@ class Wire:
     def build_obj(self):
         return C.Canvas.canvas.create_line(Point(0,0).around(1,1))
     
-    def get_value(self):
-        if self.bound_to_ref == None:
-            print("There is a wire in use that has no input")
-            return None
-        return self.bound_to_ref.obj.get_value() 
+    @property
+    def value(self) -> Node:
+        if self.value_ref == None:
+            raise AttributeError("There is a wire in use that has no input")
+        return Node("wire", [self.value_ref.obj.value])
     
     def to_front(self):
         for node in self.children_refs:
             C.Canvas.canvas.tag_raise(node.id)
     
     def get_all_references(self) -> list[ObjectReference]:
-        return super().get_all_references() + [self.bound_to_ref]
+        return super().get_all_references() + [self.value_ref]
 
     def update(self):
         for node_ref in self.children_refs:
@@ -52,7 +52,8 @@ class InputWire(Wire):
         self.index = index
         super().__init__(*args, **kwargs) 
         
-    def get_value(self):
+    @property
+    def value(self) -> Node:
         return Node(("in", self.index))
 
 class OutputWire(Wire):
@@ -60,5 +61,6 @@ class OutputWire(Wire):
         self.index = index
         super().__init__(*args, **kwargs) 
 
-    def get_value(self):
-        return Node(("out", self.index), [super().get_value()])
+    @property
+    def value(self) -> Node:
+        return Node(("out", self.index), [super().value])

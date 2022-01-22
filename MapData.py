@@ -7,14 +7,16 @@ from Tree import Node
 from ObjectHierarchy.ObjectReference import ObjectReference
 from Canvas import Canvas
 from Point import Point
+from misc.dataclassStuff.inspect_copy import Attribute
 
 class MapData(Object):
-    def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", **kwargs) -> None:
+    def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", hide_outs=False, **kwargs) -> None:
         self.fn = fn
         self.name = name
-        self.ins = ins if ins != None else [None]*len(fn.input_types)
+        self.ins : ObjectReference[MapNode] = ins if ins != None else [None]*len(fn.input_types)
         self.outs = outs if outs != None else [None]*len(fn.output_types)
-        self.height = max(len(self.ins), len(self.outs))*20+10
+        self.hide_outs = hide_outs
+        self.width = max(len(self.ins), len(self.outs))*20+10
         super().__init__(*args, width=width, height=self.height, **kwargs)
         self.children_refs = self._create_children()
         self.update()
@@ -39,15 +41,21 @@ class MapData(Object):
 
         return children
     
-    def get_value(self):
+    @property
+    def value(self) -> Node:
         in_values = []
-        for input in self.ins:
-            input_val = input.get_value()
-            in_values.append(input_val)
+        for child_ref in self.children_refs:
+            child = child_ref.obj
+            if isinstance(child, MapInputNode):
+                input_val = child.value
+                if input_val != None:
+                    in_values.append(input_val)
             
         return Node((self.fn.name, self.id), in_values)
     
     def update(self):
+        self.hide_outs = self.parent_ref != None
+
         first_in, first_out = None, None
         in_nodes, out_nodes = 0,0
         in_widths, out_widths = 0,0
@@ -70,6 +78,8 @@ class MapData(Object):
                 max_y_out = max(max_y_out, child.height)
                 out_widths += child.width
                 out_nodes += 1
+                out_state = 'hidden' if self.hide_outs else 'normal'
+                Canvas.canvas.itemconfigure(child.id, state=out_state)
             elif isinstance(child, Label):
                 label_width = len(child.name)*5.7
 
@@ -79,13 +89,20 @@ class MapData(Object):
            self.width = out_widths + padding_x*(out_nodes-1)
         self.width = max(self.width, label_width)
         self.width += 2*end_padding_x
-        self.height = max_y_out + max_y_in + label_height + 2*end_padding_y + 2*label_padding_y
+        total_height = 0
+        total_height += end_padding_y + max_y_in
+        total_height += label_padding_y + label_height + label_padding_y
+        if not self.hide_outs:
+            total_height += max_y_out + end_padding_y 
+        self.height = total_height
 
         start_x = -self.width/2 + end_padding_x
         in_x, out_x = start_x, start_x
 
         y_size = self.height/2 - end_padding_y - label_padding_y
         in_y, out_y = -y_size, y_size
+
+        first_out_height = first_out.height if first_out != None else 0
 
         for child_ref in self.children_refs:
             child = child_ref.obj
@@ -99,7 +116,9 @@ class MapData(Object):
                 child.pos = Point(out_x, out_y)
                 out_x += child.width/2 + padding_x
             elif isinstance(child, Label):
-                y = out_y - first_out.height/2 - label_height/2 - label_padding_y
+                y = out_y - first_out_height/2 - label_height/2 - label_padding_y
+                if self.hide_outs:
+                    y = self.height/2 -label_height/2 - label_padding_y
                 child.pos = Point(0,y)
 
         return super().update()

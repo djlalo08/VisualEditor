@@ -1,6 +1,7 @@
 from __future__ import annotations
 from ObjectHierarchy.Selectable import Selectable
 import Canvas as C
+from Tree import Node
 import Wire as W
 
 class WireNode(Selectable):
@@ -29,3 +30,7 @@ class WireNode(Selectable):
     
     def get_fill(self):
         return "black" if self.parent_ref else "#2B9E42" 
+    
+    @property
+    def value(self) -> Node:
+        return self.wire.value
