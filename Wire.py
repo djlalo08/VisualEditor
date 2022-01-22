@@ -34,7 +34,7 @@ class Wire:
     def value(self) -> Node:
         if self.value_ref == None:
             raise AttributeError("There is a wire in use that has no input")
-        return Node("wire", [self.value_ref.obj.value])
+        return self.value_ref.obj.value
     
     def to_front(self):
         for node in self.children_refs:

@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Tuple
 import MapData as md
 from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Object import Object
@@ -62,7 +63,7 @@ class MapNode(Selectable):
         self.update()
         
     @property
-    def value(self) -> Node:
+    def value(self) -> Tuple[Node, int]:
         return (self.value_ref.obj.value, self.index)
     
     def get_outline(self):
@@ -76,7 +77,7 @@ class MapInputNode(MapNode):
     @property
     def value(self) -> Node:
         if self.value_ref:
-            return Node("inputnode", [self.value_ref.value])
+            return self.value_ref.value
         else:
             raise AttributeError("Node [" + str(self) + "] has no input value")
         
@@ -86,8 +87,8 @@ class MapOutputNode(MapNode):
         super().__init__(*args, is_input_node=False, **kwargs) #type: ignore
 
     @property
-    def value(self) -> Node:
+    def value(self) -> Tuple[Node, int]:
         if self.parent_ref:
-            return Node("outputnode", [(self.parent_ref.obj.value, self.index)])
+            return (self.parent_ref.obj.value, self.index)
         else:
             raise AttributeError("Node [" + str(self) + "] has no parent")
