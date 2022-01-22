@@ -20,3 +20,7 @@ class ObjectReference(Generic[T]):
     @property
     def obj(self) -> T:
         return self.get_obj()
+    
+    @property
+    def value(self) -> Node:
+        return self.obj.value

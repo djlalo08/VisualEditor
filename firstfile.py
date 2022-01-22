@@ -52,6 +52,7 @@ from Point import Point
 #TODO stream (see notes on Monday.com) to which variables can be saved
     - Input wires can be read (like stream) from just a box with their name, output wires can just be saved to (I think this bad style maybe tho)
     - Output to fn can be treated as final result, in which case, there is a visual cue to that
+#TODO Everything needs to be easily navigable using only keyboard
 '''
 
     

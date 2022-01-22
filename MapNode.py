@@ -76,7 +76,7 @@ class MapInputNode(MapNode):
     @property
     def value(self) -> Node:
         if self.value_ref:
-            return Node("inputnode", [self.value_ref.obj.value])
+            return Node("inputnode", [self.value_ref.value])
         else:
             raise AttributeError("Node [" + str(self) + "] has no input value")
         
