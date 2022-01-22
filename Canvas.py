@@ -8,7 +8,7 @@ from Wire import InputWire, OutputWire
 
 class Canvas(tk.Frame):
     canvas_width = 600
-    canvas_height = 600
+    canvas_height = 1000
     root = None
     canvas = None
 
