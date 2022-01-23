@@ -89,6 +89,8 @@ class MapOutputNode(MapNode):
     @property
     def value(self) -> Node:
         if self.parent_ref:
-            return (self.parent_ref.obj.value, self.index)
+            map_val = self.parent_ref.obj.value
+            map_val.index = self.index
+            return map_val
         else:
             raise AttributeError("Node [" + str(self) + "] has no parent")
