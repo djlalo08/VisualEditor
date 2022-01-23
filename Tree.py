@@ -2,15 +2,15 @@ from typing import Tuple
 
 
 class Node:
-    def __init__(self, value=None, index=None, children=[], parent=None, depth=0) -> None:
-        self.value = value
+    def __init__(self, name=None, index=None, children=[], parent=None, depth=0) -> None:
+        self.name = name
         self.index = index
         self.children = children
         self.parent= parent
         self.depth = depth
 
     def __str__(self) -> str:
-        return str(self.value) + "[" + str(self.index) + "]" + self._children_strings
+        return self.name + "[" + str(self.index) + "]" + self._children_strings
     
     @property
     def _children_strings(self):
@@ -30,7 +30,7 @@ class Node:
             
     def map_df(self, fn, initial_state):
         state = initial_state
-        self.value = fn(self.value, state)
+        self.name = fn(self.name, state)
         for child in self.children:
             state = child.map_df(fn, state)
         return state
@@ -44,10 +44,10 @@ class Node:
 
     #TODO this is definitely in the wrong place
     def reduce(self, vars):
-        if self.value == 'root':
+        if self.name == 'root':
             self.get_reduced_children(vars)
             return vars[0]
-        (name, index) = (self.value, self.index)
+        (name, index) = (self.name, self.index)
         if name == 'in':
             children = self.get_reduced_children(vars)
             return (name, index)
@@ -67,7 +67,7 @@ class Node:
                 var_decs.append("Object[] " + name_str+ " = " + fn_name + "(" + arg_list + ");")
                 var_names.add(name_str)
             return (name_str, index)
-        raise TypeError("The type of object is wrong: " + self.value)
+        raise TypeError("The type of object is wrong: " + self.name)
             
     @staticmethod
     def child_string(child):

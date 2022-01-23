@@ -8,4 +8,4 @@ class DataFlow:
         self.value = None
         
     def get_value(self, parent=None):
-        Node(value=self.value, children=self.left.get_value(), parent=parent)
+        Node(name=self.value, children=self.left.get_value(), parent=parent)
