@@ -57,8 +57,8 @@ class Node:
             (child_name, child_index) = children[0]
             vars[0].append('out[' + str(index) + "] = " + child_name + "[" + str(child_index) + "];")
             return None
-        if len(name) == 2:
-            (fn_name, fn_id) = name
+        if '_' in name:
+            (fn_name, fn_id) = name.split('_')
             name_str = fn_name+"_"+str(fn_id)
             children = self.get_reduced_children(vars)
             arg_list = ", ".join(map(Node.child_string, children)) if children is not None else ""

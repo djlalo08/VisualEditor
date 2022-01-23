@@ -72,19 +72,23 @@ class MapNode(Selectable):
 
 class MapInputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, is_input_node=True, **kwargs) #type: ignore
+        super().__init__(*args, is_input_node=True, **kwargs)
         
     @property
     def value(self) -> Node:
         if self.value_ref:
-            return self.value_ref.value
+            value = self.value_ref.value
+            if isinstance(self.value_ref, ObjectReference) and isinstance(self.value_ref.obj, md.MapData):
+                value.index = 0
+            return value
+            
         else:
             raise AttributeError("Node [" + str(self) + "] has no input value")
         
 
 class MapOutputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, is_input_node=False, **kwargs) #type: ignore
+        super().__init__(*args, is_input_node=False, **kwargs)
 
     @property
     def value(self) -> Node:

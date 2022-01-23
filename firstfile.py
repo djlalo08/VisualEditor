@@ -81,7 +81,7 @@ class Bindings:
         Canvas.root.bind('<KeyPress-O>', self.remove_out_wire)
         Canvas.root.bind('<KeyPress-m>', self.add_map_event) #m for map
         Canvas.root.bind('<KeyPress-M>', self.open_map_modal) #m for map
-        Canvas.root.bind('<KeyPress-E>', self.to_ast) #e for evaluate
+        Canvas.root.bind('<KeyPress-E>', self.to_code) #e for evaluate
         Canvas.root.bind('<KeyPress-e>', self.eval_mode) #e for evaluate
         Canvas.root.bind('<KeyPress-d>', self.detach_wire) #d for detach
         Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
@@ -114,7 +114,7 @@ class Bindings:
         Canvas._drag_data["pos"] = Point(event.x, event.y)
 
         if Canvas.mode == "eval":
-            program = Node("root", [Canvas.id_map[id].value])
+            program = Node("root", None, [Canvas.id_map[id].value])
             print(program)
 
     def drag_stop(self, event):
@@ -314,6 +314,7 @@ class Bindings:
         outValues = map(lambda out: out.value, Canvas.outs)
         program = Node("root", None, list(outValues))
         print(program)
+        print()
         return program
         
     def to_code(self, event=None):
