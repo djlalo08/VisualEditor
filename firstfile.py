@@ -53,6 +53,7 @@ from Point import Point
     - Input wires can be read (like stream) from just a box with their name, output wires can just be saved to (I think this bad style maybe tho)
     - Output to fn can be treated as final result, in which case, there is a visual cue to that
 #TODO Everything needs to be easily navigable using only keyboard
+#TODO Sorting needs to be better and based on layering order not, order of creation (e.g. when we load in det_nested, some nested boxes are invisible because they are behind the node the node that holds them. If something is a child of another thing, it should be in front of it)
 '''
 
     
@@ -311,7 +312,7 @@ class Bindings:
         
     def to_ast(self, event=None):
         outValues = map(lambda out: out.value, Canvas.outs)
-        program = Node("root", list(outValues))
+        program = Node("root", None, list(outValues))
         print(program)
         return program
         

@@ -54,7 +54,7 @@ class InputWire(Wire):
         
     @property
     def value(self) -> Node:
-        return Node(("in", self.index))
+        return Node("in", self.index)
 
 class OutputWire(Wire):
     def __init__(self, *args, index=0, **kwargs) -> None:
@@ -63,4 +63,4 @@ class OutputWire(Wire):
 
     @property
     def value(self) -> Node:
-        return Node(("out", self.index), [super().value])
+        return Node("out", self.index, [super().value])

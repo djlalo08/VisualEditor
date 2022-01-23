@@ -63,8 +63,8 @@ class MapNode(Selectable):
         self.update()
         
     @property
-    def value(self) -> Tuple[Node, int]:
-        return (self.value_ref.obj.value, self.index)
+    def value(self) -> Node:
+        return self.value_ref.obj.value
     
     def get_outline(self):
         return "red" if self.is_selected else "black"
@@ -87,7 +87,7 @@ class MapOutputNode(MapNode):
         super().__init__(*args, is_input_node=False, **kwargs) #type: ignore
 
     @property
-    def value(self) -> Tuple[Node, int]:
+    def value(self) -> Node:
         if self.parent_ref:
             return (self.parent_ref.obj.value, self.index)
         else:

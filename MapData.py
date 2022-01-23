@@ -51,7 +51,7 @@ class MapData(Object):
                 if input_val != None:
                     in_values.append(input_val)
             
-        return Node((self.fn.name, self.id), in_values)
+        return Node((self.fn.name, self.id), None, in_values)
     
     def update(self):
         self.hide_outs = self.parent_ref != None
