@@ -7,6 +7,7 @@ from Tree import Node
 from ObjectHierarchy.ObjectReference import ObjectReference
 from Canvas import Canvas
 from Point import Point
+from Utils import Stream
 from misc.dataclassStuff.inspect_copy import Attribute
 
 class MapData(Object):
@@ -43,16 +44,15 @@ class MapData(Object):
     
     @property
     def value(self) -> Node:
-        in_values = []
-        for child_ref in self.children_refs:
-            child = child_ref.obj
-            if isinstance(child, MapInputNode):
-                input_val = child.value
-                if input_val != None:
-                    in_values.append(input_val)
+        children = map(lambda child_ref: child_ref.obj, self.children_refs)
+        input_nodes = filter(lambda child: isinstance(child, MapInputNode), children)
+        input_values = map(lambda input_node: input_node.value, input_nodes)
+        
+        #TODO figure out how to make this multiline and delete 47-49, which is exactly the same thing but more verbose. Also maybe partial can be used to make isinstance not a lambda
+        input_values = Stream(self.children_refs).map(ObjectReference.get_obj).filter(lambda child: isinstance(child, MapInputNode)).map(MapInputNode.value_fn).to_list()
             
         name = self.fn.name + "_" + str(self.id)
-        return Node(name, None, in_values)
+        return Node(name, None, list(input_values))
     
     def update(self):
         self.hide_outs = self.parent_ref != None
