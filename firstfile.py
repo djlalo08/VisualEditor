@@ -2,6 +2,8 @@ from Bindings.Nester import Nester
 from Canvas import Canvas
 from MapModal import MapModal
 from MapNode import MapNode
+from ObjectHierarchy.ObjectReference import ObjectReference
+from ObjectHierarchy.Selectable import Selectable
 from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import Node
@@ -81,7 +83,7 @@ class Bindings:
         Canvas.root.bind('<KeyPress-o>', self.add_out_wire) # o for out
         Canvas.root.bind('<KeyPress-O>', self.remove_out_wire)
         Canvas.root.bind('<KeyPress-Down>', self.move_selection_deeper)
-        Canvas.root.bind('<KeyPress-Down>', self.move_selection_higher)
+        Canvas.root.bind('<KeyPress-Up>', self.move_selection_higher)
         Canvas.root.bind('<KeyPress-m>', self.add_map_event) #m for map
         Canvas.root.bind('<KeyPress-M>', self.open_map_modal) #m for map
         Canvas.root.bind('<KeyPress-E>', self.to_code) #e for evaluate
@@ -92,10 +94,17 @@ class Bindings:
         Canvas.root.bind('<KeyPress-d>', self.debug)#l for load
 
     def move_selection_deeper(self, event):
-        pass
+        if Canvas.selected:
+            if Canvas.selected.children_refs:
+                children = map(ObjectReference.get_obj, Canvas.selected.children_refs) 
+                selectable_children = list(filter(lambda child: isinstance(child, Selectable), children))
+                if selectable_children:
+                    self.select_item(selectable_children[0])
     
     def move_selection_higher(self, event):
-        pass
+        if Canvas.selected:
+            if Canvas.selected.parent_ref:
+                self.select_item(Canvas.selected.parent_ref.obj)
 
     def print_cursor(self, event):
         print(event.x, event.y)
