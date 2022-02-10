@@ -3,6 +3,7 @@ from Label import Label
 from MapNode import MapInputNode, MapNode, MapOutputNode
 from Function import Function
 from ObjectHierarchy.Object import Object
+from ObjectHierarchy.Selectable import Selectable
 from Tree import Node
 from ObjectHierarchy.ObjectReference import ObjectReference
 from Canvas import Canvas
@@ -10,7 +11,7 @@ from Point import Point
 from Utils import Stream
 from misc.dataclassStuff.inspect_copy import Attribute
 
-class MapData(Object):
+class MapData(Selectable):
     def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", hide_outs=False, **kwargs) -> None:
         self.fn = fn
         self.name = name
@@ -27,7 +28,7 @@ class MapData(Object):
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="#E7B680",
-            tags=("draggable", ),
+            tags=("draggable", "selectable"),
         )
 
     def _create_children(self) -> list[ObjectReference[MapNode | Label]]:
@@ -122,8 +123,12 @@ class MapData(Object):
                     y = self.height/2 -label_height/2 - label_padding_y
                 child.pos = Point(0,y)
 
-        return super().update()
+
+        super().update()
+        Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
     
+    def get_outline(self):
+        return "red" if self.is_selected else "black"
     
     def get_all_references(self) -> list[ObjectReference]:
         return super().get_all_references() + self.ins + self.outs

@@ -23,7 +23,7 @@ class Canvas(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
 
-        # Canvas.canvas = tk.Canvas(width=canvas_width, height=canvas_height, background="#f5ecce")
-        Canvas.canvas = tk.Canvas(width=Canvas.canvas_width, height=Canvas.canvas_height, background="white")
+        Canvas.canvas = tk.Canvas(width=Canvas.canvas_width, height=Canvas.canvas_height, background="#f5ecce")
+        # Canvas.canvas = tk.Canvas(width=Canvas.canvas_width, height=Canvas.canvas_height, background="white")
         Canvas.canvas.pack(fill="both", expand=True)
         Canvas.root = parent

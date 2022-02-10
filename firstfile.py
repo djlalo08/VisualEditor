@@ -43,7 +43,8 @@ from Point import Point
     - I can start adding in some syntactic sugar (custom icons for certain operations)
     - m makes another of most recent map
     - map selection is not a modal, but a dropdown pop-up with type-able filter (eventually, filtered by type of fns too)
-    - Make code point from top to bottom, rather than left to right (maybe code direction is a setting?)
+    - add lines of code, so that code naturally goes in lines across, and to make things more navigable. This will make things less free form and more pretty and easier to edit
+    - navigation. Can move cursor up/down, left/right, in/out
 #TODO LAMBDAS!!!
     - Need to make fns first class first (i.e. they are valid args)
         Ideas about passing fns. All maps must have all of their ins connected to work (maybe some exceptions for optional args or something like that)
@@ -61,10 +62,10 @@ class Bindings:
 
     def set_bindings(self):
 
-        self.add_some_stuff()
+        # self.add_some_stuff()
 
         Canvas.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
-        Canvas.canvas.tag_bind("selectable", '<ButtonPress-1>', self.select_item)
+        Canvas.canvas.tag_bind("selectable", '<ButtonPress-1>', self.click_item)
         Canvas.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
         Canvas.canvas.tag_bind("map_node", "<ButtonPress-2>", self.expand_node)
         Canvas.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
@@ -79,6 +80,8 @@ class Bindings:
         Canvas.root.bind('<KeyPress-I>', self.remove_in_wire)
         Canvas.root.bind('<KeyPress-o>', self.add_out_wire) # o for out
         Canvas.root.bind('<KeyPress-O>', self.remove_out_wire)
+        Canvas.root.bind('<KeyPress-Down>', self.move_selection_deeper)
+        Canvas.root.bind('<KeyPress-Down>', self.move_selection_higher)
         Canvas.root.bind('<KeyPress-m>', self.add_map_event) #m for map
         Canvas.root.bind('<KeyPress-M>', self.open_map_modal) #m for map
         Canvas.root.bind('<KeyPress-E>', self.to_code) #e for evaluate
@@ -87,7 +90,13 @@ class Bindings:
         Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
         Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
         Canvas.root.bind('<KeyPress-d>', self.debug)#l for load
-        
+
+    def move_selection_deeper(self, event):
+        pass
+    
+    def move_selection_higher(self, event):
+        pass
+
     def print_cursor(self, event):
         print(event.x, event.y)
 
@@ -159,11 +168,13 @@ class Bindings:
             print("offset_off_par", node.offset_off_parent)
             print("pos", node.pos)
         
-    def select_item(self, event):
-        oldSelected = Canvas.selected
+    def click_item(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
-        Canvas.selected = Canvas.id_map[id]
+        self.select_item(Canvas.id_map[id])
 
+    def select_item(self, newSelected):
+        oldSelected = Canvas.selected
+        Canvas.selected  = newSelected 
         if Canvas.selected == oldSelected:
             Canvas.selected = None
         else:
