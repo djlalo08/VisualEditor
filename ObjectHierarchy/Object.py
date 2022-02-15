@@ -56,7 +56,7 @@ class Object:
         return descendants
             
     def __repr__(self) -> str:
-        return str(self.id)
+        return str(self.id) + self.__class__
 
     def to_ref(self) -> OR.ObjectReference[Self]:
         return OR.ObjectReference(self.id)
@@ -76,3 +76,10 @@ class Object:
         C.Canvas.canvas.tag_raise(self.id)
         for child_ref in self.children_refs:
             child_ref.obj.to_front()
+            
+    def get_parentest(self) -> Object:
+        if not self.parent_ref:
+            return self
+
+        return self.parent_ref.obj.get_parentest() 
+        

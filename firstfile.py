@@ -84,6 +84,8 @@ class Bindings:
         Canvas.root.bind('<KeyPress-O>', self.remove_out_wire)
         Canvas.root.bind('<KeyPress-Down>', self.move_selection_deeper)
         Canvas.root.bind('<KeyPress-Up>', self.move_selection_higher)
+        Canvas.root.bind('<KeyPress-Left>', self.move_selection_left)
+        Canvas.root.bind('<KeyPress-Right>', self.move_selection_right)
         Canvas.root.bind('<KeyPress-m>', self.add_map_event) #m for map
         Canvas.root.bind('<KeyPress-M>', self.open_map_modal) #m for map
         Canvas.root.bind('<KeyPress-E>', self.to_code) #e for evaluate
@@ -99,12 +101,35 @@ class Bindings:
                 children = map(ObjectReference.get_obj, Canvas.selected.children_refs) 
                 selectable_children = list(filter(lambda child: isinstance(child, Selectable), children))
                 if selectable_children:
-                    self.select_item(selectable_children[0])
+                    Canvas.selected_index = 0
+                    self.select_item(selectable_children[Canvas.selected_index])
     
     def move_selection_higher(self, event):
         if Canvas.selected:
             if Canvas.selected.parent_ref:
                 self.select_item(Canvas.selected.parent_ref.obj)
+
+    def move_selection_right(self, event):
+        if Canvas.selected:
+            if Canvas.selected.parent_ref:
+                children = map(ObjectReference.get_obj, Canvas.selected.parent_ref.obj.children_refs) 
+                selectable_children = list(filter(lambda child: isinstance(child, Selectable), children))
+                if selectable_children:
+                    old_selection = Canvas.selected_index
+                    Canvas.selected_index = min(Canvas.selected_index+1, len(selectable_children)-1)
+                    if old_selection != Canvas.selected_index:
+                        self.select_item(selectable_children[Canvas.selected_index])
+
+    def move_selection_left(self, event):
+        if Canvas.selected:
+            if Canvas.selected.parent_ref:
+                children = map(ObjectReference.get_obj, Canvas.selected.parent_ref.obj.children_refs) 
+                selectable_children = list(filter(lambda child: isinstance(child, Selectable), children))
+                if selectable_children:
+                    old_selection = Canvas.selected_index
+                    Canvas.selected_index = max(Canvas.selected_index-1, 0)
+                    if old_selection != Canvas.selected_index:
+                        self.select_item(selectable_children[Canvas.selected_index])
 
     def print_cursor(self, event):
         print(event.x, event.y)
