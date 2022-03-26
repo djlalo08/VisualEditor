@@ -1,9 +1,9 @@
 from Bindings.Nester import Nester
+from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, NavigateRight
+from Bindings.Selector import Selector
 from Canvas import Canvas
 from MapModal import MapModal
 from MapNode import MapNode
-from ObjectHierarchy.ObjectReference import ObjectReference
-from ObjectHierarchy.Selectable import Selectable
 from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import Node
@@ -96,40 +96,16 @@ class Bindings:
         Canvas.root.bind('<KeyPress-d>', self.debug)#l for load
 
     def move_selection_deeper(self, event):
-        if Canvas.selected:
-            if Canvas.selected.children_refs:
-                children = map(ObjectReference.get_obj, Canvas.selected.children_refs) 
-                selectable_children = list(filter(lambda child: isinstance(child, Selectable), children))
-                if selectable_children:
-                    Canvas.selected_index = 0
-                    self.select_item(selectable_children[Canvas.selected_index])
+        NavigateDeeper().move_selection()
     
     def move_selection_higher(self, event):
-        if Canvas.selected:
-            if Canvas.selected.parent_ref:
-                self.select_item(Canvas.selected.parent_ref.obj)
+        NavigateHigher().move_selection()
 
     def move_selection_right(self, event):
-        if Canvas.selected:
-            if Canvas.selected.parent_ref:
-                children = map(ObjectReference.get_obj, Canvas.selected.parent_ref.obj.children_refs) 
-                selectable_children = list(filter(lambda child: isinstance(child, Selectable), children))
-                if selectable_children:
-                    old_selection = Canvas.selected_index
-                    Canvas.selected_index = min(Canvas.selected_index+1, len(selectable_children)-1)
-                    if old_selection != Canvas.selected_index:
-                        self.select_item(selectable_children[Canvas.selected_index])
+        NavigateRight().move_selection()
 
     def move_selection_left(self, event):
-        if Canvas.selected:
-            if Canvas.selected.parent_ref:
-                children = map(ObjectReference.get_obj, Canvas.selected.parent_ref.obj.children_refs) 
-                selectable_children = list(filter(lambda child: isinstance(child, Selectable), children))
-                if selectable_children:
-                    old_selection = Canvas.selected_index
-                    Canvas.selected_index = max(Canvas.selected_index-1, 0)
-                    if old_selection != Canvas.selected_index:
-                        self.select_item(selectable_children[Canvas.selected_index])
+        NavigateLeft().move_selection()
 
     def print_cursor(self, event):
         print(event.x, event.y)
@@ -204,27 +180,7 @@ class Bindings:
         
     def click_item(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
-        self.select_item(Canvas.id_map[id])
-
-    def select_item(self, newSelected):
-        oldSelected = Canvas.selected
-        Canvas.selected  = newSelected 
-        if Canvas.selected == oldSelected:
-            Canvas.selected = None
-        else:
-            self.do_selection_action(Canvas.selected, oldSelected)
-
-        if oldSelected:
-            oldSelected.deselect()
-
-    def do_selection_action(self, newSelection, oldSelection):
-        if Canvas.mode == "connect":
-                newPos = newSelection.abs_pos()
-                delta= newPos - oldSelection.abs_pos()
-                oldSelection.move(delta)
-                Canvas.mode = "select"
-        if Canvas.mode == "select":
-                newSelection.select()
+        Selector().select_item(Canvas.id_map[id])
 
     def add_in_wire(self, event=None):
         i = len(Canvas.ins)
