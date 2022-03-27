@@ -17,7 +17,7 @@ def threewise(iterable):
 
 class Stream:
     def __init__(self, iterable:Iterable) -> None:
-        self.iterable = iterable
+        self.iterable = empty_if_null(iterable)
         
     def map(self, function):
         self.iterable = map(function, self.iterable)
@@ -32,3 +32,6 @@ class Stream:
 
     def to_list(self) -> List:
         return list(self.iterable)
+    
+def empty_if_null(list):
+    return list if list != None else []

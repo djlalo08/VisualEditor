@@ -12,3 +12,6 @@ class Selectable(Object):
     def deselect(self):
         self.is_selected = False
         self.update()
+        
+def is_selectable(o: Object):
+    return isinstance(o, Selectable)
