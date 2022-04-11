@@ -13,6 +13,13 @@ from WireSegment import WireSegment
 from Point import Point
 
 '''
+CURRENTLY WORKING ON -- NAVIGABILITY:
+-Add controls for not having to use mouse (shortcuts for insert, enclose, navigate, etc)
+-Make map modal better
+    - Autocomplete, based on available files
+    - Don't have to specify file info because the file itself already records that
+    - This means that every map needs 2 files (or maybe the file can have 2 parts) -- one that specifies the map metadata, like arguments expected and returned, and one that actually has all of the implementation of the file (which in turn can be compiled and evaluated. In reality, there probably should be a third file, which is the byte-code, since in most cases (like standard lib) we don't need to access the inside of the map itself, but we do want to be able to compile and execute it))
+
 #TODO BUGS
     - When using c-mode to jump a map to a wire, if map is in front of wire, program freaks out
 
@@ -46,7 +53,6 @@ from Point import Point
     - m makes another of most recent map
     - map selection is not a modal, but a dropdown pop-up with type-able filter (eventually, filtered by type of fns too)
     - add lines of code, so that code naturally goes in lines across, and to make things more navigable. This will make things less free form and more pretty and easier to edit
-    - navigation. Can move cursor up/down, left/right, in/out
 #TODO LAMBDAS!!!
     - Need to make fns first class first (i.e. they are valid args)
         Ideas about passing fns. All maps must have all of their ins connected to work (maybe some exceptions for optional args or something like that)
@@ -59,6 +65,12 @@ from Point import Point
 #TODO Sorting needs to be better and based on layering order not, order of creation (e.g. when we load in det_nested, some nested boxes are invisible because they are behind the node the node that holds them. If something is a child of another thing, it should be in front of it)
 '''
 
+def cursorxy():
+    c = Canvas.canvas
+    (x_abs, y_abs) = c.winfo_pointerxy()
+    (x_frame, y_frame) = (c.winfo_rootx(), c.winfo_rooty())
+    return (x_abs-x_frame, y_abs-y_frame)
+    
     
 class Bindings:
 
@@ -93,7 +105,15 @@ class Bindings:
         Canvas.root.bind('<KeyPress-d>', self.detach_wire) #d for detach
         Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
         Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
-        Canvas.root.bind('<KeyPress-d>', self.debug)#l for load
+        Canvas.root.bind('<KeyPress-d>', self.debug)#d for debug
+        Canvas.root.bind('<Command-e>', self.enclose_selection)#e for enclose
+        Canvas.root.bind('space', self.insert)
+
+    def enclose_selection(self, event):
+        print("I did it")
+        
+    def insert(self, event):
+        print("insertring stuff or something")
 
     def move_selection_deeper(self, event):
         NavigateDeeper().move_selection()
@@ -205,16 +225,12 @@ class Bindings:
         pass
     
     def add_free_wire(self, event):
-        (x,y) = Canvas.canvas.winfo_pointerxy()
-        y -= 60
-        x -= 5
+        (x,y) = cursorxy()
         wire = Wire(points=[Point(x, y), Point(x, y+50)])
         wire.update()
         
     def add_map_event(self, event=None):
-        (x,y) = Canvas.canvas.winfo_pointerxy()
-        y -= 60
-        x -= 5
+        (x,y) = cursorxy()
         MapModal.add_map(Point(x,y))
         
     def connect_mode(self, event):
@@ -227,7 +243,7 @@ class Bindings:
         Canvas.mode = "wire_edit"
 
     def open_map_modal(self, event):
-        pos = Point(*Canvas.canvas.winfo_pointerxy())
+        pos = Point(*cursorxy())
         MapModal(pos)
         
     def add_wire_node(self, event):
