@@ -36,7 +36,9 @@ class MapModal(tk.Toplevel):
         self.geometry("460x180")
 
         fn_name_label = tk.Label(self, text = "fn name").place(x = 40, y = 20)  
-        fn_name = tk.Entry(self, width = 30, textvariable=self.fn_name).place(x = 110, y = 20)  
+        fn_name = tk.Entry(self, width = 30, textvariable=self.fn_name)
+        fn_name.place(x = 110, y = 20)  
+        fn_name.focus()
 
         in_label = tk.Label(self, text = "ins").place(x = 40, y = 60)  
         ins = tk.Entry(self, width = 30, textvariable=self.ins).place(x = 110, y = 60)  

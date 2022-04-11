@@ -76,6 +76,8 @@ class OpenModal(tk.Toplevel):
         self.geometry("460x100")
 
         fn_name_label = tk.Label(self, text = "fn name").place(x = 40, y = 20)  
-        fn_name = tk.Entry(self, width = 30, textvariable=self.fn_name).place(x = 110, y = 20)  
+        fn_name = tk.Entry(self, width = 30, textvariable=self.fn_name)
+        fn_name.place(x = 110, y = 20)  
+        fn_name.focus()
 
         submit_button = tk.Button(self, text = "Open", command=self.submit).place(x = 100, y = 60)
