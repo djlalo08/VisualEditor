@@ -16,12 +16,17 @@ from Point import Point
 '''
 CURRENTLY WORKING ON -- NAVIGABILITY:
 -Add controls for not having to use mouse (shortcuts for insert, enclose, navigate, etc)
+    - Navigate -- done
+    - Insert -- done
+    - Delete -- done
+    - Enclose (next thing to work on)
 -Make map modal better
     - Autocomplete, based on available files
     - Don't have to specify file info because the file itself already records that
     - This means that every map needs 2 files (or maybe the file can have 2 parts) -- one that specifies the map metadata, like arguments expected and returned, and one that actually has all of the implementation of the file (which in turn can be compiled and evaluated. In reality, there probably should be a third file, which is the byte-code, since in most cases (like standard lib) we don't need to access the inside of the map itself, but we do want to be able to compile and execute it))
 
 #TODO BUGS
+    - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb
     - When using c-mode to jump a map to a wire, if map is in front of wire, program freaks out
 
 #TODO clean up
@@ -51,9 +56,13 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
 #TODO ui/ux leaves A LOT to be desired
     - Should be able to extend nodes in cables
     - I can start adding in some syntactic sugar (custom icons for certain operations)
+        - Maps are customizable so that symbols can be determined based on items.
+        Every map can have a top, bot, left, and right label
+        Every arg (and the ouput) can have a top, bot, left and right label (if x, y are adjacent, then x.right_label == y.left_label)
     - m makes another of most recent map
     - map selection is not a modal, but a dropdown pop-up with type-able filter (eventually, filtered by type of fns too)
     - add lines of code, so that code naturally goes in lines across, and to make things more navigable. This will make things less free form and more pretty and easier to edit
+    - add refactor commands, like extract (pulls a box out, equivalent to dragging it), and inline (replaces a wire node with the box that it comes from)
 #TODO LAMBDAS!!!
     - Need to make fns first class first (i.e. they are valid args)
         Ideas about passing fns. All maps must have all of their ins connected to work (maybe some exceptions for optional args or something like that)
@@ -62,8 +71,6 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
 #TODO stream (see notes on Monday.com) to which variables can be saved
     - Input wires can be read (like stream) from just a box with their name, output wires can just be saved to (I think this bad style maybe tho)
     - Output to fn can be treated as final result, in which case, there is a visual cue to that
-#TODO Everything needs to be easily navigable using only keyboard
-#TODO Sorting needs to be better and based on layering order not, order of creation (e.g. when we load in det_nested, some nested boxes are invisible because they are behind the node the node that holds them. If something is a child of another thing, it should be in front of it)
 '''
 
 
