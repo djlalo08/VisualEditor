@@ -37,7 +37,7 @@ def empty_if_null(list):
     return list if list != None else []
 
 def get_obj_index(ls, obj):
-    for idx, item in enumerate(ls):
+    for idx, item in enumerate(empty_if_null(ls)):
         if item == obj:
             return idx
     return -1
