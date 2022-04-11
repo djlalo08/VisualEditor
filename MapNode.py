@@ -92,6 +92,9 @@ class MapInputNode(MapNode):
         
     def value_fn(self) -> Node:
         return self.value
+    
+def is_input_node(obj):
+    return isinstance(obj, MapInputNode)
         
 
 class MapOutputNode(MapNode):

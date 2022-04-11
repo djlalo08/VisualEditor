@@ -3,7 +3,7 @@ from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, Nav
 from Bindings.Selector import Selector
 from Canvas import Canvas
 from MapModal import MapModal
-from MapNode import MapNode
+from MapNode import MapNode, is_input_node
 from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import Node
@@ -71,7 +71,6 @@ def cursorxy():
     (x_frame, y_frame) = (c.winfo_rootx(), c.winfo_rooty())
     return (x_abs-x_frame, y_abs-y_frame)
     
-    
 class Bindings:
 
     def set_bindings(self):
@@ -107,13 +106,20 @@ class Bindings:
         Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
         Canvas.root.bind('<KeyPress-d>', self.debug)#d for debug
         Canvas.root.bind('<Command-e>', self.enclose_selection)#e for enclose
-        Canvas.root.bind('space', self.insert)
+        Canvas.root.bind('<space>', self.insert)
 
     def enclose_selection(self, event):
         print("I did it")
         
     def insert(self, event):
         print("insertring stuff or something")
+        selection = Canvas.selected
+        if not is_input_node(selection):
+            return
+        
+        MapModal(selection.abs_pos(), insert_into=selection)
+        
+        
 
     def move_selection_deeper(self, event):
         NavigateDeeper().move_selection()
@@ -167,7 +173,7 @@ class Bindings:
         Canvas._drag_data["item"].move(delta)
         Canvas._drag_data["pos"] = Point(event.x, event.y)
         
-        Nester.drag_map_into_node()
+        Nester.drag_map_into_node(Canvas._drag_data["item"])
         
     def detach_wire(self, event):
         try:

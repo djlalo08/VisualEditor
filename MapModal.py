@@ -1,17 +1,19 @@
 import tkinter as tk
+from Bindings.Nester import Nester
 from Point import Point
 from Canvas import Canvas
 from Function import Function
 from MapData import MapData
 
 class MapModal(tk.Toplevel):
-    def __init__(self, cursorPos=Point(200,200)) -> None:
+    def __init__(self, cursorPos=Point(200,200), insert_into=None) -> None:
         super().__init__(Canvas.root)
         self.cursorPos = cursorPos
         self.fn_name = tk.StringVar()
         self.ins = tk.StringVar()
         self.outs = tk.StringVar()
         self.hide_outs = tk.BooleanVar()
+        self.insert_into = insert_into
         self.new_map_modal()
         self.bind('<Return>', self.submit)
 
@@ -19,13 +21,15 @@ class MapModal(tk.Toplevel):
         fn_name = self.fn_name.get()
         ins = self.ins.get().split(",")
         outs = self.outs.get().split(",")
-        self.add_map(self.cursorPos, fn_name, ins, outs, self.hide_outs.get())
+        result_map = self.add_map(self.cursorPos, fn_name, ins, outs, self.hide_outs.get())
+        if self.insert_into:
+            Nester.drag_map_into_node(result_map)
         self.destroy()
             
     @staticmethod
     def add_map(pos=Point(200,200), fn_name="map", ins=["int"], outs=["int"], hide_outs=False):
         fn = Function(fn_name, ins, outs)
-        MapData(pos=pos, name=fn_name, fn=fn, hide_outs=hide_outs)
+        return MapData(pos=pos, name=fn_name, fn=fn, hide_outs=hide_outs)
         
     def new_map_modal(self):
         self.title("Set map info")

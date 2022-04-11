@@ -34,8 +34,7 @@ class Nester:
         data_map.update()
 
     @staticmethod
-    def drag_map_into_node():
-        new_contents = Canvas._drag_data["item"]
+    def drag_map_into_node(new_contents):
         if not isinstance(new_contents, MapData):
             return
         
