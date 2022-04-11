@@ -22,7 +22,7 @@ class Wire:
         for point in points:
             node_refs.append(WireNode(self, pos=point).ref)
         for a, b in u.pairwise(node_refs):
-            wire_ref = WireSegment(a, b, parent_ref=self).ref
+            wire_ref = WireSegment(a, b, self).ref
             a.obj.children_refs.append(wire_ref)
             b.obj.children_refs.append(wire_ref)
         return node_refs

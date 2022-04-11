@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+from numpy import delete
 from ObjectHierarchy.Selectable import Selectable
 import Canvas as C
 from Tree import Node
@@ -34,3 +36,8 @@ class WireNode(Selectable):
     @property
     def value(self) -> Node:
         return self.wire.value
+    
+    def delete(self):
+        if self.parent_ref:
+            self.parent_ref.obj.children_refs.remove(self.ref)
+        self.parent_ref = None

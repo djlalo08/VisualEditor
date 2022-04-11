@@ -2,6 +2,7 @@ from Bindings.Nester import Nester
 from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, NavigateRight
 from Bindings.Selector import Selector
 from Canvas import Canvas
+from MapData import MapData
 from MapModal import MapModal
 from MapNode import MapNode, is_input_node
 from SaveModal import SaveModal
@@ -65,12 +66,14 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
 #TODO Sorting needs to be better and based on layering order not, order of creation (e.g. when we load in det_nested, some nested boxes are invisible because they are behind the node the node that holds them. If something is a child of another thing, it should be in front of it)
 '''
 
+
 def cursorxy():
     c = Canvas.canvas
     (x_abs, y_abs) = c.winfo_pointerxy()
     (x_frame, y_frame) = (c.winfo_rootx(), c.winfo_rooty())
     return (x_abs-x_frame, y_abs-y_frame)
-    
+
+
 class Bindings:
 
     def set_bindings(self):
@@ -86,44 +89,47 @@ class Bindings:
         Canvas.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
 
         Canvas.root.bind('<ButtonPress-2>', self.print_cursor)
-        Canvas.root.bind('<KeyPress-c>', self.connect_mode) #c for connect
-        Canvas.root.bind('<KeyPress-j>', self.wire_edit_mode) #j for connect
-        Canvas.root.bind('<KeyPress-w>', self.add_free_wire) #w for wire
-        Canvas.root.bind('<KeyPress-i>', self.add_in_wire) #i for in
+        Canvas.root.bind('<KeyPress-c>', self.connect_mode)  # c for connect
+        Canvas.root.bind('<KeyPress-j>', self.wire_edit_mode)  # j for connect
+        Canvas.root.bind('<KeyPress-w>', self.add_free_wire)  # w for wire
+        Canvas.root.bind('<KeyPress-i>', self.add_in_wire)  # i for in
         Canvas.root.bind('<KeyPress-I>', self.remove_in_wire)
-        Canvas.root.bind('<KeyPress-o>', self.add_out_wire) # o for out
+        Canvas.root.bind('<KeyPress-o>', self.add_out_wire)  # o for out
         Canvas.root.bind('<KeyPress-O>', self.remove_out_wire)
         Canvas.root.bind('<KeyPress-Down>', self.move_selection_deeper)
         Canvas.root.bind('<KeyPress-Up>', self.move_selection_higher)
         Canvas.root.bind('<KeyPress-Left>', self.move_selection_left)
         Canvas.root.bind('<KeyPress-Right>', self.move_selection_right)
-        Canvas.root.bind('<KeyPress-m>', self.add_map_event) #m for map
-        Canvas.root.bind('<KeyPress-M>', self.open_map_modal) #m for map
-        Canvas.root.bind('<KeyPress-E>', self.to_code) #e for evaluate
-        Canvas.root.bind('<KeyPress-e>', self.eval_mode) #e for evaluate
-        Canvas.root.bind('<KeyPress-d>', self.detach_wire) #d for detach
-        Canvas.root.bind('<KeyPress-s>', self.save_modal)#s for save
-        Canvas.root.bind('<KeyPress-l>', self.open_modal)#l for load
-        Canvas.root.bind('<KeyPress-d>', self.debug)#d for debug
-        Canvas.root.bind('<Command-e>', self.enclose_selection)#e for enclose
+        Canvas.root.bind('<KeyPress-m>', self.add_map_event)  # m for map
+        Canvas.root.bind('<KeyPress-M>', self.open_map_modal)  # m for map
+        Canvas.root.bind('<KeyPress-E>', self.to_code)  # e for evaluate
+        Canvas.root.bind('<KeyPress-e>', self.eval_mode)  # e for evaluate
+        Canvas.root.bind('<KeyPress-d>', self.detach_wire)  # d for detach
+        Canvas.root.bind('<KeyPress-s>', self.save_modal)  # s for save
+        Canvas.root.bind('<KeyPress-l>', self.open_modal)  # l for load
+        Canvas.root.bind('<d>', self.debug)  # d for debug
+        # e for enclose
+        Canvas.root.bind('<Command-e>', self.enclose_selection)
         Canvas.root.bind('<space>', self.insert)
+        Canvas.root.bind('<BackSpace>', self.delete)
+
+    def delete(self, event):
+        if isinstance(Canvas.selected, MapData):
+            Canvas.selected.delete()
 
     def enclose_selection(self, event):
         print("I did it")
-        
+
     def insert(self, event):
-        print("insertring stuff or something")
         selection = Canvas.selected
         if not is_input_node(selection):
             return
-        
+
         MapModal(selection.abs_pos(), insert_into=selection)
-        
-        
 
     def move_selection_deeper(self, event):
         NavigateDeeper().move_selection()
-    
+
     def move_selection_higher(self, event):
         NavigateHigher().move_selection()
 
@@ -137,19 +143,19 @@ class Bindings:
         print(event.x, event.y)
 
     def add_some_stuff(self):
-        self.modal = MapModal.add_map(Point(300,220))
+        self.modal = MapModal.add_map(Point(300, 220))
         self.add_in_wire()
         self.add_in_wire()
         self.add_out_wire()
-        
+
     def debug(self, event):
-        outs = Canvas.outs 
+        outs = Canvas.outs
         id_map = Canvas.id_map
         print("debug")
 
     def open_modal(self, event):
         self.modal = OpenModal()
-        
+
     def save_modal(self, event):
         self.modal = SaveModal()
 
@@ -166,44 +172,46 @@ class Bindings:
         Nester.drag_map_out_of_node()
 
         Canvas._drag_data["item"] = None
-        Canvas._drag_data["pos"] = Point(0,0)
+        Canvas._drag_data["pos"] = Point(0, 0)
 
     def drag(self, event):
         delta = Point(event.x, event.y) - Canvas._drag_data["pos"]
         Canvas._drag_data["item"].move(delta)
         Canvas._drag_data["pos"] = Point(event.x, event.y)
-        
+
         Nester.drag_map_into_node(Canvas._drag_data["item"])
-        
+
     def detach_wire(self, event):
         try:
             Canvas.selected.detach()
         except AttributeError:
             pass
-        
+
     def release_node(self, event):
-        overlap_range = Point(event.x, event.y).around(5,5)
+        overlap_range = Point(event.x, event.y).around(5, 5)
         all_overlapping = Canvas.canvas.find_overlapping(*overlap_range)
-        maps = list(filter(lambda x: "map_node" in Canvas.canvas.gettags(x), all_overlapping))
+        maps = list(
+            filter(lambda x: "map_node" in Canvas.canvas.gettags(x), all_overlapping))
         if not maps:
             return
 
         map_node = Canvas.id_map.get(maps[0])
         map_node.add_wire_node(Canvas._drag_data["item"])
-                
-    def expand_node(self,event):
+
+    def expand_node(self, event):
         print(event.x, event.y)
-        print(Point(1,2))
+        print(Point(1, 2))
         nearby_ids = Canvas.canvas.find_closest(event.x, event.y, halo=10)
         overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
-        overlapping_nodes = list(filter(lambda obj: isinstance(obj, MapNode), overlappers))
+        overlapping_nodes = list(
+            filter(lambda obj: isinstance(obj, MapNode), overlappers))
         if not len(overlapping_nodes) == 0:
             node = overlapping_nodes[0]
             print("abs", node.abs_pos())
             print("offset", node.offset)
             print("offset_off_par", node.offset_off_parent)
             print("pos", node.pos)
-        
+
     def click_item(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
         Selector().select_item(Canvas.id_map[id])
@@ -214,7 +222,7 @@ class Bindings:
         points = [Point(x, 30), Point(x, 80), Point(x, 250)]
         wire = InputWire(points=points, index=i)
         Canvas.ins += [wire]
-        
+
     def remove_in_wire(self, event):
         # TODO
         pass
@@ -222,40 +230,42 @@ class Bindings:
     def add_out_wire(self, event=None):
         i = len(Canvas.outs)
         x = i*20+200
-        points = [Point(x, Canvas.canvas_height-30), Point(x, Canvas.canvas_height-80), Point(x, Canvas.canvas_height-250)]
+        points = [Point(x, Canvas.canvas_height-30), Point(x,
+                                                           Canvas.canvas_height-80), Point(x, Canvas.canvas_height-250)]
         wire = OutputWire(points=points, index=i)
         Canvas.outs += [wire]
 
     def remove_out_wire(self, event):
         # TODO
         pass
-    
+
     def add_free_wire(self, event):
-        (x,y) = cursorxy()
+        (x, y) = cursorxy()
         wire = Wire(points=[Point(x, y), Point(x, y+50)])
         wire.update()
-        
+
     def add_map_event(self, event=None):
-        (x,y) = cursorxy()
-        MapModal.add_map(Point(x,y))
-        
+        (x, y) = cursorxy()
+        MapModal.add_map(Point(x, y))
+
     def connect_mode(self, event):
         Canvas.mode = "connect"
-        
+
     def eval_mode(self, event):
         Canvas.mode = "eval" if Canvas.mode != "eval" else "select"
-        
+
     def wire_edit_mode(self, event):
         Canvas.mode = "wire_edit"
 
     def open_map_modal(self, event):
         pos = Point(*cursorxy())
         MapModal(pos)
-        
+
     def add_wire_node(self, event):
         if Canvas.mode != "wire_edit":
             return
-        wire_segment_id = Canvas.canvas.find_closest(event.x, event.y)[0] #TODO update [0] with instead looping over all closest and finding first that is a wire
+        # TODO update [0] with instead looping over all closest and finding first that is a wire
+        wire_segment_id = Canvas.canvas.find_closest(event.x, event.y)[0]
         selected_wire_segment: WireSegment = Canvas.id_map[wire_segment_id]
 
         parent_wire = selected_wire_segment.parent_ref
@@ -263,11 +273,14 @@ class Bindings:
         new_node = WireNode(parent_wire, pos=Point(event.x, event.y))
 
         selected_segments_old_b_ref = selected_wire_segment.b
-        new_wiresegment = WireSegment(a=new_node.ref, b=selected_segments_old_b_ref, parent_ref=parent_wire)
+        new_wiresegment = WireSegment(
+            a=new_node.ref, b=selected_segments_old_b_ref, wire=parent_wire)
 
         selected_wire_segment.b = new_node.ref
-        selected_segments_old_b_ref.obj.children_refs.remove(selected_wire_segment.ref)
-        selected_segments_old_b_ref.obj.children_refs.append(new_wiresegment.ref)
+        selected_segments_old_b_ref.obj.children_refs.remove(
+            selected_wire_segment.ref)
+        selected_segments_old_b_ref.obj.children_refs.append(
+            new_wiresegment.ref)
 
         new_node.children_refs.append(new_wiresegment.ref)
         new_node.children_refs.append(selected_wire_segment.ref)
@@ -276,17 +289,17 @@ class Bindings:
         parent_wire.children_refs.append(new_node.ref)
 
         Canvas.mode = "select"
-        
+
     def to_ast(self, event=None):
         outValues = map(lambda out: out.value, Canvas.outs)
         program = Node("root", None, list(outValues))
         print(program)
         print()
         return program
-        
+
     def to_code(self, event=None):
         program = self.to_ast()
-        reduced = program.reduce(([],set()))
+        reduced = program.reduce(([], set()))
         header = '''public static Object[] example(Object[] in){
         Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];'''
         fn_decls = '\n\t'.join(reduced)

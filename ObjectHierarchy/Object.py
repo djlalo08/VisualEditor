@@ -4,6 +4,7 @@ from typing_extensions import Self
 from Point import Point
 import Canvas as C
 import ObjectHierarchy.ObjectReference as OR
+from Utils import Stream
 
 @dataclass
 class Object:
@@ -82,4 +83,17 @@ class Object:
             return self
 
         return self.parent_ref.obj.get_parentest() 
+    
+    def delete(self):
+        if self.parent_ref:
+            self.parent_ref.obj.children_refs.remove(self.ref)
+
+        children = Stream(self.children_refs).map(OR.ObjectReference.get_obj).filter(is_object).to_list()
+        for child in children:
+           child.delete() 
+
+        C.Canvas.canvas.delete(self.id)
+        del C.Canvas.id_map[self.id]
         
+def is_object(obj):
+    return isinstance(obj, Object)
