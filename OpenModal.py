@@ -18,7 +18,7 @@ class OpenModal(tk.Toplevel):
         
     @staticmethod
     def load_file(name):
-        with open('lib/'+name, 'rb') as file:
+        with open('lib/src/'+name, 'rb') as file:
             id_map: dict[int, Object]= pickle.load(file)
             outs = pickle.load(file)
 

@@ -16,7 +16,7 @@ class SaveModal(tk.Toplevel):
             
     @staticmethod
     def save_as(name):
-        with open('lib/'+name, 'wb') as file:
+        with open('lib/src/'+name, 'wb') as file:
             pickle.dump(Canvas.id_map, file)
             pickle.dump(Canvas.outs, file)
 
