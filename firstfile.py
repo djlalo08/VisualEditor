@@ -4,10 +4,11 @@ from Bindings.Selector import Selector
 from Canvas import Canvas
 from MapData import MapData
 from MapModal import MapModal
-from MapNode import MapNode, is_input_node
+from MapNode import MapNode, is_input_node, is_map_node
 from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import Node
+from Utils import Stream, nott
 from Wire import Wire, InputWire, OutputWire
 from WireNode import WireNode
 from WireSegment import WireSegment
@@ -28,6 +29,7 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
 #TODO BUGS
     - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb
     - When using c-mode to jump a map to a wire, if map is in front of wire, program freaks out
+    - If You delete stuff and then save, everything goes crazy next time file is loaded up
 
 #TODO clean up
     - Tags should be nicer and maybe classes (Selectable, Object, etc) should include them
@@ -114,7 +116,7 @@ class Bindings:
         Canvas.root.bind('<KeyPress-d>', self.detach_wire)  # d for detach
         Canvas.root.bind('<KeyPress-s>', self.save_modal)  # s for save
         Canvas.root.bind('<KeyPress-l>', self.open_modal)  # l for load
-        Canvas.root.bind('<d>', self.debug)  # d for debug
+        Canvas.root.bind('<Command-d>', self.debug)  # d for debug
         # e for enclose
         Canvas.root.bind('<Command-e>', self.enclose_selection)
         Canvas.root.bind('<space>', self.insert)
@@ -196,13 +198,16 @@ class Bindings:
 
     def release_node(self, event):
         overlap_range = Point(event.x, event.y).around(5, 5)
-        all_overlapping = Canvas.canvas.find_overlapping(*overlap_range)
-        maps = list(
-            filter(lambda x: "map_node" in Canvas.canvas.gettags(x), all_overlapping))
-        if not maps:
+        all_overlapping_ids = Canvas.canvas.find_overlapping(*overlap_range)
+        free_maps = Stream(all_overlapping_ids) \
+            .map(Canvas.id_map.get) \
+            .filter(is_map_node) \
+            .filter(nott(MapNode.is_occupied)) \
+            .to_list()
+        if not free_maps:
             return
 
-        map_node = Canvas.id_map.get(maps[0])
+        map_node = free_maps[0]
         map_node.add_wire_node(Canvas._drag_data["item"])
 
     def expand_node(self, event):

@@ -67,6 +67,15 @@ class MapNode(Selectable):
     def get_outline(self):
         return "red" if self.is_selected else "black"
     
+    def is_occupied(self) -> bool: 
+        if not hasattr(self, 'children_refs'):
+            return False
+        if not self.children_refs:
+            return False
+        return True
+    
+def is_map_node(obj) -> bool:
+    return isinstance(obj, MapNode)
 
 class MapInputNode(MapNode):
     def __init__(self, *args, **kwargs) -> None:

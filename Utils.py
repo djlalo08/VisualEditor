@@ -41,3 +41,6 @@ def get_obj_index(ls, obj):
         if item == obj:
             return idx
     return -1
+
+def nott(function):
+    return lambda x: not(function(x))
