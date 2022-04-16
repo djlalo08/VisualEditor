@@ -20,7 +20,8 @@ class MapModal(tk.Toplevel):
 
     def submit(self, event=None):
         fn_name = self.fn_name.get()
-        ins = self.ins.get().split(",")
+        ins = self.ins.get()
+        ins = ins.split(",") if ins else ''
         outs = self.outs.get().split(",")
         result_map = self.add_map(self.cursorPos, fn_name, ins, outs, self.hide_outs.get())
         if self.insert_into:
@@ -28,7 +29,7 @@ class MapModal(tk.Toplevel):
         if self.enclose:
             node_pos = result_map.input_nodes[0].abs_pos()
             enclosed_pos = self.enclose.abs_pos()
-            self.enclose.move(node_pos-enclosed_pos)
+            self.enclose.move(node_pos - enclosed_pos)
             Nester.drag_map_into_node(self.enclose) 
         self.destroy()
             
