@@ -25,6 +25,9 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
     - Autocomplete, based on available files
     - Don't have to specify file info because the file itself already records that
     - This means that every map needs 2 files (or maybe the file can have 2 parts) -- one that specifies the map metadata, like arguments expected and returned, and one that actually has all of the implementation of the file (which in turn can be compiled and evaluated. In reality, there probably should be a third file, which is the byte-code, since in most cases (like standard lib) we don't need to access the inside of the map itself, but we do want to be able to compile and execute it))
+        -Ideas about bin: 
+            - Should reference other binaries rather than pasting the entire other binaries in. This way, updating a different project doesn't require updating this project. Also means You can do funky stuff with updating code You've received. 
+            - For way down the line, there should be full-compile option which compiles into projects with no references. This would make execution faster and also prevent safety issues
 
 #TODO BUGS
     - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb
