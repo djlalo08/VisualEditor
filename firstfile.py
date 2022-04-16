@@ -16,11 +16,6 @@ from Point import Point
 
 '''
 CURRENTLY WORKING ON -- NAVIGABILITY:
--Add controls for not having to use mouse (shortcuts for insert, enclose, navigate, etc)
-    - Navigate -- done
-    - Insert -- done
-    - Delete -- done
-    - Enclose (next thing to work on)
 -Make map modal better
     - Autocomplete, based on available files
     - Don't have to specify file info because the file itself already records that
@@ -28,6 +23,12 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
         -Ideas about bin: 
             - Should reference other binaries rather than pasting the entire other binaries in. This way, updating a different project doesn't require updating this project. Also means You can do funky stuff with updating code You've received. 
             - For way down the line, there should be full-compile option which compiles into projects with no references. This would make execution faster and also prevent safety issues
+            
+    - 1. Decide on what bin for saved file looks like
+    - 2. Update how saving works to save both the src file and the bin file
+    - 3. When loading in a map (using map modal), depend on info from the bin file. Modal should have only the text and do a lookup
+    - 4. Make the modal small and nice looking, with no buttons or anything (like code suggest popups)
+    - 5. Add Autocomplete
 
 #TODO BUGS
     - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb
