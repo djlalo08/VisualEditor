@@ -18,8 +18,8 @@ class Canvas(tk.Frame):
     mode = "select"
     id_map: dict[int, O.Object]= {}
     map_count : int = 0
-    ins: list[OR.ObjectReference[InputWire]] = []
-    outs: list[OR.ObjectReference[OutputWire]] = []
+    ins: list[InputWire] = []
+    outs: list[OutputWire] = []
         
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
