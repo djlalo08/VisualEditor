@@ -1,6 +1,8 @@
 from __future__ import annotations
+
+from numpy import isin
 from Label import Label
-from MapNode import MapInputNode, MapNode, MapOutputNode
+from MapNode import MapInputNode, MapNode, MapOutputNode, is_input_node
 from Function import Function
 from ObjectHierarchy.Object import Object
 from ObjectHierarchy.Selectable import Selectable
@@ -132,3 +134,10 @@ class MapData(Selectable):
     
     def get_all_references(self) -> list[ObjectReference]:
         return super().get_all_references() + self.ins + self.outs
+        
+    @property
+    def input_nodes(self) -> list[MapInputNode]:
+        return Stream(self.children_refs).map(ObjectReference.get_obj).filter(is_input_node).to_list()
+
+def is_map_data(obj):
+    return isinstance(obj, MapData)

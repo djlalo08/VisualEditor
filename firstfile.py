@@ -2,7 +2,7 @@ from Bindings.Nester import Nester
 from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, NavigateRight
 from Bindings.Selector import Selector
 from Canvas import Canvas
-from MapData import MapData
+from MapData import MapData, is_map_data
 from MapModal import MapModal
 from MapNode import MapNode, is_input_node, is_map_node
 from SaveModal import SaveModal
@@ -120,9 +120,8 @@ class Bindings:
         Canvas.root.bind('<KeyPress-s>', self.save_modal)  # s for save
         Canvas.root.bind('<KeyPress-l>', self.open_modal)  # l for load
         Canvas.root.bind('<Command-d>', self.debug)  # d for debug
-        # e for enclose
-        Canvas.root.bind('<Command-e>', self.enclose_selection)
         Canvas.root.bind('<space>', self.insert)
+        Canvas.root.bind('<Shift-space>', self.enclose_selection)
         Canvas.root.bind('<BackSpace>', self.delete)
 
     def delete(self, event):
@@ -130,7 +129,11 @@ class Bindings:
             Canvas.selected.delete()
 
     def enclose_selection(self, event):
-        print("I did it")
+        selection = Canvas.selected
+        if not is_map_data(selection):
+            return
+
+        MapModal(selection.abs_pos(), enclose=selection)
 
     def insert(self, event):
         selection = Canvas.selected

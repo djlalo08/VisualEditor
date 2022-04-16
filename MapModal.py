@@ -6,7 +6,7 @@ from Function import Function
 from MapData import MapData
 
 class MapModal(tk.Toplevel):
-    def __init__(self, cursorPos=Point(200,200), insert_into=None) -> None:
+    def __init__(self, cursorPos=Point(200,200), insert_into=None, enclose=None) -> None:
         super().__init__(Canvas.root)
         self.cursorPos = cursorPos
         self.fn_name = tk.StringVar()
@@ -14,6 +14,7 @@ class MapModal(tk.Toplevel):
         self.outs = tk.StringVar()
         self.hide_outs = tk.BooleanVar()
         self.insert_into = insert_into
+        self.enclose = enclose
         self.new_map_modal()
         self.bind('<Return>', self.submit)
 
@@ -24,6 +25,11 @@ class MapModal(tk.Toplevel):
         result_map = self.add_map(self.cursorPos, fn_name, ins, outs, self.hide_outs.get())
         if self.insert_into:
             Nester.drag_map_into_node(result_map)
+        if self.enclose:
+            node_pos = result_map.input_nodes[0].abs_pos()
+            enclosed_pos = self.enclose.abs_pos()
+            self.enclose.move(node_pos-enclosed_pos)
+            Nester.drag_map_into_node(self.enclose) 
         self.destroy()
             
     @staticmethod
