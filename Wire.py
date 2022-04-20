@@ -2,7 +2,6 @@ from __future__ import annotations
 from ObjectHierarchy.ObjectReference import ObjectReference
 import Utils as u
 from Point import Point
-from ObjectHierarchy.Object import Object
 import Canvas as C
 from WireNode import WireNode
 from WireSegment import WireSegment
