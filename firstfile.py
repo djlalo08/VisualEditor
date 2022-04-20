@@ -1,7 +1,9 @@
 from Bindings.Nester import Nester
 from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, NavigateRight
 from Bindings.Selector import Selector
+from Bindings.WireAdder import WireAdder
 from Canvas import Canvas
+from CanvasUtils import cursorxy
 from MapData import MapData, is_map_data
 from MapModal import MapModal
 from MapNode import MapNode, is_input_node, is_map_node
@@ -9,7 +11,6 @@ from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import Node
 from Utils import Stream, nott
-from Wire import Wire, InputWire, OutputWire
 from WireNode import WireNode
 from WireSegment import WireSegment
 from Point import Point
@@ -81,14 +82,6 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
     - Output to fn can be treated as final result, in which case, there is a visual cue to that
 '''
 
-
-def cursorxy():
-    c = Canvas.canvas
-    (x_abs, y_abs) = c.winfo_pointerxy()
-    (x_frame, y_frame) = (c.winfo_rootx(), c.winfo_rooty())
-    return (x_abs-x_frame, y_abs-y_frame)
-
-
 class Bindings:
 
     def set_bindings(self):
@@ -106,11 +99,11 @@ class Bindings:
         Canvas.root.bind('<ButtonPress-2>', self.print_cursor)
         Canvas.root.bind('<KeyPress-c>', self.connect_mode)  # c for connect
         Canvas.root.bind('<KeyPress-j>', self.wire_edit_mode)  # j for connect
-        Canvas.root.bind('<KeyPress-w>', self.add_free_wire)  # w for wire
-        Canvas.root.bind('<KeyPress-i>', self.add_in_wire)  # i for in
-        Canvas.root.bind('<KeyPress-I>', self.remove_in_wire)
-        Canvas.root.bind('<KeyPress-o>', self.add_out_wire)  # o for out
-        Canvas.root.bind('<KeyPress-O>', self.remove_out_wire)
+        Canvas.root.bind('<KeyPress-w>', WireAdder.add_free_wire)  # w for wire
+        Canvas.root.bind('<KeyPress-i>', WireAdder.add_in_wire)  # i for in
+        Canvas.root.bind('<KeyPress-I>', WireAdder.remove_in_wire)
+        Canvas.root.bind('<KeyPress-o>', WireAdder.add_out_wire)  # o for out
+        Canvas.root.bind('<KeyPress-O>', WireAdder.remove_out_wire)
         Canvas.root.bind('<KeyPress-Down>', self.move_selection_deeper)
         Canvas.root.bind('<KeyPress-Up>', self.move_selection_higher)
         Canvas.root.bind('<KeyPress-Left>', self.move_selection_left)
@@ -126,6 +119,7 @@ class Bindings:
         Canvas.root.bind('<space>', self.insert)
         Canvas.root.bind('<Shift-space>', self.enclose_selection)
         Canvas.root.bind('<BackSpace>', self.delete)
+        Canvas.root.bind('<Command-N>', self.new_file_from_interface)
 
     def delete(self, event):
         if isinstance(Canvas.selected, MapData):
@@ -144,6 +138,9 @@ class Bindings:
             return
 
         MapModal(selection.abs_pos(), insert_into=selection)
+        
+    def new_file_from_interface(self, event):
+        pass
 
     def move_selection_deeper(self, event):
         NavigateDeeper().move_selection()
@@ -236,35 +233,6 @@ class Bindings:
     def click_item(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
         Selector().select_item(Canvas.id_map[id])
-
-    def add_in_wire(self, event=None):
-        i = len(Canvas.ins)
-        x = i*20+200
-        points = [Point(x, 30), Point(x, 80), Point(x, 250)]
-        wire = InputWire(points=points, index=i)
-        Canvas.ins += [wire]
-
-    def remove_in_wire(self, event):
-        # TODO
-        pass
-
-    def add_out_wire(self, event=None):
-        i = len(Canvas.outs)
-        x = i*20+200
-        points = [Point(x, Canvas.canvas_height-30), 
-                  Point(x, Canvas.canvas_height-80), 
-                  Point(x, Canvas.canvas_height-250)]
-        wire = OutputWire(points=points, index=i)
-        Canvas.outs += [wire]
-
-    def remove_out_wire(self, event):
-        # TODO
-        pass
-
-    def add_free_wire(self, event):
-        (x, y) = cursorxy()
-        wire = Wire(points=[Point(x, y), Point(x, y+50)])
-        wire.update()
 
     def add_map_event(self, event=None):
         (x, y) = cursorxy()
