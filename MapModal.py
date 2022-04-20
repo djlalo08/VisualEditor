@@ -16,6 +16,7 @@ class MapModal(tk.Toplevel):
         self.enclose = enclose
         self.new_map_modal()
         self.bind('<Return>', self.submit)
+        self.bind('<Escape>', self.exit)
 
     def submit(self, event=None):
         result_map = self.add_map(self.cursorPos, self.fn_name.get())
@@ -28,6 +29,9 @@ class MapModal(tk.Toplevel):
             self.enclose.move(node_pos - enclosed_pos)
             Nester.drag_map_into_node(self.enclose)
 
+        self.exit()
+        
+    def exit(self, event=None):
         self.destroy()
 
     @staticmethod
@@ -42,7 +46,7 @@ class MapModal(tk.Toplevel):
 
     def new_map_modal(self):
         self.title("")
-        self.geometry("195x30")
+        self.geometry('195x30')
 
         fn_name = tk.Entry(self, textvariable=self.fn_name)
         fn_name.place(x=0, y=0)

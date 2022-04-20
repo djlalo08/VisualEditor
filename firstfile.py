@@ -15,6 +15,7 @@ from Utils import Stream, nott
 from WireNode import WireNode
 from WireSegment import WireSegment
 from Point import Point
+from Evaluator import Evaluator
 
 '''
 CURRENTLY WORKING ON -- NAVIGABILITY:
@@ -121,7 +122,7 @@ class Bindings:
         Canvas.root.bind('<KeyPress-Left>', self.move_selection_left)
         Canvas.root.bind('<KeyPress-Right>', self.move_selection_right)
         Canvas.root.bind('<KeyPress-m>', self.open_map_modal)  # m for map
-        Canvas.root.bind('<KeyPress-E>', self.to_code)  # e for evaluate
+        Canvas.root.bind('<KeyPress-E>', Evaluator.to_code)  # e for evaluate
         Canvas.root.bind('<KeyPress-e>', self.eval_mode)  # e for evaluate
         Canvas.root.bind('<KeyPress-d>', self.detach_wire)  # d for detach
         Canvas.root.bind('<KeyPress-s>', self.save_modal)  # s for save
@@ -286,21 +287,3 @@ class Bindings:
         parent_wire.children_refs.append(new_node.ref)
 
         Canvas.mode = "select"
-
-    def to_ast(self, event=None):
-        outValues = map(lambda out: out.value, Canvas.outs)
-        program = Node("root", None, list(outValues))
-        print(program)
-        print()
-        return program
-
-    def to_code(self, event=None):
-        program = self.to_ast()
-        reduced = program.reduce(([], set()))
-        header = '''public static Object[] example(Object[] in){
-        Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];'''
-        fn_decls = '\n\t'.join(reduced)
-        footer = "\treturn out;\n}"
-        print(header)
-        print('\t' + fn_decls)
-        print(footer)
