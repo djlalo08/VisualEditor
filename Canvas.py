@@ -1,9 +1,8 @@
 from __future__ import annotations
 import tkinter as tk
 import ObjectHierarchy.Object as O
-import ObjectHierarchy.ObjectReference as OR
 from Point import Point
-from Wire import InputWire, OutputWire
+# from Wire import InputWire, OutputWire
 
 
 class Canvas(tk.Frame):
@@ -18,8 +17,10 @@ class Canvas(tk.Frame):
     mode = "select"
     id_map: dict[int, O.Object]= {}
     map_count : int = 0
-    ins: list[InputWire] = []
-    outs: list[OutputWire] = []
+    # ins: list[InputWire] = []
+    # outs: list[OutputWire] = []
+    ins = []
+    outs = []
         
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)

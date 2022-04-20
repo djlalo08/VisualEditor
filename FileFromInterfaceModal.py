@@ -18,7 +18,7 @@ class FileFromInterfaceModal(tk.Toplevel):
         
     @staticmethod
     def load_file(name):
-        with open('lib/bin/'+name+'.Int', 'rb') as file:
+        with open('lib/int/'+name+'.Int', 'rb') as file:
             interface = pickle.load(file)
             for in_wire in interface.ins:
                 WireAdder.add_in_wire()

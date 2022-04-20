@@ -26,7 +26,7 @@ class InterfaceModal(tk.Toplevel):
         ins = Stream(ins).map(lambda in_name: MapInterfaceNode(in_name, 'type')).to_list()
         outs = Stream(outs).map(lambda out_name: MapInterfaceNode(out_name, 'type')).to_list()
         interface = MapInterface(name, ins, outs, '')
-        with open('lib/bin/'+name+'.Int', 'wb') as file:
+        with open('lib/int/'+name+'.Int', 'wb') as file:
             pickle.dump(interface, file)
         
     def new_map_modal(self):
