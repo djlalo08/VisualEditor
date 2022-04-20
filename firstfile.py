@@ -19,7 +19,7 @@ from Point import Point
 '''
 CURRENTLY WORKING ON -- NAVIGABILITY:
 -Make map modal better
-    - Autocomplete, based on available files
+    - Autocomplete, based on available ints
     - Don't have to specify file info because the file itself already records that
     - This means that every map needs 2 files (or maybe the file can have 2 parts) -- one that specifies the map metadata, like arguments expected and returned, and one that actually has all of the implementation of the file (which in turn can be compiled and evaluated. In reality, there probably should be a third file, which is the byte-code, since in most cases (like standard lib) we don't need to access the inside of the map itself, but we do want to be able to compile and execute it))
         -Ideas about bin: 
@@ -30,7 +30,7 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
            
     - 1. Decide on what bin for saved file looks like
     - 2. Update how saving works to save both the src file and the bin file
-    - 3. When loading in a map (using map modal), depend on info from the bin file. Modal should have only the text and do a lookup
+    - 3. When loading in a map (using map modal), depend on info from the int file. Modal should have only the text and do a lookup
     - 4. Make the modal small and nice looking, with no buttons or anything (like code suggest popups)
     - 5. Add Autocomplete
 
@@ -109,8 +109,7 @@ class Bindings:
         Canvas.root.bind('<KeyPress-Up>', self.move_selection_higher)
         Canvas.root.bind('<KeyPress-Left>', self.move_selection_left)
         Canvas.root.bind('<KeyPress-Right>', self.move_selection_right)
-        Canvas.root.bind('<KeyPress-m>', self.add_map_event)  # m for map
-        Canvas.root.bind('<KeyPress-M>', self.open_map_modal)  # m for map
+        Canvas.root.bind('<KeyPress-m>', self.open_map_modal)  # m for map
         Canvas.root.bind('<KeyPress-E>', self.to_code)  # e for evaluate
         Canvas.root.bind('<KeyPress-e>', self.eval_mode)  # e for evaluate
         Canvas.root.bind('<KeyPress-d>', self.detach_wire)  # d for detach
@@ -234,10 +233,6 @@ class Bindings:
     def click_item(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
         Selector().select_item(Canvas.id_map[id])
-
-    def add_map_event(self, event=None):
-        (x, y) = cursorxy()
-        MapModal.add_map(Point(x, y))
 
     def connect_mode(self, event):
         Canvas.mode = "connect"
