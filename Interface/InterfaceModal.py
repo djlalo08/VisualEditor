@@ -8,6 +8,7 @@ from Utils import Stream
 class InterfaceModal(tk.Toplevel):
     def __init__(self, root) -> None:
         super().__init__(root)
+        self.root = root
         self.fn_name = tk.StringVar()
         self.ins = tk.StringVar()
         self.outs = tk.StringVar()
@@ -21,6 +22,7 @@ class InterfaceModal(tk.Toplevel):
         outs = self.outs.get().split(",")
         self.save_int(fn_name, ins, outs)
         self.destroy()
+        self.root.destroy()
         
     def save_int(self, name, ins, outs):
         ins = Stream(ins).map(lambda in_name: MapInterfaceNode(in_name, 'type')).to_list()
