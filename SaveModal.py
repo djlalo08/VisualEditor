@@ -1,6 +1,7 @@
 import pickle
 import tkinter as tk
 from Canvas import Canvas
+from Bindings.Evaluator import Evaluator
 
 class SaveModal(tk.Toplevel):
     def __init__(self) -> None:
@@ -21,7 +22,7 @@ class SaveModal(tk.Toplevel):
             pickle.dump(Canvas.outs, file)
 
         with open('lib/bin/'+name+'.exec', 'wb') as file:
-            pickle.dump(Canvas.id_map, file)
+            pickle.dump(Evaluator.to_code(), file)
 
     def save_modal(self):
         self.title("Save Map As:")

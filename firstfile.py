@@ -36,8 +36,8 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
     - 5. Add Autocomplete
     
 - Be able to execute code
-    - Generate .java code when we save a src file
-    - Add source component to MapData
+    - Generate .java code when we save a src file - Done
+    - Add source component to MapData 
     - Add ability to select source component (maybe default behavior should be to look through lib and for any bin files that implement desired int, and if there's more than 1, ask which is desired)
     - Make src file combine its maps' source code with its own to build its own src file (this should keep each bin file as just a name)
     - Make run method which asks for input to selected map (or to the entire file we're looking at, if none selected), and runs the java code
