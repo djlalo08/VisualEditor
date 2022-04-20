@@ -1,6 +1,5 @@
 import tkinter as tk
 from Interface.InterfaceModal import InterfaceModal
-from firstfile import Bindings
     
 class InterfaceApp(tk.Frame):
 

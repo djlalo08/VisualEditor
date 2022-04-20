@@ -4,6 +4,7 @@ from Bindings.Selector import Selector
 from Bindings.WireAdder import WireAdder
 from Canvas import Canvas
 from CanvasUtils import cursorxy
+from FileFromInterfaceModal import FileFromInterfaceModal
 from MapData import MapData, is_map_data
 from MapModal import MapModal
 from MapNode import MapNode, is_input_node, is_map_node
@@ -140,7 +141,7 @@ class Bindings:
         MapModal(selection.abs_pos(), insert_into=selection)
         
     def new_file_from_interface(self, event):
-        pass
+        FileFromInterfaceModal()
 
     def move_selection_deeper(self, event):
         NavigateDeeper().move_selection()
