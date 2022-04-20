@@ -2,6 +2,7 @@ from Bindings.Nester import Nester
 from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, NavigateRight
 from Bindings.Selector import Selector
 from Bindings.WireAdder import WireAdder
+from Bindings.Evaluator import Evaluator
 from Canvas import Canvas
 from CanvasUtils import cursorxy
 from FileFromInterfaceModal import FileFromInterfaceModal
@@ -15,7 +16,6 @@ from Utils import Stream, nott
 from WireNode import WireNode
 from WireSegment import WireSegment
 from Point import Point
-from Evaluator import Evaluator
 
 '''
 CURRENTLY WORKING ON -- NAVIGABILITY:
