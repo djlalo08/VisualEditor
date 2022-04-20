@@ -28,9 +28,9 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
     - Making an interface can be independent from making an actual map. Interfaces can have multiple implementations (this is a pref that can be decided on sidebar). Source files can claim to implement an interface. Interface can be made with no impl but when You try to execute code that depends on it, You get a "not implemented"-type error
     - Autocomplete looks for interfaces. If an interface has only 1 impl, then that one is selected. Otherwise user is prompted to select
            
-    - 1. Decide on what bin for saved file looks like
-    - 2. Update how saving works to save both the src file and the bin file
-    - 3. When loading in a map (using map modal), depend on info from the int file. Modal should have only the text and do a lookup
+    - 1. Decide on what bin for saved file looks like - Done(ish)
+    - 2. Update how saving works to save both the src file and the bin file - Done(ish). Missing bin stuff
+    - 3. When loading in a map (using map modal), depend on info from the int file. Modal should have only the text and do a lookup - Done
     - 4. Make the modal small and nice looking, with no buttons or anything (like code suggest popups)
     - 5. Add Autocomplete
 

@@ -41,13 +41,9 @@ class MapModal(tk.Toplevel):
             return MapData(pos=pos, name=fn_name, fn=fn)
 
     def new_map_modal(self):
-        self.title("Set map info")
-        self.geometry("460x180")
+        self.title("")
+        self.geometry("195x30")
 
-        fn_name_label = tk.Label(self, text="fn name").place(x=40, y=20)
-        fn_name = tk.Entry(self, width=30, textvariable=self.fn_name)
-        fn_name.place(x=110, y=20)
+        fn_name = tk.Entry(self, textvariable=self.fn_name)
+        fn_name.place(x=0, y=0)
         fn_name.focus()
-
-        submit_button = tk.Button(
-            self, text="Give me a map!", command=self.submit).place(x=250, y=140)
