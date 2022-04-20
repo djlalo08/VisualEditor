@@ -31,8 +31,19 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
     - 1. Decide on what bin for saved file looks like - Done(ish)
     - 2. Update how saving works to save both the src file and the bin file - Done(ish). Missing bin stuff
     - 3. When loading in a map (using map modal), depend on info from the int file. Modal should have only the text and do a lookup - Done
-    - 4. Make the modal small and nice looking, with no buttons or anything (like code suggest popups)
+    - 4. Make the modal small and nice looking, with no buttons or anything (like code suggest popups) - Need to remove top edge. Not sure how, need to look up
     - 5. Add Autocomplete
+    
+- Be able to execute code
+    - Generate .java code when we save a src file
+    - Add source component to MapData
+    - Add ability to select source component (maybe default behavior should be to look through lib and for any bin files that implement desired int, and if there's more than 1, ask which is desired)
+    - Make src file combine its maps' source code with its own to build its own src file (this should keep each bin file as just a name)
+    - Make run method which asks for input to selected map (or to the entire file we're looking at, if none selected), and runs the java code
+        - Make a modal to take in inputs, and with a field that we'll write to for output, and a run button (Shift+Enter is a good trigger I think
+        - Replace all src files in the this file's java compilation with the actual src content
+        - Figure out how to trigger a JVM instance and run Java code through python
+        - Have the result return on screen
 
 #TODO BUGS
     - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb
