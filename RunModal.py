@@ -12,8 +12,15 @@ from Canvas import Canvas
 class RunModal(tk.Toplevel):
     def __init__(self) -> None:
         super().__init__(Canvas.root)
-        self.ins = [tk.StringVar()]*len(Canvas.ins)
-        self.outs = [tk.StringVar()]*len(Canvas.outs)
+
+        self.ins = []
+        for _ in Canvas.ins:
+            self.ins.append(tk.StringVar())
+
+        self.outs = []
+        for _ in Canvas.outs:
+            self.outs.append(tk.StringVar())
+
         self.run_modal()
         self.bind('<Return>', self.run)
 
@@ -39,7 +46,11 @@ class RunModal(tk.Toplevel):
         retrieved_fns = set()
         new_code = RunModal.dereference(code, retrieved_fns)
         imports = 'import java.util.Arrays;'
-        main = 'public static void main(String[] args) {\n\t System.out.println("hi");\n}'
+        args = []
+        for entry in self.ins:
+            args += entry.get()
+        method_call = 'System.out.println(' + Canvas.file_name + '(' + ','.join(args) + ')[0]);'
+        main = 'public static void main(String[] args) {\n\t ' + method_call +'\n}'
         final_code = imports + '\n\n'\
                 + 'public class Transpiler {\n'\
                 + main + '\n'\
