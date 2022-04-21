@@ -19,35 +19,19 @@ from WireSegment import WireSegment
 from Point import Point
 
 '''
-CURRENTLY WORKING ON -- NAVIGABILITY:
--Make map modal better
-    - Autocomplete, based on available ints
-    - Don't have to specify file info because the file itself already records that
-    - This means that every map needs 2 files (or maybe the file can have 2 parts) -- one that specifies the map metadata, like arguments expected and returned, and one that actually has all of the implementation of the file (which in turn can be compiled and evaluated. In reality, there probably should be a third file, which is the byte-code, since in most cases (like standard lib) we don't need to access the inside of the map itself, but we do want to be able to compile and execute it))
-        -Ideas about bin: 
-            - Should reference other binaries rather than pasting the entire other binaries in. This way, updating a different project doesn't require updating this project. Also means You can do funky stuff with updating code You've received. 
-            - For way down the line, there should be full-compile option which compiles into projects with no references. This would make execution faster and also prevent safety issues
-    - Making an interface can be independent from making an actual map. Interfaces can have multiple implementations (this is a pref that can be decided on sidebar). Source files can claim to implement an interface. Interface can be made with no impl but when You try to execute code that depends on it, You get a "not implemented"-type error
-    - Autocomplete looks for interfaces. If an interface has only 1 impl, then that one is selected. Otherwise user is prompted to select
-           
-    - 1. Decide on what bin for saved file looks like - Done(ish)
-    - 2. Update how saving works to save both the src file and the bin file - Done(ish). Missing bin stuff
-    - 3. When loading in a map (using map modal), depend on info from the int file. Modal should have only the text and do a lookup - Done
-    - 4. Make the modal small and nice looking, with no buttons or anything (like code suggest popups) - Need to remove top edge. Not sure how, need to look up
-    - 5. Add Autocomplete
-    
-- Be able to execute code
-    - Generate .java code when we save a src file - Done
-    - Add source component to MapData 
-    - Add ability to select source component (maybe default behavior should be to look through lib and for any bin files that implement desired int, and if there's more than 1, ask which is desired)
-    - Make src file combine its maps' source code with its own to build its own src file (this should keep each bin file as just a name)
-    - Make run method which asks for input to selected map (or to the entire file we're looking at, if none selected), and runs the java code
-        - Make a modal to take in inputs, and with a field that we'll write to for output, and a run button (Shift+Enter is a good trigger I think
-        - Replace all src files in the this file's java compilation with the actual src content
-        - Figure out how to trigger a JVM instance and run Java code through python
-        - Have the result return on screen
-        
+CURRENTLY WORKING ON -- CODE EXECUTION:
+- Be able to execute code - Done!
+    - Need to clean up code because it's awful:
+        - Most of RunModal should be extracted into a Bindings class, Runner
+        - RunModal needs heavy refactoring because it's gross. Probably just extracting things into methods will make everything nicer
+        - All the raw text in RunModal (and in other places too, for that matter) should be kept somewhere nicer. Maybe a constants file? 
+        - Also might be a good idea to use string formatting rather than concatenation in this case 
+        - I sanitatized inputs willy-nilly until there weren't errors. I should make it more systematic
+        - Input sanitation is extremely limited. Let's begin to include other common symbols (. , < > ( ) : ; ' " [ ] { } # ^ & * % @) and $ _ if it's possible (need to think about whether there's endless recursion or something dumb like that)
     At some point Function.py should be replaced with MapInterface.py
+    
+On deck:
+    - Stamdard library!!
 
 #TODO BUGS
     - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb
@@ -63,7 +47,9 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
     - Data flow is messyish
     - Clean up save/load
     
-#TODO add writing directly to java files
+#TODO there's a bit to figure out regarding workflow and make impl vs intr files. Some
+    UI/UX decisions are goig to have to be made regarding that at some point
+#TODO extract java text to be in separate java files, rather than strings in python files
 #TODO need to refactor parents and children in general. In general,
     Objects can have more than one parent and more than one type of child.
     I'm thinking something like parent/child is a list of tuples, where 1st elem is name, second is value(s)
@@ -72,12 +58,21 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
 #TODO build standard library over java wrappers
 #TODO constants support
+#TODO parallel processing
 #TODO implement proper class typing
     - Make types, including lists, etc
 #TODO switch to using strictly typed python
-    - This will solve our saving issue: things like children, and parent can be typed as ObjectReference, which hold integers but can use id_map to get the actual referred object.
     - Switch to dataclass impls for classes to make the code nicer and add more type hints
-#TODO implement ability to run code inside editor
+#TODO CODE EXECUTION:
+    - Figure out how interfaces and their impls interact exactly. 
+        Current system of identical name matches is obviously not extensible 
+        and doesn't allow for swapping impls. Leading idea is when You select 
+        an interface to add to workspace, a secondary pop-up asking for which
+        impl You want pops up. This can be something that can be set in the
+        sidebar in the future. Do impls have to declare which interfaces they're
+        implementing, or is it enough to just match in argument number/type
+    - Code execution has some overhead, since it have to compiled, JVM start, and then
+        write and read from a file. Not sure if there's a way around that...
 #TODO ui/ux leaves A LOT to be desired
     - Should be able to extend nodes in cables
     - I can start adding in some syntactic sugar (custom icons for certain operations)
@@ -88,6 +83,8 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
     - map selection is not a modal, but a dropdown pop-up with type-able filter (eventually, filtered by type of fns too)
     - add lines of code, so that code naturally goes in lines across, and to make things more navigable. This will make things less free form and more pretty and easier to edit
     - add refactor commands, like extract (pulls a box out, equivalent to dragging it), and inline (replaces a wire node with the box that it comes from)
+    - remove frame from mapModal (this seemed like it's pretty hard)
+    - add autocomplete and suggestions list to mapModal
 #TODO LAMBDAS!!!
     - Need to make fns first class first (i.e. they are valid args)
         Ideas about passing fns. All maps must have all of their ins connected to work (maybe some exceptions for optional args or something like that)
