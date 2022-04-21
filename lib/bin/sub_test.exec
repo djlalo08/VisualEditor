@@ -1,0 +1,6 @@
+public static Object[] sub_test(Object[] in){
+    Object[] out = new Object[1];
+	Object[] sub_1 = sub(in[0], in[1]);
+	out[0] = sub_1[0];
+	return out;
+}

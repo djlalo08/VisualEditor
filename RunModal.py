@@ -1,6 +1,7 @@
 from os import stat
 import pickle
 import tkinter as tk
+from Bindings.Evaluator import Evaluator
 from Interface.MapInterface import MapInterface
 from Interface.MapInterfaceNode import MapInterfaceNode
 from Utils import Stream
@@ -15,7 +16,20 @@ class RunModal(tk.Toplevel):
         self.bind('<Return>', self.run)
 
     def run(self, event=None):
-        pass
+        code = Evaluator.to_code()
+        new_code = ''
+        retrieved_fns = set()
+        for line in code.split('\n'):
+            new_line = line
+            if '#' in line:
+                [front, file_name, end] = line.split('#')
+                if file_name not in retrieved_fns:
+                    with open('lib/bin/'+file_name, 'r') as file:
+                        new_code = file.read() + '\n' + new_code
+                method_name = file_name.replace('.exec', '')
+                new_line = front + method_name + end
+            new_code += '\n' + new_line
+        print(new_code)
         
     def run_modal(self):
         self.title('Run ' + Canvas.file_name)

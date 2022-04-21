@@ -1,0 +1,6 @@
+public static Object[] (Object[] in){
+    Object[] out = new Object[1];
+	Object[] sub_test_1 = #sub_test.exec#(in[0], in[1]);
+	out[0] = sub_test_1[0];
+	return out;
+}
