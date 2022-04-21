@@ -9,10 +9,11 @@ class OpenModal(tk.Toplevel):
         self.fn_name = tk.StringVar()
         self.open_modal()
         self.bind('<Return>', self.submit)
-
         
     def submit(self, event):
         fn_name = self.fn_name.get()
+        Canvas.file_name = fn_name
+        Canvas.root.title(fn_name)
         self.load_file(fn_name)
         self.destroy()
         

@@ -9,6 +9,7 @@ from FileFromInterfaceModal import FileFromInterfaceModal
 from MapData import MapData, is_map_data
 from MapModal import MapModal
 from MapNode import MapNode, is_input_node, is_map_node
+from RunModal import RunModal
 from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import Node, RootNode
@@ -127,13 +128,18 @@ class Bindings:
         Canvas.root.bind('<KeyPress-E>', Evaluator.to_code)  # e for evaluate
         Canvas.root.bind('<KeyPress-e>', self.eval_mode)  # e for evaluate
         Canvas.root.bind('<KeyPress-d>', self.detach_wire)  # d for detach
-        Canvas.root.bind('<KeyPress-s>', self.save_modal)  # s for save
+        Canvas.root.bind('<Command-s>', self.save)
+        Canvas.root.bind('<Command-S>', self.save_as)
         Canvas.root.bind('<KeyPress-l>', self.open_modal)  # l for load
         Canvas.root.bind('<Command-d>', self.debug)  # d for debug
         Canvas.root.bind('<space>', self.insert)
         Canvas.root.bind('<Shift-space>', self.enclose_selection)
         Canvas.root.bind('<BackSpace>', self.delete)
         Canvas.root.bind('<Command-N>', self.new_file_from_interface)
+        Canvas.root.bind('<Command-Return>', self.run)
+
+    def run(self, event):
+        RunModal()
 
     def delete(self, event):
         if isinstance(Canvas.selected, MapData):
@@ -185,8 +191,11 @@ class Bindings:
     def open_modal(self, event):
         self.modal = OpenModal()
 
-    def save_modal(self, event):
+    def save(self, event):
         self.modal = SaveModal()
+
+    def save_as(self, event):
+        self.modal = SaveModal(save_as = True)
 
     def drag_start(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]

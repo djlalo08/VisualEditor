@@ -14,6 +14,7 @@ class Canvas(tk.Frame):
     _drag_data = {"pos": Point(0,0), "item": None}
     selected : O.Object = None
     selected_index: int= 0
+    file_name = ''
     mode = "select"
     id_map: dict[int, O.Object]= {}
     map_count : int = 0

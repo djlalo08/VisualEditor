@@ -1,0 +1,10 @@
+public static Object[] example(Object[] in){
+    Object[] out = new Object[1];
+	Object[] square_10 = square(in[1]);
+	Object[] 4_20 = #4.exec#();
+	Object[] mul3_14 = mul3(4_20[0], in[0], in[2]);
+	Object[] sub_5 = sub(square_10[0], mul3_14[0]);
+	Object[] sqrt_1 = sqrt(sub_5[0]);
+	out[0] = sqrt_1[0];
+	return out;
+}

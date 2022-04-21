@@ -3,9 +3,15 @@ import tkinter as tk
 from Canvas import Canvas
 from Bindings.Evaluator import Evaluator
 
+#In reality I should extract save functionality into a binding and this should be the save as modal, which can call the Saver.save(file_name)
+
 class SaveModal(tk.Toplevel):
-    def __init__(self) -> None:
+    def __init__(self, save_as = False) -> None:
         super().__init__(Canvas.root)
+        if Canvas.file_name and not save_as:
+            self.save_as(Canvas.file_name)
+            self.destroy()
+            return
         self.fn_name = tk.StringVar()
         self.save_modal()
         self.bind('<Return>', self.submit)
@@ -23,6 +29,9 @@ class SaveModal(tk.Toplevel):
 
         with open('lib/bin/'+name+'.exec', 'w') as file:
             file.write(Evaluator.to_code())
+            
+        Canvas.file_name = name
+        Canvas.root.title(name)
 
     def save_modal(self):
         self.title("Save Map As:")
