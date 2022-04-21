@@ -25,6 +25,7 @@ class SaveModal(tk.Toplevel):
     def save_as(name):
         with open('lib/src/'+name, 'wb') as file:
             pickle.dump(Canvas.id_map, file)
+            pickle.dump(Canvas.ins, file)
             pickle.dump(Canvas.outs, file)
 
         with open('lib/bin/'+name+'.exec', 'w') as file:

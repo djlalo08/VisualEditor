@@ -21,9 +21,11 @@ class OpenModal(tk.Toplevel):
     def load_file(name):
         with open('lib/src/'+name, 'rb') as file:
             id_map: dict[int, Object]= pickle.load(file)
+            ins = pickle.load(file)
             outs = pickle.load(file)
 
         Canvas.id_map = id_map
+        Canvas.ins = ins
         Canvas.outs = outs
         
         # TODO: Note this might be fragile. Not certain yet, 

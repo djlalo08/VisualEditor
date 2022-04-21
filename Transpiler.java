@@ -20,8 +20,8 @@ public static Object[] sub_test(Object... in){
 
 public static Object[] ref_test(Object... in){
     Object[] out = new Object[1];
-	Object[] sub_test_1 = sub_test(in[0], in[1]);
-	out[0] = sub_test_1[0];
+	Object[] sub_test_16 = sub_test(in[0], in[1]);
+	out[0] = sub_test_16[0];
 	return out;
 }
 }
