@@ -45,13 +45,30 @@ class RunModal(tk.Toplevel):
         code = Evaluator.to_code()
         retrieved_fns = set()
         new_code = RunModal.dereference(code, retrieved_fns)
-        imports = 'import java.util.Arrays;'
+        imports = '''
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException; 
+'''
         args = []
         for entry in self.ins:
-            args += entry.get()
-        method_call = 'System.out.println(' + Canvas.file_name + '(' + ','.join(args) + ')[0]);'
-        main = 'public static void main(String[] args) {\n\t ' + method_call +'\n}'
-        final_code = imports + '\n\n'\
+            args.append(entry.get())
+        method_call = Canvas.file_name + '(' + ','.join(args) + ');'
+
+        main = \
+''' public static void main(String[] args) throws IOException {''' +\
+'Object[] result = ' + method_call +\
+'''
+    File data_bus = new File("data_bus.txt");
+    data_bus.createNewFile();
+
+    FileWriter writer = new FileWriter("data_bus.txt");
+    for (Object o: result)
+        writer.write(o + "\\n");
+    writer.close();
+}
+'''
+        final_code = imports \
                 + 'public class Transpiler {\n'\
                 + main + '\n'\
                 + new_code + '\n'\
@@ -60,6 +77,14 @@ class RunModal(tk.Toplevel):
             file.write(final_code)
         os.system("javac Transpiler.java")
         os.system("java Transpiler")
+        
+        result = ''
+        with open('data_bus.txt', 'r') as file:
+            result = file.read()
+            print(result)
+        for entry, output in zip(self.outs, result.split('\n')):
+            entry.set(output)
+            
         
     def run_modal(self):
         self.title('Run ' + Canvas.file_name)

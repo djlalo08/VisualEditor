@@ -1,3 +1,4 @@
+package generatedCode;
 
 public class Example{
 

@@ -1,9 +1,18 @@
-import java.util.Arrays;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException; 
 public class Transpiler {
-public static void main(String[] args) {
-	 System.out.println(ref_test(5,2)[0]);
+ public static void main(String[] args) throws IOException {Object[] result = ref_test(12350,1234);
+    File data_bus = new File("data_bus.txt");
+    data_bus.createNewFile();
+
+    FileWriter writer = new FileWriter("data_bus.txt");
+    for (Object o: result)
+        writer.write(o + "\n");
+    writer.close();
 }
+
 
 public static Object[] sub(Object... ins){
     Object[] result = new Object[1];
