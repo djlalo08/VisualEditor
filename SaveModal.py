@@ -21,8 +21,8 @@ class SaveModal(tk.Toplevel):
             pickle.dump(Canvas.id_map, file)
             pickle.dump(Canvas.outs, file)
 
-        with open('lib/bin/'+name+'.exec', 'wb') as file:
-            pickle.dump(Evaluator.to_code(), file)
+        with open('lib/bin/'+name+'.exec', 'w') as file:
+            file.write(Evaluator.to_code())
 
     def save_modal(self):
         self.title("Save Map As:")

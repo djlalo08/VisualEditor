@@ -12,13 +12,23 @@ from Canvas import Canvas
 from Point import Point
 from Utils import Stream
 from misc.dataclassStuff.inspect_copy import Attribute
+import os
 
 class MapData(Selectable):
-    def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", hide_outs=False, **kwargs) -> None:
+    def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", source_file='', hide_outs=False, **kwargs) -> None:
         self.fn = fn
         self.name = name
         self.ins : ObjectReference[MapNode] = ins if ins != None else [None]*len(fn.input_types)
         self.outs = outs if outs != None else [None]*len(fn.output_types)
+        if not source_file:
+            print("Source file is blank")
+            for file_name in os.listdir("./lib/bin/"):
+                print(file_name, name)
+                if file_name == name+'.exec':
+                    self.source_file = file_name
+                    print("Source file updated")
+
+        self.source_file: str = source_file
         self.hide_outs = hide_outs
         self.width = max(len(self.ins), len(self.outs))*20+10
         super().__init__(*args, width=width, height=self.height, **kwargs)

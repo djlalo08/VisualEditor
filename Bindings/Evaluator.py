@@ -1,3 +1,4 @@
+from xxlimited import foo
 from Canvas import Canvas
 from Tree import Node
 
@@ -19,6 +20,4 @@ class Evaluator:
         Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];'''
         fn_decls = '\n\t'.join(reduced)
         footer = "\treturn out;\n}"
-        print(header)
-        print('\t' + fn_decls)
-        print(footer)
+        return header + fn_decls + footer
