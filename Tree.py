@@ -1,11 +1,12 @@
 from typing import Tuple
+from typing_extensions import Self
 
 
 class Node:
     def __init__(self, name=None, index=None, children=[], parent=None, depth=0) -> None:
         self.name = name
         self.index = index
-        self.children = children
+        self.children: list[Node] = children
         self.parent= parent
         self.depth = depth
 
@@ -35,45 +36,70 @@ class Node:
             state = child.map_df(fn, state)
         return state
     
-    def get_reduced_children(self, vars):
+    def get_reduced_children(self, accumulated):
         reduced_children = []
         for child in self.children:
-            reduced_child = child.reduce(vars)
+            reduced_child = child.reduce(accumulated)
             reduced_children.append(reduced_child)
         return reduced_children
 
-    #TODO this is definitely in the wrong place
-    def reduce(self, vars):
-        if self.name == 'root':
-            self.get_reduced_children(vars)
-            return vars[0]
-        (name, index) = (self.name, self.index)
-        if name == 'in':
-            children = self.get_reduced_children(vars)
-            return (name, index)
-        if name == 'out':
-            children = self.get_reduced_children(vars)
-            assert len(children) == 1
-            (child_name, child_index) = children[0]
-            vars[0].append('out[' + str(index) + "] = " + child_name + "[" + str(child_index) + "];")
-            return None
-        if '_' in name:
-            (fn_name, fn_id) = name.split('_')
-            name_str = fn_name+"_"+str(fn_id)
-            children = self.get_reduced_children(vars)
-            arg_list = ", ".join(map(Node.child_string, children)) if children is not None else ""
-            (var_decs, var_names) = vars
-            if name_str not in var_names:
-                var_decs.append("Object[] " + name_str+ " = " + fn_name + "(" + arg_list + ");")
-                var_names.add(name_str)
-            return (name_str, index)
-        raise TypeError("The type of object is wrong: " + self.name)
+    def reduce(self, accumulated):
+        # raise TypeError("The type of object is wrong: " + self.name)
+        pass
             
     @staticmethod
     def child_string(child):
         (name, index) = child
         return name + "[" + str(index) + "]"
         
+    
+class RootNode(Node):
+    def __init__(self, children:list[Node]=[]) -> None:
+        super().__init__("root", 0, children, None, 0)
+        
+    def reduce(self, accumulated):
+        self.get_reduced_children(accumulated)
+        return accumulated[0]
+
+class InputWireNode(Node):
+
+    def __init__(self, index=None, parent=None, depth=0) -> None:
+        super().__init__("in", index, [], parent, depth)
+
+    def reduce(self, accumulated) -> Tuple[str, int]:
+        return (self.name, self.index)
+
+class MapDataNode(Node):
+    
+    def __init__(self, name=None, index=None, obj_id=None, source_file='', children:list[Self|InputWireNode]=[], parent=None, depth=0) -> None:
+        super().__init__(name, index, children, parent, depth)
+        self.source_file = source_file
+        self.obj_id = obj_id
+    
+    def reduce(self, accumulated):
+        name_str = self.name + "_" + str(self.obj_id)
+        children = self.get_reduced_children(accumulated)
+        arg_list = ", ".join(map(Node.child_string, children)) if children else ""
+        (var_decs, var_names) = accumulated
+        if name_str not in var_names:
+            var_decs.append("Object[] " + name_str+ " = " + self.source_file + "(" + arg_list + ");")
+            var_names.add(name_str)
+        return (name_str, self.index)
+
+class OutputWireNode(Node):
+
+    def __init__(self, index=None, children: list[MapDataNode]=[], parent=None, depth=0) -> None:
+        super().__init__("out", index, children, parent, depth)
+
+    def reduce(self, accumulated):
+        children = self.get_reduced_children(accumulated)
+        assert len(children) == 1
+        (child_name, child_index) = children[0]
+        accumulated[0].append('out[' + str(self.index) + "] = " + child_name + "[" + str(child_index) + "];")
+        return None
+        
+    
+    
 '''
 a = Node("A") 
 b = Node("B") 

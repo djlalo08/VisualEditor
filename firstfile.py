@@ -11,7 +11,7 @@ from MapModal import MapModal
 from MapNode import MapNode, is_input_node, is_map_node
 from SaveModal import SaveModal
 from OpenModal import OpenModal
-from Tree import Node
+from Tree import Node, RootNode
 from Utils import Stream, nott
 from WireNode import WireNode
 from WireSegment import WireSegment
@@ -194,7 +194,7 @@ class Bindings:
         Canvas._drag_data["pos"] = Point(event.x, event.y)
 
         if Canvas.mode == "eval":
-            program = Node("root", None, [Canvas.id_map[id].value])
+            program = RootNode("root", None, [Canvas.id_map[id].value])
             print(program)
 
     def drag_stop(self, event):

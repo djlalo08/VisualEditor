@@ -1,13 +1,13 @@
 from xxlimited import foo
 from Canvas import Canvas
-from Tree import Node
+from Tree import RootNode
 
 class Evaluator:
 
     @staticmethod
     def to_ast(event=None):
         outValues = map(lambda out: out.value, Canvas.outs)
-        program = Node("root", None, list(outValues))
+        program = RootNode(list(outValues))
         print(program)
         print()
         return program
@@ -20,4 +20,6 @@ class Evaluator:
     Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];\n\t'''
         fn_decls = '\n\t'.join(reduced)
         footer = "\n\treturn out;\n}"
-        return header + fn_decls + footer
+        result = header + fn_decls + footer
+        print(result)
+        return result

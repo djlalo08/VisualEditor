@@ -4,7 +4,7 @@ from Label import Label
 from MapNode import MapInputNode, MapNode, MapOutputNode, is_input_node
 from Function import Function
 from ObjectHierarchy.Selectable import Selectable
-from Tree import Node
+from Tree import MapDataNode, Node
 from ObjectHierarchy.ObjectReference import ObjectReference
 from Canvas import Canvas
 from Point import Point
@@ -52,16 +52,15 @@ class MapData(Selectable):
     
     @property
     def value(self) -> Node:
-        children = map(lambda child_ref: child_ref.obj, self.children_refs)
-        input_nodes = filter(lambda child: isinstance(child, MapInputNode), children)
-        input_values = map(lambda input_node: input_node.value, input_nodes)
-        
-        #TODO figure out how to make this multiline and delete 47-49, which is exactly the same thing but more verbose. Also maybe partial can be used to make isinstance not a lambda
-        input_values = Stream(self.children_refs).map(ObjectReference.get_obj).filter(lambda child: isinstance(child, MapInputNode)).map(MapInputNode.value_fn).to_list()
+        input_values = Stream(self.children_refs)\
+            .map(ObjectReference.get_obj)\
+            .filter(is_input_node)\
+            .map(MapInputNode.value_fn)\
+            .to_list()
             
-        ref = '#'+self.source_file+'#' if self.source_file else self.fn.name
-        name = self.fn.name + "_" + str(self.id)
-        return Node(name, ref, list(input_values))
+        name = self.fn.name
+        ref = '#'+self.source_file+'#' if self.source_file else name
+        return MapDataNode(name, None, self.id, ref, list(input_values))
     
     def update(self):
         self.hide_outs = self.parent_ref != None

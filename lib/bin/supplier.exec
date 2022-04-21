@@ -1,0 +1,6 @@
+public static Object[] example(Object[] in){
+    Object[] out = new Object[1];
+	Object[] 4_6 = 4();
+	out[0] = 4_6[0];
+	return out;
+}

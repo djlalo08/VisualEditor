@@ -5,7 +5,7 @@ from Point import Point
 import Canvas as C
 from WireNode import WireNode
 from WireSegment import WireSegment
-from Tree import Node
+from Tree import Node, InputWireNode, OutputWireNode
 
 class Wire:
     
@@ -53,7 +53,7 @@ class InputWire(Wire):
         
     @property
     def value(self) -> Node:
-        return Node("in", self.index)
+        return InputWireNode(self.index)
 
 class OutputWire(Wire):
     def __init__(self, *args, index=0, **kwargs) -> None:
@@ -62,4 +62,4 @@ class OutputWire(Wire):
 
     @property
     def value(self) -> Node:
-        return Node("out", self.index, [super().value])
+        return OutputWireNode(self.index, [super().value])
