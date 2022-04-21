@@ -1,5 +1,6 @@
 from typing import Tuple
 from typing_extensions import Self
+from StringUtils import sanitize
 
 
 class Node:
@@ -82,7 +83,7 @@ class MapDataNode(Node):
         arg_list = ", ".join(map(Node.child_string, children)) if children else ""
         (var_decs, var_names) = accumulated
         if name_str not in var_names:
-            var_decs.append("Object[] " + name_str+ " = " + self.source_file + "(" + arg_list + ");")
+            var_decs.append("Object[] " + sanitize(name_str) + " = " + self.source_file + "(" + arg_list + ");")
             var_names.add(name_str)
         return (name_str, self.index)
 
@@ -95,7 +96,7 @@ class OutputWireNode(Node):
         children = self.get_reduced_children(accumulated)
         assert len(children) == 1
         (child_name, child_index) = children[0]
-        accumulated[0].append('out[' + str(self.index) + "] = " + child_name + "[" + str(child_index) + "];")
+        accumulated[0].append('out[' + str(self.index) + "] = " + sanitize(child_name) + "[" + str(child_index) + "];")
         return None
         
     

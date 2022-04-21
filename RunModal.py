@@ -8,6 +8,7 @@ from Interface.MapInterface import MapInterface
 from Interface.MapInterfaceNode import MapInterfaceNode
 from Utils import Stream
 from Canvas import Canvas
+from StringUtils import sanitize
 
 class RunModal(tk.Toplevel):
     def __init__(self) -> None:
@@ -37,7 +38,7 @@ class RunModal(tk.Toplevel):
                         new_code = files_code + '\n' + new_code
                         retrieved_fns.add(file_name)
                 method_name = file_name.replace('.exec', '')
-                new_line = front + method_name + end
+                new_line = front + sanitize(method_name) + end
             new_code += '\n' + new_line
         return new_code
 
@@ -53,7 +54,7 @@ import java.io.IOException;
         args = []
         for entry in self.ins:
             args.append(entry.get())
-        method_call = Canvas.file_name + '(' + ','.join(args) + ');'
+        method_call = sanitize(Canvas.file_name or 'D E F A U L T') + '(' + ','.join(args) + ');'
 
         main = \
 ''' public static void main(String[] args) throws IOException {''' +\
