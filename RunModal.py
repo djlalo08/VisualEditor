@@ -1,5 +1,7 @@
 from os import stat
+import os
 import pickle
+import time
 import tkinter as tk
 from Bindings.Evaluator import Evaluator
 from Interface.MapInterface import MapInterface
@@ -15,21 +17,38 @@ class RunModal(tk.Toplevel):
         self.run_modal()
         self.bind('<Return>', self.run)
 
-    def run(self, event=None):
-        code = Evaluator.to_code()
+    @staticmethod
+    def dereference(code, retrieved_fns):
         new_code = ''
-        retrieved_fns = set()
         for line in code.split('\n'):
             new_line = line
             if '#' in line:
                 [front, file_name, end] = line.split('#')
                 if file_name not in retrieved_fns:
                     with open('lib/bin/'+file_name, 'r') as file:
-                        new_code = file.read() + '\n' + new_code
+                        files_code = RunModal.dereference(file.read(), retrieved_fns)
+                        new_code = files_code + '\n' + new_code
+                        retrieved_fns.add(file_name)
                 method_name = file_name.replace('.exec', '')
                 new_line = front + method_name + end
             new_code += '\n' + new_line
-        print(new_code)
+        return new_code
+
+    def run(self, event=None):
+        code = Evaluator.to_code()
+        retrieved_fns = set()
+        new_code = RunModal.dereference(code, retrieved_fns)
+        imports = 'import java.util.Arrays;'
+        main = 'public static void main(String[] args) {\n\t System.out.println("hi");\n}'
+        final_code = imports + '\n\n'\
+                + 'public class Transpiler {\n'\
+                + main + '\n'\
+                + new_code + '\n'\
+                + '}'
+        with open('Transpiler.java', 'w') as file:
+            file.write(final_code)
+        os.system("javac Transpiler.java")
+        os.system("java Transpiler")
         
     def run_modal(self):
         self.title('Run ' + Canvas.file_name)
