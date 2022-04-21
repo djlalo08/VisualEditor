@@ -17,7 +17,7 @@ class Evaluator:
         program = Evaluator.to_ast()
         reduced = program.reduce(([], set()))
         header = '''public static Object[] example(Object[] in){
-        Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];'''
+    Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];\n\t'''
         fn_decls = '\n\t'.join(reduced)
-        footer = "\treturn out;\n}"
+        footer = "\n\treturn out;\n}"
         return header + fn_decls + footer

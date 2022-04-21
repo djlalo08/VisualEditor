@@ -1,0 +1,6 @@
+public static Object[] example(Object[] in){
+    Object[] out = new Object[1];
+	Object[] sub test_1 = 0(in[0], in[1]);
+	out[0] = sub test_1[0];
+	return out;
+}

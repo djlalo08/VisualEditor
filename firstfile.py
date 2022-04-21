@@ -45,6 +45,8 @@ CURRENTLY WORKING ON -- NAVIGABILITY:
         - Replace all src files in the this file's java compilation with the actual src content
         - Figure out how to trigger a JVM instance and run Java code through python
         - Have the result return on screen
+        
+    At some point Function.py should be replaced with MapInterface.py
 
 #TODO BUGS
     - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb

@@ -1,17 +1,14 @@
 from __future__ import annotations
 
-from numpy import isin
 from Label import Label
 from MapNode import MapInputNode, MapNode, MapOutputNode, is_input_node
 from Function import Function
-from ObjectHierarchy.Object import Object
 from ObjectHierarchy.Selectable import Selectable
 from Tree import Node
 from ObjectHierarchy.ObjectReference import ObjectReference
 from Canvas import Canvas
 from Point import Point
 from Utils import Stream
-from misc.dataclassStuff.inspect_copy import Attribute
 import os
 
 class MapData(Selectable):
@@ -20,15 +17,13 @@ class MapData(Selectable):
         self.name = name
         self.ins : ObjectReference[MapNode] = ins if ins != None else [None]*len(fn.input_types)
         self.outs = outs if outs != None else [None]*len(fn.output_types)
+        self.source_file: str = source_file
         if not source_file:
             print("Source file is blank")
             for file_name in os.listdir("./lib/bin/"):
-                print(file_name, name)
                 if file_name == name+'.exec':
                     self.source_file = file_name
                     print("Source file updated")
-
-        self.source_file: str = source_file
         self.hide_outs = hide_outs
         self.width = max(len(self.ins), len(self.outs))*20+10
         super().__init__(*args, width=width, height=self.height, **kwargs)
@@ -64,8 +59,9 @@ class MapData(Selectable):
         #TODO figure out how to make this multiline and delete 47-49, which is exactly the same thing but more verbose. Also maybe partial can be used to make isinstance not a lambda
         input_values = Stream(self.children_refs).map(ObjectReference.get_obj).filter(lambda child: isinstance(child, MapInputNode)).map(MapInputNode.value_fn).to_list()
             
+        ref = '#'+self.source_file+'#' if self.source_file else self.fn.name
         name = self.fn.name + "_" + str(self.id)
-        return Node(name, None, list(input_values))
+        return Node(name, ref, list(input_values))
     
     def update(self):
         self.hide_outs = self.parent_ref != None

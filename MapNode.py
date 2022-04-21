@@ -1,6 +1,4 @@
 from __future__ import annotations
-from functools import reduce
-from typing import Tuple
 import MapData as md
 from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Object import Object

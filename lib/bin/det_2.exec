@@ -1,8 +1,0 @@
-public static Object[] example(Object[] in){
-	Object[] out = new Object[1];	Object[] square_5 = square(in[1]);
-	Object[] 4_20 = 4();
-	Object[] mul3_14 = mul3(4_20[0], in[0], in[2]);
-	Object[] sub_9 = sub(square_5[0], mul3_14[0]);
-	Object[] sqrt_1 = sqrt(sub_9[0]);
-	out[0] = sqrt_1[0];	return out;
-}
