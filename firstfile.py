@@ -101,7 +101,6 @@ class Bindings:
         Canvas.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
         Canvas.canvas.tag_bind("selectable", '<ButtonPress-1>', self.click_item)
         Canvas.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
-        Canvas.canvas.tag_bind("map_node", "<ButtonPress-2>", self.expand_node)
         Canvas.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
         Canvas.canvas.tag_bind("draggable", "<B1-Motion>", self.drag)
         Canvas.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
@@ -232,20 +231,6 @@ class Bindings:
 
         map_node = free_maps[0]
         map_node.add_wire_node(Canvas._drag_data["item"])
-
-    def expand_node(self, event):
-        print(event.x, event.y)
-        print(Point(1, 2))
-        nearby_ids = Canvas.canvas.find_closest(event.x, event.y, halo=10)
-        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
-        overlapping_nodes = list(
-            filter(lambda obj: isinstance(obj, MapNode), overlappers))
-        if not len(overlapping_nodes) == 0:
-            node = overlapping_nodes[0]
-            print("abs", node.abs_pos())
-            print("offset", node.offset)
-            print("offset_off_par", node.offset_off_parent)
-            print("pos", node.pos)
 
     def click_item(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]

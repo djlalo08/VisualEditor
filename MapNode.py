@@ -6,7 +6,7 @@ from Point import Point
 from ObjectHierarchy.Selectable import Selectable
 from Canvas import Canvas
 from Tree import Node
-from Utils import Stream
+from Utils import Stream, nott
 from Wire import Wire
 from WireNode import WireNode, is_wire_node
 
@@ -42,7 +42,7 @@ class MapNode(Selectable):
         left, top, right, bottom = 0,0,0,0
         children = Stream(self.children_refs)\
             .map(ObjectReference.get_obj)\
-            .filter(is_wire_node)\
+            .filter(nott(is_wire_node))\
             .iterable
 
         for child in children:
