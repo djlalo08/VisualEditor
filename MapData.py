@@ -17,6 +17,12 @@ END_PADDING_Y = 5
 LABEL_PADDING_Y = 10
 PADDING_X = 7
 
+def max_height_and_tot_width(items):
+    heights = list(map(lambda item: item.height, items))
+    max_y = max(heights + [0])
+    tot_width = sum(map(lambda item: item.width, items))
+    return max_y, tot_width
+
 class MapData(Selectable):
     def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", source_file='', hide_outs=False, **kwargs) -> None:
         self.fn = fn
@@ -83,40 +89,28 @@ class MapData(Selectable):
     def update(self):
         self.hide_outs = self.parent_ref != None
 
-        first_in, first_out = None, None
-        in_nodes, out_nodes = 0,0
-        in_widths, out_widths = 0,0
-        max_y_in, max_y_out, label_width = 0,0,0
-        
         input_nodes = self.map_input_nodes
         output_nodes = self.map_output_nodes
         labels = self.labels
 
-        for input_node in input_nodes:
-            first_in = input_node if first_in == None else first_in
-            max_y_in = max(max_y_in, input_node.height)
-            in_widths += input_node.width
-            in_nodes += 1
+        max_y_in, in_widths = max_height_and_tot_width(input_nodes)
+        max_y_out, out_widths = max_height_and_tot_width(output_nodes)
                 
         for output_node in output_nodes:
-            first_out = output_node if first_out == None else first_out
-            max_y_out = max(max_y_out, output_node.height)
-            out_widths += output_node.width
-            out_nodes += 1
             out_state = 'hidden' if self.hide_outs else 'normal'
             Canvas.canvas.itemconfigure(output_node.id, state=out_state)
 
-        for label in labels:
-            label_width = len(label.name)*5.7
+        label_width = sum(map(lambda label: len(label.name), labels))*5.7
 
         if in_widths > out_widths:
-           self.width = in_widths + PADDING_X*(in_nodes-1)
+           self.width = in_widths + PADDING_X*(len(input_nodes)-1)
         else:
-           self.width = out_widths + PADDING_X*(out_nodes-1)
+           self.width = out_widths + PADDING_X*(len(output_nodes)-1)
+
         self.width = max(self.width, label_width)
         self.width += 2*END_PADDING_X
-        total_height = 0
-        total_height += END_PADDING_Y + max_y_in
+
+        total_height = END_PADDING_Y + max_y_in
         total_height += LABEL_PADDING_Y + LABEL_HEIGHT + LABEL_PADDING_Y
         if not self.hide_outs:
             total_height += max_y_out + END_PADDING_Y 
@@ -128,6 +122,7 @@ class MapData(Selectable):
         y_size = self.height/2 - END_PADDING_Y - LABEL_PADDING_Y
         in_y, out_y = -y_size, y_size
 
+        first_out = output_nodes and output_nodes[0]
         first_out_height = first_out.height if first_out != None else 0
 
         for child_ref in self.children_refs:
@@ -150,6 +145,7 @@ class MapData(Selectable):
 
         super().update()
         Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
+
     
     def get_outline(self):
         return "red" if self.is_selected else "black"
