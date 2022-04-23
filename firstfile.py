@@ -19,9 +19,7 @@ from WireSegment import WireSegment
 from Point import Point
 
 '''
-CURRENTLY WORKING ON -- CODE EXECUTION:
-- Be able to execute code - Done!
-    - Need to clean up code because it's awful:
+CURRENTLY WORKING ON -- SYNTACTIC SUGAR
     
 On deck:
     - Stamdard library!!

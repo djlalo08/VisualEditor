@@ -40,8 +40,10 @@ class MapNode(Selectable):
     @property
     def _size(self):
         left, top, right, bottom = 0,0,0,0
-        #TODO figure out how to multiline this
-        children = Stream(self.children_refs).map(ObjectReference.get_obj).filter(lambda child: not isinstance(child, WireNode)).iterable
+        children = Stream(self.children_refs)\
+            .map(ObjectReference.get_obj)\
+            .filter(lambda child: not isinstance(child, WireNode))\
+            .iterable
 
         for child in children:
             c_left, c_top, c_right, c_bottom = child.pos.around(child.width,child.height)
@@ -114,7 +116,6 @@ class MapOutputNode(MapNode):
         wire_node.bind_index = self.index
         self.update()
 
-
     @property
     def value(self) -> Node:
         if self.parent_ref:
@@ -123,3 +124,6 @@ class MapOutputNode(MapNode):
             return map_val
         else:
             raise AttributeError("Node [" + str(self) + "] has no parent")
+        
+def is_output_node(obj):
+    return isinstance(obj, MapOutputNode)
