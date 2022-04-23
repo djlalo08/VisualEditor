@@ -4,14 +4,14 @@ import java.io.FileWriter;
 import java.io.IOException; 
 public class Transpiler {
  public static void main(String[] args) throws IOException {
-	Object[] result = quad(3.0,8.0,2.0);
-    File data_bus = new File("data_bus.txt");
-    data_bus.createNewFile();
+	Object[] result = quad(3.0,8.0,1.0);
+File data_bus = new File("data_bus.txt");
+data_bus.createNewFile();
 
-    FileWriter writer = new FileWriter("data_bus.txt");
-    for (Object o: result)
-        writer.write(o + "\n");
-    writer.close();
+FileWriter writer = new FileWriter("data_bus.txt");
+for (Object o: result)
+    writer.write(o + "\n");
+writer.close();
 }
 
 
