@@ -22,10 +22,6 @@ from Point import Point
 CURRENTLY WORKING ON -- CODE EXECUTION:
 - Be able to execute code - Done!
     - Need to clean up code because it's awful:
-        - Most of RunModal should be extracted into a Bindings class, Runner
-        - RunModal needs heavy refactoring because it's gross. Probably just extracting things into methods will make everything nicer
-        - All the raw text in RunModal (and in other places too, for that matter) should be kept somewhere nicer. Maybe a constants file? 
-        - Also might be a good idea to use string formatting rather than concatenation in this case 
         - I sanitatized inputs willy-nilly until there weren't errors. I should make it more systematic
         - Input sanitation is extremely limited. Let's begin to include other common symbols (. , < > ( ) : ; ' " [ ] { } # ^ & * % @) and $ _ if it's possible (need to think about whether there's endless recursion or something dumb like that)
     At some point Function.py should be replaced with MapInterface.py

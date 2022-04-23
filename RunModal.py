@@ -18,7 +18,9 @@ class RunModal(tk.Toplevel):
         self.bind('<Return>', self.run_)
 
     def run_(self, event=None):
-        run(Canvas.file_name, self.ins, self.outs)
+        results = run(Canvas.file_name, self.ins)
+        for entry, output in zip(self.outs, results):
+            entry.set(output)
         
     def run_modal(self):
         self.title('Run ' + Canvas.file_name)
