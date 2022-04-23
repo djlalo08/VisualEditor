@@ -1,11 +1,13 @@
 from __future__ import annotations
 import MapData as md
 from ObjectHierarchy.ObjectReference import ObjectReference
+from ObjectHierarchy.Object import Object
 from Point import Point
 from ObjectHierarchy.Selectable import Selectable
 from Canvas import Canvas
 from Tree import Node
 from Utils import Stream
+from Wire import Wire
 from WireNode import WireNode, is_wire_node
 
 height = 15

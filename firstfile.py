@@ -12,7 +12,7 @@ from MapNode import MapNode, is_input_node, is_map_node
 from RunModal import RunModal
 from SaveModal import SaveModal
 from OpenModal import OpenModal
-from Tree import Node, RootNode
+from Tree import RootNode
 from Utils import Stream, nott
 from WireNode import WireNode
 from WireSegment import WireSegment
