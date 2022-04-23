@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from numpy import delete
 from ObjectHierarchy.Selectable import Selectable
 import Canvas as C
 from Tree import Node
@@ -41,3 +40,6 @@ class WireNode(Selectable):
         if self.parent_ref:
             self.parent_ref.obj.children_refs.remove(self.ref)
         self.parent_ref = None
+        
+def is_wire_node(obj):
+    return isinstance(obj, WireNode)

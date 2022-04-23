@@ -1,14 +1,12 @@
 from __future__ import annotations
 import MapData as md
 from ObjectHierarchy.ObjectReference import ObjectReference
-from ObjectHierarchy.Object import Object
 from Point import Point
 from ObjectHierarchy.Selectable import Selectable
 from Canvas import Canvas
 from Tree import Node
 from Utils import Stream
-from Wire import Wire
-from WireNode import WireNode
+from WireNode import WireNode, is_wire_node
 
 height = 15
 width = 15
@@ -42,7 +40,7 @@ class MapNode(Selectable):
         left, top, right, bottom = 0,0,0,0
         children = Stream(self.children_refs)\
             .map(ObjectReference.get_obj)\
-            .filter(lambda child: not isinstance(child, WireNode))\
+            .filter(is_wire_node)\
             .iterable
 
         for child in children:

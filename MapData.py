@@ -122,26 +122,25 @@ class MapData(Selectable):
         y_size = self.height/2 - END_PADDING_Y - LABEL_PADDING_Y
         in_y, out_y = -y_size, y_size
 
+        for input_node in input_nodes:
+            in_x += input_node.width/2
+            y = in_y + input_node.height/2 - LABEL_PADDING_Y
+            input_node.pos = Point(in_x, y)
+            in_x += input_node.width/2 + PADDING_X
+                
+        for output_node in output_nodes:
+            out_x += output_node.width/2
+            output_node.pos = Point(out_x, out_y)
+            out_x += output_node.width/2 + PADDING_X
+
         first_out = output_nodes and output_nodes[0]
         first_out_height = first_out.height if first_out != None else 0
 
-        for child_ref in self.children_refs:
-            child = child_ref.obj
-            if isinstance(child, MapInputNode):
-                in_x += child.width/2
-                y = in_y + child.height/2 - LABEL_PADDING_Y
-                child.pos = Point(in_x, y)
-                in_x += child.width/2 + PADDING_X
-            elif isinstance(child, MapOutputNode):
-                out_x += child.width/2
-                child.pos = Point(out_x, out_y)
-                out_x += child.width/2 + PADDING_X
-            elif isinstance(child, Label):
-                y = out_y - first_out_height/2 - LABEL_HEIGHT/2 - LABEL_PADDING_Y
-                if self.hide_outs:
-                    y = self.height/2 -LABEL_HEIGHT/2 - LABEL_PADDING_Y
-                child.pos = Point(0,y)
-
+        for label in labels:
+            y = out_y - first_out_height/2 - LABEL_HEIGHT/2 - LABEL_PADDING_Y
+            if self.hide_outs:
+                y = self.height/2 -LABEL_HEIGHT/2 - LABEL_PADDING_Y
+            label.pos = Point(0,y)
 
         super().update()
         Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
