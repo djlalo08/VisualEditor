@@ -1,0 +1,5 @@
+public static Object[] sqrt(Object... ins){
+    Object[] result = new Object[1];
+    result[0] = Math.sqrt((double)ins[0]);
+    return result;
+}

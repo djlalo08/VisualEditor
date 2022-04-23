@@ -57,7 +57,7 @@ import java.io.IOException;
         method_call = sanitize(Canvas.file_name or 'D E F A U L T') + '(' + ','.join(args) + ');'
 
         main = \
-''' public static void main(String[] args) throws IOException {''' +\
+''' public static void main(String[] args) throws IOException {\n''' +\
 'Object[] result = ' + method_call +\
 '''
     File data_bus = new File("data_bus.txt");

@@ -1,0 +1,5 @@
+public static Object[] mul3(Object... ins){
+    Object[] result = new Object[1];
+    result[0] = (double)ins[0]*(double)ins[1]*(double)ins[2];
+    return result;
+}

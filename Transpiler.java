@@ -3,7 +3,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException; 
 public class Transpiler {
- public static void main(String[] args) throws IOException {Object[] result = D_0E_0F_0A_0U_0L_0T();
+ public static void main(String[] args) throws IOException {
+Object[] result = det(3.0,8.0,2.0);
     File data_bus = new File("data_bus.txt");
     data_bus.createNewFile();
 
@@ -14,15 +15,43 @@ public class Transpiler {
 }
 
 
-public static Object[] _$4(Object... in){
+public static Object[] sqrt(Object... ins){
     Object[] result = new Object[1];
-    result[0] = 4;
+    result[0] = Math.sqrt((double)ins[0]);
     return result;
 }
 
-public static Object[] D_0E_0F_0A_0U_0L_0T(Object... in){ Object[] out = new Object[1];
-	Object[] _$4_1 = _$4();
-	out[0] = _$4_1[0];
+public static Object[] sub(Object... ins){
+    Object[] result = new Object[1];
+    result[0] = (double)ins[0]-(double)ins[1];
+    return result;
+}
+
+public static Object[] mul3(Object... ins){
+    Object[] result = new Object[1];
+    result[0] = (double)ins[0]*(double)ins[1]*(double)ins[2];
+    return result;
+}
+
+public static Object[] _$4(Object... in){
+    Object[] result = new Object[1];
+    result[0] = 4.0;
+    return result;
+}
+
+public static Object[] square(Object... ins){
+    Object[] result = new Object[1];
+    result[0] = (double)ins[0]*(double)ins[0];
+    return result;
+}
+
+public static Object[] det(Object... in){ Object[] out = new Object[1];
+	Object[] square_10 = square(in[1]);
+	Object[] _$4_20 = _$4();
+	Object[] mul3_14 = mul3(_$4_20[0], in[0], in[2]);
+	Object[] sub_5 = sub(square_10[0], mul3_14[0]);
+	Object[] sqrt_1 = sqrt(sub_5[0]);
+	out[0] = sqrt_1[0];
 	return out;
 }
 }

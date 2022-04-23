@@ -51,7 +51,7 @@ class Node:
     @staticmethod
     def child_string(child):
         (name, index) = child
-        return name + "[" + str(index) + "]"
+        return sanitize(name) + "[" + str(index) + "]"
         
     
 class RootNode(Node):
