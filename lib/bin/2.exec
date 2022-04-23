@@ -1,0 +1,5 @@
+public static Object[] _$2(Object... in){
+    Object[] result = new Object[1];
+    result[0] = 2.0;
+    return result;
+}

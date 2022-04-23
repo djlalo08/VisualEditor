@@ -1,0 +1,5 @@
+public static Object[] div(Object... ins){
+    Object[] result = new Object[1];
+    result[0] = (double)ins[0]/(double)ins[1];
+    return result;
+}

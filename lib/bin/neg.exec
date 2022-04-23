@@ -1,0 +1,5 @@
+public static Object[] neg(Object... ins){
+    Object[] result = new Object[1];
+    result[0] = -(double)ins[0];
+    return result;
+}

@@ -1,0 +1,7 @@
+
+public static Object[] split2(Object... ins){
+    Object[] result = new Object[2];
+    result[0] = ins[0];
+    result[1] = ins[0];
+    return result;
+}

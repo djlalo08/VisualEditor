@@ -1,12 +1,6 @@
-from os import stat
 import os
-import pickle
-import time
 import tkinter as tk
 from Bindings.Evaluator import Evaluator
-from Interface.MapInterface import MapInterface
-from Interface.MapInterfaceNode import MapInterfaceNode
-from Utils import Stream
 from Canvas import Canvas
 from StringUtils import sanitize
 
@@ -57,7 +51,7 @@ import java.io.IOException;
         method_call = sanitize(Canvas.file_name or 'D E F A U L T') + '(' + ','.join(args) + ');'
 
         main = \
-''' public static void main(String[] args) throws IOException {\n''' +\
+''' public static void main(String[] args) throws IOException {\n\t''' +\
 'Object[] result = ' + method_call +\
 '''
     File data_bus = new File("data_bus.txt");
