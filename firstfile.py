@@ -22,9 +22,6 @@ from Point import Point
 CURRENTLY WORKING ON -- CODE EXECUTION:
 - Be able to execute code - Done!
     - Need to clean up code because it's awful:
-        - I sanitatized inputs willy-nilly until there weren't errors. I should make it more systematic
-        - Input sanitation is extremely limited. Let's begin to include other common symbols (. , < > ( ) : ; ' " [ ] { } # ^ & * % @) and $ _ if it's possible (need to think about whether there's endless recursion or something dumb like that)
-    At some point Function.py should be replaced with MapInterface.py
     
 On deck:
     - Stamdard library!!
@@ -34,7 +31,7 @@ On deck:
     - When using c-mode to jump a map to a wire, if map is in front of wire, program freaks out
     - If You delete stuff and then save, everything goes crazy next time file is loaded up
 
-#TODO clean up
+#TODO CLEAN UP
     - Tags should be nicer and maybe classes (Selectable, Object, etc) should include them
     - Wire.py is a bit unruly. Maybe it should be more of a proper Object. 
         Maybe wire is an example of why Movable should be a class -- wire would be an Object but not movable. 
@@ -42,9 +39,12 @@ On deck:
     - Make enum for selection modes
     - Data flow is messyish
     - Clean up save/load
+    - MapInterface.py turns out to be encoding basically the same thing as Function.py. Delete Function.Py
     
-#TODO there's a bit to figure out regarding workflow and make impl vs intr files. Some
-    UI/UX decisions are goig to have to be made regarding that at some point
+#TODO INPUT SANITATION
+    - I sanitatized inputs willy-nilly until there weren't errors. I should make it more systematic
+    - Input sanitation is extremely limited. Let's begin to include other common symbols (. , < > ( ) : ; ' " [ ] { } # ^ & * % @) and $ _ if it's possible (need to think about whether there's endless recursion or something dumb like that)
+    
 #TODO extract java text to be in separate java files, rather than strings in python files
 #TODO need to refactor parents and children in general. In general,
     Objects can have more than one parent and more than one type of child.
@@ -52,11 +52,11 @@ On deck:
     e.g. parent = [('wire', wire), ('bound-to', bound_to)]
     ^^ This above sounds sort of complicated... there must be a better way
 #TODO add support for calls to other maps (i.e. I made map x, it uses map y, be able to build map y)
-#TODO build standard library over java wrappers
-#TODO constants support
-#TODO parallel processing
-#TODO implement proper class typing
-    - Make types, including lists, etc
+#TODO STANDARD LIBRARY
+#TODO CONSTANTS SUPPORT
+#TODO PARALLEL PROCESSING
+#TODO TYPING
+    - Make types including lists, etc
 #TODO switch to using strictly typed python
     - Switch to dataclass impls for classes to make the code nicer and add more type hints
 #TODO CODE EXECUTION:
@@ -69,7 +69,7 @@ On deck:
         implementing, or is it enough to just match in argument number/type
     - Code execution has some overhead, since it have to compiled, JVM start, and then
         write and read from a file. Not sure if there's a way around that...
-#TODO ui/ux leaves A LOT to be desired
+#TODO UI/UX
     - Should be able to extend nodes in cables
     - I can start adding in some syntactic sugar (custom icons for certain operations)
         - Maps are customizable so that symbols can be determined based on items.
@@ -81,6 +81,9 @@ On deck:
     - add refactor commands, like extract (pulls a box out, equivalent to dragging it), and inline (replaces a wire node with the box that it comes from)
     - remove frame from mapModal (this seemed like it's pretty hard)
     - add autocomplete and suggestions list to mapModal
+    - there's a bit to figure out regarding workflow and make impl vs intr files. Some
+        UI/UX decisions are going to have to be made regarding that at some point
+
 #TODO LAMBDAS!!!
     - Need to make fns first class first (i.e. they are valid args)
         Ideas about passing fns. All maps must have all of their ins connected to work (maybe some exceptions for optional args or something like that)
@@ -106,24 +109,24 @@ class Bindings:
         Canvas.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
 
         Canvas.root.bind('<ButtonPress-2>', self.print_cursor)
-        Canvas.root.bind('<KeyPress-c>', self.connect_mode)  # c for connect
-        Canvas.root.bind('<KeyPress-j>', self.wire_edit_mode)  # j for connect
-        Canvas.root.bind('<KeyPress-w>', WireAdder.add_free_wire)  # w for wire
-        Canvas.root.bind('<KeyPress-i>', WireAdder.add_in_wire)  # i for in
-        Canvas.root.bind('<KeyPress-I>', WireAdder.remove_in_wire)
-        Canvas.root.bind('<KeyPress-o>', WireAdder.add_out_wire)  # o for out
-        Canvas.root.bind('<KeyPress-O>', WireAdder.remove_out_wire)
-        Canvas.root.bind('<KeyPress-Down>', self.move_selection_deeper)
-        Canvas.root.bind('<KeyPress-Up>', self.move_selection_higher)
-        Canvas.root.bind('<KeyPress-Left>', self.move_selection_left)
-        Canvas.root.bind('<KeyPress-Right>', self.move_selection_right)
-        Canvas.root.bind('<KeyPress-m>', self.open_map_modal)  # m for map
-        Canvas.root.bind('<KeyPress-E>', Evaluator.to_code)  # e for evaluate
-        Canvas.root.bind('<KeyPress-e>', self.eval_mode)  # e for evaluate
-        Canvas.root.bind('<KeyPress-d>', self.detach_wire)  # d for detach
+        Canvas.root.bind('c', self.connect_mode)  # c for connect
+        Canvas.root.bind('j', self.wire_edit_mode)  # j for connect
+        Canvas.root.bind('w', WireAdder.add_free_wire)  # w for wire
+        Canvas.root.bind('i', WireAdder.add_in_wire)  # i for in
+        Canvas.root.bind('I', WireAdder.remove_in_wire)
+        Canvas.root.bind('o', WireAdder.add_out_wire)  # o for out
+        Canvas.root.bind('O', WireAdder.remove_out_wire)
+        Canvas.root.bind('<Down>', self.move_selection_deeper)
+        Canvas.root.bind('<Up>', self.move_selection_higher)
+        Canvas.root.bind('<Left>', self.move_selection_left)
+        Canvas.root.bind('<Right>', self.move_selection_right)
+        Canvas.root.bind('m', self.open_map_modal)  # m for map
+        Canvas.root.bind('E', Evaluator.to_code)  # e for evaluate
+        Canvas.root.bind('e', self.eval_mode)  # e for evaluate
+        Canvas.root.bind('d', self.detach_wire)  # d for detach
         Canvas.root.bind('<Command-s>', self.save)
         Canvas.root.bind('<Command-S>', self.save_as)
-        Canvas.root.bind('<KeyPress-l>', self.open_modal)  # l for load
+        Canvas.root.bind('l', self.open_modal)  # l for load
         Canvas.root.bind('<Command-d>', self.debug)  # d for debug
         Canvas.root.bind('<space>', self.insert)
         Canvas.root.bind('<Shift-space>', self.enclose_selection)
@@ -148,7 +151,7 @@ class Bindings:
     def insert(self, event):
         selection = Canvas.selected
         if not is_input_node(selection):
-            return
+            selection = None
 
         MapModal(selection.abs_pos(), insert_into=selection)
         
