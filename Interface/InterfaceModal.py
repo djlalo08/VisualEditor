@@ -16,9 +16,9 @@ class InterfaceModal(tk.Toplevel):
         self.new_map_modal()
         self.bind('<Return>', self.submit)
 
-    def submit(self, event=None):
+    def submit(self, event=None, label=None):
         fn_name, ins, outs = self.read_fields()
-        self.save_int(fn_name, ins, outs)
+        self.save_int(fn_name, ins, outs, label)
         self.destroy()
         self.root.destroy()
 
@@ -34,10 +34,10 @@ class InterfaceModal(tk.Toplevel):
         outs = outs.split(",") if outs else ''
         return fn_name, ins, outs
         
-    def save_int(self, name, ins, outs):
+    def save_int(self, name, ins, outs, label=None):
         ins = Stream(ins).map(lambda in_name: MapInterfaceNode(in_name, 'type')).to_list()
         outs = Stream(outs).map(lambda out_name: MapInterfaceNode(out_name, 'type')).to_list()
-        interface = MapInterface(name, ins, outs, '')
+        interface = MapInterface(name, ins, outs, '', labels=label)
         with open('lib/int/'+name+'.Int', 'wb') as file:
             pickle.dump(interface, file)
         

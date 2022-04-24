@@ -6,8 +6,7 @@ class InterfaceApp(tk.Frame):
 
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
-        # InterfaceModal(parent)
-        LabelModal(parent, ['',''], [''], 'split2')
+        InterfaceModal(parent)
 
 if __name__ == "__main__":
     root = tk.Tk()

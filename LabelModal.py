@@ -1,7 +1,9 @@
+from cProfile import label
 import pickle
 import tkinter as tk
 from Interface.MapInterface import MapInterface
 from Interface.MapInterfaceNode import MapInterfaceNode
+from Interface.InterfaceLabels import InterfaceLabels
 from Utils import Stream
 
 pad_lr = 20
@@ -40,19 +42,24 @@ class LabelModal(tk.Toplevel):
             ls.append(tk.StringVar())
         return ls
 
-    def submit(self, event=None):
-        fn_name = self.fn_name.get()
-        ins = self.ins.get()
-        ins = ins.split(",") if ins else ''
-        outs = self.outs.get().split(",")
-        self.save_int(fn_name, ins, outs) 
+    def collect_labels(self):
+        in_tops = list(map(tk.StringVar.get, self.in_tops))
+        in_btwns = list(map(tk.StringVar.get, self.in_btwns))
+        in_bots = list(map(tk.StringVar.get, self.in_bots))
+
+        out_tops = list(map(tk.StringVar.get, self.out_tops))
+        out_btwns = list(map(tk.StringVar.get, self.out_btwns))
+        out_bots = list(map(tk.StringVar.get, self.out_bots))
         
-    def save_int(self, name, ins, outs):
-        ins = Stream(ins).map(lambda in_name: MapInterfaceNode(in_name, 'type')).to_list()
-        outs = Stream(outs).map(lambda out_name: MapInterfaceNode(out_name, 'type')).to_list()
-        interface = MapInterface(name, ins, outs, '')
-        with open('lib/int/'+name+'.Int', 'wb') as file:
-            pickle.dump(interface, file)
+        return InterfaceLabels(self.fn_name, self.center.get(), 
+            self.top.get(), self.bot.get(), 
+            self.left.get(), self.right.get(), 
+            in_tops, in_btwns, in_bots, 
+            out_tops, out_btwns, out_bots)
+        
+    def save(self, event=None):
+        labels = self.collect_labels()
+        self.root.submit(label=labels)
         
     def new_map_modal(self):
         self.title("Set map info")
