@@ -5,12 +5,11 @@ from Utils import empty_if_null
 
 class MapInterface:
 
-    def __init__(self, name, ins, outs, code, source=None, labels=None, is_pure=True) -> None:
+    def __init__(self, name, ins, outs, source=None, labels=None, is_pure=True) -> None:
         self.name: str = name
         self.ins: list[MapInterfaceNode] = empty_if_null(ins)
         self.outs: list[MapInterfaceNode] = empty_if_null(outs)
 
-        self.code: str = code
         self.source: str = source
 
         self.labels: InterfaceLabels = labels
