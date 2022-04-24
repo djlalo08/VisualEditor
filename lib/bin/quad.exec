@@ -1,12 +1,12 @@
-public static Object[] D_0E_0F_0A_0U_0L_0T(Object... in){ Object[] out = new Object[1];
-	Object[] split2_16 = #split2.exec#(in[1]);
-	Object[] neg_44 = #neg.exec#(split2_16[0]);
-	Object[] split2_21 = #split2.exec#(in[0]);
-	Object[] det_26 = #det.exec#(split2_21[1], split2_16[1], in[2]);
-	Object[] plus_48 = #plus.exec#(neg_44[0], det_26[0]);
-	Object[] _$2_63 = #2.exec#();
-	Object[] mul_58 = #mul.exec#(_$2_63[0], split2_21[0]);
-	Object[] div_53 = #div.exec#(plus_48[0], mul_58[0]);
-	out[0] = div_53[0];
+public static Object[] quad(Object... in){ Object[] out = new Object[1];
+	Object[] split2_30 = #split2.exec#(in[0]);
+	Object[] split2_25 = #split2.exec#(split2_30[0]);
+	Object[] neg_21 = #neg.exec#(split2_25[0]);
+	Object[] det_52 = #det.exec#(split2_30[0], split2_25[1], in[2]);
+	Object[] plus_47 = #plus.exec#(neg_21[0], det_52[0]);
+	Object[] _$2_68 = #2.exec#();
+	Object[] mul_63 = #mul.exec#(_$2_68[0], split2_30[1]);
+	Object[] div_58 = #div.exec#(plus_47[0], mul_63[0]);
+	out[0] = div_58[0];
 	return out;
 }

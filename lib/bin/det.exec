@@ -1,9 +1,9 @@
 public static Object[] det(Object... in){ Object[] out = new Object[1];
-	Object[] square_10 = #square.exec#(in[1]);
-	Object[] _$4_20 = #4.exec#();
-	Object[] mul3_14 = #mul3.exec#(_$4_20[0], in[0], in[2]);
-	Object[] sub_5 = #sub.exec#(square_10[0], mul3_14[0]);
-	Object[] sqrt_1 = #sqrt.exec#(sub_5[0]);
-	out[0] = sqrt_1[0];
+	Object[] square_30 = #square.exec#(in[1]);
+	Object[] _$4_40 = #4.exec#();
+	Object[] mul3_34 = #mul3.exec#(_$4_40[0], in[0], in[2]);
+	Object[] sub_25 = #sub.exec#(square_30[0], mul3_34[0]);
+	Object[] sqrt_21 = #sqrt.exec#(sub_25[0]);
+	out[0] = sqrt_21[0];
 	return out;
 }
