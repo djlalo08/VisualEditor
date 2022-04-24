@@ -43,6 +43,7 @@ class MapModal(tk.Toplevel):
 
             fn = Function(fn_name, ins, outs)
             return MapData(pos=pos, name=fn_name, fn=fn)
+        #   return MapData(interface, pos=pos)
 
     def new_map_modal(self):
         self.title("")
