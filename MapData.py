@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from Label import Label, is_label
 from MapNode import MapInputNode, MapNode, MapOutputNode, is_input_node, is_output_node
-from Function import Function
 from ObjectHierarchy.Selectable import Selectable
 from Tree import MapDataNode, Node
 from ObjectHierarchy.ObjectReference import ObjectReference
@@ -24,16 +23,16 @@ def max_height_and_tot_width(items):
     return max_y, tot_width
 
 class MapData(Selectable):
-    def __init__(self, *args, width=100, ins=None, outs=None, fn=Function(), name="name", source_file='', hide_outs=False, **kwargs) -> None:
-        self.fn = fn
-        self.name = name
-        self.ins : ObjectReference[MapNode] = ins if ins != None else [None]*len(fn.input_types)
-        self.outs = outs if outs != None else [None]*len(fn.output_types)
+    def __init__(self, interface, *args, width=100, ins=None, outs=None, source_file='', hide_outs=False, **kwargs) -> None:
+        self.interface = interface
+        self.name = interface.name
+        self.ins : ObjectReference[MapNode] = ins if ins != None else [None]*len(interface.ins)
+        self.outs: ObjectReference[MapNode] = outs if outs != None else [None]*len(interface.outs)
         self.source_file: str = source_file
         if not source_file:
             print("Source file is blank")
             for file_name in os.listdir("./lib/bin/"):
-                if file_name == name+'.exec':
+                if file_name == self.name+'.exec':
                     self.source_file = file_name
                     print("Source file updated")
         self.hide_outs = hide_outs
@@ -52,10 +51,10 @@ class MapData(Selectable):
 
     def _create_children(self) -> list[ObjectReference[MapNode | Label]]:
         children : list[ObjectReference[MapNode | Label]] = []
-        for index, _ in enumerate(self.fn.input_types):
+        for index, _ in enumerate(self.ins):
             children.append(MapInputNode(self.ref, index, offset=self.abs_pos()).ref)
 
-        for index, _ in enumerate(self.fn.output_types):
+        for index, _ in enumerate(self.outs):
             children.append(MapOutputNode(self.ref, index, offset=self.abs_pos()).ref)
             
         children.append(Label(parent_ref=self.ref, name=self.name, offset=self.abs_pos()).ref) 
@@ -70,9 +69,8 @@ class MapData(Selectable):
             .map(MapInputNode.value_fn)\
             .to_list()
             
-        name = self.fn.name
-        ref = '#'+self.source_file+'#' if self.source_file else name
-        return MapDataNode(name, None, self.id, ref, list(input_values))
+        ref = '#'+self.source_file+'#' if self.source_file else self.name
+        return MapDataNode(self.name, None, self.id, ref, list(input_values))
     
     @property
     def map_input_nodes(self):

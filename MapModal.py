@@ -3,7 +3,6 @@ import tkinter as tk
 from Bindings.Nester import Nester
 from Point import Point
 from Canvas import Canvas
-from Function import Function
 from MapData import MapData
 
 
@@ -38,12 +37,7 @@ class MapModal(tk.Toplevel):
     def add_map(pos=Point(200, 200), fn_name="map"):
         with open('lib/int/'+fn_name+'.Int', 'rb') as file:
             interface = pickle.load(file)
-            ins = list(map(lambda x: x.type, interface.ins))
-            outs = list(map(lambda x: x.type, interface.outs))
-
-            fn = Function(fn_name, ins, outs)
-            return MapData(pos=pos, name=fn_name, fn=fn)
-        #   return MapData(interface, pos=pos)
+            return MapData(interface, pos=pos)
 
     def new_map_modal(self):
         self.title("")
