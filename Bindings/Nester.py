@@ -39,7 +39,7 @@ class Nester:
             return
         
         nearby_ids = Canvas.canvas.find_enclosed(*new_contents.corners)
-        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
+        overlappers = list(map(lambda id: Canvas.id_map[id], nearby_ids))
         overlapping_in_nodes = list(filter(lambda obj: isinstance(obj, MapInputNode), overlappers))
         map_descs = new_contents.get_all_descendants()
         for descendant in map_descs:

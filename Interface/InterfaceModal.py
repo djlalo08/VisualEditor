@@ -13,8 +13,20 @@ class InterfaceModal(tk.Toplevel):
         self.fn_name = tk.StringVar()
         self.ins = tk.StringVar()
         self.outs = tk.StringVar()
+        self.labels = None
         self.new_map_modal()
         self.bind('<Return>', self.submit)
+        self.bind('<Command-o>', self.load)
+
+    def load(self, event=None):
+        fn_name = self.fn_name.get()
+
+        with open('lib/int/'+fn_name+'.Int', 'rb') as file:
+            interface = pickle.load(file)
+            self.ins.set( str(interface.ins) )
+            self.outs.set( str(interface.outs) )
+            self.labels = interface.labels
+         
 
     def submit(self, event=None, label=None):
         fn_name, ins, outs = self.read_fields()
@@ -24,7 +36,7 @@ class InterfaceModal(tk.Toplevel):
 
     def set_labels(self, event=None):
         fn_name, ins, outs = self.read_fields()
-        LabelModal(self, ins, outs, fn_name)
+        LabelModal(self, ins, outs, fn_name, self.labels)
 
     def read_fields(self):
         fn_name = self.fn_name.get()

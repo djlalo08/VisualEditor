@@ -12,7 +12,7 @@ t_h = 20 # text height
 t_w = 40 # text width
 
 class LabelModal(tk.Toplevel):
-    def __init__(self, root, ins, outs, fn_name='') -> None:
+    def __init__(self, root, ins, outs, fn_name='', labels=None) -> None:
         super().__init__(root, background='#E7B680')
         self.root = root
         self.fn_name = fn_name
@@ -32,9 +32,34 @@ class LabelModal(tk.Toplevel):
         self.out_tops = self.string_var_list(outs)
         self.out_btwns = self.string_var_list(range( len(outs)+1 ))
         self.out_bots = self.string_var_list(outs)
+        
+        self.all_vars = [self.center, self.top, self.bot, self.left, self.right] + self.in_tops + self.in_btwns + self.in_bots + self.out_tops + self.out_btwns + self.out_bots
+        
+        self.update_labels(labels)
 
         self.new_map_modal()
         self.bind('<Command-s>', self.save)
+        
+    def update_labels_row(self, stringVars, oldVals):
+        for stringVar, oldVal in zip(stringVars, oldVals):
+            stringVar.set(oldVal)
+
+    def update_labels(self, labels):
+        if not labels: return
+        
+        self.center.set(labels.center)
+        self.top.set(labels.top)
+        self.bot.set(labels.bot)
+        self.left.set(labels.left)
+        self.right.set(labels.right)
+        
+        self.update_labels_row(self.in_tops, labels.in_tops)
+        self.update_labels_row(self.in_btwns, labels.in_btwns)
+        self.update_labels_row(self.in_bots, labels.in_bots)
+
+        self.update_labels_row(self.out_tops, labels.out_tops)
+        self.update_labels_row(self.out_btwns, labels.out_btwns)
+        self.update_labels_row(self.out_bots, labels.out_bots)
 
     def string_var_list(self, ins):
         ls = []
@@ -87,8 +112,9 @@ class LabelModal(tk.Toplevel):
         self.label_row(self.ins, 2, 2)
         self.label_row(self.outs, 6, 2)
 
-        center.focus
-        self.center.set(self.fn_name)
+        center.focus()
+        if not any(map(tk.StringVar.get, self.all_vars)):
+            self.center.set(self.fn_name)
         # submit_button = tk.Button(self, text = "Done", command=self.submit).place(x = 250, y = 140)
         
     def label(self, text, x, y):

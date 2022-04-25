@@ -23,7 +23,7 @@ class Object:
         C.Canvas.id_map[self.id] = self
 
     def move(self, delta):
-        if self.parent_ref is not None and self.constrained_to_parent:
+        if self.parent_ref and self.constrained_to_parent:
             self.parent_ref.obj.move(delta)
         else:
             self.pos += delta

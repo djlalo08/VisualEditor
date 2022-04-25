@@ -44,3 +44,11 @@ def get_obj_index(ls, obj):
 
 def nott(function):
     return lambda x: not(function(x))
+
+def pad(list, new_length, item_to_pad_with=None):
+    num_items_to_add = new_length - len(list)
+    if num_items_to_add <= 0:
+        return list
+    
+    for _ in range(num_items_to_add):
+        list.append(item_to_pad_with)

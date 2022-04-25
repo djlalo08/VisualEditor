@@ -1,13 +1,14 @@
 from __future__ import annotations
 
-from Label import Label, is_label
 from MapNode import MapInputNode, MapNode, MapOutputNode, is_input_node, is_output_node
 from ObjectHierarchy.Selectable import Selectable
+from Point import Point
 from Tree import MapDataNode, Node
 from ObjectHierarchy.ObjectReference import ObjectReference
 from Canvas import Canvas
-from Point import Point
-from Utils import Stream
+from Utils import Stream, empty_if_null
+from bisect import insort
+from Label import Label, is_label
 import os
 
 LABEL_HEIGHT = 5
@@ -15,6 +16,8 @@ END_PADDING_X = 5
 END_PADDING_Y = 5
 LABEL_PADDING_Y = 10
 PADDING_X = 7
+PAD_TB = 4
+PAD_LR = 5
 
 def max_height_and_tot_width(items):
     heights = list(map(lambda item: item.height, items))
@@ -57,7 +60,12 @@ class MapData(Selectable):
         for index, _ in enumerate(self.outs):
             children.append(MapOutputNode(self.ref, index, offset=self.abs_pos()).ref)
             
-        children.append(Label(parent_ref=self.ref, name=self.name, offset=self.abs_pos()).ref) 
+        if self.interface and self.interface.labels:
+            labels = self.interface.labels.create_labels(self)
+            for label in labels:
+                children.append(label)
+        else:
+            children.append(Label(parent_ref=self.ref, text=self.name, offset=self.abs_pos()).ref) 
 
         return children
     
@@ -84,6 +92,18 @@ class MapData(Selectable):
     def labels(self):
         return Stream(self.children_refs).map(ObjectReference.get_obj).filter(is_label).to_list()
     
+    def collect_labels_by_row_name(self):
+        labels_by_name = {}
+        for label in self.labels:
+            if label.index == -1:
+                labels_by_name[label.row_name] = label
+            else:
+                if not label.row_name in labels_by_name:
+                    labels_by_name[label.row_name] = []
+                insort(labels_by_name[label.row_name], label)
+
+        return labels_by_name
+    
     def update(self):
         self.hide_outs = self.parent_ref != None
 
@@ -93,12 +113,47 @@ class MapData(Selectable):
 
         max_y_in, in_widths = max_height_and_tot_width(input_nodes)
         max_y_out, out_widths = max_height_and_tot_width(output_nodes)
+        
+        self.max_x = 0
                 
+        self.x0, self.y0 = PAD_LR, PAD_TB
+        self.cursor_x, self.cursor_y = self.x0, self.y0
+        self.x_ins = []
+        labels_by_name = self.collect_labels_by_row_name()
+        
+        self.pos_label('top', labels_by_name, update_y=True)
+        
+        in_tops = labels_by_name.get('in_tops')
+        in_btwns = labels_by_name.get('in_btwns')
+        in_bots = labels_by_name.get('in_bots')
+        self.position_a_row(input_nodes, in_tops, in_btwns, in_bots, self.cursor_y)
+
+        self.cursor_x = self.max_x/2
+        self.pos_label('center', labels_by_name, update_y=True)
+        self.cursor_x = self.x0
+        
+        out_tops = labels_by_name.get('out_tops')
+        out_btwns = labels_by_name.get('out_btwns')
+        out_bots = labels_by_name.get('out_bots')
+        self.position_a_row(output_nodes, out_tops, out_btwns, out_bots, self.cursor_y)
+
+        self.height = self.cursor_y + PAD_TB
+        self.width = self.max_x + PAD_LR
+        
+        #for now, let's just assume that there is no such thing as 'left' text
+
+        # self.pos_label('center', labels_by_name)
+
+        # self.pos_label('bottom', labels_by_name)
+        # self.pos_label('right', labels_by_name)
+            
         for output_node in output_nodes:
             out_state = 'hidden' if self.hide_outs else 'normal'
             Canvas.canvas.itemconfigure(output_node.id, state=out_state)
+        '''
 
-        label_width = sum(map(lambda label: len(label.name), labels))*5.7
+        # label_width = sum(map(lambda label: len(label.name), labels))*5.7
+        label_width = len(self.interface.labels.center)*5.7
 
         if in_widths > out_widths:
            self.width = in_widths + PADDING_X*(len(input_nodes)-1)
@@ -138,11 +193,56 @@ class MapData(Selectable):
             y = out_y - first_out_height/2 - LABEL_HEIGHT/2 - LABEL_PADDING_Y
             if self.hide_outs:
                 y = self.height/2 -LABEL_HEIGHT/2 - LABEL_PADDING_Y
-            label.pos = Point(0,y)
+            # label.pos = Point(0,y)
+        '''
+        delta = Point(-self.width/2, -self.height/2)
+        for child_ref in self.children_refs:
+            child = child_ref.obj
+            local_delta = Point(child.width/2, child.height/2)
+            child.pos += delta + local_delta
+            child.update()
 
         super().update()
         Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
 
+    def position_a_row(self, nodes, tops, btwns, bots, top_of_row):
+        max_y_in_row = 0
+        for top_label, left_btwn_label, node, bot_label in zip(tops, btwns, nodes, bots):
+            self.cursor_y = top_of_row
+            segment_height = top_label.height + node.height + bot_label.height
+
+            btwn_x = self.cursor_x
+            self.cursor_x += left_btwn_label.width + PAD_LR
+            
+            top_label.pos = Point(self.cursor_x, self.cursor_y)
+            self.cursor_y += top_label.height + PAD_TB
+            
+            node.pos = Point(self.cursor_x, self.cursor_y)
+            left_btwn_label.pos = Point(btwn_x, self.cursor_y)
+            self.cursor_y += node.height + PAD_TB
+
+            bot_label.pos = Point(self.cursor_x, self.cursor_y) 
+            self.cursor_y += bot_label.height + PAD_TB
+                        
+            self.cursor_x += max([top_label.width, node.width, bot_label.width])
+            
+            max_y_in_row = max (max_y_in_row, self.cursor_y)
+            
+        last_btwn = btwns[-1]
+        last_btwn.pos = Point(self.cursor_x, top_of_row+segment_height/2)
+        self.cursor_x += last_btwn.width + PAD_LR
+            
+        self.max_x = max(self.max_x, self.cursor_x)
+        self.cursor_y = max_y_in_row
+
+    def pos_label(self, row_name, labels_by_name, update_x=False, update_y=False):
+        label = labels_by_name.get(row_name)
+        if label:
+            label.pos = Point(self.cursor_x, self.cursor_y)
+            if update_x:
+                self.cursor_x += label.width
+            if update_y:
+                self.cursor_y += label.height
     
     def get_outline(self):
         return "red" if self.is_selected else "black"

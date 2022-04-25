@@ -235,6 +235,20 @@ class Bindings:
 
         map_node = free_maps[0]
         map_node.add_wire_node(Canvas._drag_data["item"])
+        
+    def expand_node(self, event):
+        print(event.x, event.y)
+        print(Point(1, 2))
+        nearby_ids = Canvas.canvas.find_closest(event.x, event.y, halo=10)
+        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
+        overlapping_nodes = list(
+            filter(lambda obj: isinstance(obj, MapNode), overlappers))
+        if not len(overlapping_nodes) == 0:
+            node = overlapping_nodes[0]
+            print("abs", node.abs_pos())
+            print("offset", node.offset)
+            print("offset_off_par", node.offset_off_parent)
+            print("pos", node.pos)
 
     def click_item(self, event):
         id = Canvas.canvas.find_closest(event.x, event.y)[0]
