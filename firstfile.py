@@ -22,7 +22,7 @@ from Point import Point
 CURRENTLY WORKING ON -- SYNTACTIC SUGAR
     - Making labels editable and flexible(ish)
         - Make a label modal and label objects to store the labels [DONE]
-        - Make MapData inputs for construction be just the interface (see MapModal line 45)
+        - Make MapData inputs for construction be just the interface (see MapModal line 45) [DONE]
         - Have MapData rely on that label object in order to display according to it
     
 On deck:
