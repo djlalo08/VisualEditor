@@ -44,8 +44,8 @@ class MapNode(Selectable):
         left, top, right, bottom = 0,0,0,0
         children = Stream(self.children_refs)\
             .map(ObjectReference.get_obj)\
-            .filter(nott(is_wire_node))\
             .iterable
+            # .filter(nott(is_wire_node))\
 
         for child in children:
             c_left, c_top, c_right, c_bottom = child.pos.around(child.width,child.height)
