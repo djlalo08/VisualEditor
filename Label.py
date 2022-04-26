@@ -15,7 +15,7 @@ class Label(Object):
     
     def build_obj(self):
         pos = self.abs_pos().unpack()
-        return Canvas.canvas.create_text(pos, text=self.text, fill="black", font=('Helvetica 10 bold'))
+        return Canvas.canvas.create_text(pos, text=self.text, fill="black", font=('Helvetica 20 bold'))
     
     def __lt__(self, other):
         return self.index < other.index

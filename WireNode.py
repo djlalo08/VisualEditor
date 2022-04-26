@@ -6,8 +6,8 @@ from Tree import Node
 import Wire as W
 
 class WireNode(Selectable):
-    def __init__(self, wire, width=10, height=10, **kwargs) -> None:
-        super().__init__(width=width, height=height, constrained_to_parent=True, **kwargs) 
+    def __init__(self, wire, width=20, height=20, **kwargs) -> None:
+        super().__init__(width=width, height=height, constrained_to_parent=False, **kwargs) 
         self.wire: W.Wire = wire
         
     def build_obj(self):

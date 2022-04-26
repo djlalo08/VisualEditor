@@ -1,7 +1,8 @@
 from Canvas import Canvas
 from MapData import MapData
-from MapNode import MapInputNode
+from MapNode import MapInputNode, is_input_node
 from Point import Point
+from WireNode import is_wire_node
 
 class Nester:
 
@@ -35,12 +36,12 @@ class Nester:
 
     @staticmethod
     def drag_map_into_node(new_contents):
-        if not isinstance(new_contents, MapData):
+        if not isinstance(new_contents, MapData) and not is_wire_node(new_contents):
             return
         
         nearby_ids = Canvas.canvas.find_enclosed(*new_contents.corners)
-        overlappers = list(map(lambda id: Canvas.id_map[id], nearby_ids))
-        overlapping_in_nodes = list(filter(lambda obj: isinstance(obj, MapInputNode), overlappers))
+        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
+        overlapping_in_nodes = list(filter(is_input_node, overlappers))
         map_descs = new_contents.get_all_descendants()
         for descendant in map_descs:
             if descendant in overlapping_in_nodes:

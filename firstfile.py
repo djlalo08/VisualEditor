@@ -8,13 +8,13 @@ from CanvasUtils import cursorxy
 from FileFromInterfaceModal import FileFromInterfaceModal
 from MapData import MapData, is_map_data
 from MapModal import MapModal
-from MapNode import MapNode, is_input_node, is_map_node
+from MapNode import MapNode, is_input_node, is_map_node, is_output_node
 from RunModal import RunModal
 from SaveModal import SaveModal
 from OpenModal import OpenModal
 from Tree import RootNode
 from Utils import Stream, nott
-from WireNode import WireNode
+from WireNode import WireNode, is_wire_node
 from WireSegment import WireSegment
 from Point import Point
 
@@ -148,7 +148,7 @@ class Bindings:
 
     def enclose_selection(self, event):
         selection = Canvas.selected
-        if not is_map_data(selection):
+        if not is_map_data(selection) and not is_wire_node(selection):
             return
 
         MapModal(selection.abs_pos(), enclose=selection)
@@ -234,7 +234,7 @@ class Bindings:
         all_overlapping_ids = Canvas.canvas.find_overlapping(*overlap_range)
         free_maps = Stream(all_overlapping_ids) \
             .map(Canvas.id_map.get) \
-            .filter(is_map_node) \
+            .filter(is_output_node) \
             .filter(nott(MapNode.is_occupied)) \
             .to_list()
         if not free_maps:
