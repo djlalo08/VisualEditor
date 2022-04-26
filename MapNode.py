@@ -10,12 +10,14 @@ from Utils import Stream, nott
 from Wire import Wire
 from WireNode import WireNode, is_wire_node
 
+pad_y = 6
+pad_x = 6
 height = 15
 width = 15
 
 class MapNode(Selectable):
     def __init__(self, parent_ref, index, **kwargs) -> None:
-        super().__init__(parent_ref=parent_ref, constrained_to_parent=True, width=width, height=height, **kwargs)
+        super().__init__(parent_ref=parent_ref, constrained_to_parent=True, width=pad_x, height=pad_y, **kwargs)
         self.index = index
         self.value_ref = None
         
@@ -51,8 +53,10 @@ class MapNode(Selectable):
             top = min(c_top, top)
             right = max(c_right, right)
             bottom = max(c_bottom, bottom)
-        new_width = (right - left) + height
-        new_height = (bottom - top) + width
+            
+        is_occupied = self.is_occupied()
+        new_width = (right - left) + (pad_y if is_occupied else height)
+        new_height = (bottom - top) + (pad_x if is_occupied else width)
         return (new_width, new_height)
         
     def add_wire_node(self, wire_node: WireNode):

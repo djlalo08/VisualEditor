@@ -151,10 +151,10 @@ class Bindings:
 
     def insert(self, event):
         selection = Canvas.selected
-        if not is_input_node(selection):
-            selection = None
-
-        MapModal(selection.abs_pos(), insert_into=selection)
+        if is_input_node(selection):
+            MapModal(selection.abs_pos(), insert_into=selection)
+        else:
+            MapModal(Point(*cursorxy()))
         
     def new_file_from_interface(self, event):
         FileFromInterfaceModal()

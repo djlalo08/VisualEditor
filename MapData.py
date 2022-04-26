@@ -16,7 +16,7 @@ END_PADDING_X = 5
 END_PADDING_Y = 5
 LABEL_PADDING_Y = 10
 PADDING_X = 7
-PAD_TB = 4
+PAD_TB = 5
 PAD_LR = 5
 
 def max_height_and_tot_width(items):
@@ -121,7 +121,7 @@ class MapData(Selectable):
         self.x_ins = []
         labels_by_name = self.collect_labels_by_row_name()
         
-        self.pos_label('top', labels_by_name, update_y=True)
+        # self.pos_label('top', labels_by_name, update_y=True)
         
         in_tops = labels_by_name.get('in_tops')
         in_btwns = labels_by_name.get('in_btwns')
@@ -132,12 +132,13 @@ class MapData(Selectable):
         self.pos_label('center', labels_by_name, update_y=True)
         self.cursor_x = self.x0
         
-        out_tops = labels_by_name.get('out_tops')
-        out_btwns = labels_by_name.get('out_btwns')
-        out_bots = labels_by_name.get('out_bots')
-        self.position_a_row(output_nodes, out_tops, out_btwns, out_bots, self.cursor_y)
+        if not self.hide_outs:
+            out_tops = labels_by_name.get('out_tops')
+            out_btwns = labels_by_name.get('out_btwns')
+            out_bots = labels_by_name.get('out_bots')
+            self.position_a_row(output_nodes, out_tops, out_btwns, out_bots, self.cursor_y)
 
-        self.height = self.cursor_y + PAD_TB
+        self.height = self.cursor_y
         self.width = self.max_x + PAD_LR
         
         #for now, let's just assume that there is no such thing as 'left' text
@@ -206,31 +207,41 @@ class MapData(Selectable):
         Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
 
     def position_a_row(self, nodes, tops, btwns, bots, top_of_row):
+        nodes = empty_if_null(nodes)
+        tops = empty_if_null(tops)
+        btwns = empty_if_null(btwns)
+        bots = empty_if_null(bots)
         max_y_in_row = 0
+        last_btwn_y = 0
         for top_label, left_btwn_label, node, bot_label in zip(tops, btwns, nodes, bots):
             self.cursor_y = top_of_row
-            segment_height = top_label.height + node.height + bot_label.height
 
             btwn_x = self.cursor_x
-            self.cursor_x += left_btwn_label.width + PAD_LR
+            if left_btwn_label.width:
+                self.cursor_x += left_btwn_label.width + PAD_LR
             
             top_label.pos = Point(self.cursor_x, self.cursor_y)
-            self.cursor_y += top_label.height + PAD_TB
+            if top_label.height:
+                self.cursor_y += top_label.height + PAD_TB
             
             node.pos = Point(self.cursor_x, self.cursor_y)
             left_btwn_label.pos = Point(btwn_x, self.cursor_y)
-            self.cursor_y += node.height + PAD_TB
+            last_btwn_y = self.cursor_y
+            if node.height:
+                self.cursor_y += node.height + PAD_TB
 
             bot_label.pos = Point(self.cursor_x, self.cursor_y) 
-            self.cursor_y += bot_label.height + PAD_TB
+            if bot_label.height:
+                self.cursor_y += bot_label.height + PAD_TB
                         
             self.cursor_x += max([top_label.width, node.width, bot_label.width])
             
             max_y_in_row = max (max_y_in_row, self.cursor_y)
             
         last_btwn = btwns[-1]
-        last_btwn.pos = Point(self.cursor_x, top_of_row+segment_height/2)
-        self.cursor_x += last_btwn.width + PAD_LR
+        last_btwn.pos = Point(self.cursor_x, last_btwn_y)
+        if last_btwn.width:
+            self.cursor_x += last_btwn.width + PAD_LR
             
         self.max_x = max(self.max_x, self.cursor_x)
         self.cursor_y = max_y_in_row

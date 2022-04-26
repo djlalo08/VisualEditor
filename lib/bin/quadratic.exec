@@ -1,0 +1,16 @@
+public static Object[] quadratic(Object... in){ Object[] out = new Object[1];
+	Object[] split2_156 = #split2.exec#(in[1]);
+	Object[] neg_1 = #neg.exec#(split2_156[0]);
+	Object[] square_171 = #square.exec#(split2_156[1]);
+	Object[] _$4_188 = #4.exec#();
+	Object[] split2_196 = #split2.exec#(in[0]);
+	Object[] mul3_64 = #mul3.exec#(_$4_188[0], split2_196[0], in[2]);
+	Object[] sub_38 = #sub.exec#(square_171[0], mul3_64[0]);
+	Object[] sqrt_27 = #sqrt.exec#(sub_38[0]);
+	Object[] plus_12 = #plus.exec#(neg_1[0], sqrt_27[0]);
+	Object[] _$2_133 = #2.exec#();
+	Object[] mul_98 = #mul.exec#(_$2_133[0], split2_196[1]);
+	Object[] div_83 = #div.exec#(plus_12[0], mul_98[0]);
+	out[0] = div_83[0];
+	return out;
+}

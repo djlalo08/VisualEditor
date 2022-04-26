@@ -1,5 +1,6 @@
 import pickle
 import tkinter as tk
+from unittest import result
 from Bindings.Nester import Nester
 from Point import Point
 from Canvas import Canvas
@@ -28,6 +29,7 @@ class MapModal(tk.Toplevel):
             self.enclose.move(node_pos - enclosed_pos)
             Nester.drag_map_into_node(self.enclose)
 
+        result_map.update()
         self.exit()
         
     def exit(self, event=None):
