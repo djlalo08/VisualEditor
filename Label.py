@@ -19,6 +19,9 @@ class Label(Object):
     
     def __lt__(self, other):
         return self.index < other.index
+    
+    def __repr__(self) -> str:
+        return f"[{self.id}] Label: {self.text} of {{{repr(self.parent_ref)}}} at {self.row_name}:{self.index}"
         
     def update(self):
         self.width = len(self.text)*5.7

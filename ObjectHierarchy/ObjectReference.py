@@ -11,6 +11,9 @@ T = TypeVar('T')
 class ObjectReference(Generic[T]):
     id : int
 
+    def __repr__(self) -> str:
+        return f"#{repr(self.obj)}"
+
     def get_obj(self) -> T:
         return C.Canvas.id_map[self.id]
     

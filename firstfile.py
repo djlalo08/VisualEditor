@@ -125,6 +125,7 @@ class Bindings:
         Canvas.root.bind('E', Evaluator.to_code)  # e for evaluate
         Canvas.root.bind('e', self.eval_mode)  # e for evaluate
         Canvas.root.bind('d', self.detach_wire)  # d for detach
+        Canvas.root.bind('p', self.print_selection)
         Canvas.root.bind('<Command-s>', self.save)
         Canvas.root.bind('<Command-S>', self.save_as)
         Canvas.root.bind('l', self.open_modal)  # l for load
@@ -184,6 +185,9 @@ class Bindings:
         outs = Canvas.outs
         id_map = Canvas.id_map
         print("debug")
+        
+    def print_selection(self, event):
+        print(repr(Canvas.selected))
 
     def open_modal(self, event):
         self.modal = OpenModal()

@@ -78,6 +78,13 @@ class MapNode(Selectable):
             return False
         return True
     
+    @property
+    def class_name(self) -> str:
+        raise NotImplementedError
+    
+    def __repr__(self) -> str:
+        return f"[{self.id}] {self.class_name}: of {{{repr(self.parent_ref)}}}[{self.index}]"
+    
 def is_map_node(obj) -> bool:
     return isinstance(obj, MapNode)
 
@@ -106,6 +113,10 @@ class MapInputNode(MapNode):
     def value_fn(self) -> Node:
         return self.value
     
+    @property
+    def class_name(self) -> str:
+        return "MapInputNode"
+    
 def is_input_node(obj):
     return isinstance(obj, MapInputNode)
         
@@ -129,5 +140,9 @@ class MapOutputNode(MapNode):
         else:
             raise AttributeError("Node [" + str(self) + "] has no parent")
         
+    @property
+    def class_name(self) -> str:
+        return "MapOutputNode"
+
 def is_output_node(obj):
     return isinstance(obj, MapOutputNode)

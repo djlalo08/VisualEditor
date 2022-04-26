@@ -44,6 +44,9 @@ class MapData(Selectable):
         self.children_refs = self._create_children()
         self.update()
         
+    def __repr__(self) -> str:
+        return f"[{self.id}] MapData: {self.name}"
+    
     def build_obj(self):
         return Canvas.canvas.create_rectangle(
             self.abs_pos().around(self.width, self.height),
