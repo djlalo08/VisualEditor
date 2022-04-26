@@ -10,8 +10,8 @@ class WireAdder:
     @staticmethod
     def add_in_wire(event=None):
         i = len(Canvas.ins)
-        x = i*20+200
-        points = [Point(x, 30), Point(x, 80), Point(x, 250)]
+        x = i*40+200
+        points = [Point(x, 30), Point(x, 80), Point(x, 120)]
         wire = InputWire(points=points, index=i)
         Canvas.ins += [wire]
 

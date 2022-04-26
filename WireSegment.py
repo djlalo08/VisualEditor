@@ -15,7 +15,7 @@ class WireSegment(Object):
     def build_obj(self):
         return C.Canvas.canvas.create_line(
             0,0,0,0,
-            width = 5,
+            width = 10,
             fill = '#8AA153',
             tags=("wire", "wire_segment")
         )

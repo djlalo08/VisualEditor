@@ -9,7 +9,7 @@ class Nester:
     @staticmethod
     def drag_map_out_of_node():
         data_map = Canvas._drag_data["item"]
-        if not isinstance(data_map, MapData):
+        if not isinstance(data_map, MapData) and not is_wire_node(data_map):
             return False
         
         parent_map_ref = data_map.parent_ref
