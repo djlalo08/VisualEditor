@@ -23,10 +23,13 @@ CURRENTLY WORKING ON -- SYNTACTIC SUGAR
     - Making labels editable and flexible(ish)
         - Make a label modal and label objects to store the labels [DONE]
         - Make MapData inputs for construction be just the interface (see MapModal line 45) [DONE]
-        - Have MapData rely on that label object in order to display according to it
+        - Have MapData rely on that label object in order to display according to it[DONE]
     
 On deck:
     - Stamdard library!!
+    
+# TODO OPTIMIZATIONS
+    - Dragging a box with many boxes inside it can cause things to go very slow -- makes sense, but what are out bottle necks and how can we optimize?
 
 #TODO BUGS
     - When a map is nested inside another map, its parent map gets formatted to look pretty but higher up ancestor maps aren't and so things look dumb
