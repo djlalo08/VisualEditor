@@ -120,7 +120,7 @@ class LabelModal(tk.Toplevel):
     def label(self, text, x, y):
         x+= pad_lr
         y+= pad_tb
-        t = tk.Label(self, text=text, background='white', borderwidth=2, relief="solid")
+        t = tk.Label(self, text=text, background='white', borderwidth=2, relief="solid", foreground='black')
         t.place(x=x, y=y, width=t_w, height=t_h)
         return t
     
@@ -135,6 +135,6 @@ class LabelModal(tk.Toplevel):
     def entry(self, var, x, y, w=t_w, h=t_h, incl_lr_pad=True, incl_tb_pad=True):
         if incl_lr_pad: x+= pad_lr
         if incl_tb_pad: y+= pad_tb
-        e = tk.Entry(self, textvariable=var, justify='center', background='#F8F2DE', highlightcolor='#F8F2DE', highlightbackground='#E7B680')
+        e = tk.Entry(self, textvariable=var, justify='center', background='#F8F2DE', highlightcolor='#F8F2DE', highlightbackground='#E7B680', foreground='black')
         e.place(x=x, y=y, width=w, height=h)
         return e

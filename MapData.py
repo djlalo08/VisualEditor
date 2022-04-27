@@ -16,8 +16,8 @@ END_PADDING_X = 5
 END_PADDING_Y = 5
 LABEL_PADDING_Y = 10
 PADDING_X = 7
-PAD_TB = 5
-PAD_LR = 5
+PAD_TB = 3
+PAD_LR = 2
 
 def max_height_and_tot_width(items):
     heights = list(map(lambda item: item.height, items))
@@ -107,17 +107,23 @@ class MapData(Selectable):
 
         return labels_by_name
     
-    def update(self):
-        self.hide_outs = self.parent_ref
-
-        input_nodes = self.map_input_nodes
-        output_nodes = self.map_output_nodes
-        
+    def update_positions_and_size(self, input_nodes, output_nodes, labels_by_name):
         self.max_x = 0
                 
         self.x0, self.y0 = PAD_LR, PAD_TB
         self.cursor_x, self.cursor_y = self.x0, self.y0
-        labels_by_name = self.collect_labels_by_row_name()
+        
+        if not input_nodes and (self.hide_outs or not output_nodes):
+            center = labels_by_name.get('center')
+            if not center:
+                self.width = self.height = 0
+                return
+            
+            self.width = center.width + 2*PAD_LR
+            self.height = center.height + 2*PAD_TB
+            center.pos = Point(self.width/2, self.height/2)
+            center.pos = Point(0, 0)
+            return
         
         # self.pos_label('top', labels_by_name, update_y=True)
         
@@ -136,7 +142,7 @@ class MapData(Selectable):
             out_bots = labels_by_name.get('out_bots')
             self.position_a_row(output_nodes, out_tops, out_btwns, out_bots, self.cursor_y)
 
-        self.height = self.cursor_y
+        self.height = self.cursor_y + PAD_TB
         self.width = self.max_x + PAD_LR
         
         #for now, let's just assume that there is no such thing as 'left' text
@@ -146,22 +152,32 @@ class MapData(Selectable):
         # self.pos_label('bottom', labels_by_name)
         # self.pos_label('right', labels_by_name)
             
-        for output_node in output_nodes:
-            out_state = 'hidden' if self.hide_outs else 'normal'
-            Canvas.canvas.itemconfigure(output_node.id, state=out_state)
-
         delta = Point(-self.width/2, -self.height/2)
         for child_ref in self.children_refs:
             child = child_ref.obj
             local_delta = Point(child.width/2, 0)
             child.pos += delta + local_delta
             child.update()
+    
+    def update(self):
+        self.hide_outs = self.parent_ref
+
+        input_nodes = self.map_input_nodes
+        output_nodes = self.map_output_nodes
+        labels_by_name = self.collect_labels_by_row_name()
+
+        self.update_positions_and_size(input_nodes, output_nodes, labels_by_name)
+
+        for output_node in output_nodes:
+            out_state = 'hidden' if self.hide_outs else 'normal'
+            Canvas.canvas.itemconfigure(output_node.id, state=out_state)
 
         super().update()
         Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
 
     def position_a_row(self, nodes, tops, btwns, bots, top_of_row):
-        nodes = empty_if_null(nodes)
+        if not nodes or not len(nodes):
+            return
         tops = empty_if_null(tops)
         btwns = empty_if_null(btwns)
         bots = empty_if_null(bots)
@@ -198,7 +214,7 @@ class MapData(Selectable):
                 self.cursor_x += last_btwn.width + PAD_LR
             
         self.max_x = max(self.max_x, self.cursor_x)
-        self.cursor_y = top_of_row + max_row_height
+        self.cursor_y = top_of_row + max_row_height + PAD_TB
 
     def get_max_row_height(self, nodes, tops, bots):
         max_row_height = 0

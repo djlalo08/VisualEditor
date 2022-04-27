@@ -24,7 +24,7 @@ class Label(Object):
         return f"[{self.id}] Label: {self.text} of {{{repr(self.parent_ref)}}} at {self.row_name}:{self.index}"
         
     def update(self):
-        self.width = len(self.text)*10
+        self.width = len(self.text)*15
         self.height = 12 if self.text else 0
         return super().update()
     
