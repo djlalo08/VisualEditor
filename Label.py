@@ -15,7 +15,7 @@ class Label(Object):
     
     def build_obj(self):
         pos = self.abs_pos().unpack()
-        return Canvas.canvas.create_text(pos, text=self.text, fill="black", font=('Helvetica 20 bold'))
+        return Canvas.canvas.create_text(pos, text=self.text, fill="black", font=('Monaco 20 bold'))
     
     def __lt__(self, other):
         return self.index < other.index
@@ -24,8 +24,8 @@ class Label(Object):
         return f"[{self.id}] Label: {self.text} of {{{repr(self.parent_ref)}}} at {self.row_name}:{self.index}"
         
     def update(self):
-        self.width = len(self.text)*5.7*2
-        self.height = 20 if self.text else 0
+        self.width = len(self.text)*10
+        self.height = 12 if self.text else 0
         return super().update()
     
 def is_label(obj):
