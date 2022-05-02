@@ -1,7 +1,7 @@
 import pickle
 import tkinter as tk
 
-from Bindings.Nester import Nester
+from actors.Nester import Nester
 from EditorWindow import EditorWindow
 from MapData import MapData
 from Point import Point

@@ -1,7 +1,7 @@
 import pickle
 import tkinter as tk
 from EditorWindow import EditorWindow
-from Bindings.Evaluator import Evaluator
+from actors.Evaluator import Evaluator
 
 #In reality I should extract save functionality into a binding and this should be the save as modal, which can call the Saver.save(file_name)
 

@@ -1,4 +1,4 @@
-public static Object[] D_0E_0F_0A_0U_0L_0T(Object... in){ Object[] out = new Object[1];
+public static Object[] quadratic(Object... in){ Object[] out = new Object[1];
 	Object[] split2_37 = #split2.exec#(in[1]);
 	Object[] neg_65 = #neg.exec#(split2_37[0]);
 	Object[] square_117 = #square.exec#(split2_37[1]);

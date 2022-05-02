@@ -1,6 +1,6 @@
 import tkinter as tk
 from EditorWindow import EditorWindow
-from Bindings.Runner import run
+from actors.Runner import run
 
 class RunModal(tk.Toplevel):
     def __init__(self) -> None:
