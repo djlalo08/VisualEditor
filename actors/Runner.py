@@ -1,7 +1,9 @@
 import os
 import tkinter as tk
+
 from StringUtils import sanitize
-from actors.Evaluator import Evaluator
+
+from actors.evaluator import Evaluator
 
 IMPORTS = '''import java.io.File;
 import java.io.FileWriter;

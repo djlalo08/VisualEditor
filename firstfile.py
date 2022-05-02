@@ -1,9 +1,9 @@
-from actors.Evaluator import Evaluator
-from actors.Navigator import (NavigateDeeper, NavigateHigher, NavigateLeft,
+from actors.evaluator import Evaluator
+from actors.navigator import (NavigateDeeper, NavigateHigher, NavigateLeft,
                                 NavigateRight)
-from actors.Nester import Nester
-from actors.Selector import Selector
-from actors.WireAdder import WireAdder
+from actors.nester import Nester
+from actors.selector import Selector
+from actors.wire_adder import WireAdder
 from CanvasUtils import cursorxy
 from EditorWindow import EditorWindow
 from FileFromInterfaceModal import FileFromInterfaceModal

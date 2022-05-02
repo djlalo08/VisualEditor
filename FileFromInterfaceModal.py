@@ -1,7 +1,7 @@
 import pickle
 import tkinter as tk
 
-from actors.WireAdder import WireAdder
+from actors.wire_adder import WireAdder
 from EditorWindow import EditorWindow
 
 

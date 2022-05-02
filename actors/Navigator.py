@@ -5,7 +5,7 @@ from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Selectable import is_selectable
 from Utils import Stream, get_obj_index
 
-from actors.Selector import Selector
+from actors.selector import Selector
 
 
 class Navigator:
