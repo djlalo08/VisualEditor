@@ -1,4 +1,4 @@
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from MapData import MapData
 from MapNode import MapInputNode, is_input_node
 from Point import Point
@@ -8,7 +8,7 @@ class Nester:
 
     @staticmethod
     def drag_map_out_of_node():
-        data_map = Canvas._drag_data["item"]
+        data_map = EditorWindow._drag_data["item"]
         if not isinstance(data_map, MapData) and not is_wire_node(data_map):
             return False
         
@@ -16,10 +16,10 @@ class Nester:
         if parent_map_ref is None:
             return False
         
-        inside_parent = Canvas.canvas.find_enclosed(*parent_map_ref.obj.corners)
+        inside_parent = EditorWindow.canvas.find_enclosed(*parent_map_ref.obj.corners)
         is_inside_parent = False
         for item_id in inside_parent:
-            item = Canvas.id_map[item_id]
+            item = EditorWindow.id_map[item_id]
             if item == data_map:
                 is_inside_parent = True 
                 break 
@@ -39,8 +39,8 @@ class Nester:
         if not isinstance(new_contents, MapData) and not is_wire_node(new_contents):
             return
         
-        nearby_ids = Canvas.canvas.find_enclosed(*new_contents.corners)
-        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
+        nearby_ids = EditorWindow.canvas.find_enclosed(*new_contents.corners)
+        overlappers = map(lambda id: EditorWindow.id_map[id], nearby_ids)
         overlapping_in_nodes = list(filter(is_input_node, overlappers))
         map_descs = new_contents.get_all_descendants()
         for descendant in map_descs:

@@ -3,13 +3,13 @@ import tkinter as tk
 from unittest import result
 from Bindings.Nester import Nester
 from Point import Point
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from MapData import MapData
 
 
 class MapModal(tk.Toplevel):
     def __init__(self, cursorPos=Point(200, 200), insert_into=None, enclose=None) -> None:
-        super().__init__(Canvas.root)
+        super().__init__(EditorWindow.root)
         self.cursorPos = cursorPos
         self.fn_name = tk.StringVar()
         self.insert_into = insert_into

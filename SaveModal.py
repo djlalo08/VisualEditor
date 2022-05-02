@@ -1,15 +1,15 @@
 import pickle
 import tkinter as tk
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from Bindings.Evaluator import Evaluator
 
 #In reality I should extract save functionality into a binding and this should be the save as modal, which can call the Saver.save(file_name)
 
 class SaveModal(tk.Toplevel):
     def __init__(self, save_as = False) -> None:
-        super().__init__(Canvas.root)
-        if Canvas.file_name and not save_as:
-            self.save_as(Canvas.file_name)
+        super().__init__(EditorWindow.root)
+        if EditorWindow.file_name and not save_as:
+            self.save_as(EditorWindow.file_name)
             self.destroy()
             return
         self.fn_name = tk.StringVar()
@@ -24,15 +24,15 @@ class SaveModal(tk.Toplevel):
     @staticmethod
     def save_as(name):
         with open('lib/src/'+name, 'wb') as file:
-            pickle.dump(Canvas.id_map, file)
-            pickle.dump(Canvas.ins, file)
-            pickle.dump(Canvas.outs, file)
+            pickle.dump(EditorWindow.id_map, file)
+            pickle.dump(EditorWindow.ins, file)
+            pickle.dump(EditorWindow.outs, file)
 
         with open('lib/bin/'+name+'.exec', 'w') as file:
             file.write(Evaluator.to_code())
             
-        Canvas.file_name = name
-        Canvas.root.title(name)
+        EditorWindow.file_name = name
+        EditorWindow.root.title(name)
 
     def save_modal(self):
         self.title("Save Map As:")

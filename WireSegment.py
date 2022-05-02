@@ -1,6 +1,6 @@
 from __future__ import annotations
 from ObjectHierarchy.Object import Object
-import Canvas as C
+import EditorWindow as C
 from ObjectHierarchy.ObjectReference import ObjectReference
 import Wire
 from WireNode import WireNode
@@ -13,7 +13,7 @@ class WireSegment(Object):
         super().__init__(**kwargs)
         
     def build_obj(self):
-        return C.Canvas.canvas.create_line(
+        return C.EditorWindow.canvas.create_line(
             0,0,0,0,
             width = 10,
             fill = '#8AA153',
@@ -21,7 +21,7 @@ class WireSegment(Object):
         )
         
     def update(self):
-        C.Canvas.canvas.coords(self.id, *self.a.obj.abs_pos().unpack(), *self.b.obj.abs_pos().unpack())
+        C.EditorWindow.canvas.coords(self.id, *self.a.obj.abs_pos().unpack(), *self.b.obj.abs_pos().unpack())
 
     def get_all_references(self) -> list[ObjectReference]:
         return super().get_all_references() + [self.a, self.b]

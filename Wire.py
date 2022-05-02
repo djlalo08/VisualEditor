@@ -2,7 +2,7 @@ from __future__ import annotations
 from ObjectHierarchy.ObjectReference import ObjectReference
 import Utils as u
 from Point import Point
-import Canvas as C
+import EditorWindow as C
 from WireNode import WireNode
 from WireSegment import WireSegment
 from Tree import Node, InputWireNode, OutputWireNode
@@ -27,7 +27,7 @@ class Wire:
         return node_refs
     
     def build_obj(self):
-        return C.Canvas.canvas.create_line(Point(0,0).around(1,1))
+        return C.EditorWindow.canvas.create_line(Point(0,0).around(1,1))
     
     @property
     def value(self) -> Node:
@@ -37,7 +37,7 @@ class Wire:
     
     def to_front(self):
         for node in self.children_refs:
-            C.Canvas.canvas.tag_raise(node.id)
+            C.EditorWindow.canvas.tag_raise(node.id)
     
     def get_all_references(self) -> list[ObjectReference]:
         return super().get_all_references() + [self.value_ref]

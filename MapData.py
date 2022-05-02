@@ -5,7 +5,7 @@ from ObjectHierarchy.Selectable import Selectable
 from Point import Point
 from Tree import MapDataNode, Node
 from ObjectHierarchy.ObjectReference import ObjectReference
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from Utils import Stream, empty_if_null
 from bisect import insort
 from Label import Label, is_label
@@ -48,7 +48,7 @@ class MapData(Selectable):
         return f"[{self.id}] MapData: {self.name}"
     
     def build_obj(self):
-        return Canvas.canvas.create_rectangle(
+        return EditorWindow.canvas.create_rectangle(
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="#E7B680",
@@ -170,10 +170,10 @@ class MapData(Selectable):
 
         for output_node in output_nodes:
             out_state = 'hidden' if self.hide_outs else 'normal'
-            Canvas.canvas.itemconfigure(output_node.id, state=out_state)
+            EditorWindow.canvas.itemconfigure(output_node.id, state=out_state)
 
         super().update()
-        Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
+        EditorWindow.canvas.itemconfig(self.id, outline=self.get_outline())
 
     def position_a_row(self, nodes, tops, btwns, bots, top_of_row):
         if not nodes or not len(nodes):

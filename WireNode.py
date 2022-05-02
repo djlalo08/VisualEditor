@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from ObjectHierarchy.Selectable import Selectable
-import Canvas as C
+import EditorWindow as C
 from Tree import Node
 import Wire as W
 
@@ -11,7 +11,7 @@ class WireNode(Selectable):
         self.wire: W.Wire = wire
         
     def build_obj(self):
-        return C.Canvas.canvas.create_oval(
+        return C.EditorWindow.canvas.create_oval(
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="#2B9E42",
@@ -24,7 +24,7 @@ class WireNode(Selectable):
     def update(self):
         super().update()
         self.wire.to_front()
-        C.Canvas.canvas.itemconfig(self.id, outline=self.get_outline(), fill=self.get_fill())
+        C.EditorWindow.canvas.itemconfig(self.id, outline=self.get_outline(), fill=self.get_fill())
         
     def get_outline(self):
         return "red" if self.is_selected else "black"

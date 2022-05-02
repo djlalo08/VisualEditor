@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import Generic, TypeVar
-import Canvas as C
+import EditorWindow as C
 import ObjectHierarchy.Object as O
 from Tree import Node
 from misc.dataclassStuff.dataclasses_copy import dataclass
@@ -15,7 +15,7 @@ class ObjectReference(Generic[T]):
         return f"#{repr(self.obj)}"
 
     def get_obj(self) -> T:
-        return C.Canvas.id_map[self.id]
+        return C.EditorWindow.id_map[self.id]
     
     def __invert__(self) -> T:
         return self.get_obj()

@@ -4,8 +4,7 @@ import ObjectHierarchy.Object as O
 from Point import Point
 # from Wire import InputWire, OutputWire
 
-
-class Canvas(tk.Frame):
+class EditorWindow(tk.Frame):
     canvas_width = 600
     canvas_height = 600
     root = None
@@ -26,7 +25,6 @@ class Canvas(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
 
-        Canvas.canvas = tk.Canvas(width=Canvas.canvas_width, height=Canvas.canvas_height, background="#f5ecce")
-        # Canvas.canvas = tk.Canvas(width=Canvas.canvas_width, height=Canvas.canvas_height, background="white")
-        Canvas.canvas.pack(fill="both", expand=True)
-        Canvas.root = parent
+        EditorWindow.canvas = tk.Canvas(background="#f5ecce")
+        EditorWindow.canvas.pack(fill="both", expand=True)
+        EditorWindow.root = parent

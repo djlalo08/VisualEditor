@@ -3,7 +3,7 @@ from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, Nav
 from Bindings.Selector import Selector
 from Bindings.WireAdder import WireAdder
 from Bindings.Evaluator import Evaluator
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from CanvasUtils import cursorxy
 from FileFromInterfaceModal import FileFromInterfaceModal
 from MapData import MapData, is_map_data
@@ -19,11 +19,10 @@ from WireSegment import WireSegment
 from Point import Point
 
 '''
-CURRENTLY WORKING ON -- SYNTACTIC SUGAR
-    - Making labels editable and flexible(ish)
-        - Make a label modal and label objects to store the labels [DONE]
-        - Make MapData inputs for construction be just the interface (see MapModal line 45) [DONE]
-        - Have MapData rely on that label object in order to display according to it[DONE]
+CURRENTLY WORKING ON -- Build out IDE
+    - Make app into a main window
+    - Make Canvas into a component of said window
+    - Make a sidebar component in the window, for properties and stuff
         
 On deck:
     - Stamdard library!!
@@ -108,56 +107,56 @@ class Bindings:
 
         # self.add_some_stuff()
 
-        Canvas.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
-        Canvas.canvas.tag_bind("selectable", '<ButtonPress-1>', self.click_item)
-        Canvas.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
-        Canvas.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
-        Canvas.canvas.tag_bind("draggable", "<B1-Motion>", self.drag)
-        Canvas.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
+        EditorWindow.canvas.tag_bind("wire", '<ButtonRelease-1>', self.release_node)
+        EditorWindow.canvas.tag_bind("selectable", '<ButtonPress-1>', self.click_item)
+        EditorWindow.canvas.tag_bind("draggable", "<ButtonPress-1>", self.drag_start)
+        EditorWindow.canvas.tag_bind("draggable", "<ButtonRelease-1>", self.drag_stop)
+        EditorWindow.canvas.tag_bind("draggable", "<B1-Motion>", self.drag)
+        EditorWindow.canvas.tag_bind("wire_segment", "<ButtonPress-1>", self.add_wire_node)
 
-        Canvas.root.bind('<ButtonPress-2>', self.print_cursor)
-        Canvas.root.bind('c', self.connect_mode)  # c for connect
-        Canvas.root.bind('j', self.wire_edit_mode)  # j for connect
-        Canvas.root.bind('w', WireAdder.add_free_wire)  # w for wire
-        Canvas.root.bind('i', WireAdder.add_in_wire)  # i for in
-        Canvas.root.bind('I', WireAdder.remove_in_wire)
-        Canvas.root.bind('o', WireAdder.add_out_wire)  # o for out
-        Canvas.root.bind('O', WireAdder.remove_out_wire)
-        Canvas.root.bind('<Down>', self.move_selection_deeper)
-        Canvas.root.bind('<Up>', self.move_selection_higher)
-        Canvas.root.bind('<Left>', self.move_selection_left)
-        Canvas.root.bind('<Right>', self.move_selection_right)
-        Canvas.root.bind('m', self.open_map_modal)  # m for map
-        Canvas.root.bind('E', Evaluator.to_code)  # e for evaluate
-        Canvas.root.bind('e', self.eval_mode)  # e for evaluate
-        Canvas.root.bind('d', self.detach_wire)  # d for detach
-        Canvas.root.bind('p', self.print_selection)
-        Canvas.root.bind('<Command-s>', self.save)
-        Canvas.root.bind('<Command-S>', self.save_as)
-        Canvas.root.bind('l', self.open_modal)  # l for load
-        Canvas.root.bind('<Command-d>', self.debug)  # d for debug
-        Canvas.root.bind('<space>', self.insert)
-        Canvas.root.bind('<Shift-space>', self.enclose_selection)
-        Canvas.root.bind('<BackSpace>', self.delete)
-        Canvas.root.bind('<Command-N>', self.new_file_from_interface)
-        Canvas.root.bind('<Command-Return>', self.run)
+        EditorWindow.root.bind('<ButtonPress-2>', self.print_cursor)
+        EditorWindow.root.bind('c', self.connect_mode)  # c for connect
+        EditorWindow.root.bind('j', self.wire_edit_mode)  # j for connect
+        EditorWindow.root.bind('w', WireAdder.add_free_wire)  # w for wire
+        EditorWindow.root.bind('i', WireAdder.add_in_wire)  # i for in
+        EditorWindow.root.bind('I', WireAdder.remove_in_wire)
+        EditorWindow.root.bind('o', WireAdder.add_out_wire)  # o for out
+        EditorWindow.root.bind('O', WireAdder.remove_out_wire)
+        EditorWindow.root.bind('<Down>', self.move_selection_deeper)
+        EditorWindow.root.bind('<Up>', self.move_selection_higher)
+        EditorWindow.root.bind('<Left>', self.move_selection_left)
+        EditorWindow.root.bind('<Right>', self.move_selection_right)
+        EditorWindow.root.bind('m', self.open_map_modal)  # m for map
+        EditorWindow.root.bind('E', Evaluator.to_code)  # e for evaluate
+        EditorWindow.root.bind('e', self.eval_mode)  # e for evaluate
+        EditorWindow.root.bind('d', self.detach_wire)  # d for detach
+        EditorWindow.root.bind('p', self.print_selection)
+        EditorWindow.root.bind('<Command-s>', self.save)
+        EditorWindow.root.bind('<Command-S>', self.save_as)
+        EditorWindow.root.bind('l', self.open_modal)  # l for load
+        EditorWindow.root.bind('<Command-d>', self.debug)  # d for debug
+        EditorWindow.root.bind('<space>', self.insert)
+        EditorWindow.root.bind('<Shift-space>', self.enclose_selection)
+        EditorWindow.root.bind('<BackSpace>', self.delete)
+        EditorWindow.root.bind('<Command-N>', self.new_file_from_interface)
+        EditorWindow.root.bind('<Command-Return>', self.run)
 
     def run(self, event):
         RunModal()
 
     def delete(self, event):
-        if isinstance(Canvas.selected, MapData):
-            Canvas.selected.delete()
+        if isinstance(EditorWindow.selected, MapData):
+            EditorWindow.selected.delete()
 
     def enclose_selection(self, event):
-        selection = Canvas.selected
+        selection = EditorWindow.selected
         if not is_map_data(selection) and not is_wire_node(selection):
             return
 
         MapModal(selection.abs_pos(), enclose=selection)
 
     def insert(self, event):
-        selection = Canvas.selected
+        selection = EditorWindow.selected
         if is_input_node(selection):
             MapModal(selection.abs_pos(), insert_into=selection)
         else:
@@ -188,12 +187,12 @@ class Bindings:
         self.add_out_wire()
 
     def debug(self, event):
-        outs = Canvas.outs
-        id_map = Canvas.id_map
+        outs = EditorWindow.outs
+        id_map = EditorWindow.id_map
         print("debug")
         
     def print_selection(self, event):
-        print(repr(Canvas.selected))
+        print(repr(EditorWindow.selected))
 
     def open_modal(self, event):
         self.modal = OpenModal()
@@ -205,38 +204,38 @@ class Bindings:
         self.modal = SaveModal(save_as = True)
 
     def drag_start(self, event):
-        id = Canvas.canvas.find_closest(event.x, event.y)[0]
-        Canvas._drag_data["item"] = Canvas.id_map[id]
-        Canvas._drag_data["pos"] = Point(event.x, event.y)
+        id = EditorWindow.canvas.find_closest(event.x, event.y)[0]
+        EditorWindow._drag_data["item"] = EditorWindow.id_map[id]
+        EditorWindow._drag_data["pos"] = Point(event.x, event.y)
 
-        if Canvas.mode == "eval":
-            program = RootNode("root", None, [Canvas.id_map[id].value])
+        if EditorWindow.mode == "eval":
+            program = RootNode("root", None, [EditorWindow.id_map[id].value])
             print(program)
 
     def drag_stop(self, event):
         Nester.drag_map_out_of_node()
 
-        Canvas._drag_data["item"] = None
-        Canvas._drag_data["pos"] = Point(0, 0)
+        EditorWindow._drag_data["item"] = None
+        EditorWindow._drag_data["pos"] = Point(0, 0)
 
     def drag(self, event):
-        delta = Point(event.x, event.y) - Canvas._drag_data["pos"]
-        Canvas._drag_data["item"].move(delta)
-        Canvas._drag_data["pos"] = Point(event.x, event.y)
+        delta = Point(event.x, event.y) - EditorWindow._drag_data["pos"]
+        EditorWindow._drag_data["item"].move(delta)
+        EditorWindow._drag_data["pos"] = Point(event.x, event.y)
 
-        Nester.drag_map_into_node(Canvas._drag_data["item"])
+        Nester.drag_map_into_node(EditorWindow._drag_data["item"])
 
     def detach_wire(self, event):
         try:
-            Canvas.selected.detach()
+            EditorWindow.selected.detach()
         except AttributeError:
             pass
 
     def release_node(self, event):
         overlap_range = Point(event.x, event.y).around(5, 5)
-        all_overlapping_ids = Canvas.canvas.find_overlapping(*overlap_range)
+        all_overlapping_ids = EditorWindow.canvas.find_overlapping(*overlap_range)
         free_maps = Stream(all_overlapping_ids) \
-            .map(Canvas.id_map.get) \
+            .map(EditorWindow.id_map.get) \
             .filter(is_output_node) \
             .filter(nott(MapNode.is_occupied)) \
             .to_list()
@@ -244,13 +243,13 @@ class Bindings:
             return
 
         map_node = free_maps[0]
-        map_node.add_wire_node(Canvas._drag_data["item"])
+        map_node.add_wire_node(EditorWindow._drag_data["item"])
         
     def expand_node(self, event):
         print(event.x, event.y)
         print(Point(1, 2))
-        nearby_ids = Canvas.canvas.find_closest(event.x, event.y, halo=10)
-        overlappers = map(lambda id: Canvas.id_map[id], nearby_ids)
+        nearby_ids = EditorWindow.canvas.find_closest(event.x, event.y, halo=10)
+        overlappers = map(lambda id: EditorWindow.id_map[id], nearby_ids)
         overlapping_nodes = list(
             filter(lambda obj: isinstance(obj, MapNode), overlappers))
         if not len(overlapping_nodes) == 0:
@@ -261,28 +260,28 @@ class Bindings:
             print("pos", node.pos)
 
     def click_item(self, event):
-        id = Canvas.canvas.find_closest(event.x, event.y)[0]
-        Selector().select_item(Canvas.id_map[id])
+        id = EditorWindow.canvas.find_closest(event.x, event.y)[0]
+        Selector().select_item(EditorWindow.id_map[id])
 
     def connect_mode(self, event):
-        Canvas.mode = "connect"
+        EditorWindow.mode = "connect"
 
     def eval_mode(self, event):
-        Canvas.mode = "eval" if Canvas.mode != "eval" else "select"
+        EditorWindow.mode = "eval" if EditorWindow.mode != "eval" else "select"
 
     def wire_edit_mode(self, event):
-        Canvas.mode = "wire_edit"
+        EditorWindow.mode = "wire_edit"
 
     def open_map_modal(self, event):
         pos = Point(*cursorxy())
         MapModal(pos)
 
     def add_wire_node(self, event):
-        if Canvas.mode != "wire_edit":
+        if EditorWindow.mode != "wire_edit":
             return
         # TODO update [0] with instead looping over all closest and finding first that is a wire
-        wire_segment_id = Canvas.canvas.find_closest(event.x, event.y)[0]
-        selected_wire_segment: WireSegment = Canvas.id_map[wire_segment_id]
+        wire_segment_id = EditorWindow.canvas.find_closest(event.x, event.y)[0]
+        selected_wire_segment: WireSegment = EditorWindow.id_map[wire_segment_id]
 
         parent_wire = selected_wire_segment.parent_ref
 
@@ -304,4 +303,4 @@ class Bindings:
 
         parent_wire.children_refs.append(new_node.ref)
 
-        Canvas.mode = "select"
+        EditorWindow.mode = "select"

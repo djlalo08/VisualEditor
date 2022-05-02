@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from ObjectHierarchy.Object import Object
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from ObjectHierarchy.ObjectReference import ObjectReference
 
 
@@ -16,7 +16,7 @@ class Label(Object):
 
     def build_obj(self):
         pos = self.abs_pos().unpack()
-        return Canvas.canvas.create_text(
+        return EditorWindow.canvas.create_text(
             pos,
             text=self.text,
             fill="black", 

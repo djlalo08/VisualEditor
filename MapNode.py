@@ -4,7 +4,7 @@ from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Object import Object
 from Point import Point
 from ObjectHierarchy.Selectable import Selectable
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from Tree import Node
 from Utils import Stream, nott
 from Wire import Wire
@@ -22,7 +22,7 @@ class MapNode(Selectable):
         self.value_ref = None
         
     def build_obj(self):
-        return Canvas.canvas.create_rectangle(
+        return EditorWindow.canvas.create_rectangle(
             self.abs_pos().around(self.width, self.height),
             outline="black",
             fill="white",
@@ -37,7 +37,7 @@ class MapNode(Selectable):
             self.parent_ref.obj.update()
 
         super().update()
-        Canvas.canvas.itemconfig(self.id, outline=self.get_outline())
+        EditorWindow.canvas.itemconfig(self.id, outline=self.get_outline())
         
     @property
     def _size(self):

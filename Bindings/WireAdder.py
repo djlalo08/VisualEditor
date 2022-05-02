@@ -1,5 +1,5 @@
 from os import stat
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from CanvasUtils import cursorxy
 from Point import Point
 from Wire import InputWire, OutputWire, Wire
@@ -9,11 +9,11 @@ class WireAdder:
 
     @staticmethod
     def add_in_wire(event=None):
-        i = len(Canvas.ins)
+        i = len(EditorWindow.ins)
         x = i*40+200
         points = [Point(x, 30), Point(x, 80), Point(x, 120)]
         wire = InputWire(points=points, index=i)
-        Canvas.ins += [wire]
+        EditorWindow.ins += [wire]
 
     @staticmethod
     def remove_in_wire(event):
@@ -22,13 +22,13 @@ class WireAdder:
 
     @staticmethod
     def add_out_wire(event=None):
-        i = len(Canvas.outs)
+        i = len(EditorWindow.outs)
         x = i*20+200
-        points = [Point(x, Canvas.canvas_height-30), 
-                  Point(x, Canvas.canvas_height-80), 
-                  Point(x, Canvas.canvas_height-250)]
+        points = [Point(x, EditorWindow.canvas_height-30), 
+                  Point(x, EditorWindow.canvas_height-80), 
+                  Point(x, EditorWindow.canvas_height-250)]
         wire = OutputWire(points=points, index=i)
-        Canvas.outs += [wire]
+        EditorWindow.outs += [wire]
 
     @staticmethod
     def remove_out_wire(event):

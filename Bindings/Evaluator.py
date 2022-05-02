@@ -1,4 +1,4 @@
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from Tree import RootNode
 from StringUtils import sanitize
 
@@ -6,7 +6,7 @@ class Evaluator:
 
     @staticmethod
     def to_ast(event=None):
-        outValues = map(lambda out: out.value, Canvas.outs)
+        outValues = map(lambda out: out.value, EditorWindow.outs)
         program = RootNode(list(outValues))
         print(program)
         print()
@@ -16,7 +16,7 @@ class Evaluator:
     def to_code(event=None):
         program = Evaluator.to_ast()
         reduced = program.reduce(([], set()))
-        header = '''public static Object[] '''+sanitize(Canvas.file_name or 'D E F A U L T')+'''(Object... in){ Object[] out = new Object[''' + str(len(Canvas.outs)) + '''];\n\t'''
+        header = '''public static Object[] '''+sanitize(EditorWindow.file_name or 'D E F A U L T')+'''(Object... in){ Object[] out = new Object[''' + str(len(EditorWindow.outs)) + '''];\n\t'''
         fn_decls = '\n\t'.join(reduced)
         footer = "\n\treturn out;\n}"
         result = header + fn_decls + footer

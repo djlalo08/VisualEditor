@@ -1,19 +1,19 @@
 import pickle
 import tkinter as tk
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from ObjectHierarchy.Object import Object
 
 class OpenModal(tk.Toplevel):
     def __init__(self) -> None:
-        super().__init__(Canvas.root)
+        super().__init__(EditorWindow.root)
         self.fn_name = tk.StringVar()
         self.open_modal()
         self.bind('<Return>', self.submit)
         
     def submit(self, event):
         fn_name = self.fn_name.get()
-        Canvas.file_name = fn_name
-        Canvas.root.title(fn_name)
+        EditorWindow.file_name = fn_name
+        EditorWindow.root.title(fn_name)
         self.load_file(fn_name)
         self.destroy()
         
@@ -24,9 +24,9 @@ class OpenModal(tk.Toplevel):
             ins = pickle.load(file)
             outs = pickle.load(file)
 
-        Canvas.id_map = id_map
-        Canvas.ins = ins
-        Canvas.outs = outs
+        EditorWindow.id_map = id_map
+        EditorWindow.ins = ins
+        EditorWindow.outs = outs
         
         # TODO: Note this might be fragile. Not certain yet, 
         # but it's possible that if we begin to delete items 
@@ -68,10 +68,10 @@ class OpenModal(tk.Toplevel):
 
         # Canvas.outs = list(map(lambda o_id: Canvas.id_map[o_id], out_ids))
         '''
-        for obj in Canvas.id_map.values():
+        for obj in EditorWindow.id_map.values():
             obj.build_obj()
 
-        for obj in Canvas.id_map.values():
+        for obj in EditorWindow.id_map.values():
             obj.update()
             
     def open_modal(self):

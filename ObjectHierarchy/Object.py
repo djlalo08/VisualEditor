@@ -2,7 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing_extensions import Self
 from Point import Point
-import Canvas as C
+import EditorWindow as C
 import ObjectHierarchy.ObjectReference as OR
 from Utils import Stream
 
@@ -20,7 +20,7 @@ class Object:
     
     def __post_init__(self):
         self.id = self.build_obj()
-        C.Canvas.id_map[self.id] = self
+        C.EditorWindow.id_map[self.id] = self
 
     def move(self, delta):
         if self.parent_ref and self.constrained_to_parent:
@@ -39,12 +39,12 @@ class Object:
         return [self.parent_ref, *self.children_refs]
 
     def update(self):
-        C.Canvas.canvas.tag_raise(self.id)
+        C.EditorWindow.canvas.tag_raise(self.id)
         newPos = self.abs_pos().around(self.width, self.height)
         if self.single_point_position: 
             newPos = self.abs_pos().unpack()
             
-        C.Canvas.canvas.coords(self.id, newPos)
+        C.EditorWindow.canvas.coords(self.id, newPos)
         for child_ref in self.children_refs:
             child_ref.obj.offset = self.abs_pos()
             child_ref.obj.update()
@@ -74,7 +74,7 @@ class Object:
         return self.abs_pos().around(self.width, self.height)
         
     def to_front(self) ->None:
-        C.Canvas.canvas.tag_raise(self.id)
+        C.EditorWindow.canvas.tag_raise(self.id)
         for child_ref in self.children_refs:
             child_ref.obj.to_front()
             
@@ -92,8 +92,8 @@ class Object:
         for child in children:
            child.delete() 
 
-        C.Canvas.canvas.delete(self.id)
-        del C.Canvas.id_map[self.id]
+        C.EditorWindow.canvas.delete(self.id)
+        del C.EditorWindow.id_map[self.id]
         
 def is_object(obj):
     return isinstance(obj, Object)

@@ -1,12 +1,12 @@
 import pickle
 import tkinter as tk
 from Bindings.WireAdder import WireAdder
-from Canvas import Canvas
+from EditorWindow import EditorWindow
 from ObjectHierarchy.Object import Object
 
 class FileFromInterfaceModal(tk.Toplevel):
     def __init__(self) -> None:
-        super().__init__(Canvas.root)
+        super().__init__(EditorWindow.root)
         self.fn_name = tk.StringVar()
         self.create_modal()
         self.bind('<Return>', self.submit)
