@@ -24,7 +24,7 @@ CURRENTLY WORKING ON -- SYNTACTIC SUGAR
         - Make a label modal and label objects to store the labels [DONE]
         - Make MapData inputs for construction be just the interface (see MapModal line 45) [DONE]
         - Have MapData rely on that label object in order to display according to it[DONE]
-    
+        
 On deck:
     - Stamdard library!!
     
@@ -50,6 +50,9 @@ On deck:
     - I sanitatized inputs willy-nilly until there weren't errors. I should make it more systematic
     - Input sanitation is extremely limited. Let's begin to include other common symbols (. , < > ( ) : ; ' " [ ] { } # ^ & * % @) and $ _ if it's possible (need to think about whether there's endless recursion or something dumb like that)
     
+#TODO BACKWARDS COMPATIBILITY
+    - When a file is loaded it doesn't load the exact same objects but recalls all the build methods which makes things more compatible with future changes
+
 #TODO extract java text to be in separate java files, rather than strings in python files
 #TODO need to refactor parents and children in general. In general,
     Objects can have more than one parent and more than one type of child.
