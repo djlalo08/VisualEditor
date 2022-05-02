@@ -1,6 +1,7 @@
 from functools import reduce
 from itertools import tee
-from typing import Iterable, List, Type
+from typing import Iterable, List
+
 
 def pairwise(iterable):
     "s -> (s0,s1), (s1,s2), (s2, s3), ..."

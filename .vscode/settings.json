@@ -7,5 +7,9 @@
     "python.analysis.useLibraryCodeForTypes": true,
     "python.analysis.extraPaths": [
         "./Interface"
-    ]
+    ],
+    "python.linting.banditEnabled": false,
+    "python.linting.pylintEnabled": false,
+    "python.linting.pydocstyleEnabled": false,
+    "python.linting.pylamaEnabled": false
 }

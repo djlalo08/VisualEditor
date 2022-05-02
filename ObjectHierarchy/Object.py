@@ -1,18 +1,22 @@
 from __future__ import annotations
+
 from dataclasses import dataclass, field
-from typing_extensions import Self
-from Point import Point
+
 import EditorWindow as C
-import ObjectHierarchy.ObjectReference as OR
+from Point import Point
+from typing_extensions import Self
 from Utils import Stream
+
+from ObjectHierarchy.ObjectReference import ObjectReference
+
 
 @dataclass
 class Object:
     pos: Point = Point(0,0) 
     offset: Point = Point(0,0) 
     single_point_position: bool = False
-    children_refs: list[OR.ObjectReference] = field(default_factory=list)
-    parent_ref: OR.ObjectReference = None
+    children_refs: list[ObjectReference] = field(default_factory=list)
+    parent_ref: ObjectReference | None = None
     constrained_to_parent: bool = False
     offset_off_parent: Point = Point(0,0)
     width: int = 0
@@ -35,7 +39,7 @@ class Object:
     def build_obj(self):
         raise NotImplementedError("build_obj must overridden but is not")
     
-    def get_all_references(self) -> list[OR.ObjectReference]:
+    def get_all_references(self) -> list[ObjectReference]:
         return [self.parent_ref, *self.children_refs]
 
     def update(self):
@@ -59,14 +63,14 @@ class Object:
     def __repr__(self) -> str:
         return f"[{self.id}] {self.__class__}"
 
-    def to_ref(self) -> OR.ObjectReference[Self]:
-        return OR.ObjectReference(self.id)
+    def to_ref(self) -> ObjectReference[Self]:
+        return ObjectReference(self.id)
 
-    def __invert__(self) -> OR.ObjectReference[Self]:
+    def __invert__(self) -> ObjectReference[Self]:
         return self.to_ref()
     
     @property
-    def ref(self) -> OR.ObjectReference[Self]:
+    def ref(self) -> ObjectReference[Self]:
         return self.to_ref()
     
     @property
@@ -88,7 +92,7 @@ class Object:
         if self.parent_ref:
             self.parent_ref.obj.children_refs.remove(self.ref)
 
-        children = Stream(self.children_refs).map(OR.ObjectReference.get_obj).filter(is_object).to_list()
+        children = Stream(self.children_refs).map(ObjectReference.get_obj).filter(is_object).to_list()
         for child in children:
            child.delete() 
 

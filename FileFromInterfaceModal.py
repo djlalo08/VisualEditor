@@ -1,8 +1,9 @@
 import pickle
 import tkinter as tk
+
 from Bindings.WireAdder import WireAdder
 from EditorWindow import EditorWindow
-from ObjectHierarchy.Object import Object
+
 
 class FileFromInterfaceModal(tk.Toplevel):
     def __init__(self) -> None:
@@ -20,10 +21,10 @@ class FileFromInterfaceModal(tk.Toplevel):
     def load_file(name):
         with open('lib/int/'+name+'.Int', 'rb') as file:
             interface = pickle.load(file)
-            for in_wire in interface.ins:
+            for _ in interface.ins:
                 WireAdder.add_in_wire()
                 
-            for out_wire in interface.outs:
+            for _ in interface.outs:
                 WireAdder.add_out_wire()
             
     def create_modal(self):

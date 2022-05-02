@@ -1,6 +1,12 @@
-from Interface.InterfaceLabels import InterfaceLabels
-from Interface.MapInterfaceNode import MapInterfaceNode
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from Utils import empty_if_null
+
+if TYPE_CHECKING:
+    from Interface.InterfaceLabels import InterfaceLabels
+    from Interface.MapInterfaceNode import MapInterfaceNode
 
 
 class MapInterface:

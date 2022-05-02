@@ -1,14 +1,17 @@
 from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from WireNode import WireNode
+
 import MapData as md
-from ObjectHierarchy.ObjectReference import ObjectReference
-from ObjectHierarchy.Object import Object
-from Point import Point
-from ObjectHierarchy.Selectable import Selectable
 from EditorWindow import EditorWindow
+from ObjectHierarchy.ObjectReference import ObjectReference
+from ObjectHierarchy.Selectable import Selectable
+from Point import Point
 from Tree import Node
-from Utils import Stream, nott
-from Wire import Wire
-from WireNode import WireNode, is_wire_node
+from Utils import Stream
 
 pad_y = 6
 pad_x = 6

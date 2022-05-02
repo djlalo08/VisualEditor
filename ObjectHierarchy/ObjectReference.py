@@ -1,9 +1,10 @@
 from __future__ import annotations
+
 from typing import Generic, TypeVar
+
 import EditorWindow as C
-import ObjectHierarchy.Object as O
-from Tree import Node
 from misc.dataclassStuff.dataclasses_copy import dataclass
+from Tree import Node
 
 T = TypeVar('T')
 

@@ -1,8 +1,9 @@
 from EditorWindow import EditorWindow
 from MapData import MapData
-from MapNode import MapInputNode, is_input_node
+from MapNode import is_input_node
 from Point import Point
 from WireNode import is_wire_node
+
 
 class Nester:
 

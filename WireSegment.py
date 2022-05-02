@@ -1,9 +1,15 @@
 from __future__ import annotations
-from ObjectHierarchy.Object import Object
+
+from typing import TYPE_CHECKING
+
 import EditorWindow as C
-from ObjectHierarchy.ObjectReference import ObjectReference
-import Wire
-from WireNode import WireNode
+from ObjectHierarchy.Object import Object
+
+if TYPE_CHECKING:
+    from ObjectHierarchy.ObjectReference import ObjectReference
+    from Wire import Wire
+    from WireNode import WireNode
+
 
 class WireSegment(Object):
     def __init__(self, a:ObjectReference[WireNode], b:ObjectReference[WireNode], wire:Wire, **kwargs) -> None:

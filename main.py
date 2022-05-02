@@ -1,4 +1,5 @@
 import tkinter as tk
+
 from EditorWindow import EditorWindow
 from firstfile import Bindings
 

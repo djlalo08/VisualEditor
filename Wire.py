@@ -1,11 +1,17 @@
 from __future__ import annotations
-from ObjectHierarchy.ObjectReference import ObjectReference
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ObjectHierarchy.ObjectReference import ObjectReference
+
+import EditorWindow as C
 import Utils as u
 from Point import Point
-import EditorWindow as C
+from Tree import InputWireNode, Node, OutputWireNode
 from WireNode import WireNode
 from WireSegment import WireSegment
-from Tree import Node, InputWireNode, OutputWireNode
+
 
 class Wire:
     

@@ -1,14 +1,19 @@
 from __future__ import annotations
 
-from ObjectHierarchy.Selectable import Selectable
+from typing import TYPE_CHECKING
+
 import EditorWindow as C
+from ObjectHierarchy.Selectable import Selectable
 from Tree import Node
-import Wire as W
+
+if TYPE_CHECKING:
+    from Wire import Wire
+
 
 class WireNode(Selectable):
     def __init__(self, wire, width=20, height=20, **kwargs) -> None:
         super().__init__(width=width, height=height, constrained_to_parent=False, **kwargs) 
-        self.wire: W.Wire = wire
+        self.wire: Wire = wire
         
     def build_obj(self):
         return C.EditorWindow.canvas.create_oval(

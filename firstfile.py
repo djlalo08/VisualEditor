@@ -1,22 +1,23 @@
+from Bindings.Evaluator import Evaluator
+from Bindings.Navigator import (NavigateDeeper, NavigateHigher, NavigateLeft,
+                                NavigateRight)
 from Bindings.Nester import Nester
-from Bindings.Navigator import NavigateDeeper, NavigateHigher, NavigateLeft, NavigateRight
 from Bindings.Selector import Selector
 from Bindings.WireAdder import WireAdder
-from Bindings.Evaluator import Evaluator
-from EditorWindow import EditorWindow
 from CanvasUtils import cursorxy
+from EditorWindow import EditorWindow
 from FileFromInterfaceModal import FileFromInterfaceModal
 from MapData import MapData, is_map_data
 from MapModal import MapModal
 from MapNode import MapNode, is_input_node, is_map_node, is_output_node
+from OpenModal import OpenModal
+from Point import Point
 from RunModal import RunModal
 from SaveModal import SaveModal
-from OpenModal import OpenModal
 from Tree import RootNode
 from Utils import Stream, nott
 from WireNode import WireNode, is_wire_node
 from WireSegment import WireSegment
-from Point import Point
 
 '''
 CURRENTLY WORKING ON -- Build out IDE

@@ -1,10 +1,10 @@
 import pickle
 import tkinter as tk
-from unittest import result
+
 from Bindings.Nester import Nester
-from Point import Point
 from EditorWindow import EditorWindow
 from MapData import MapData
+from Point import Point
 
 
 class MapModal(tk.Toplevel):

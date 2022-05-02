@@ -1,11 +1,12 @@
 from abc import abstractmethod
 
-from numpy import empty
 from EditorWindow import EditorWindow
 from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Selectable import is_selectable
-from Bindings.Selector import Selector
 from Utils import Stream, get_obj_index
+
+from Bindings.Selector import Selector
+
 
 class Navigator:
     @abstractmethod
