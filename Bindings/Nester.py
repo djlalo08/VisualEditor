@@ -9,6 +9,9 @@ class Nester:
     @staticmethod
     def drag_map_out_of_node():
         data_map = EditorWindow._drag_data["item"]
+        while data_map.parent_ref and data_map.constrained_to_parent:
+            data_map = data_map.parent_ref.obj
+
         if not isinstance(data_map, MapData) and not is_wire_node(data_map):
             return False
         
@@ -36,6 +39,8 @@ class Nester:
 
     @staticmethod
     def drag_map_into_node(new_contents):
+        while new_contents.parent_ref and new_contents.constrained_to_parent:
+            new_contents = new_contents.parent_ref.obj
         if not isinstance(new_contents, MapData) and not is_wire_node(new_contents):
             return
         
