@@ -1,6 +1,8 @@
 from typing import Tuple
+
 from typing_extensions import Self
-from StringUtils import sanitize
+
+from utils.string import sanitize
 
 
 class Node:

@@ -1,5 +1,6 @@
-from Utils import empty_if_null
 from Label import Label
+from utils.general import empty_if_null
+
 
 def label(parent, text, row, index=-1):
     return Label(parent_ref=parent.ref, text=text, offset=parent.abs_pos(), row_name=row, index=index)

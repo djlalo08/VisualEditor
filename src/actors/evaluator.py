@@ -1,5 +1,5 @@
 from EditorWindow import EditorWindow
-from StringUtils import sanitize
+from utils.string import sanitize
 from Tree import RootNode
 
 

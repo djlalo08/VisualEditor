@@ -11,7 +11,7 @@ from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Selectable import Selectable
 from Point import Point
 from Tree import Node
-from Utils import Stream
+from utils.general import Stream
 
 pad_y = 6
 pad_x = 6

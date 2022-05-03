@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 
 import EditorWindow as C
 from Point import Point
-from Utils import Stream
+from utils.general import Stream
 
 from ObjectHierarchy.ObjectReference import ObjectReference
 

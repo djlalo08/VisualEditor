@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from ObjectHierarchy.ObjectReference import ObjectReference
 
 import EditorWindow as C
-import Utils as u
+import utils.general as u
 from Point import Point
 from Tree import InputWireNode, Node, OutputWireNode
 from WireNode import WireNode

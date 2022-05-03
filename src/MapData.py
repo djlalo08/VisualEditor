@@ -12,7 +12,7 @@ from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Selectable import Selectable
 from Point import Point
 from Tree import MapDataNode, Node
-from Utils import Stream, empty_if_null
+from utils.general import Stream, empty_if_null
 
 LABEL_HEIGHT = 5
 END_PADDING_X = 5

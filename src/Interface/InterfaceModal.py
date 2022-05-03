@@ -4,7 +4,7 @@ import tkinter as tk
 
 from GlobalData import resources
 from LabelModal import LabelModal
-from Utils import Stream
+from utils.general import Stream
 
 from Interface.MapInterface import MapInterface
 from Interface.MapInterfaceNode import MapInterfaceNode

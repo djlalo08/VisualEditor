@@ -1,10 +1,9 @@
 from actors.evaluator import Evaluator
 from actors.navigator import (NavigateDeeper, NavigateHigher, NavigateLeft,
-                                NavigateRight)
+                              NavigateRight)
 from actors.nester import Nester
 from actors.selector import Selector
 from actors.wire_adder import WireAdder
-from CanvasUtils import cursorxy
 from EditorWindow import EditorWindow
 from FileFromInterfaceModal import FileFromInterfaceModal
 from MapData import MapData, is_map_data
@@ -15,7 +14,8 @@ from Point import Point
 from RunModal import RunModal
 from SaveModal import SaveModal
 from Tree import RootNode
-from Utils import Stream, nott
+from utils.canvas import cursorxy
+from utils.general import Stream, nott
 from WireNode import WireNode, is_wire_node
 from WireSegment import WireSegment
 

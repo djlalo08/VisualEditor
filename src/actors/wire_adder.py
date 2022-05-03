@@ -1,6 +1,6 @@
 from os import stat
 from EditorWindow import EditorWindow
-from CanvasUtils import cursorxy
+from utils.canvas import cursorxy
 from Point import Point
 from Wire import InputWire, OutputWire, Wire
 

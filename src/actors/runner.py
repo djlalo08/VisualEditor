@@ -2,7 +2,7 @@ import os
 import tkinter as tk
 
 from GlobalData import resources, target, target_s
-from StringUtils import sanitize
+from utils.string import sanitize
 
 from actors.evaluator import Evaluator
 
