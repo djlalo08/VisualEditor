@@ -5,14 +5,14 @@ from actors.nester import Nester
 from actors.selector import Selector
 from actors.wire_adder import WireAdder
 from EditorWindow import EditorWindow
-from FileFromInterfaceModal import FileFromInterfaceModal
+from modals.FileFromInterfaceModal import FileFromInterfaceModal
 from MapData import MapData, is_map_data
-from MapModal import MapModal
+from modals.MapModal import MapModal
 from MapNode import MapNode, is_input_node, is_map_node, is_output_node
-from OpenModal import OpenModal
+from modals.OpenModal import OpenModal
 from Point import Point
-from RunModal import RunModal
-from SaveModal import SaveModal
+from modals.RunModal import RunModal
+from modals.SaveModal import SaveModal
 from Tree import RootNode
 from utils.canvas import cursorxy
 from utils.general import Stream, nott

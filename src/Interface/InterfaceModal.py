@@ -3,7 +3,7 @@ import pickle
 import tkinter as tk
 
 from GlobalData import resources
-from LabelModal import LabelModal
+from modals.LabelModal import LabelModal
 from utils.general import Stream
 
 from Interface.MapInterface import MapInterface
