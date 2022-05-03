@@ -32,8 +32,8 @@ class MapData(Selectable):
     def __init__(self, interface, *args, width=100, ins=None, outs=None, source_file='', hide_outs=False, **kwargs) -> None:
         self.interface = interface
         self.name = interface.name
-        self.ins : ObjectReference[MapNode] = ins if ins != None else [None]*len(interface.ins)
-        self.outs: ObjectReference[MapNode] = outs if outs != None else [None]*len(interface.outs)
+        self.ins : list[ObjectReference[MapNode] | None] = ins if ins != None else [None]*len(interface.ins)
+        self.outs: list[ObjectReference[MapNode] | None] = outs if outs != None else [None]*len(interface.outs)
         self.source_file: str = source_file
         if not source_file:
             print("Source file is blank")

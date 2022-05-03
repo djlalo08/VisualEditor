@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 
 import EditorWindow as C
 from Point import Point
-from typing_extensions import Self
 from Utils import Stream
 
 from ObjectHierarchy.ObjectReference import ObjectReference
@@ -39,7 +38,7 @@ class Object:
     def build_obj(self):
         raise NotImplementedError("build_obj must overridden but is not")
     
-    def get_all_references(self) -> list[ObjectReference]:
+    def get_all_references(self) -> list[None | ObjectReference]:
         return [self.parent_ref, *self.children_refs]
 
     def update(self):
@@ -63,14 +62,14 @@ class Object:
     def __repr__(self) -> str:
         return f"[{self.id}] {self.__class__}"
 
-    def to_ref(self) -> ObjectReference[Self]:
+    def to_ref(self) -> ObjectReference[Object]:
         return ObjectReference(self.id)
 
-    def __invert__(self) -> ObjectReference[Self]:
+    def __invert__(self) -> ObjectReference[Object]:
         return self.to_ref()
     
     @property
-    def ref(self) -> ObjectReference[Self]:
+    def ref(self) -> ObjectReference[Object]:
         return self.to_ref()
     
     @property
