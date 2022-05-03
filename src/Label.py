@@ -2,9 +2,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from EditorWindow import EditorWindow
 from ObjectHierarchy.Object import Object
 from ObjectHierarchy.ObjectReference import ObjectReference
-from EditorWindow import EditorWindow
 
 
 @dataclass
@@ -21,7 +21,7 @@ class Label(Object):
         return EditorWindow.canvas.create_text(
             pos,
             text=self.text,
-            fill="black", 
+            fill="black",
             font=('Monaco 20 bold'),
             tags=("draggable"))
 
@@ -32,7 +32,7 @@ class Label(Object):
         return f"[{self.id}] Label: {self.text} of {{{repr(self.parent_ref)}}} at {self.row_name}:{self.index}"
 
     def update(self):
-        self.width = len(self.text)*15
+        self.width = len(self.text) * 15
         self.height = 12 if self.text else 0
         return super().update()
 

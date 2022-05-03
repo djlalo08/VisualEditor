@@ -12,25 +12,25 @@ class OpenModal(tk.Toplevel):
         self.fn_name = tk.StringVar()
         self.open_modal()
         self.bind('<Return>', self.submit)
-        
+
     def submit(self, event):
         fn_name = self.fn_name.get()
         EditorWindow.file_name = fn_name
         EditorWindow.root.title(fn_name)
         self.load_file(fn_name)
         self.destroy()
-        
+
     @staticmethod
     def load_file(name):
         with open(f'{resources}/lib/src/{name}', 'rb') as file:
-            id_map: dict[int, Object]= pickle.load(file)
+            id_map: dict[int, Object] = pickle.load(file)
             ins = pickle.load(file)
             outs = pickle.load(file)
 
         EditorWindow.id_map = id_map
         EditorWindow.ins = ins
         EditorWindow.outs = outs
-        
+
         # TODO: Note this might be fragile. Not certain yet, 
         # but it's possible that if we begin to delete items 
         # this saving schema won't work anymore, since the gaps 
@@ -42,7 +42,6 @@ class OpenModal(tk.Toplevel):
         # This is a quick workaround but will create problems 
         # (like with out-wires, for example). But it does prevent
         # the mismatch error.
-
 
         '''
         old_to_new_id = {}
@@ -76,14 +75,14 @@ class OpenModal(tk.Toplevel):
 
         for obj in EditorWindow.id_map.values():
             obj.update()
-            
+
     def open_modal(self):
         self.title("Open Map:")
         self.geometry("460x100")
 
-        fn_name_label = tk.Label(self, text = "fn name").place(x = 40, y = 20)  
-        fn_name = tk.Entry(self, width = 30, textvariable=self.fn_name)
-        fn_name.place(x = 110, y = 20)  
+        fn_name_label = tk.Label(self, text="fn name").place(x=40, y=20)
+        fn_name = tk.Entry(self, width=30, textvariable=self.fn_name)
+        fn_name.place(x=110, y=20)
         fn_name.focus()
 
-        submit_button = tk.Button(self, text = "Open", command=self.submit).place(x = 100, y = 60)
+        submit_button = tk.Button(self, text="Open", command=self.submit).place(x=100, y=60)

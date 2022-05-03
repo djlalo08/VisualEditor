@@ -3,23 +3,25 @@ from abc import abstractmethod
 from EditorWindow import EditorWindow
 from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Selectable import is_selectable
-from utils.general import Stream, get_obj_index
-
 from actors.selector import Selector
+from utils.general import Stream, get_obj_index
 
 
 class Navigator:
     @abstractmethod
-    def move_selection(self): 
+    def move_selection(self):
         raise NotImplemented
-    
+
+
 def extract_selectable(ls):
     return Stream(ls).map(ObjectReference.get_obj).filter(is_selectable).to_list()
 
+
 def get_siblings(obj):
-    return (EditorWindow.selected 
-        and EditorWindow.selected.parent_ref 
-        and EditorWindow.selected.parent_ref.obj.children_refs)
+    return (EditorWindow.selected
+            and EditorWindow.selected.parent_ref
+            and EditorWindow.selected.parent_ref.obj.children_refs)
+
 
 class NavigateDeeper(Navigator):
     def move_selection(self):
@@ -28,7 +30,8 @@ class NavigateDeeper(Navigator):
         if selectable_children:
             EditorWindow.selected_index = 0
             Selector().select_item(selectable_children[EditorWindow.selected_index])
-    
+
+
 class NavigateHigher(Navigator):
     def move_selection(self):
         parent_ref = EditorWindow.selected and EditorWindow.selected.parent_ref
@@ -38,6 +41,7 @@ class NavigateHigher(Navigator):
             if new_index != -1:
                 EditorWindow.selected_index = new_index
 
+
 class NavigateLeftRight(Navigator):
     def move_selection(self):
         selectable_siblings = extract_selectable(get_siblings(EditorWindow.selected))
@@ -46,15 +50,17 @@ class NavigateLeftRight(Navigator):
             EditorWindow.selected_index = self.update_index(selectable_siblings)
             if old_selection != EditorWindow.selected_index:
                 Selector().select_item(selectable_siblings[EditorWindow.selected_index])
-                        
+
     @abstractmethod
-    def update_index(self, selectable_children): 
+    def update_index(self, selectable_children):
         raise NotImplemented
+
 
 class NavigateRight(NavigateLeftRight):
     def update_index(self, selectable_children):
-        return max(0, min(EditorWindow.selected_index+1, len(selectable_children)-2))
+        return max(0, min(EditorWindow.selected_index + 1, len(selectable_children) - 2))
+
 
 class NavigateLeft(NavigateLeftRight):
     def update_index(self, _):
-        return max(EditorWindow.selected_index-1, 0)
+        return max(EditorWindow.selected_index - 1, 0)

@@ -1,23 +1,23 @@
+from EditorWindow import EditorWindow
+from MapData import MapData, is_map_data
+from MapNode import MapNode, is_input_node, is_output_node
+from Point import Point
+from Tree import RootNode
+from WireNode import WireNode, is_wire_node
+from WireSegment import WireSegment
 from actors.evaluator import Evaluator
 from actors.navigator import (NavigateDeeper, NavigateHigher, NavigateLeft,
                               NavigateRight)
 from actors.nester import Nester
 from actors.selector import Selector
 from actors.wire_adder import WireAdder
-from EditorWindow import EditorWindow
 from modals.FileFromInterfaceModal import FileFromInterfaceModal
-from MapData import MapData, is_map_data
 from modals.MapModal import MapModal
-from MapNode import MapNode, is_input_node, is_map_node, is_output_node
 from modals.OpenModal import OpenModal
-from Point import Point
 from modals.RunModal import RunModal
 from modals.SaveModal import SaveModal
-from Tree import RootNode
 from utils.canvas import cursorxy
 from utils.general import Stream, nott
-from WireNode import WireNode, is_wire_node
-from WireSegment import WireSegment
 
 '''
 CURRENTLY WORKING ON -- Build out IDE
@@ -102,6 +102,7 @@ On deck:
     - Output to fn can be treated as final result, in which case, there is a visual cue to that
 '''
 
+
 class Bindings:
 
     def set_bindings(self):
@@ -162,7 +163,7 @@ class Bindings:
             MapModal(selection.abs_pos(), insert_into=selection)
         else:
             MapModal(Point(*cursorxy()))
-        
+
     def new_file_from_interface(self, event):
         FileFromInterfaceModal()
 
@@ -191,7 +192,7 @@ class Bindings:
         outs = EditorWindow.outs
         id_map = EditorWindow.id_map
         print("debug")
-        
+
     def print_selection(self, event):
         print(repr(EditorWindow.selected))
 
@@ -202,7 +203,7 @@ class Bindings:
         self.modal = SaveModal()
 
     def save_as(self, event):
-        self.modal = SaveModal(save_as = True)
+        self.modal = SaveModal(save_as=True)
 
     def drag_start(self, event):
         id = EditorWindow.canvas.find_closest(event.x, event.y)[0]
@@ -245,7 +246,7 @@ class Bindings:
 
         map_node = free_maps[0]
         map_node.add_wire_node(EditorWindow._drag_data["item"])
-        
+
     def expand_node(self, event):
         print(event.x, event.y)
         print(Point(1, 2))

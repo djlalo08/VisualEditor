@@ -1,11 +1,11 @@
 import pickle
 import tkinter as tk
 
-from actors.nester import Nester
 from EditorWindow import EditorWindow
 from GlobalData import resources
 from MapData import MapData
 from Point import Point
+from actors.nester import Nester
 
 
 class MapModal(tk.Toplevel):
@@ -32,7 +32,7 @@ class MapModal(tk.Toplevel):
 
         result_map.update()
         self.exit()
-        
+
     def exit(self, event=None):
         self.destroy()
 

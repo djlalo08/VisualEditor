@@ -12,20 +12,20 @@ if TYPE_CHECKING:
 
 
 class WireSegment(Object):
-    def __init__(self, a:ObjectReference[WireNode], b:ObjectReference[WireNode], wire:Wire, **kwargs) -> None:
+    def __init__(self, a: ObjectReference[WireNode], b: ObjectReference[WireNode], wire: Wire, **kwargs) -> None:
         self.a: ObjectReference[WireNode] = a
         self.b: ObjectReference[WireNode] = b
         self.wire: Wire = wire
         super().__init__(**kwargs)
-        
+
     def build_obj(self):
         return C.EditorWindow.canvas.create_line(
-            0,0,0,0,
-            width = 10,
-            fill = '#8AA153',
+            0, 0, 0, 0,
+            width=10,
+            fill='#8AA153',
             tags=("wire", "wire_segment")
         )
-        
+
     def update(self):
         C.EditorWindow.canvas.coords(self.id, *self.a.obj.abs_pos().unpack(), *self.b.obj.abs_pos().unpack())
 
