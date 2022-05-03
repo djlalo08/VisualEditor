@@ -1,1 +1,0 @@
-active_editor = None

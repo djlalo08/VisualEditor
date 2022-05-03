@@ -1,15 +1,18 @@
 from __future__ import annotations
 
-from MapNode import MapInputNode, MapNode, MapOutputNode, is_input_node, is_output_node
+import os
+from bisect import insort
+
+from EditorWindow import EditorWindow
+from GlobalData import resources
+from Label import Label, is_label
+from MapNode import (MapInputNode, MapNode, MapOutputNode, is_input_node,
+                     is_output_node)
+from ObjectHierarchy.ObjectReference import ObjectReference
 from ObjectHierarchy.Selectable import Selectable
 from Point import Point
 from Tree import MapDataNode, Node
-from ObjectHierarchy.ObjectReference import ObjectReference
-from EditorWindow import EditorWindow
 from Utils import Stream, empty_if_null
-from bisect import insort
-from Label import Label, is_label
-import os
 
 LABEL_HEIGHT = 5
 END_PADDING_X = 5
@@ -34,7 +37,7 @@ class MapData(Selectable):
         self.source_file: str = source_file
         if not source_file:
             print("Source file is blank")
-            for file_name in os.listdir("./lib/bin/"):
+            for file_name in os.listdir(f"{resources}/lib/bin/"):
                 if file_name == self.name+'.exec':
                     self.source_file = file_name
                     print("Source file updated")

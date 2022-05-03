@@ -3,6 +3,7 @@ import tkinter as tk
 
 from actors.nester import Nester
 from EditorWindow import EditorWindow
+from GlobalData import resources
 from MapData import MapData
 from Point import Point
 
@@ -37,7 +38,7 @@ class MapModal(tk.Toplevel):
 
     @staticmethod
     def add_map(pos=Point(200, 200), fn_name="map"):
-        with open('lib/int/'+fn_name+'.Int', 'rb') as file:
+        with open(f'{resources}/lib/int/{fn_name}.Int', 'rb') as file:
             interface = pickle.load(file)
             return MapData(interface, pos=pos)
 

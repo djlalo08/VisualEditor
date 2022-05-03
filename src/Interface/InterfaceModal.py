@@ -1,10 +1,14 @@
 
 import pickle
 import tkinter as tk
+
+from GlobalData import resources
+from LabelModal import LabelModal
+from Utils import Stream
+
 from Interface.MapInterface import MapInterface
 from Interface.MapInterfaceNode import MapInterfaceNode
-from Utils import Stream
-from LabelModal import LabelModal
+
 
 class InterfaceModal(tk.Toplevel):
     def __init__(self, root) -> None:
@@ -21,7 +25,7 @@ class InterfaceModal(tk.Toplevel):
     def load(self, event=None):
         fn_name = self.fn_name.get()
 
-        with open('lib/int/'+fn_name+'.Int', 'rb') as file:
+        with open(f'{resources}/lib/int/{fn_name}.Int', 'rb') as file:
             interface = pickle.load(file)
             self.ins.set( str(interface.ins) )
             self.outs.set( str(interface.outs) )
@@ -50,7 +54,7 @@ class InterfaceModal(tk.Toplevel):
         ins = Stream(ins).map(lambda in_name: MapInterfaceNode(in_name, 'type')).to_list()
         outs = Stream(outs).map(lambda out_name: MapInterfaceNode(out_name, 'type')).to_list()
         interface = MapInterface(name, ins, outs, '', labels=label)
-        with open('lib/int/'+name+'.Int', 'wb') as file:
+        with open(f'{resources}/lib/int/{name}.Int', 'wb') as file:
             pickle.dump(interface, file)
         
     def new_map_modal(self):

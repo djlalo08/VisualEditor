@@ -1,13 +1,15 @@
 from __future__ import annotations
+
 from dataclasses import dataclass
+
 from ObjectHierarchy.Object import Object
-from EditorWindow import EditorWindow
 from ObjectHierarchy.ObjectReference import ObjectReference
+from EditorWindow import EditorWindow
 
 
 @dataclass
 class Label(Object):
-    parent_ref: ObjectReference = None
+    parent_ref: ObjectReference | None = None
     text: str = "map"
     single_point_position: bool = True
     constrained_to_parent: bool = True

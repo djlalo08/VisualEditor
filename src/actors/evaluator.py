@@ -1,6 +1,7 @@
 from EditorWindow import EditorWindow
-from Tree import RootNode
 from StringUtils import sanitize
+from Tree import RootNode
+
 
 class Evaluator:
 

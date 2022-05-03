@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 
+from GlobalData import resources, target, target_s
 from StringUtils import sanitize
 
 from actors.evaluator import Evaluator
@@ -13,11 +14,12 @@ import java.io.IOException;
 def main(method_call):
     return \
         ''' public static void main(String[] args) throws IOException {\n\t''' +\
-        'Object[] result = ' + method_call + ''';
-        File data_bus = new File("data_bus.txt");
+        'Object[] result = ' + method_call + ';\n' +\
+        '\tString path = "' + target + '''/data_bus.txt";
+        File data_bus = new File(path);
         data_bus.createNewFile();
 
-        FileWriter writer = new FileWriter("data_bus.txt");
+        FileWriter writer = new FileWriter(path);
         for (Object o: result)
             writer.write(o + "\\n");
         writer.close();
@@ -31,7 +33,7 @@ def dereference(code, retrieved_fns):
         if '#' in line:
             [front, file_name, end] = line.split('#')
             if file_name not in retrieved_fns:
-                with open('lib/bin/'+file_name, 'r') as file:
+                with open(f'{resources}/lib/bin/{file_name}', 'r') as file:
                     files_code = dereference(file.read(), retrieved_fns)
                     new_code = files_code + '\n' + new_code
                     retrieved_fns.add(file_name)
@@ -58,13 +60,13 @@ def run(file_name, ins):
     return read_answer_from_data_bus()
 
 def read_answer_from_data_bus():
-    with open('data_bus.txt', 'r') as file:
+    with open(f'{target}/data_bus.txt', 'r') as file:
         result = file.read()
         print(result)
         return result.split('\n')
 
 def update_and_run_transpiler(final_code):
-    with open('Transpiler.java', 'w') as file:
+    with open(f'{target}/Transpiler.java', 'w') as file:
         file.write(final_code)
-    os.system("javac Transpiler.java")
-    os.system("java Transpiler")
+    os.system(f"javac {target_s}/Transpiler.java")
+    os.system(f"java -cp {target_s}/ Transpiler")

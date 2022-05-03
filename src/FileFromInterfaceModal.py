@@ -3,6 +3,7 @@ import tkinter as tk
 
 from actors.wire_adder import WireAdder
 from EditorWindow import EditorWindow
+from GlobalData import resources
 
 
 class FileFromInterfaceModal(tk.Toplevel):
@@ -19,7 +20,7 @@ class FileFromInterfaceModal(tk.Toplevel):
         
     @staticmethod
     def load_file(name):
-        with open('lib/int/'+name+'.Int', 'rb') as file:
+        with open(f'{resources}/lib/int/{name}.Int', 'rb') as file:
             interface = pickle.load(file)
             for _ in interface.ins:
                 WireAdder.add_in_wire()

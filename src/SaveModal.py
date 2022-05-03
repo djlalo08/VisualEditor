@@ -3,6 +3,7 @@ import tkinter as tk
 
 from actors.evaluator import Evaluator
 from EditorWindow import EditorWindow
+from GlobalData import resources
 
 #In reality I should extract save functionality into a binding and this should be the save as modal, which can call the Saver.save(file_name)
 
@@ -24,12 +25,12 @@ class SaveModal(tk.Toplevel):
             
     @staticmethod
     def save_as(name):
-        with open('lib/src/'+name, 'wb') as file:
+        with open(f'{resources}/lib/src/{name}', 'wb') as file:
             pickle.dump(EditorWindow.id_map, file)
             pickle.dump(EditorWindow.ins, file)
             pickle.dump(EditorWindow.outs, file)
 
-        with open('lib/bin/'+name+'.exec', 'w') as file:
+        with open(f'{resources}/lib/bin/{name}.exec', 'w') as file:
             file.write(Evaluator.to_code())
             
         EditorWindow.file_name = name

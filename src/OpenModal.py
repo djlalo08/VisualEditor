@@ -1,7 +1,10 @@
 import pickle
 import tkinter as tk
+
 from EditorWindow import EditorWindow
+from GlobalData import resources
 from ObjectHierarchy.Object import Object
+
 
 class OpenModal(tk.Toplevel):
     def __init__(self) -> None:
@@ -19,7 +22,7 @@ class OpenModal(tk.Toplevel):
         
     @staticmethod
     def load_file(name):
-        with open('lib/src/'+name, 'rb') as file:
+        with open(f'{resources}/lib/src/{name}', 'rb') as file:
             id_map: dict[int, Object]= pickle.load(file)
             ins = pickle.load(file)
             outs = pickle.load(file)
