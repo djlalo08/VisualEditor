@@ -15,6 +15,7 @@ class EditorWindow(tk.Frame):
     canvas_height = 600
     root = None
     canvas: tk.Canvas
+    side_pane: tk.Frame
 
     _drag_data = {"pos": Point(0, 0), "item": None}
     selected: Object | None = None
@@ -29,6 +30,7 @@ class EditorWindow(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent)
 
-        EditorWindow.canvas = tk.Canvas(background="#f5ecce")
+        EditorWindow.canvas = tk.Canvas(self, background="#f5ecce")
         EditorWindow.canvas.pack(fill="both", expand=True)
         EditorWindow.root = parent
+

@@ -9,9 +9,9 @@ from actors.nester import Nester
 
 
 class MapModal(tk.Toplevel):
-    def __init__(self, cursorPos=Point(200, 200), insert_into=None, enclose=None) -> None:
+    def __init__(self, cursor_pos=Point(200, 200), insert_into=None, enclose=None) -> None:
         super().__init__(EditorWindow.root)
-        self.cursorPos = cursorPos
+        self.cursorPos = cursor_pos
         self.fn_name = tk.StringVar()
         self.insert_into = insert_into
         self.enclose = enclose
@@ -44,7 +44,11 @@ class MapModal(tk.Toplevel):
 
     def new_map_modal(self):
         self.title("")
-        self.geometry('195x30')
+        x = EditorWindow.root.winfo_x()
+        y = EditorWindow.root.winfo_y()
+        (dx, dy) = self.cursorPos.unpack()
+        (w, h) = (195, 30)
+        self.geometry("%dx%d+%d+%d" % (w, h, x + dx, y + dy))
 
         fn_name = tk.Entry(self, textvariable=self.fn_name)
         fn_name.place(x=0, y=0)
