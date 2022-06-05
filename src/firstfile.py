@@ -1,4 +1,3 @@
-from EditorWindow import EditorWindow
 from MapData import MapData, is_map_data
 from MapNode import MapNode, is_input_node, is_output_node
 from Point import Point

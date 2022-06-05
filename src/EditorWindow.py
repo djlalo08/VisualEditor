@@ -33,4 +33,3 @@ class EditorWindow(tk.Frame):
         EditorWindow.canvas = tk.Canvas(self, background="#f5ecce")
         EditorWindow.canvas.pack(fill="both", expand=True)
         EditorWindow.root = parent
-
