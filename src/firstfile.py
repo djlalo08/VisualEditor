@@ -19,13 +19,10 @@ from utils.canvas import cursorxy
 from utils.general import Stream, nott
 
 '''
-CURRENTLY WORKING ON -- Build out IDE
-    - Make app into a main window
-    - Make Canvas into a component of said window
-    - Make a sidebar component in the window, for properties and stuff
     
 On deck:
     - Make everything save into a JSON file. Try to reduce file size. It'd be nice if it can be human-readable, at least for this stage
+    - Optimize ... dragging a block in quadratic is suuuuuper slow. There's probably a method that's being called re-called a million times
     - Stamdard library!!
     
 # TODO OPTIMIZATIONS
