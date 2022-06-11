@@ -19,6 +19,8 @@ from utils.canvas import cursorxy
 from utils.general import Stream, nott
 
 '''
+Actually first: local variables
+WORKING ON: Adding lines and columns that we can navigate between to make things go in standard places
     
 On deck:
     - Make everything save into a JSON file. Try to reduce file size. It'd be nice if it can be human-readable, at least for this stage
