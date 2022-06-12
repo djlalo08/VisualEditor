@@ -57,9 +57,13 @@ class MapData(Selectable):
         return EditorWindow.canvas.create_rectangle(
             self.abs_pos().around(self.width, self.height),
             outline="black",
-            fill="#E7B680",
+            fill=self.background(),
             tags=("draggable", "selectable"),
         )
+
+    @staticmethod
+    def background():
+        return '#E7B680'
 
     def _create_children(self) -> list[ObjectReference[MapNode | Label]]:
         children: list[ObjectReference[MapNode | Label]] = []

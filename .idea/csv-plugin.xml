@@ -31,6 +31,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="/src/MapData.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/src/firstfile.py">
           <value>
             <Attribute>

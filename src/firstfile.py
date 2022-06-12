@@ -12,14 +12,17 @@ from actors.selector import Selector
 from actors.wire_adder import WireAdder
 from modals.FileFromInterfaceModal import FileFromInterfaceModal
 from modals.MapModal import MapModal
+from modals.NewVariableModal import NewVariableModal
 from modals.OpenModal import OpenModal
 from modals.RunModal import RunModal
 from modals.SaveModal import SaveModal
+from modals.VariableModal import VariableModal
 from utils.canvas import cursorxy
 from utils.general import Stream, nott
 
 '''
-Actually first: local variables
+But first: local variables
+    - For now making it so that variable names can't be overriden. In the future, we likely can remedy that.. 
 WORKING ON: Adding lines and columns that we can navigate between to make things go in standard places
     
 On deck:
@@ -36,6 +39,7 @@ On deck:
     - If You delete stuff and then save, everything goes crazy next time file is loaded up
 
 #TODO CLEAN UP
+    - All the modals (e.g. mapModal, NewVariableModal, VariableModal) that are just a single text box should inherit a ui element modal and just override the submit fn
     - Tags should be nicer and maybe classes (Selectable, Object, etc) should include them
     - Wire.py is a bit unruly. Maybe it should be more of a proper Object. 
         Maybe wire is an example of why Movable should be a class -- wire would be an Object but not movable. 
@@ -144,6 +148,8 @@ class Bindings:
         self.editorWindow.root.bind('<Shift-space>', self.enclose_selection)
         self.editorWindow.root.bind('<BackSpace>', self.delete)
         self.editorWindow.root.bind('<Command-N>', self.new_file_from_interface)
+        self.editorWindow.root.bind('v', self.create_local_var)  # w for wire
+        self.editorWindow.root.bind('V', self.insert_local_var)  # w for wire
         self.editorWindow.root.bind('<Command-Return>', self.run)
 
     def run(self, event):
@@ -284,6 +290,14 @@ class Bindings:
     def force_update(self, event):
         for item in self.editorWindow.id_map.values():
             item.update()
+
+    def create_local_var(self, event):
+        pos = Point(*cursorxy())
+        NewVariableModal(pos)
+
+    def insert_local_var(self, event):
+        pos = Point(*cursorxy())
+        VariableModal(pos)
 
     def add_wire_node(self, event):
         if self.editorWindow.mode != "wire_edit":
