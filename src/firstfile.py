@@ -12,11 +12,9 @@ from actors.selector import Selector
 from actors.wire_adder import WireAdder
 from modals.FileFromInterfaceModal import FileFromInterfaceModal
 from modals.MapModal import MapModal
-from modals.NewVariableModal import NewVariableModal
 from modals.OpenModal import OpenModal
 from modals.RunModal import RunModal
 from modals.SaveModal import SaveModal
-from modals.VariableModal import VariableModal
 from utils.canvas import cursorxy
 from utils.general import Stream, nott
 
@@ -110,6 +108,7 @@ class Bindings:
 
     def __init__(self, editorWindow):
         self.editorWindow = editorWindow
+        self.is_shift_down = False
 
     def set_bindings(self):
 
@@ -144,13 +143,24 @@ class Bindings:
         self.editorWindow.root.bind('<Command-S>', self.save_as)
         self.editorWindow.root.bind('l', self.open_modal)  # l for load
         self.editorWindow.root.bind('<Command-d>', self.debug)  # d for debug
-        self.editorWindow.root.bind('<space>', self.insert)
-        self.editorWindow.root.bind('<Shift-space>', self.enclose_selection)
+        self.editorWindow.root.bind('<space>', self.add_map)
         self.editorWindow.root.bind('<BackSpace>', self.delete)
         self.editorWindow.root.bind('<Command-N>', self.new_file_from_interface)
         self.editorWindow.root.bind('v', self.create_local_var)  # w for wire
         self.editorWindow.root.bind('V', self.insert_local_var)  # w for wire
         self.editorWindow.root.bind('<Command-Return>', self.run)
+
+        self.editorWindow.root.bind('<KeyPress-Shift_L>', self.shift_press)
+        self.editorWindow.root.bind('<KeyRelease-Shift_L>', self.shift_unpress)  # this is a bit buggy. When You
+        # unpress, if focus isn't on canvas, it doesn't update...
+
+    def shift_press(self, event):
+        self.is_shift_down = True
+        print('shift press')
+
+    def shift_unpress(self, event):
+        self.is_shift_down = False
+        print('shift unpress')
 
     def run(self, event):
         RunModal()
@@ -159,14 +169,20 @@ class Bindings:
         if isinstance(self.editorWindow.selected, MapData):
             self.editorWindow.selected.delete()
 
-    def enclose_selection(self, event):
+    def add_map(self, event):
+        if self.is_shift_down:
+            self.enclose_selection()
+        elif not self.is_shift_down:
+            self.insert()
+
+    def enclose_selection(self):
         selection = self.editorWindow.selected
-        if not is_map_data(selection) and not is_wire_node(selection):
-            return
+        if is_map_data(selection) or is_wire_node(selection):
+            MapModal(selection.abs_pos(), enclose=selection)
+        else:
+            MapModal(Point(*cursorxy()))
 
-        MapModal(selection.abs_pos(), enclose=selection)
-
-    def insert(self, event):
+    def insert(self):
         selection = self.editorWindow.selected
         if is_input_node(selection):
             MapModal(selection.abs_pos(), insert_into=selection)
