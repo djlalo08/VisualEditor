@@ -21,8 +21,8 @@ from utils.canvas import cursorxy
 from utils.general import Stream, nott
 
 '''
-But first: local variables
-    - For now making it so that variable names can't be overriden. In the future, we likely can remedy that.. 
+Some clean-up for variables:
+    - Combine create_local_var, and insert_local_var with insert and enclose. Not sure what the best way forward is. I'm thinking use only MapModal and have tab switch between interface and variable mode (maybe use bckg color or something to show which)
 WORKING ON: Adding lines and columns that we can navigate between to make things go in standard places
     
 On deck:
