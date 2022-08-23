@@ -19,10 +19,16 @@ from utils.canvas import cursorxy
 from utils.general import Stream, nott
 
 '''
+FIRST WORK ON: Make an app that can take a JSON like in save_format.txt and make it into something that looks like the editor
+
 WORKING ON: Adding lines and columns that we can navigate between to make things go in standard places
+    - Maybe make an expandable object class that mapNode, mapData, row, etc inherit?
     
 On deck:
     - Make everything save into a JSON file. Try to reduce file size. It'd be nice if it can be human-readable, at least for this stage
+        - I'm actually going to do one better -- the language will be JSON-style spec. Everything in the language will work that way. Editor is just an editor on top of that, which hides the actual code.
+        - That is the JSON is itself what gets transformed into machine code and it itself is "the language" even tho programmers shouldn't be interacting with it
+            (Philosophically, this is like going from binary to assembly to higher-level languages. We don't need to look at binary or assembly when we work with high-level languages. Similarly, we don't need to look at the spec file when we work with POO)
     - Optimize ... dragging a block in quadratic is suuuuuper slow. There's probably a method that's being called re-called a million times
     - Stamdard library!!
     

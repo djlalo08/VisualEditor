@@ -1,1 +1,376 @@
 Not yet. First let's tidy up the formatting. Add lines and stuff. As things become more uniform and less flexible (visually) JSONifying saves will become easier.
+Scrap that. We're JSONing and we're doing it now!
+
+Some questions: does the JSON structure reflect the code structure or the visual appearance?
+It feels like it should reflect the code structure (in a lispy style)
+Maybe I should write a lot of example code first...
+Solve some leetcode problems, make a mock app, etc
+
+Before that, let's begin with a simple trial:
+
+{
+    //meta-data goes at this level
+    int : 'path of interface or its name or smth goes here',
+    ins: {['A', 'B', 'C']}
+    lines: {[
+        line : {[
+            div: {[
+                plus: {[
+                    neg: {'B'},
+                    sqrt: {
+                        sub: {
+                            square: {'B'},
+                            mul: {[
+                                4,
+                                'A',
+                                'C'
+                            ]}
+                        }
+                    }
+                ]},
+                mul: {[2,'A']}
+            ]}
+        }
+    ]} // any given line can have multiple threads and any thread can have multiple lines (threads must have ins and outs to ensure ordering)
+}
+
+Going to use a different notation for now to make things easier to write out/read (indentation matters)
+
+This is quadratic all in one line
+{
+    //meta-data goes at this level
+    int : 'path of interface or its name or smth goes here',
+    ins: 'A', 'B', 'C'
+    lines:
+        line:
+            maps:
+                map:
+                    name: div
+                    int: div
+                    ins:
+                        map:
+                            name: plus
+                            int: plus
+                            ins:
+                                map:
+                                    name: neg
+                                    int: neg
+                                    ins:
+                                        wire_val: B
+                                    outs:
+                                        in_place
+                                map:
+                                    name: sqrt
+                                    int: sqrt
+                                    ins:
+                                        map:
+                                            name: sub
+                                            int: sub
+                                            ins:
+                                                map:
+                                                    name: square
+                                                    int: square
+                                                    ins:
+                                                        wire_val: B
+                                                    outs:
+                                                        in_place: 0
+                                                map:
+                                                    name: mul
+                                                    int: mul
+                                                    ins:
+                                                        integer: 4
+                                                        wire_val: A
+                                                        wire_val: C
+                                                    outs:
+                                                        in_place: 0
+                                            outs:
+                                                in_place
+                                    outs:
+                                        in_place
+                            outs:
+                                in_place
+                        map:
+                            name: mul
+                            ins:
+                                integer: 2
+                                wire_val: A
+                            outs:
+                                in_place: 0
+                    outs:
+                        make_default_output: 0
+    outs:
+        use_default_output: 0
+}
+
+This is quadratic in 2 lines (with discriminant and 2*a as separate maps in the same line, combined in next line)
+{
+    //meta-data goes at this level
+    int : 'path of interface or its name or smth goes here',
+    ins: 'A', 'B', 'C'
+    lines:
+        line:
+            maps:
+                map:
+                    name: plus
+                    int: plus
+                    ins:
+                        map:
+                            name: neg
+                            int: neg
+                            ins:
+                                use_wire: B
+                            outs:
+                                in_place
+                        map:
+                            name: sqrt
+                            int: sqrt
+                            ins:
+                                map:
+                                    name: sub
+                                    int: sub
+                                    ins:
+                                        map:
+                                            name: square
+                                            int: square
+                                            ins:
+                                                use_wire: B
+                                            outs:
+                                                in_place
+                                        map:
+                                            name: mul
+                                            int: mul
+                                            ins:
+                                                integer: 4
+                                                use_wire: A
+                                                use_wire: C
+                                            outs:
+                                                in_place
+                                    outs:
+                                        in_place
+                            outs:
+                                in_place
+                    outs:
+                        make_wire: 0
+                map:
+                    name: mul
+                    ins:
+                        integer: 2
+                        use_wire: A
+                    outs:
+                        make_wire: 1
+        line:
+            maps:
+                map:
+                    name: div
+                    int: div
+                    ins:
+                        use_wire: 0
+                        use_wire: 1
+                    outs:
+                        make_wire: 2
+    outs:
+        use_wire: 2
+}
+
+
+Let's try to make this homoiconic:
+
+A new line line is effectively another nested 'let'
+Let's try to write homoiconic code for the macro that takes something like (sin(A) * cos(B)) ~ ( * (sin A) (cos B))
+and returns (sin(A) * sin(B)) ~ (* (sin A) (sin B)
+
+(
+    (let [wire_1 input_2]                   //wire 1 is the input fn: (* (sin A) (cos B))
+        [(let [wire_2 (get wire_1 2)]        // wire 2 is the 3rd elt in input fn: (cos B)
+            [(let [wire_3 (get wire_2 1])    // wire 3 is the 2nd element in cos fn: B
+                [(let [wire_4 (replace wire_1 (sin wire_3) 2)] //wire 4 is the fn with cos swapped for sin: (* (sin A) (sin B))
+                    [wire_4]
+                )]
+            )]'
+        )[
+    )
+)
+
+This is cool, but there's a problem -- No multiple return values!!
+
+Let's fix that...
+
+Just added some brackets and I think that fixes it!
+
+Wait no, we get a nesting problem... our function doesn't return [wire_4], rather it returns [[[[wire_4]]]]
+lets need to be a bit different I guess...
+
+let's try quadratic just as an exercise:
+
+(
+    let
+        [a int input_2 b int input_1 c int input_2] //list vec here is used to contain 'horizontal' split (in this case the set_vars are all all on the same line, next to each other)
+        (let
+            [_ (set_var A a) _ (set_var B b) _ (set_var C c)] // to make a new line
+                                        //note that each of these elts return a list of size 0 (void)
+            (let
+                [discriminant (sqrt (- (square (get_var B)) (* 4 (get_var A) (get_var C))))] //Note that each of these operations return lists of size 1 (except sqrt returns 2 items).
+                                                                        //In general we expect inputs to be lists.
+                                                                        //If they are of size 1, things are good and work as we expect
+                                                                        //If any has size 0, something is wrong -- this is a compile time exception
+                                                                        //If any has size greater than 1 we get something like (* [1,3] [2]) = [2,6]. It does for every value. For (* [1,3] [2,4]) = [2,4,6,12]
+                                                                        //This is a cool idea, but I'm scared it might be a source of many runtime errors that aren't caught by compiler...
+                (let
+                    [x (+ (- (get_var B) discriminant)]
+                    (return x)              //return keyword means that this is an output value for the entire expression
+                )
+            )
+        )
+    ]
+)
+
+This works. We don't need to be wrapping things in lists because they already _are_ lists.
+x = [-b+sqrt(b^2-4ac), -b-sqrt(b^2-4ac)], so innermost let returns 2 elts
+
+Now let's redo the macro example but in our multi-return-value schema:
+
+
+(
+    (let
+        [wire_1 input_2]                   //wire 1 is the input fn: (* (sin A) (cos B))
+        (let
+            [wire_2 (get wire_1 2)]        // wire 2 is the 3rd elt in input fn: (cos B)
+            (let
+                [wire_3 (get wire_2 1])    // wire 3 is the 2nd element in cos fn: B
+                (let
+                    [wire_4 (replace wire_1 (sin wire_3) 2)] //wire 4 is the fn with cos swapped for sin: (* (sin A) (sin B))
+                    (return wire_4) //wire_4 is a vec of size 1 here since that is what replace returns when the first input is of length 1 (wire_1 technically is actually like [(* (sin A) (cos B)]
+                )
+            )
+        )
+    )
+)
+
+In general any data is always held in a list and wherever we have lists of size 1, the behavior is the same as if it wasn't in a list. I wonder whether this unpacking can create problems or slowness... maybe in the future there will be virtual unpacking where the data isn't actually packaged unless it's of size not-1
+Also in general, null (i.e. data list of size 0) doesn't throw exceptions, it just makes nothing happen, since the idea is to think of the list as being mapped and so the mapping is vacuous. i.e. for x in [] obviously doesn't do anything...
+
+
+So all operations are list operations. That means that (a + b) is not summing 2 integers, it is mapping 2 lists, a and b in this way
+map(a, a' => a' + b),
+but since b is a list, the operation a' + b is actually map(b, b' => a' + b')
+So the whole thing looks like
+map(a, a' => map(b, b' => a' + b'))
+Actually when looking at it this way
+[1,10] + [2,3] = [ [3,4], [12,13] ]
+Which I sort of like? It keeps data about the relative positions of outputs in relation to the inputs
+I'll have to play around with this and see if it's useful, but I think the idea is good
+
+Obviously, compiler will have to check for size of input lists, and ensure that they are correct (i.e. in most cases, where we expect list size to be 1, input has to be guaranteeable to be of size 1, based off of the output of wherever it's coming from)
+
+btw, Something like (get wire_2 2) returns a list of size 1
+
+Notice that we have type inference here
+    for line 235 we don't specify the type of wire_1, because wire_1 is just whatever type input_2 is
+
+the types of inputs must be stated at the beginning I guess.
+This homoiconicity is making contextual metadata a bit trickier, but I think it can be resolved by adding it in colons next to the fn:
+    for example [wire_2 (get:{inside of here we have a metadata description of this particular get}: wire_1 2)]
+    The compiler then just throws all this data away
+    It's used only for front-end stuff, I guess
+
+Now the question is, is there any metadata that the *compiler* should care about. I think macros are the best way to handle this, but I need to think on it a bit...
+
+Probably best way is to come up with some cases where the *compiler* cares about metadata and then an example on how to make that into a macro
+
+One case can be interface specification -- we want to get a specific implementation of a certain map-interface
+    This is detailed near line 350
+
+I want to test returning multiple values to make sure it makes sense with the structure we have.
+min-max-avg gets min, max and avg of min and max
+
+( let
+    [list input_1]
+    ([ (let
+            [min (min list)]
+            (return min))
+
+        (let
+            [max (max list)]
+            (return max))
+    ])
+)
+
+This doesn't work :( avg would have to be in line 290 and 294 at the same time to have access to both vars.
+So let scoping, it turns out, doesn't fully work for our purposes...
+
+We need a wider kind of scoping
+How do we know what scope different vars have access to?
+
+So we need a new structure. We'll call it line. Line can declare new variables similar to let but we have some restrictions:
+    1) A var declared in a line can only be referred to in a successive line
+
+Does the idea of a list of lines break homoiconicity? Let's try it
+We can use the macro example
+
+(defn swap_for_cos
+    [int fn]
+    [
+        (line [wire_1 (get fn 2)])    // wire 1 is the 3rd elt in input fn: (cos B)
+        (line [wire_2 (get wire_1 1]))    // wire 2 is the 2nd element in cos fn: B
+        (line [wire_3 (replace wire_fn (sin wire_2) 2)])     //wire 3 is the fn with cos swapped for sin: (* (sin A) (sin B))
+                                        //wire_4 is a vec of size 1 here since that is what replace returns when the first input is of length 1 (wire_1 technically is actually like [(* (sin A) (cos B))] )
+    ]
+    wire_3
+)
+Yes! This looks homoiconic to me! :)
+
+Let's try the other 2 codes:
+
+(defn quadratic
+    [int input_0 int input_1 int input_2]
+    [
+        (line [_ (set_var A a) _ (set_var B b) _ (set_var C c)])
+        (line [discriminant (sqrt (- (square (get_var B)) (* 4 (get_var A) (get_var C))))])
+        (line [x (+ (- (get_var B) discriminant)])
+    ]
+    x
+)
+
+(defn min-max-avg
+    [int<any> list]
+    [
+        (line [min (min list) max (max list)])
+        (line [avg (/ (+ min max) 2)])
+    ]
+    [min, avg, max]
+)
+
+I like how this is looking for now :)
+
+An example for macros:
+(defn many-sum
+    [int<n> list]
+    [
+        (line [
+            sum (+ (head list) (many-sum (tail list)))
+            count n
+        ])
+    ]
+    [sum, count]
+)
+
+Regarding <n> in line 337, we should expect this to be an issue, since n has not been defined.
+This is an example of of where we can use macros to simulate metadata!
+
+Let's make a macro that takes a metadata param and a fn and uses that to "set the function straight"
+Using it:
+
+(META {:argsizes [7]} many-sum ([1,2,3,4,5,6,7]))
+
+(defn META
+    [dict<META_KEYS anything> metadata fn fn_args]
+    [
+        (line [argsizes (get metadata :argsizes))]
+        (line [
+    ]
+)
+I would have to actually use my brain a bit to properly come up with this -- point is it could totally be done!!
+So yay.
+I think we have mostly consistent language :)
+
+I probably still have some Type stuff to figure out, but for the most part, it looks good
