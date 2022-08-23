@@ -354,7 +354,7 @@ An example for macros:
     [sum, count]
 )
 
-Regarding <n> in line 337, we should expect this to be an issue, since n has not been defined.
+Regarding <n> in line 347, we should expect this to be an issue, since n has not been defined.
 This is an example of of where we can use macros to simulate metadata!
 
 Let's make a macro that takes a metadata param and a fn and uses that to "set the function straight"
@@ -362,6 +362,7 @@ Using it:
 
 (META {:argsizes [7]} many-sum ([1,2,3,4,5,6,7]))
 
+TODO: actually complete this code
 (defn META
     [dict<META_KEYS anything> metadata fn fn_args]
     [
@@ -369,6 +370,7 @@ Using it:
         (line [
     ]
 )
+
 I would have to actually use my brain a bit to properly come up with this -- point is it could totally be done!!
 So yay.
 I think we have mostly consistent language :)
