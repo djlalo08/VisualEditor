@@ -376,3 +376,32 @@ So yay.
 I think we have mostly consistent language :)
 
 I probably still have some Type stuff to figure out, but for the most part, it looks good
+
+Rust's type inference system is super simple, but I like it: You have to specify input and output types and everything else is inferred
+(I guess for us everything _is_ an input or output, but still it's nice...)
+
+Good match statements with decomposition and guards and all that good Haskell stuff is super important,
+especially if we want to make writing macros easy
+
+I think we'll transpile to C for now? Might make it easier to have our own type system? Obviously the whole memory safety thing will sort of suck,
+but I have a suspicion that the kind of valid code transpiles in such a way where there's just a few cases and we can try to be safe about allocation for those...
+Any I'm fine with terrible safety for now in the prototyping stage -- if this ever becomes something real, it won't be transpiled anyhow...
+
+That said, it might be *easier* to transpile to Clojure because the fn'al structure will be similar already, but I don't really know how to deal with the min-max-avg example in Clojure...
+I might have to write a Clojure macro if I went that route
+
+I think I need to start practicing my lang and really understanding how it works. I think that means that for now,
+most of the work I do will be in language spec and in just pen and paper code written in the lang
+
+(also need not be said that only optionals can be null obv)
+
+One really neat idea from Rust:
+Typestate -- make it so that programs that *could* throw exceptions won't compile. We want to ensure that we always get the right type
+HTTP example:
+
+makeHTTP().statusline('ok').header('header').body('x')
+statusline() returns a different type than header(). This means we can do a compile check
+only the type that returns statusline() can have header called on it, and so on...
+
+I need to think about this more, but making compilation hard is a good idea
+And graphical interface helps You out with getting that right a lot, actually I think
