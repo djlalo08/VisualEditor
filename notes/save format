@@ -402,6 +402,63 @@ HTTP example:
 makeHTTP().statusline('ok').header('header').body('x')
 statusline() returns a different type than header(). This means we can do a compile check
 only the type that returns statusline() can have header called on it, and so on...
+In other words, encode state requirements in the type rather than a try-catch or if statement
 
 I need to think about this more, but making compilation hard is a good idea
 And graphical interface helps You out with getting that right a lot, actually I think
+
+Massively multi-threading every place where there is vertical code actually sounds like it would be good
+Probably should have a contextual option for it, of course, but it'll probably make things faster
+
+I have this fun idea, on the website there'll be sections describing it all
+and for multithreading, it just shows the multithreading box with a tick on it, because all You need for multi-threading
+is to enable it in Your already parallel code
+
+It is easy to make  mutability work.
+We just have something akin to our set_var/get_var business, but use a special set_mut_var, get_mut_var
+
+
+OMG
+
+WE CAN JUST WRITE SOME LISP MACROS. THAT'S LITERALLY ALL WE HAVE TO DO
+MACROS THAT HANDLE TYPING
+MACROS THAT HANDLE LINE INHERITANCE
+ETC
+
+THE INTERMEDIATE LANG ISN'T A NEW LANG AT ALL!! IT'S AN EXTENSION OF LISP!!! (in this case Clojure)
+
+I UNDERSTAND THE BEAUTY OF LISP AND MACROS NOW
+THIS IS WHAT IT MEANS FOR A LANGUAGE TO BE HOMOICONIC AND EXTENSIBLE
+
+Also perhaps animation is a good way to represent certain things -- there's no requirement that the page be static and
+You can use space a lot more efficiently if it's moving (consider the limitations of still pixel art vs pixel art animations_
+I'm thinking for example foldr can be represented by a diagram like this
+    fn
+agg   [a, b, c, ... ]
+
+And fn is shown to grab agg and a and that replaces agg. b and c move left
+Perhaps recursion can be also represented more easily with animation...
+
+So LINE can secretly do something like save a new variable for all the outputs and retrieve the previous lines as inputs
+or something like that
+
+What does line return? It could return actual return values for the function
+Or it could return any usable outputs for the function
+Or it could return both as 2 lists?
+I think it's actually best if it doesn't return anything at all?
+
+So lines are sequential
+This means that they are not exactly perfectly functional.
+Min-max probably gives a good example of this. I do want to keep the flexibility of being able to put lines anywhere.
+Obviously, a line's is scoped by wherever it is
+
+(defn min-max-avg
+    [int<any> list]
+    [
+        (line [min (min list) max (max list)])
+        (line [avg (/ (+ min max) 2)])
+    ]
+    [min, avg, max]
+)
+
+Maps must have the property where if You know the TYPE of its inputs, then You can infer the TYPE of its outputs
