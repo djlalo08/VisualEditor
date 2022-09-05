@@ -13,10 +13,11 @@
   padding: 8px;
   margin: 5px;
   border-radius: 7px;
+  border-style: outset;
 }
 
 .Node {
-  background-color: white;
+  background-color: rgb(252, 245, 201);
   display: inline-block;
   width: auto;
   height: auto;
@@ -25,14 +26,16 @@
   padding: 1px;
   margin: 3px;
   border-radius: 4px;
+  border-style: inset;
 }
 
 .io {
-  background-color: green;
+  background-color: rgb(87, 195, 87);
   display: inline-block;
   width: auto;
   height: auto;
   padding: 8px;
   margin: 5px;
   border-radius: 7px;
+  border-style: outset;
 }

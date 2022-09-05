@@ -8,8 +8,8 @@ export default function Wire(props){
         headShape='circle'
         tailShape='circle'
         // path='grid'
-        // showHead={false}
-        showTail
+        showHead={false}
+        // showTail
         headSize={2.8}
         tailSize={2.8}
         startAnchor='bottom'
@@ -21,8 +21,8 @@ export default function Wire(props){
         headShape='circle'
         tailShape='circle'
         // path='grid'
-        // showHead={false}
-        showTail
+        showHead={false}
+        // showTail
         headSize={3}
         tailSize={3}
         startAnchor='bottom'
