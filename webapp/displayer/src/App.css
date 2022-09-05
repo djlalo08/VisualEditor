@@ -1,4 +1,4 @@
-.App {
+.App, .Vertical {
   padding-left: 50px;
   padding-top: 10px;
   text-align: center;
@@ -20,7 +20,19 @@
   display: inline-block;
   width: auto;
   height: auto;
+  /* min-width: 8px; */
+  /* min-height: 8px; */
   padding: 1px;
   margin: 3px;
+  border-radius: 4px;
+}
+
+.io {
+  background-color: green;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  padding: 8px;
+  margin: 5px;
   border-radius: 7px;
 }
