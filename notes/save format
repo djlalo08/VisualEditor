@@ -462,3 +462,37 @@ Obviously, a line's is scoped by wherever it is
 )
 
 Maps must have the property where if You know the TYPE of its inputs, then You can infer the TYPE of its outputs
+
+
+(defmacro do-horizontal [& stmts]
+    `(do ~@stmts)
+)
+
+(defmacro do-vertical [& stmts]
+    `(do ~@stmts)
+)
+
+(def outsmap {})
+
+(defn output [name value]
+    (assoc outmap name value)
+)
+
+(defn make-map [map-name [& inputs] [& outputs]]
+    (doseq [result (apply map-name inputs) output-name outputs]
+        (output output-name result)
+    )
+)
+
+For now we can just have a global map of vars, and set-var just adds an element to the var
+
+Now with our more developed understanding, let's rewrite examples
+
+
+(defn min-max-avg [ls]
+    (do-vertical
+        (make-map min-max [ls] [o0 o1])
+        (make-map / [ (make-map + [o0 o1] []) 2 ] [o2])
+        [o0 o1 o2]
+    )
+)

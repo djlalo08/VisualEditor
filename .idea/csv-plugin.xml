@@ -24,6 +24,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$APPLICATION_CONFIG_DIR$/scratches/test.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="/notes/save format">
           <value>
             <Attribute>
