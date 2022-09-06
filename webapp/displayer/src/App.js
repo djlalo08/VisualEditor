@@ -4,6 +4,7 @@ import Horizontal from './Components/Horizontal';
 import Map from './Components/Map';
 import Vertical from './Components/Vertical';
 import Wire from './Components/Wire';
+import { intersperse } from './Utils/ListUtils';
 
 function App() {
   return (
@@ -19,12 +20,12 @@ function App() {
             <div id="1"/>
           ]}
         /> 
-        <Map name="/"
+        <Map infix name="/"
           ins={[
-            <Map name="+"
+            <Map infix name="+"
               ins={[
                 <div id="2"/>,
-                <Map name="test"/>,
+                <Map name={intersperse(["1", "2", "3"], ",")}/>,
                 <div id="3"/>
               ]}
             />,
