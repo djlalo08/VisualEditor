@@ -1,4 +1,4 @@
-import './App.css';
+import './App.less';
 import Node from './Node.js';
 
 export default function Map(props){
