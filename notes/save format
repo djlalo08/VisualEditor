@@ -496,3 +496,7 @@ Now with our more developed understanding, let's rewrite examples
         [o0 o1 o2]
     )
 )
+
+Should our homoiconic structure not be trees? I feel like that more obviously mirrors the structure of code (we literally transform into an AST), and trees are clearly what our code structures visually look like. Except they're a bit more complicated than trees, in that for a tree any parents node only has children nodes, whereas for us, any given map can have both children nodes in the sense of where their outputs connect to and also children nodes in the sense of stuff nested in their inputs...I need to think about this a bit more... maybe there is a modification of a tree that better matches the structure of code...
+
+But basically it would read like "every method is actually a tree", and when You call eval on a tree, that runs the method

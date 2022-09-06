@@ -1,9 +1,9 @@
 import { Xwrapper } from 'react-xarrows';
 import './App.css';
-import Horizontal from './Horizontal';
-import Map from './Map.js';
-import Vertical from './Vertical.js';
-import Wire from './Wire';
+import Horizontal from './Components/Horizontal';
+import Map from './Components/Map';
+import Vertical from './Components/Vertical';
+import Wire from './Components/Wire';
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
             <Map name="+"
               ins={[
                 <div id="2"/>,
+                <Map name="test"/>,
                 <div id="3"/>
               ]}
             />,
