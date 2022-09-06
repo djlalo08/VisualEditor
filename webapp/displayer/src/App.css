@@ -10,7 +10,7 @@
   display: inline-block;
   width: auto;
   height: auto;
-  padding: 8px;
+  padding: 5px 8px;
   margin: 5px;
   border-radius: 7px;
   border-style: outset;
@@ -23,17 +23,29 @@
   /* min-width: 8px; */
   /* min-height: 8px; */
   padding: 1px;
-  margin: 3px;
+  margin: 0px 3px;
   border-radius: 4px;
   border-style: inset;
 }
 .io {
-  background-color: #57c357;
+  background-color: gold;
   display: inline-block;
   width: auto;
   height: auto;
-  padding: 8px;
+  padding: 5px 8px;
   margin: 5px;
   border-radius: 7px;
   border-style: outset;
+  background-color: #57c357;
+}
+.constant {
+  background-color: gold;
+  display: inline-block;
+  width: auto;
+  height: auto;
+  padding: 5px 8px;
+  margin: 5px;
+  border-radius: 7px;
+  border-style: outset;
+  background-color: #57bec3;
 }

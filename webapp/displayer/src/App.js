@@ -10,7 +10,7 @@ function App() {
     <div className="App"> <Xwrapper>
       <Vertical>
         <Map className="io" name="ls" outs={[<div id="5"/>]} />
-        <Map name="min-max"
+        <Map name="Min-Max"
           ins={[
             <div id="9"/>
           ]} 
@@ -27,7 +27,7 @@ function App() {
                 <div id="3"/>
               ]}
             />,
-            <Map name="2"/>
+            <Map className="constant" name="2"/>
           ]} 
           outs={[
             <div id="4"/>
