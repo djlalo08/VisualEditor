@@ -9,8 +9,8 @@ import { intersperse } from './Utils/ListUtils';
 function App() {
   return (
     <div className="App"> <Xwrapper>
+      <Map className="io" name="ls" outs={[<div id="5"/>]} />
       <Vertical>
-        <Map className="io" name="ls" outs={[<div id="5"/>]} />
         <Map name="Min-Max"
           ins={[
             <div id="9"/>
@@ -34,12 +34,12 @@ function App() {
           outs={[
             <div id="4"/>
           ]} />
-        <Horizontal>
-          <Map className="io" name="min" ins={[<div id="6"/>]} />
-          <Map className="io" name="avg" ins={[<div id="7"/>]} />
-          <Map className="io" name="max" ins={[<div id="8"/>]} />
-        </Horizontal>
       </Vertical>
+      <Horizontal>
+        <Map className="io" name="min" ins={[<div id="6"/>]} />
+        <Map className="io" name="avg" ins={[<div id="7"/>]} />
+        <Map className="io" name="max" ins={[<div id="8"/>]} />
+      </Horizontal>
       <Wire start="0" end="2"/>
       <Wire start="1" end="3"/>
       <Wire start="5" end="9"/>
