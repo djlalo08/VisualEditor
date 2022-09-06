@@ -10,7 +10,7 @@ export default function Map(props){
 
     return (<div id={props.id} className={props.className || "Map"}>
         {ins}
-        {!props.infix && <div>{props.name}</div>}
+        {props.infix? <br/> : <div>{props.name}</div>}
         {outs}
     </div>);
 }
