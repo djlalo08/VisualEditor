@@ -33,9 +33,9 @@ function App() {
             <div id="4"/>
           ]} />
         <Horizontal>
-          <Map className="io" name="min" outs={[<div id="6"/>]} />
-          <Map className="io" name="avg" outs={[<div id="7"/>]} />
-          <Map className="io" name="max" outs={[<div id="8"/>]} />
+          <Map className="io" name="min" ins={[<div id="6"/>]} />
+          <Map className="io" name="avg" ins={[<div id="7"/>]} />
+          <Map className="io" name="max" ins={[<div id="8"/>]} />
         </Horizontal>
       </Vertical>
       <Wire start="0" end="2"/>
