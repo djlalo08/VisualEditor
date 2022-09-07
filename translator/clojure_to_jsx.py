@@ -69,13 +69,13 @@ class ParentedList:
         if not self.ls or len(self.ls): return ""
 
         match self.ls[0]:
-            case 'defn':
-                inputs = self.ls[2]
+            case 'defx':
+                [_, name, ins, lines, outs] = self.ls
+
 
             case 'do-vertical':
 
                 return Tag('Vertical', )
-
 
 if __name__ == '__main__':
     parse(clojure_code)

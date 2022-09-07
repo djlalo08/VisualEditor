@@ -1,6 +1,8 @@
-clojure_code = \
-    '''(defn min-max-avg [ls]
-           (do-vertical
-           (make-map min-max ls [:o0 :o1])
-           (make-map / [(make-map + [(outsmap :o0) (outsmap :o1)] []) 2] [:o2])
-           (vector (outsmap :o0) (outsmap :o1) (outsmap :o2))))'''
+clojure_code = '''
+(defx
+   min-max-avg
+   [:i0 :i1]
+   [(make-map min-max [(outsmap :i0)] [:o0 :o1])
+    (make-map div [(make-map add [(outsmap :o0) (outsmap :o1)] []) [2]] [:o2])]
+   [:o0 :o2 :o1])
+'''

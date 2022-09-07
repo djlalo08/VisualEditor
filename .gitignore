@@ -69,3 +69,4 @@ venv/.Python
 .idea/misc.xml
 .idea/Visual Editor.iml
 .clj-kondo/.cache/v1/clj/user.transit.json
+.clj-kondo/.cache/v1/clj/user.transit.json
