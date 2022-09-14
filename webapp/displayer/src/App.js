@@ -1,44 +1,52 @@
 import { Xwrapper } from 'react-xarrows';
 import './App.css';
 import Horizontal from './Components/Horizontal';
+import Ins from './Components/Ins';
 import Map from './Components/Map';
+import Outs from './Components/Outs';
 import Vertical from './Components/Vertical';
 import Wire from './Components/Wire';
-import { intersperse } from './Utils/ListUtils';
+
 
 function App() {
   return (
     <div className="App"> <Xwrapper>
-      <Map className="io" name="ls" outs={[<div id="5"/>]} />
+      <Map className="io" name="ls">
+        <Ins/>
+        <Outs><div id="5"/></Outs>
+      </Map>
       <Vertical>
-        <Map name="Min-Max"
-          ins={[
-            <div id="9"/>
-          ]} 
-          outs={[
-            <div id="0"/>,
-            <div id="1"/>
-          ]}
-        /> 
-        <Map infix name="/"
-          ins={[
-            <Map infix name="+"
-              ins={[
-                <div id="2"/>,
-                <Map name={intersperse(["1", "2", "3"], ",")}/>,
+        <Map name="Min-Max" > 
+          <Ins><div id="9"/></Ins>
+          <Outs><div id="0"/><div id="1"/></Outs>
+        </Map>
+        <Map infix={true} name="/">
+          <Ins>
+            <Map infix={true} name="+">
+              <Ins>
+                <div id="2"/>
                 <div id="3"/>
-              ]}
-            />,
+              </Ins>
+              <Outs/>
+            </Map>
             <Map className="constant" name="2"/>
-          ]} 
-          outs={[
-            <div id="4"/>
-          ]} />
+          </Ins>
+          <Outs><div id="4"/></Outs>
+        </Map>
       </Vertical>
       <Horizontal>
-        <Map className="io" name="min" ins={[<div id="6"/>]} />
-        <Map className="io" name="avg" ins={[<div id="7"/>]} />
-        <Map className="io" name="max" ins={[<div id="8"/>]} />
+        <Map className="io" name="min">
+          <Ins><div id="6"/></Ins>
+          <Outs/>
+        </Map>
+        <Map className="io" name="avg">
+          <Ins><div id="7"/></Ins>
+          <Outs/>
+        </Map>
+        <Map className="io" name="avg">
+          <Ins><div id="8"/></Ins>
+          <Outs/>
+        </Map>
       </Horizontal>
       <Wire start="0" end="2"/>
       <Wire start="1" end="3"/>

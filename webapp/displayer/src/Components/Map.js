@@ -1,15 +1,14 @@
-import { intersperse } from '../Utils/ListUtils.js';
-import Node from './Node.js';
+import React from "react";
 
 export default function Map(props){
-   
-    let ins = props.ins ? props.ins.map((in_, index) => <Node key={index}>{in_}</Node>) : [];
-    if (props.infix)
-        ins = intersperse(ins, props.name);
-    let outs = props.outs ? props.outs.map((out_, index) => <Node key={index}>{out_}</Node>) : [];
-
+    let {children, ...other} = props;
+    
+    let ins = children? children[0]: [];
+    let ins2 = React.Children.map(ins, x => React.cloneElement(x, {...other}));
+    let outs = children? children[1]: [];
+    
     return (<div id={props.id} className={props.className || "Map"}>
-        {ins}
+        {ins2}
         {props.infix? <br/> : <div>{props.name}</div>}
         {outs}
     </div>);

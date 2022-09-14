@@ -39,9 +39,12 @@ def to_jsx(selves, tabs='', my_type=''):
             result += tabs + self
             continue
 
-        result += tabs + '<' + self.name + to_jsx(self.props, my_type='props') + '>\n' \
-                  + to_jsx(self.children, tabs1) + '\n' \
-                  + tabs + '<' + self.name + '/>\n'
+        if len(self.children):
+            result += tabs + '<' + self.name + to_jsx(self.props, my_type='props') + '>\n' \
+                      + to_jsx(self.children, tabs1) + '\n' \
+                      + tabs + '</' + self.name + '>\n'
+        else:
+            result += tabs + '<' + self.name + to_jsx(self.props, my_type='props') + '/>\n'
     return result
 
 
@@ -123,12 +126,14 @@ def to_tag(self, my_type=''):
                                'name': self
                                })
 
+        case 'ins':
+            return Tag('div')
+
     if not isinstance(self, ParentedList):
         return self
     ls = self.ls
     if len(ls) == 1:
         return ls[0]
-
 
     match ls[0]:
         case 'defx':
@@ -137,6 +142,13 @@ def to_tag(self, my_type=''):
             lines = Tag('Vertical', {}, [to_tag(x) for x in lines])
             outs = Tag('Horizontal', {}, [to_tag(x, 'output') for x in outs])
             return [ins, lines, outs]
+        case 'make-map':
+            [_, map_name, ins, outs] = ls
+            props = {'name': map_name, 'ins': [to_tag(x, 'ins') for x in ins], 'outs': [to_tag(x, 'outs') for x in outs]}
+            return Tag('Map', props)
+        case 'outsmap':
+            [_, var_name] = ls
+            return Tag('div', {'id': var_name})
 
 
 if __name__ == '__main__':
