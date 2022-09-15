@@ -11,10 +11,16 @@ import Wire from './Components/Wire';
 function App() {
   return (
     <div className="App"> <Xwrapper>
-      <Map className="io" name="ls">
-        <Ins/>
-        <Outs><div id="5"/></Outs>
-      </Map>
+      <Horizontal>
+        <Map className="io" name="ls">
+          <Ins/>
+          <Outs><div id="5"/></Outs>
+        </Map>
+        <Map className="io" name="x">
+          <Ins/>
+          <Outs><div id="x"/></Outs>
+        </Map>
+      </Horizontal>
       <Vertical>
         <Map name="Min-Max" > 
           <Ins><div id="9"/></Ins>

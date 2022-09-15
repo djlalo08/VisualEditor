@@ -12,7 +12,7 @@ export default function Ins(props){
 
     let ins = children.map((in_, index) => <Node key={index}>{in_}</Node>);
 
-    if (props.infix) ins = intersperse(ins, props.name);
+    if (infix) ins = intersperse(ins, props.name);
     
     return (ins);
 }
