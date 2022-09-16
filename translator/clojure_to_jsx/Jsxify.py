@@ -18,7 +18,7 @@ def to_jsx(selves, tabs='', my_type=''):
 
         if len(self.children):
             result += tabs + '<' + self.name + to_jsx(self.props, my_type='props') + '>\n' \
-                      + to_jsx(self.children, tabs1) + '\n' \
+                      + to_jsx(self.children, tabs1) \
                       + tabs + '</' + self.name + '>\n'
         else:
             result += tabs + '<' + self.name + to_jsx(self.props, my_type='props') + '/>\n'
