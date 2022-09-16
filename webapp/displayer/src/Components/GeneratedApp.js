@@ -10,49 +10,48 @@ import Wire from './Wire';
 
 export default function GeneratedApp(){
     return( <Xwrapper>
+        
 <Horizontal>
-	<FileInput name="ls">{[":ix"]}</FileInput>
-	<FileInput>{[":i1",":i0"]}</FileInput>
+	<FileInput>{[":a"]}</FileInput>
+	<FileInput>{[":b"]}</FileInput>
+	<FileInput>{[":c"]}</FileInput>
 </Horizontal>
 <Vertical>
-	<Map name="min-max">
+	<Map name="sqrt">
 		<Ins>
-			<div id=":i0_0"/>
-		</Ins>
-		<Outs>
-			<div id=":o0"/>
-			<div id=":o1"/>
-		</Outs>
-	</Map>
-	<Map name="/" infix="true">
-		<Ins infix="true">
-			<Map name="+" infix="true">
+			<Map name="-" infix="true">
 				<Ins infix="true">
-					<div id=":o0_0"/>
-					<div id=":o1_0"/>
+					<Map name="sqr">
+						<Ins>
+							<div id=":b_0"/>
+						</Ins>
+						<Outs/>
+					</Map>
+					<Map name="*" infix="true">
+						<Ins infix="true">
+							<Map name="4" className="constant"/>
+							<div id=":a_0"/>
+							<div id=":c_0"/>
+						</Ins>
+						<Outs infix="true"/>
+					</Map>
 				</Ins>
 				<Outs infix="true"/>
 			</Map>
-			<Map name="2" className="constant"/>
 		</Ins>
-		<Outs infix="true">
-			<div id=":o2"/>
+		<Outs>
+			<div id=":discr"/>
 		</Outs>
 	</Map>
 </Vertical>
 <Horizontal>
-	<FileOutput name="min">{[":o0_1"]}</FileOutput>
-	<FileOutput name="avg">{[":o2_0",":o1_1"]}</FileOutput>
-	<FileOutput name="max">{[":o1_2"]}</FileOutput>
+	<FileOutput>{[":discr_0"]}</FileOutput>
 </Horizontal>
 
-<Wire start=":i0" end=":i0_0"/>
-<Wire start=":o0" end=":o0_0"/>
-<Wire start=":o1" end=":o1_0"/>
-<Wire start=":o0" end=":o0_1"/>
-<Wire start=":o2" end=":o2_0"/>
-<Wire start=":o1" end=":o1_1"/>
-<Wire start=":o1" end=":o1_2"/>
+<Wire start=":b" end=":b_0"/>
+<Wire start=":a" end=":a_0"/>
+<Wire start=":c" end=":c_0"/>
+<Wire start=":discr" end=":discr_0"/>
 
     </Xwrapper>);
 }

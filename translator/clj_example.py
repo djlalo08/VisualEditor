@@ -1,8 +1,10 @@
 clojure_code = '''
-(defx
-  min-max-avg
-  [(m {"name" "ls"} [:ix]) [:i1 :i0]]
-  [(make-map min-max [(outsmap :i0)] [:o0 :o1])
-   (m {"infix" "true"} (make-map / [(m {"infix" "true"} (make-map + [(outsmap :o0) (outsmap :o1)] [])) (m {"className" "constant"} [2])] [:o2]))]
-  [(m {"name" "min"} [:o0]) (m {"name" "avg"} [:o2, :o1]) (m {"name" "max"} [:o1])])
+(defx 
+  quadratic
+  [[:a] [:b] [:c]]
+  [(make-map sqrt [(m {"infix" "true"} (make-map - [(make-map sqr [(outsmap :b)] [])
+                                                    (m {"infix" "true"} (make-map * [(m {"className" "constant"} [4]) (outsmap :a) (outsmap :c)] []))]
+                                                 []))]
+             [:discr])]
+  [[:discr]])
   '''

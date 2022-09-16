@@ -30,10 +30,26 @@
 
 (def + add)
 
+(defn minus [& as] 
+  (vector (apply - as)))
+
+(def - minus)
+
+(defn times [& as]
+  (vector (apply * as)))
+
+(def * times)
+
 (defn pair_ [a b]
   (if (vector? a)
     (mapcat pair_ a b)
     [a b]))
+
+(defn sqrt [a] 
+  (let [sqrt_abs (Math/sqrt a)]
+    [sqrt_abs (- sqrt_abs)]))
+
+(defn sqr [a] (* a a))
 
 (defn pair [a b] (partition 2 (pair_ a b)))
 
@@ -65,10 +81,20 @@
    (m {"infix" "true"} (make-map / [(m {"infix" "true"} (make-map + [(outsmap :o0) (outsmap :o1)] [])) (m {"constant" "true"} [2])] [:o2]))]
   [(m {"name" "min"} [:o0]) (m {"name" "avg"} [:o2, :o1]) (m {"name" "max"} [:o1])])
 
+(defx 
+  quadratic
+  [[:a] [:b] [:c]]
+  [(make-map sqrt [(m {"infix" "true"} (make-map - [(make-map sqr [(outsmap :b)] [])
+                                                    (m {"infix" "true"} (make-map * [(m {"className" "constant"} [4]) (outsmap :a) (outsmap :c)] []))]
+                                                 []))]
+             [:discr])]
+  [[:discr]])
+
 (println "c " outsmap)
 
-(println (min-max-avg [[1,2,3,4,5]] [[0,0,0] [10,20,30,40]]))
-(println (min-max-avg [[30,40,80]] [[][300,400,800]]))
+;; (println (min-max-avg [[1,2,3,4,5]] [[0,0,0] [10,20,30,40]]))
+;; (println (min-max-avg [[30,40,80]] [[][300,400,800]]))
+(println (quadratic [8] [30] [10]))
 
 (println "c " outsmap)
 
