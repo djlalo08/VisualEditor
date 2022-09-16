@@ -2,7 +2,7 @@ from translator.clojure_to_jsx.ParentedList import ParentedList
 from translator.clojure_to_jsx.Tag import Tag
 
 
-def to_tag(self):
+def to_tag(self, my_type=''):
     if not isinstance(self, ParentedList):
         return Tag('div', {'name': str0(self)})
     ls = self.ls
@@ -12,7 +12,7 @@ def to_tag(self):
     match ls[0]:
         case 'defx':
             [_, name, ins, lines, outs] = ls
-            ins = Tag('Horizontal', {}, [to_tag(x) for x in ins])
+            ins = Tag('Horizontal', {}, [to_tag(x, 'FileInput') for x in ins])
             lines = Tag('Vertical', {}, [to_tag(x) for x in lines])
             outs = Tag('Horizontal', {}, [to_tag(x) for x in outs])
             return [ins, lines, outs]

@@ -10,7 +10,9 @@ export default function Ins(props){
 
     if (!Array.isArray(props.children)) children = [children];
 
-    let ins = children.map((in_, index) => <Node key={index}>{in_}</Node>);
+    let ins = props.x ?
+        children.map((in_, index) => <Node key={index}><div id={in_}/></Node>):
+        children.map((in_, index) => <Node key={index}>{in_}</Node>);
 
     if (infix) ins = intersperse(ins, props.name);
     

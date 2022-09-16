@@ -52,10 +52,13 @@
 
 (println "c " outsmap)
 
+
+(defn !m [metadata value] value)
+
 (println
  (defx
    min-max-avg
-   [:ix [:i1 :i0]]
+   [(!m {"input-name" "ls"} :ix) (!m {"input-name" "unused"} [:i1 :i0])]
    [(make-map min-max [(outsmap :i0)] [:o0 :o1])
     (make-map div [(make-map add [(outsmap :o0) (outsmap :o1)] []) [2]] [:o2])]
    [:o0 :o2 :o1]))
@@ -75,7 +78,7 @@
 
 
 (println (pair :i0 5))
-(println (pair [:i0 [:i1 :i2]] [0 [1 2]]))
+(println (pair [:i0 [:i1 :i2 [:a :b [:c :d]]]] [0 [1 2 [\a \b [\c \d]]]]))
 
 
 ;; (println (combine-destruct :i0 0))

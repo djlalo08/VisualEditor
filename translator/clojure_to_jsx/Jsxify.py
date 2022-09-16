@@ -4,7 +4,7 @@ def to_jsx(selves, tabs='', my_type=''):
 
     match my_type:
         case 'props':
-            print(selves)
+            # print(selves)
             for key, value in selves.items():
                 result += ' ' + key + '=' + to_jsx(value)
             return result
