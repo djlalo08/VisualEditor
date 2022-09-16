@@ -21,13 +21,21 @@
 (defn div [as bs]
   (for [a as b bs] (/ a b)))
 
-(println (div [10 20 30] [1 2 6]))
+;; (println (div [10 20 30] [1 2 6]))
 
 (defn add [& as]
   (vector (apply + as)))
 
+
+(defn pair_ [a b]
+  (if (vector? a)
+    (mapcat pair_ a b)
+    [a b]))
+
+(defn pair [a b] (partition 2 (pair_ a b)))
+
 (defn read-inputs [input-names input-values]
-  (let [r (map vector input-names input-values)]
+  (let [r (pair input-names input-values)]
     (doseq [[a b] r]
       (output a b))))
 
@@ -47,13 +55,27 @@
 (println
  (defx
    min-max-avg
-   [:i0 :i1]
+   [:ix [:i1 :i0]]
    [(make-map min-max [(outsmap :i0)] [:o0 :o1])
     (make-map div [(make-map add [(outsmap :o0) (outsmap :o1)] []) [2]] [:o2])]
    [:o0 :o2 :o1]))
 
 (println "c " outsmap)
-(println (min-max-avg [1,2,3,4,5]))
-(println (min-max-avg [30,40,80]))
+
+(println (min-max-avg [1,2,3,4,5] [[0,0,0] [10,20,30,40]]))
+(println (min-max-avg [30,40,80] [[][300,400,800]]))
 
 (println "c " outsmap)
+
+(require '[clojure.core.match :refer [match]])
+
+
+(defn combine-destruct [in-names in-values]
+  (map pair in-names in-values))
+
+
+(println (pair :i0 5))
+(println (pair [:i0 [:i1 :i2]] [0 [1 2]]))
+
+
+;; (println (combine-destruct :i0 0))
