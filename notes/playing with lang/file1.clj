@@ -58,15 +58,15 @@
 (println
  (defx
    min-max-avg
-   [(!m {"input-name" "ls"} :ix) (!m {"input-name" "unused"} [:i1 :i0])]
+   [(!m {"input-name" "ls"} [:ix]) (!m {"input-name" "unused"} [:i1 :i0])]
    [(make-map min-max [(outsmap :i0)] [:o0 :o1])
     (make-map div [(make-map add [(outsmap :o0) (outsmap :o1)] []) [2]] [:o2])]
    [:o0 :o2 :o1]))
 
 (println "c " outsmap)
 
-(println (min-max-avg [1,2,3,4,5] [[0,0,0] [10,20,30,40]]))
-(println (min-max-avg [30,40,80] [[][300,400,800]]))
+(println (min-max-avg [[1,2,3,4,5]] [[0,0,0] [10,20,30,40]]))
+(println (min-max-avg [[30,40,80]] [[][300,400,800]]))
 
 (println "c " outsmap)
 

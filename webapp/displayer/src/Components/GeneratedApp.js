@@ -1,3 +1,5 @@
+import FileInput from './FileInput';
+import FileOutput from './FileOutput';
 import Horizontal from './Horizontal';
 import Ins from './Ins';
 import Map from './Map';
@@ -7,8 +9,8 @@ import Vertical from './Vertical';
 export default function GeneratedApp(){
     return( <>
 <Horizontal>
-	<div name=":i0"/>
-	<div name=":i1"/>
+	<FileInput>{[":i0"]}</FileInput>
+	<FileInput>{[":i1",":ix"]}</FileInput>
 </Horizontal>
 <Vertical>
 	<Map name="min-max">
@@ -37,9 +39,9 @@ export default function GeneratedApp(){
 	</Map>
 </Vertical>
 <Horizontal>
-	<div name=":o0"/>
-	<div name=":o2"/>
-	<div name=":o1"/>
+	<FileOutput>{[":o0"]}</FileOutput>
+	<FileOutput>{[":o2"]}</FileOutput>
+	<FileOutput>{[":o1"]}</FileOutput>
 </Horizontal>
     </>);
 

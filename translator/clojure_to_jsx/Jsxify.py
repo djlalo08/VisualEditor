@@ -1,3 +1,6 @@
+from translator.clojure_to_jsx.Tagify import str0
+
+
 def to_jsx(selves, tabs='', my_type=''):
     tabs1 = tabs + '\t'
     result = ''
@@ -12,11 +15,16 @@ def to_jsx(selves, tabs='', my_type=''):
     for self in selves:
         if not self:
             continue
-        if isinstance(self, str):
+        elif isinstance(self, str):
             result += tabs + self
             continue
 
-        if len(self.children):
+        elif self.name in ['FileInput', 'FileOutput']:
+            result += tabs + '<' + self.name + to_jsx(self.props, my_type='props') + '>'\
+                      + '{[' + ','.join(map(str0, self.children)) + ']}' \
+                      + '</' + self.name + '>\n'
+
+        elif len(self.children):
             result += tabs + '<' + self.name + to_jsx(self.props, my_type='props') + '>\n' \
                       + to_jsx(self.children, tabs1) \
                       + tabs + '</' + self.name + '>\n'
