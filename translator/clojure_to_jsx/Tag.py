@@ -3,6 +3,7 @@ class Tag:
         self.name = name
         self.props = props if props else {}
         self.children = children if children else []
+        self.has_run = False
 
     def __repr__(self):
         return my_str(self)
@@ -14,6 +15,9 @@ class Tag:
         return self
 
     def __next__(self):
+        if self.has_run: raise StopIteration
+
+        self.has_run = True
         return self
 
 
@@ -22,7 +26,7 @@ def my_str(self, tabs=''):
     if isinstance(self, str): return tabs + self + '\n'
 
     tabs1 = tabs + '\t'
-    props_list = [key + ':' + str(self.props.get(key)) for key in self.props.keys() if key not in ['ins', 'outs']]
+    props_list = [key + ':' + str(self.props.get(key)) for key in self.props.keys()]
     children = [my_str(x, tabs1) for x in self.children]
 
     return tabs + self.name \

@@ -1,5 +1,5 @@
 from translator.clj_example import clojure_code
-from translator.clojure_to_jsx.Jsxify import to_jsx
+from translator.clojure_to_jsx.Jsxify import to_jsx_, to_jsx
 from translator.clojure_to_jsx.Tagify import to_tag
 from translator.clojure_to_jsx.parser import parse
 

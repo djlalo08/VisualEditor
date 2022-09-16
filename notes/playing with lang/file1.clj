@@ -58,7 +58,7 @@
 (println
  (defx
    min-max-avg
-   [(!m {"input-name" "ls"} [:ix]) (!m {"input-name" "unused"} [:i1 :i0])]
+   [[:ix] [:i1 :i0]]
    [(make-map min-max [(outsmap :i0)] [:o0 :o1])
     (make-map div [(make-map add [(outsmap :o0) (outsmap :o1)] []) [2]] [:o2])]
    [:o0 :o2 :o1]))
