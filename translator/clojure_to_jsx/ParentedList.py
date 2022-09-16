@@ -1,8 +1,12 @@
-class ParentedList:
+from translator.clojure_to_jsx.ParentedCollection import ParentedCollection
+
+
+class ParentedList(ParentedCollection):
     def __init__(self, parent=None):
+        super().__init__(parent)
         self.ls = []
-        self.parent = parent
         self.current_index = 0
+        self.meta = {}
 
     def __str__(self):
         res = '('

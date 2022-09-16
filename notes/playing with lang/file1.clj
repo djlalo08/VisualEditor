@@ -21,11 +21,14 @@
 (defn div [as bs]
   (for [a as b bs] (/ a b)))
 
+(def / div)
+
 ;; (println (div [10 20 30] [1 2 6]))
 
 (defn add [& as]
   (vector (apply + as)))
 
+(def + add)
 
 (defn pair_ [a b]
   (if (vector? a)
@@ -48,20 +51,19 @@
               (list 'do
                     (list 'read-inputs ins 'in-vals)
                     (list 'doseq ['line lines] (list 'list 'line))
-                    (list 'map 'outsmap outs)))))
+                    (list 'map (list 'fn ['x] (list 'map 'outsmap 'x)) outs)))))
 
 (println "c " outsmap)
 
 
-(defn !m [metadata value] value)
+(defn m [metadata value] value)
 
-(println
- (defx
-   min-max-avg
-   [[:ix] [:i1 :i0]]
-   [(make-map min-max [(outsmap :i0)] [:o0 :o1])
-    (make-map div [(make-map add [(outsmap :o0) (outsmap :o1)] []) [2]] [:o2])]
-   [:o0 :o2 :o1]))
+(defx
+  min-max-avg
+  [(m {"name" "ls"} [:ix]) [:i1 :i0]]
+  [(make-map min-max [(outsmap :i0)] [:o0 :o1])
+   (m {"infix" "true"} (make-map / [(m {"infix" "true"} (make-map + [(outsmap :o0) (outsmap :o1)] [])) (m {"constant" "true"} [2])] [:o2]))]
+  [(m {"name" "min"} [:o0]) (m {"name" "avg"} [:o2, :o1]) (m {"name" "max"} [:o1])])
 
 (println "c " outsmap)
 
