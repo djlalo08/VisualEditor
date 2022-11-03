@@ -1,9 +1,10 @@
 class Tag:
-    def __init__(self, name, props=None, children=None):
+    def __init__(self, name, props=None, children=None, parent=None):
         self.name = name
         self.props = props if props else {}
         self.children = children if children else []
-        self.has_run = False
+        self.parent = parent
+        self._has_run = False
 
     def __repr__(self):
         return my_str(self)
@@ -15,9 +16,9 @@ class Tag:
         return self
 
     def __next__(self):
-        if self.has_run: raise StopIteration
+        if self._has_run: raise StopIteration
 
-        self.has_run = True
+        self._has_run = True
         return self
 
 
@@ -30,9 +31,9 @@ def my_str(self, tabs=''):
     children = [my_str(x, tabs1) for x in self.children]
 
     return tabs + self.name \
-           + ('[' + ', '.join(props_list) + ']' if len(props_list) else '') \
-           + '\n' \
-           + (''.join(children) if len(children) else '')
+        + ('[' + ', '.join(props_list) + ']' if len(props_list) else '') \
+        + '\n' \
+        + (''.join(children) if len(children) else '')
 
 # print(Tag(
 #     'Map',

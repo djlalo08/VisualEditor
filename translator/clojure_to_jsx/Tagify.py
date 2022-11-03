@@ -25,7 +25,7 @@ def to_tag(self, my_type=''):
             ins = Tag('Horizontal', meta, [to_tag(x, 'FileInput') for x in ins])
             lines = Tag('Vertical', meta, [to_tag(x) for x in lines])
             outs = Tag('Horizontal', meta, [to_tag(x, 'FileOutput') for x in outs])
-            return [ins, lines, outs]
+            return Tag('Root', meta, [ins, lines, outs])
         case 'make-map':
             [_, map_name, ins, outs] = ls
             props = {'name': str0(map_name)}

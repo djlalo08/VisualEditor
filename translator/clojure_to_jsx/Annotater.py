@@ -1,7 +1,6 @@
 from translator.clojure_to_jsx.ParentedCollection import ParentedCollection
 from translator.clojure_to_jsx.ParentedList import ParentedList
 
-
 def annotate(parsed):
     if not isinstance(parsed, ParentedCollection):
         return parsed

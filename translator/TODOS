@@ -5,6 +5,19 @@ This means that clojure code is only ever generated -- never read.
 We need the following abilities:
     1. IR to CLJ, so we can run IR code
     2. IR to UI, so we can display IR
-    3. UI to IR so changes in UI can update IR -- I actually think this is not fully correct -- what we _really_ want is IR _is_ our program representation. UI just reads and shows that. UI interacts directly with IR. So it's not "UI updates and then we translate UI to IR". Instead, it is "interacting with UI triggers updates to IR and updates to IR trigger updates to UI"
+    3. UI interacts directly with IR. (So it's not "UI updates and then we translate UI to IR". Instead, it is "interacting with UI triggers updates to IR and updates to IR trigger updates to UI")
 
     IR includes "navigational" information like what box is currently selected
+
+    We need a textual representation of IR. So we need to be able to go from text to IR and IR to text.
+    We actually already have IR to text (it's Tag.my_str())
+
+========== CURRENTLY WORKING ON =========
+Text to IR (i.e. Tag):
+    - All that remains is to make sure that generating IR from text works fine clojure_to_jsx
+
+========== TODO =============
+1. Associate changes to UI with changes to IR
+2. IR to CLJ
+
+- Jsxify looks pretty messy and bad
