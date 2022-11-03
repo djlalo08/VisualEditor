@@ -49,3 +49,6 @@
   border-style: outset;
   background-color: #57bec3;
 }
+.selected {
+  border-color: red;
+}
