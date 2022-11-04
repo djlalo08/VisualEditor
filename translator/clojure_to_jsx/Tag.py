@@ -1,6 +1,8 @@
 free_ids = set()  # stuff will get added to this set whenever an element is deleted
 max_id = 0
 
+tag_set = {}
+
 
 def generate_id():
     global max_id
@@ -18,6 +20,11 @@ class Tag:
         self.children = children if children else []
         self.parent = parent
         self._has_run = False
+
+        self.props["id"] = f'{{{self.id}}}'
+
+        global tag_set
+        tag_set[self.id] = self
 
     def __repr__(self):
         return my_str(self)

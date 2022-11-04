@@ -13,42 +13,42 @@ import Wire from './Wire';
 export default function GeneratedApp(){
     return( <Xwrapper>
     
-<Root>
-	<Horizontal>
-		<FileInput>{[":a"]}</FileInput>
-		<FileInput>{[":b"]}</FileInput>
-		<FileInput>{[":c"]}</FileInput>
+<Root id={1}>
+	<Horizontal id={2}>
+		<FileInput id={3}>{[":a"]}</FileInput>
+		<FileInput id={5}>{[":b"]}</FileInput>
+		<FileInput id={7}>{[":c"]}</FileInput>
 	</Horizontal>
-	<Vertical>
-		<Map name="sqrt">
-			<Ins>
-				<Map name="-" infix="true">
-					<Ins infix="true">
-						<Map name="sqr">
-							<Ins>
+	<Vertical id={9}>
+		<Map name="sqrt" id={10}>
+			<Ins id={11}>
+				<Map name="-" infix="true" id={12}>
+					<Ins infix="true" id={13}>
+						<Map name="sqr" id={14}>
+							<Ins id={15}>
 								<div id=":b_0"/>
 							</Ins>
-							<Outs/>
+							<Outs id={17}/>
 						</Map>
-						<Map name="*" infix="true">
-							<Ins infix="true">
-								<Map name="4" className="constant"/>
+						<Map name="*" infix="true" id={18}>
+							<Ins infix="true" id={19}>
+								<Map name="4" className="constant" id={20}/>
 								<div id=":a_0"/>
 								<div id=":c_0"/>
 							</Ins>
-							<Outs infix="true"/>
+							<Outs infix="true" id={23}/>
 						</Map>
 					</Ins>
-					<Outs infix="true"/>
+					<Outs infix="true" id={24}/>
 				</Map>
 			</Ins>
-			<Outs>
+			<Outs id={25}>
 				<div id=":discr"/>
 			</Outs>
 		</Map>
 	</Vertical>
-	<Horizontal>
-		<FileOutput>{[":discr_0"]}</FileOutput>
+	<Horizontal id={27}>
+		<FileOutput id={28}>{[":discr_0"]}</FileOutput>
 	</Horizontal>
 </Root>
 

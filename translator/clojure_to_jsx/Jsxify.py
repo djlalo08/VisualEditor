@@ -4,22 +4,16 @@ all_wires = {}
 wires_list = []
 
 
-
 def to_jsx(selves):
     jsx = _to_jsx(selves) + '\n'
     wires = '\n'.join(wires_list)
     body = jsx + wires
     return header + body + footer
-def _to_jsx(selves, tabs='', my_type=''):
+
+
+def _to_jsx(selves, tabs=''):
     tabs1 = tabs + '\t'
     result = ''
-
-    match my_type:
-        case 'props':
-            # print(selves)
-            for key, value in selves.items():
-                result += ' ' + key + '=' + _to_jsx(value)
-            return result
 
     for self in selves:
         if not self:
@@ -43,17 +37,20 @@ def _to_jsx(selves, tabs='', my_type=''):
                 tabs + '<div id=' + str0(value) + '/>\n'
 
         elif self.name in ['FileInput', 'FileOutput']:
-            result += tabs + '<' + self.name + _to_jsx(self.props, my_type='props') + '>' \
+            result += tabs + '<' + self.name + props_to_jsx(self.props) + '>' \
                       + '{[' + ','.join(map(_to_jsx, self.children)) + ']}' \
                       + '</' + self.name + '>\n'
 
         elif len(self.children):
-            result += tabs + '<' + self.name + _to_jsx(self.props, my_type='props') + '>\n' \
+            result += tabs + '<' + self.name + props_to_jsx(self.props) + '>\n' \
                       + _to_jsx(self.children, tabs1) \
                       + tabs + '</' + self.name + '>\n'
         else:
-            result += tabs + '<' + self.name + _to_jsx(self.props, my_type='props') + '/>\n'
+            result += tabs + '<' + self.name + props_to_jsx(self.props) + '/>\n'
     return result
+
+def props_to_jsx(props):
+    return ''.join([f' {key}={_to_jsx(value)}' for (key, value) in props.items()])
 
 header = '''
 import { Xwrapper } from 'react-xarrows';
