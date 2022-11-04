@@ -1,6 +1,19 @@
+free_ids = set()  # stuff will get added to this set whenever an element is deleted
+max_id = 0
+
+
+def generate_id():
+    global max_id
+    new_id = free_ids.pop() if len(free_ids) else max_id + 1
+
+    max_id = max(max_id, new_id)
+    return new_id
+
+
 class Tag:
     def __init__(self, name, props=None, children=None, parent=None):
         self.name = name
+        self.id = generate_id()
         self.props = props if props else {}
         self.children = children if children else []
         self.parent = parent
@@ -22,7 +35,7 @@ class Tag:
         return self
 
 
-def my_str(self, tabs=''):
+def my_str(self, tabs='', show_ids=True):
     if not self: return ''
     if isinstance(self, str): return tabs + self + '\n'
 
@@ -31,6 +44,7 @@ def my_str(self, tabs=''):
     children = [my_str(x, tabs1) for x in self.children]
 
     return tabs + self.name \
+        + ('_' + str(self.id) if show_ids else '') \
         + ('[' + ', '.join(props_list) + ']' if len(props_list) else '') \
         + '\n' \
         + (''.join(children) if len(children) else '')
