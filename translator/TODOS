@@ -40,6 +40,18 @@ Breakdown: Make items selectable:
     - On-click triggers an IR update
     - This means the every IR object needs a unique id, so we can associate IR objects with jsx objects
 
+    Here's the issue -- our code is in python...
+    When UI onClick happens, it needs to send a request to our python program -- we can't just have the js update the IR and then ask python to regen.
+    I mean we could, but that defeats the whole purpose. The main point here is that python prog has a live tree with all the data that is easily manipulable (as opposed to the DOM)
+    So what we really need is something like select(id) which is a python program that updates IR. And we need to allow js to call it...
+    
+
+    OK! So I have made a flask server and I can connect to it via our JS server!! All we need to do is use the endpoint to write to IR
+    To run flask server:
+        1 open terminal to flask-project
+        2 activate the venv by doing '. venv /bin/activate'
+        3 run 'flask --app hello run'
+
 
 ========== TODO =============
 2. IR to CLJ
