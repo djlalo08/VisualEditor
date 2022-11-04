@@ -37,17 +37,20 @@ def _to_jsx(selves, tabs=''):
                 tabs + '<div id=' + str0(value) + '/>\n'
 
         elif self.name in ['FileInput', 'FileOutput']:
-            result += tabs + '<' + self.name + props_to_jsx(self.props) + '>' \
-                      + '{[' + ','.join(map(_to_jsx, self.children)) + ']}' \
-                      + '</' + self.name + '>\n'
+            result += tabs + f"<{name_and_props(self)}>" \
+                        + f"{{[{ ','.join(map(_to_jsx, self.children)) }]}}" \
+                        + f"</{self.name}>\n"
 
         elif len(self.children):
-            result += tabs + '<' + self.name + props_to_jsx(self.props) + '>\n' \
+            result += tabs + f"<{name_and_props(self)}>\n" \
                       + _to_jsx(self.children, tabs1) \
                       + tabs + '</' + self.name + '>\n'
         else:
-            result += tabs + '<' + self.name + props_to_jsx(self.props) + '/>\n'
+            result += tabs + f"<{self.name}{props_to_jsx(self.props)}/>\n"
     return result
+
+def name_and_props(tag):
+    return f"{tag.name}{props_to_jsx(tag.props)}"
 
 def props_to_jsx(props):
     return ''.join([f' {key}={_to_jsx(value)}' for (key, value) in props.items()])
