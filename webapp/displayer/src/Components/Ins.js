@@ -1,11 +1,10 @@
 import React from 'react';
 import { intersperse } from '../Utils/ListUtils';
 import Node from './Node';
-import Selectable from './Selectable';
 
-function InnerIns(props){
+export default function Ins(props){
    
-    let {children, infix, ...other} = props
+let {children, infix, ...other} = props
 
     if (!children) return;
 
@@ -19,6 +18,3 @@ function InnerIns(props){
     
     return (ins);
 }
-
-const Ins = Selectable(InnerIns);
-export default Ins;
