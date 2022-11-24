@@ -1,7 +1,6 @@
-import Node from './Node';
-import Selectable from './Selectable';
+import React from 'react';
 
-function InnerOuts(props){
+export default function Outs(props){
 
     let {children} = props
 
@@ -11,11 +10,8 @@ function InnerOuts(props){
 
 
     let outs = props.x ? 
-        children.map((out_, index) => <Node key={index}><div id={out_}/></Node>) :
-        children.map((out_, index) => <Node key={index}>{out_}</Node>);
+        children.map((out_, index) => <div key={index} id={out_}/>) :
+        children.map((out_, index) => React.cloneElement(out_, {key: index}));
    
     return (outs);
 }
-
-const Outs = Selectable(InnerOuts);
-export default Outs;

@@ -62,6 +62,7 @@ import FileOutput from './FileOutput';
 import Horizontal from './Horizontal';
 import Ins from './Ins';
 import Map from './Map';
+import Node from './Node';
 import Outs from './Outs';
 import Root from './Root';
 import Vertical from './Vertical';

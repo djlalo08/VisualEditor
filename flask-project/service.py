@@ -10,7 +10,6 @@ def select(id_):
     ir = lift.parse(lines)
 
     id_map = index(ir)
-    print(id_map)
 
     make_selection(id_, id_map)
 

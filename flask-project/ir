@@ -10,21 +10,29 @@ Root
     Vertical
         Map[name:"sqrt"]
             Ins
-                Map[name:"-", infix:"true"]
-                    Ins[infix:"true"]
-                        Map[name:"sqr"]
-                            Ins
-                                GetNode[value::b]
-                            Outs
-                        Map[name:"*", infix:"true"]
-                            Ins[infix:"true"]
-                                Map[name:"4", className:"constant", selected:' ']
-                                GetNode[value::a]
-                                GetNode[value::c]
-                            Outs[infix:"true"]
-                    Outs[infix:"true"]
+                Node
+                    Map[name:"-", infix:"true"]
+                        Ins[infix:"true"]
+                            Node
+                                Map[name:"sqr"]
+                                    Ins
+                                        Node
+                                            GetNode[value::b]
+                                    Outs
+                            Node
+                                Map[name:"*", infix:"true"]
+                                    Ins[infix:"true"]
+                                        Node
+                                            Map[name:"4", className:"constant", selected:' ']
+                                        Node
+                                            GetNode[value::a]
+                                        Node
+                                            GetNode[value::c]
+                                    Outs[infix:"true"]
+                        Outs[infix:"true"]
             Outs
-                SetNode[value::discr]
+                Node
+                    SetNode[value::discr]
     Horizontal
         FileOutput
             GetNode[value::discr, x:True]
