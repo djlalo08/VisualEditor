@@ -1,8 +1,8 @@
 import React from "react";
+import Selectable from "./Selectable";
 
-
-export default function Map(props){
-    let {children, ...other} = props;
+function InnerMap(props){
+    let {children, className, selected, ...other} = props;
     
     let ins = children? children[0]: [];
     let ins2 = React.Children.map(ins, x => React.cloneElement(x, {...other}));
@@ -19,9 +19,13 @@ export default function Map(props){
         makeCall();
     }
     
+    
     return (<div id={props.id} className={props.className || "Map"} onClick={on_click}>
         {ins2}
         {props.infix? <br/> : <div>{props.name}</div>}
         {outs}
     </div>);
 }
+
+const Map = Selectable(InnerMap);
+export default Map;

@@ -1,6 +1,7 @@
 import Node from './Node';
+import Selectable from './Selectable';
 
-export default function Ins(props){
+function InnerOuts(props){
 
     let {children} = props
 
@@ -15,3 +16,6 @@ export default function Ins(props){
    
     return (outs);
 }
+
+const Outs = Selectable(InnerOuts);
+export default Outs;

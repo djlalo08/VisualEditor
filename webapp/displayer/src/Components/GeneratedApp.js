@@ -10,6 +10,8 @@ import Root from './Root';
 import Vertical from './Vertical';
 import Wire from './Wire';
 
+//We need to replace empty nodes (or nodes that only have a wired-in id), with an EmptyNode component. This way, EmptyNodes are maps and maps inherit selectable
+
 export default function GeneratedApp(){
     return( <Xwrapper>
     
@@ -21,7 +23,7 @@ export default function GeneratedApp(){
 	</Horizontal>
 	<Vertical id={9}>
 		<Map name="sqrt" id={10}>
-			<Ins id={11}>
+			<Ins id={11} selected=' '>
 				<Map name="-" infix="true" id={12}>
 					<Ins infix="true" id={13}>
 						<Map name="sqr" id={14}>
@@ -32,7 +34,7 @@ export default function GeneratedApp(){
 						</Map>
 						<Map name="*" infix="true" id={18}>
 							<Ins infix="true" id={19}>
-								<Map name="4" className="constant" id={20}/>
+								<Map name="4" className="constant" selected=' ' id={20}/>
 								<div id=":a_0"/>
 								<div id=":c_0"/>
 							</Ins>

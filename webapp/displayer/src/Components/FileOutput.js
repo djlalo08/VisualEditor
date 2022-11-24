@@ -3,8 +3,9 @@ import Map from "./Map";
 import Outs from "./Outs";
 
 export default function FileOutput(props){
-    return <Map className="io" name={props.name}>
-        <Ins x>{props.children}</Ins>
+    const {children, ...other} = props;
+    return <Map className="io" {...other}>
+        <Ins x>{children}</Ins>
         <Outs/>
     </Map>
 }

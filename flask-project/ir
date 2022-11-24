@@ -1,0 +1,30 @@
+
+Root
+    Horizontal
+        FileInput
+            SetNode[value::a, x:True]
+        FileInput
+            SetNode[value::b, x:True]
+        FileInput
+            SetNode[value::c, x:True]
+    Vertical
+        Map[name:"sqrt"]
+            Ins
+                Map[name:"-", infix:"true"]
+                    Ins[infix:"true"]
+                        Map[name:"sqr"]
+                            Ins
+                                GetNode[value::b]
+                            Outs
+                        Map[name:"*", infix:"true"]
+                            Ins[infix:"true"]
+                                Map[name:"4", className:"constant", selected:' ']
+                                GetNode[value::a]
+                                GetNode[value::c]
+                            Outs[infix:"true"]
+                    Outs[infix:"true"]
+            Outs
+                SetNode[value::discr]
+    Horizontal
+        FileOutput
+            GetNode[value::discr, x:True]

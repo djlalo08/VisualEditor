@@ -1,0 +1,59 @@
+Our actual stored code is in IR
+
+This means that clojure code is only ever generated -- never read.
+
+We need the following abilities:
+    1. IR to CLJ, so we can run IR code
+    2. IR to UI, so we can display IR
+    3. UI interacts directly with IR. (So it's not "UI updates and then we translate UI to IR". Instead, it is "interacting with UI triggers updates to IR and updates to IR trigger updates to UI")
+
+    IR includes "navigational" information like what box is currently selected
+
+    We need a textual representation of IR. So we need to be able to go from text to IR and IR to text.
+    We actually already have IR to text (it's Tag.my_str())
+
+========== CURRENTLY WORKING ON =========
+1. Associate changes to UI with changes to IR
+    Thoughts: Every Tag should have a unique id, which is associated with the element in the UI.
+    When something happens to UI element, we make an update to IR element
+
+    Now the big issue is that we are working with updating js-code in a real-time via a call to a js file...
+    This is obviously inefficient (if even possible).
+
+    I think first step is that jsxify should actually be JS code, since we need to update GeneratedApp whenever, say a node is clicked.
+    I don't know if a JS file has the ability to update another file. I also don't really want to deal with setting up a python server tho,
+    For JS to call python when it needs a request to update IR -- that seems like a bad solution...
+
+    Eventually, it should all be running in the js front-end and I guess it duplicates in IR at the same time?
+    It's the kind of way I imagine something like Google Docs works.
+    Basically You have a UI triggered action (say drag a thing). The drag action callback does 2 things --
+        it both updates the IR and it responds visually on the page. Then periodicaly we can sync the UI with the IR
+        to make sure they match up.
+
+    Can Javascript be used to rewrite itself? That would be crazy -- build a cloned site based on the changed specs and redirected You to it...
+    The problem with that is that it's super inefficient...You shouldn't have to reload an entire page to demonstrate small local changes...
+    It's all future questions. I think for now, I'm ok focusing on a much more primitive version: upon a UI event, update IR.
+    Then we click the run button button in Python which updates GeneratedApp which reloads the site
+
+Breakdown: Make items selectable:
+    - Need to have all items have an on-click function
+    - On-click triggers an IR update
+    - This means the every IR object needs a unique id, so we can associate IR objects with jsx objects
+
+    Here's the issue -- our code is in python...
+    When UI onClick happens, it needs to send a request to our python program -- we can't just have the js update the IR and then ask python to regen.
+    I mean we could, but that defeats the whole purpose. The main point here is that python prog has a live tree with all the data that is easily manipulable (as opposed to the DOM)
+    So what we really need is something like select(id) which is a python program that updates IR. And we need to allow js to call it...
+    
+
+    OK! So I have made a flask server and I can connect to it via our JS server!! All we need to do is use the endpoint to write to IR
+    To run flask server:
+        1 open terminal to flask-project
+        2 activate the venv by doing '. venv /bin/activate'
+        3 run 'flask --app hello run'
+
+
+========== TODO =============
+2. IR to CLJ
+
+- Jsxify looks pretty messy and bad

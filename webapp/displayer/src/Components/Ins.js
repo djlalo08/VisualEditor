@@ -1,20 +1,24 @@
 import React from 'react';
 import { intersperse } from '../Utils/ListUtils';
 import Node from './Node';
+import Selectable from './Selectable';
 
-export default function Ins(props){
+function InnerIns(props){
    
-    let {children, infix} = props
+    let {children, infix, ...other} = props
 
     if (!children) return;
 
     if (!Array.isArray(props.children)) children = [children];
 
     let ins = props.x ?
-        children.map((in_, index) => <Node key={index}><div id={in_}/></Node>):
-        children.map((in_, index) => <Node key={index}>{in_}</Node>);
+        children.map((in_, index) => <Node key={index} {...other}><div id={in_}/></Node>):
+        children.map((in_, index) => <Node key={index} {...other}>{in_}</Node>);
 
     if (infix) ins = intersperse(ins, props.name);
     
     return (ins);
 }
+
+const Ins = Selectable(InnerIns);
+export default Ins;
