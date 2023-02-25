@@ -1,7 +1,6 @@
 import { Xwrapper } from "react-xarrows";
 import FileInput from "../Components/FileInput";
 import FileOutput from "../Components/FileOutput";
-import GenericNode from "../Components/GenericNode";
 import Horizontal from '../Components/Horizontal';
 import Ins from "../Components/Ins";
 import Mapx from '../Components/Map';
@@ -26,17 +25,17 @@ function readAttrs(attrStr){
     return attrs;
 }
 
-function treeToJsx(tree, key){
+function treeToJsx(tree){
     let id = ++id_gen + '';
+
     let values = tree.value.split(/[\[\]]/);
     let nodeName = values[0];
-    let attrs = readAttrs(values[1]);
-    attrs["id"] = id;
-    let children = [];
 
-    for (let [i, child] of tree.children.entries()){
-        children.push(treeToJsx(child, i));
-    }
+    let attrs = readAttrs(values[1]);
+    attrs.id = id;
+    attrs.key = id;
+
+    let children = tree.children.map(treeToJsx);
     
     switch (nodeName) {
         case 'Root':
@@ -50,7 +49,6 @@ function treeToJsx(tree, key){
         case 'Node':
             return <Node {...attrs}>{children}</Node>;
         case 'Map':
-            console.log(attrs);
             return <Mapx {...attrs}>{children}</Mapx>;
         case 'Horizontal':
             return <Horizontal {...attrs}>{children}</Horizontal>;
@@ -59,29 +57,21 @@ function treeToJsx(tree, key){
         case 'FileOutput':
             return <FileOutput {...attrs}>{children}</FileOutput>;
         case 'SetNode':
-            console.log(attrs);
-            if (! wires_map[attrs['value']])
-                wires_map[attrs['value']] = [-1,-1];
+            if (! wires_map[attrs.value])
+                wires_map[attrs.value] = [-1,-1];
 
-            wires_map[attrs['value']][0] = id;
-            // return id;
-            return <div id={id}/>;
+            wires_map[attrs.value][0] = id;
+            return <div {...attrs}/>;
         case 'GetNode':
-            if (! wires_map[attrs['value']])
-                wires_map[attrs['value']] = [-1,-1];
+            if (! wires_map[attrs.value])
+                wires_map[attrs.value] = [-1,-1];
 
-            wires_map[attrs['value']][1] = id;
-            return <div id={id}/>;
+            wires_map[attrs.value][1] = id;
+            return <div {...attrs}/>;
         default:
-            return genericNode(nodeName, key, children);
+            return nodeName;
     }
 
-}
-
-function genericNode(nodeName, key, children, style){
-    return (<GenericNode nodeName={nodeName} key={key}>
-        {children} 
-    </GenericNode>);
 }
 
 function parse(ir_text){
@@ -111,7 +101,7 @@ function getWires(){
     let wires = [];
     for (let value in wires_map){
         let [start_id, end_id] = wires_map[value];
-        wires.push(<Wire start={start_id} end={end_id}/>);
+        wires.push(<Wire key={start_id+end_id} start={start_id} end={end_id}/>);
     }
     return wires;
 }
@@ -122,8 +112,6 @@ export function run_parse(){
     let parsed = parse(ex);
     let jsx_root = treeToJsx(parsed);
     let wires_ls = getWires();
-    console.log(wires_ls);
-    console.log(wires_map);
     let children = [jsx_root, ...wires_ls];
     return (<Xwrapper>{children}</Xwrapper>);
 }
