@@ -10,10 +10,6 @@ import Root from '../Components/Root';
 import Vertical from '../Components/Vertical';
 import Wire from '../Components/Wire';
 
-export default function ir_to_components(ir_text) {
-    let tree = parse(ir_text);
-}
-
 function readAttrs(attrStr){
     let attrs = {};
     if (!attrStr) return attrs;
@@ -74,29 +70,6 @@ function treeToJsx(tree){
 
 }
 
-function parse(ir_text){
-    let lines = ir_text.split("\n");
-    let last_indent = 0;
-    let root_node = {value: "", children: [], parent: {children: []}};
-    let last_node = root_node;
-    for (let line of lines) {
-        let indent = line.search(/\S/)/4;
-
-        let parent_to_the_node_we_are_adding = last_node;
-        for (let i = 0; i <= last_indent-indent; i++){
-            parent_to_the_node_we_are_adding = parent_to_the_node_we_are_adding.parent;
-        }
-
-        let this_node = {value: line.trim(), children: [], parent: parent_to_the_node_we_are_adding};
-
-        parent_to_the_node_we_are_adding.children.push(this_node);
-
-        last_node = this_node; 
-        last_indent = indent;
-    };
-    return root_node.parent.children[0];
-}
-
 function getWires(){
     let wires = [];
     for (let value in wires_map){
@@ -106,11 +79,10 @@ function getWires(){
     return wires;
 }
 
-export function run_parse(){
+export function ast_to_jsx(ast){
     clearGlobals(); 
     
-    let parsed = parse(ex);
-    let jsx_root = treeToJsx(parsed);
+    let jsx_root = treeToJsx(ast);
     let wires_ls = getWires();
     let children = [jsx_root, ...wires_ls];
     return (<Xwrapper>{children}</Xwrapper>);
@@ -123,41 +95,3 @@ function clearGlobals(){
     wires_map = {};
     id_gen = 0;
 }
-
-const ex = `Root
-    Horizontal
-        FileInput
-            SetNode[value:a, x:True]
-        FileInput
-            SetNode[value:b, x:True]
-        FileInput
-            SetNode[value:c, x:True]
-    Vertical
-        Map[name:sqrt]
-            Ins
-                Node
-                    Map[name:-, infix:true]
-                        Ins[infix:true]
-                            Node
-                                Map[name:sqr]
-                                    Ins
-                                        Node
-                                            GetNode[value:b]
-                                    Outs
-                            Node
-                                Map[name:*, infix:true]
-                                    Ins[infix:true]
-                                        Node
-                                            Map[name:4, className:constant, selected:' ']
-                                        Node
-                                            GetNode[value:a]
-                                        Node
-                                            GetNode[value:c]
-                                    Outs[infix:true]
-                        Outs[infix:true]
-            Outs
-                Node
-                    SetNode[value:discr]
-    Horizontal
-        FileOutput
-            GetNode[value:discr, x:True]`

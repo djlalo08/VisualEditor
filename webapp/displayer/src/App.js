@@ -1,30 +1,39 @@
 import './App.css';
 import GeneratedApp from './Components/GeneratedApp';
-import { run_parse } from './Utils/Converter';
+import { ex } from './ir';
+import { ast_to_jsx } from './Utils/Converter';
+import { parse } from './Utils/IrToAst';
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
 import $ from 'jquery';
+import React from "react";
 
 
-function App() {
-  return (
-    <div className="App"> 
-      <GeneratedApp/> 
-      <br/>
-      <button onClick={fetchAndLog(`http://localhost:5000/clear`)}>Clear</button> 
-      <button onClick={fetchAndLog(`http://localhost:5000/show/id_map`)}>Show map</button> 
-      <button onClick={fetchAndLog(`http://localhost:5000/show/ir`)}>Show ir</button> 
-      <button onClick={fetchAndLog(`http://localhost:5000/show/inited`)}>Show inited</button> 
-      <button onClick={fetchAndLog(`http://localhost:5000/show/all`)}>Show all</button> 
-      <button onClick={run_parse}>Parse</button> 
-      <div>
-        {run_parse()} 
+class App extends React.Component{
+  constructor(props){
+    super(props);
+    this.fetchAndLog = this.fetchAndLog.bind(this);
+    this.state = { AST: parse(ex), selected: null};
+  }
+
+  render(){
+    return (
+      <div className="App"> 
+        <GeneratedApp/> 
+        <br/>
+        <button onClick={this.fetchAndLog(`http://localhost:5000/clear`)}>Clear</button> 
+        <button onClick={this.fetchAndLog(`http://localhost:5000/show/id_map`)}>Show map</button> 
+        <button onClick={this.fetchAndLog(`http://localhost:5000/show/ir`)}>Show ir</button> 
+        <button onClick={this.fetchAndLog(`http://localhost:5000/show/inited`)}>Show inited</button> 
+        <button onClick={this.fetchAndLog(`http://localhost:5000/show/all`)}>Show all</button> 
+        <div>
+          { ast_to_jsx(this.state.AST) } 
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-  function fetchAndLog(url){
+  fetchAndLog(url){
     return async () => {
       $.ajax(url, 
         {xhrFields: {withCredentials: true}, 
@@ -32,5 +41,7 @@ function App() {
         crossDomain: true});
     }
   }
+}
+
 
 export default App;
