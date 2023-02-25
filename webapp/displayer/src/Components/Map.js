@@ -11,7 +11,6 @@ function InnerMap(props){
     const makeCall = async () => {
         const response = await fetch(`http://localhost:5000/select/${props.id}`);
         const text = await response.text(); 
-        alert(text)
     }
 
     let on_click = (e) => {

@@ -8,6 +8,8 @@ import Outs from './Outs';
 import Vertical from './Vertical';
 import Wire from './Wire';
 
+//I think the idea is that instead of updating the text in this app we have this return something different -- something that maps 
+//And IR tree into a react tree...
 export default function ExpectedApp(props) {
     return (
     <Xwrapper>

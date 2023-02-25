@@ -16,9 +16,9 @@ export default function GeneratedApp(){
     
 <Root id={1}>
 	<Horizontal id={2}>
-		<FileInput id={3}>{[":a"]}</FileInput>
-		<FileInput id={5}>{[":b"]}</FileInput>
-		<FileInput id={7}>{[":c"]}</FileInput>
+		<FileInput id={3}>{[]}</FileInput>
+		<FileInput id={5}>{[]}</FileInput>
+		<FileInput id={7}>{[]}</FileInput>
 	</Horizontal>
 	<Vertical id={9}>
 		<Map name="sqrt" id={10}>
@@ -30,23 +30,23 @@ export default function GeneratedApp(){
 								<Map name="sqr" id={16}>
 									<Ins id={17}>
 										<Node id={18}>
-											<div id=":b_0"/>
+											<div id=":b"/>
 										</Node>
 									</Ins>
-									<Outs id={20}/>
+									<Outs id={20} selected=" "/>
 								</Map>
 							</Node>
 							<Node id={21}>
 								<Map name="*" infix="true" id={22}>
 									<Ins infix="true" id={23}>
 										<Node id={24}>
-											<Map name="4" className="constant" selected=" " id={25}/>
+											<Map name="4" className="constant" selected=' ' id={25}/>
 										</Node>
 										<Node id={26}>
-											<div id=":a_0"/>
+											<div id=":a"/>
 										</Node>
 										<Node id={28}>
-											<div id=":c_0"/>
+											<div id=":c"/>
 										</Node>
 									</Ins>
 									<Outs infix="true" id={30}/>
@@ -65,13 +65,12 @@ export default function GeneratedApp(){
 		</Map>
 	</Vertical>
 	<Horizontal id={35}>
-		<FileOutput id={36}>{[":discr_0"]}</FileOutput>
+		<FileOutput id={36}>{[]}</FileOutput>
 	</Horizontal>
 </Root>
 
-<Wire start=":b" end=":b_0"/>
-<Wire start=":a" end=":a_0"/>
-<Wire start=":c" end=":c_0"/>
-<Wire start=":discr" end=":discr_0"/>
+<Wire start=":b" end=":b"/>
+<Wire start=":a" end=":a"/>
+<Wire start=":c" end=":c"/>
     </Xwrapper>);
 }

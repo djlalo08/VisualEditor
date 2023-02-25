@@ -6,6 +6,6 @@ export default function FileInput(props){
     const {children, ...other} = props;
     return (<Map className="io" {...other}>
         <Ins/>
-        <Outs x>{children}</Outs>
+        <Outs>{children}</Outs>
     </Map>);
 }
