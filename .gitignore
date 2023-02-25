@@ -70,3 +70,8 @@ venv/.Python
 .idea/Visual Editor.iml
 .clj-kondo/.cache/v1/clj/user.transit.json
 .clj-kondo/.cache/v1/clj/user.transit.json
+
+flask-project/flask_session/*
+flask-project/venv/lib/*
+.DS_Store
+.DS_Store
