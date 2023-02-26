@@ -45,13 +45,13 @@ function treeToJsx(tree){
             return <FileOutput {...props}>{children}</FileOutput>;
         case 'SetNode':
             if (! wires_map[props.value])
-                wires_map[props.value] = [-1,-1];
+                wires_map[props.value] = ['', ''];
 
             wires_map[props.value][0] = id;
             return <div {...props}/>;
         case 'GetNode':
             if (! wires_map[props.value])
-                wires_map[props.value] = [-1,-1];
+                wires_map[props.value] = ['', ''];
 
             wires_map[props.value][1] = id;
             return <div {...props}/>;
@@ -65,7 +65,8 @@ function getWires(){
     let wires = [];
     for (let value in wires_map){
         let [start_id, end_id] = wires_map[value];
-        wires.push(<Wire key={start_id+end_id} start={start_id} end={end_id}/>);
+        if (start_id && end_id)
+            wires.push(<Wire key={start_id+end_id} start={start_id} end={end_id}/>);
     }
     return wires;
 }
