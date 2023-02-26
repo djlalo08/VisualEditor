@@ -1,10 +1,11 @@
 import Selectable from "./Selectable";
 
 function InnerNode(props) {
+    let {children, className, selected, ...other} = props;
 
-    return (<div className={"Node " + props.className}>
+    return (<div className={props.className + " Node "} {...other}>
         {props.children}
-    </div>) 
+    </div>);
 }
 
 const Node = Selectable(InnerNode);
