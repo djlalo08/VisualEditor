@@ -124,11 +124,14 @@ export function moveUp(){
 }
 
 export function moveDown(){
-    let {selected} = app.state;
-    if (!hasChildren(selected))
+    moveDownFrom(app.state.selected);
+}
+
+export function moveDownFrom(elmt){
+    if (!hasChildren(elmt))
         return;
 
-    let child = app.state.selected.children[0];
+    let child = elmt.children[0];
 
     while (child && !selectables.includes(getName(child))){
         if (!hasChildren(child)) break;
@@ -139,4 +142,37 @@ export function moveDown(){
 
 function hasChildren(node){
     return node.children && node.children.length;
+}
+
+export function nextLine(){
+    let {parent} = app.state.selected;
+    while (parent && parent.parent && getName(parent.parent) != 'Vertical')
+        parent = parent.parent;
+
+    let curr = parent;
+    if (curr.idx >= curr.parent.children.length-1)
+        return;
+
+    let next = curr.parent.children[curr.idx+1];
+    if (selectables.includes(getName(next)))
+        updateSelected(next);        
+    else
+        moveDownFrom(next);
+}
+
+export function prevLine(){
+    console.log("prevlin");
+    let parent = app.state.selected;
+    while (parent && parent.parent && getName(parent.parent) != 'Vertical')
+        parent = parent.parent;
+
+    let curr = parent;
+    if (curr.idx <= 0)
+        return;
+
+    let prev = curr.parent.children[curr.idx-1];
+    if (selectables.includes(getName(prev)))
+        updateSelected(prev);        
+    else
+        moveDownFrom(prev);
 }

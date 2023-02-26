@@ -1,10 +1,11 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import { handleClose, setApp as setActions } from './Actions';
 import './App.css';
 import { ex } from './ir';
-import { keypress, setApp as setKeyboard } from './KeyboardController';
+import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
 import { printAst } from './Utils/NodeUtils';
@@ -12,6 +13,9 @@ import { printAst } from './Utils/NodeUtils';
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
 
+
+//TODO Verticals and Horizontals don't really work correctly...
+//And also using them breaks m command
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -31,10 +35,12 @@ class App extends React.Component{
   
   componentDidMount(){
     document.addEventListener("keydown", keypress);
+    document.addEventListener("keyup", keyrelease);
   }
 
   componentWillUnmount(){
     document.removeEventListener("keydown", keypress);
+    document.removeEventListener("keyup", keyrelease);
   }
   
   handleTextChange(e){
@@ -42,22 +48,24 @@ class App extends React.Component{
   }
 
   render(){
+    let modal = <Modal show={this.state.showModal} onHide={handleClose}>
+      <Modal.Body>
+        <FormControl
+          onChange={this.handleTextChange}
+          value={this.state.modalText}
+          autoFocus={true}
+          type="text"
+        /> 
+      </Modal.Body>
+    </Modal>
+
     return (
       <div className="App"> 
         <div>
           { this.state.JSX }
         </div>
-        <button onClick={() => console.log(printAst(this.state.AST))}>Print AST</button> 
-        <Modal show={this.state.showModal} onHide={handleClose}>
-          <Modal.Body>
-            <FormControl
-              onChange={this.handleTextChange}
-              value={this.state.modalText}
-              autoFocus={true}
-              type="text"
-            /> 
-          </Modal.Body>
-        </Modal>
+        <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button> 
+        {modal}
       </div>
     );
   }

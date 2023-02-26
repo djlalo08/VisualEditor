@@ -1,3 +1,3 @@
 export default function Horizontal(props){
-    return (<span>{props.children}</span>)    
+    return (<div className="Horizontal">{props.children}</div>)    
 }
