@@ -1,11 +1,11 @@
 export function addAttr(node, key, value){
-    let [name, attrs] = getNameAndAttrs(node.value);
+    let [name, attrs] = getNameAndAttrs(node);
     attrs[key] = value;
     node.value = name + stringifyAttrs(attrs);
 }
 
 export function delAttr(node, key){
-    let [name, attrs] = getNameAndAttrs(node.value);
+    let [name, attrs] = getNameAndAttrs(node);
     delete attrs[key];
     node.value = name + stringifyAttrs(attrs);
 }
@@ -54,7 +54,16 @@ export function readAttrs(attrStr){
     return attrs;
 }
 
-export function getNameAndAttrs(value){
-    let values = value.split(/[\[\]]/);
+export function getNameAndAttrs(node){
+    let values = node.value.split(/[\[\]]/);
     return [values[0], {...readAttrs(values[1])}];
+}
+
+export function getName(node){
+    return node.value.split(/[\[\]]/)[0];
+}
+
+export function getAttrs(node){
+    let values = node.value.split(/[\[\]]/);
+    return {...readAttrs(values[1])};
 }

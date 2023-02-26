@@ -15,7 +15,7 @@ import { getNameAndAttrs } from './NodeUtils';
 function treeToJsx(tree){
     let id = ++id_gen + '';
 
-    let [nodeName, props]= getNameAndAttrs(tree.value);
+    let [nodeName, props]= getNameAndAttrs(tree);
     props.id = id;
     props.key = id;
     props.ast_node = tree;

@@ -1,5 +1,5 @@
 import { ast_to_jsx } from './Utils/Converter';
-import { addAttr, delAttr } from './Utils/NodeUtils';
+import { addAttr, delAttr, getName } from './Utils/NodeUtils';
 
 let app = null;
 
@@ -21,6 +21,25 @@ export function updateSelected(new_selection){
         app.setState({selected: new_selection});
     }
 
+    updateAST();
+}
+
+export function delete_element(elmt_to_del){
+    if (!elmt_to_del)
+        return;
+
+    let {parent, idx, children} = elmt_to_del;
+    switch (getName(elmt_to_del)){
+        case 'Map':
+            parent.children.splice(idx, 1);
+            break;
+        case 'Node':
+            elmt_to_del.children = [];
+            break;        
+        default:
+            return;
+    }
+    
     updateAST();
 }
   

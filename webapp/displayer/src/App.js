@@ -1,4 +1,4 @@
-import { setApp, updateSelected } from './Actions';
+import { delete_element, setApp, updateSelected } from './Actions';
 import './App.css';
 import { ex } from './ir';
 import { ast_to_jsx } from './Utils/Converter';
@@ -13,6 +13,7 @@ const UP = 38;
 const DOWN = 40;
 const LEFT = 37;
 const RIGHT = 39;
+const BACKSPACE = 8;
 
 class App extends React.Component{
   constructor(props){
@@ -26,6 +27,7 @@ class App extends React.Component{
   }
   
   keypress(e) {
+    // console.log(e.keyCode);
     if (!this.state.selected) return;
 
     let {parent, children, idx} = this.state.selected;
@@ -45,6 +47,8 @@ class App extends React.Component{
         if (parent && idx < parent.children.length) 
           updateSelected(parent.children[idx+1]);
         break;
+      case BACKSPACE:
+        delete_element(this.state.selected);
     }
   }
   
