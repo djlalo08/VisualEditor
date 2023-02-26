@@ -1,4 +1,4 @@
-import { delete_element, insertMapFromModal, insert_element, updateSelected } from "./Actions";
+import { delete_element, enterMoveMode, insertMapFromModal, insert_element, move, updateSelected } from "./Actions";
 
 const UP = 38;
 const DOWN = 40;
@@ -7,6 +7,8 @@ const RIGHT = 39;
 const BACKSPACE = 8;
 const SPACE = 32;
 const ENTER = 13;
+
+const M = 77;
 
 let app = null;
 
@@ -45,6 +47,12 @@ export function keypress(e){
             break;
         case SPACE:
             insert_element(selected);
+            break;
+        case M:
+            enterMoveMode();
+            break;
+        case ENTER:
+            move();
             break;
     }
 }

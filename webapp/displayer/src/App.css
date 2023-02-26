@@ -52,3 +52,6 @@
 .selected {
   border-color: red;
 }
+.toMove{
+  border-color: blue;
+}

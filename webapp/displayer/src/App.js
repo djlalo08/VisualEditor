@@ -24,7 +24,8 @@ class App extends React.Component{
     let [JSX, selected] = ast_to_jsx(AST);
     this.state = { AST, JSX, selected, 
       showModal: false,
-      modalText: ''
+      modalText: '',
+      toMove: null,
     };
   }
   

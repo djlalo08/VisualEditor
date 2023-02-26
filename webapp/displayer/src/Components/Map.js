@@ -1,4 +1,5 @@
 import React from "react";
+import Movable from "./Movable";
 import Selectable from "./Selectable";
 
 function InnerMap(props){
@@ -15,5 +16,5 @@ function InnerMap(props){
     </div>);
 }
 
-const Map = Selectable(InnerMap);
+const Map = Movable(Selectable(InnerMap));
 export default Map;

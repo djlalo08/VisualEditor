@@ -70,3 +70,47 @@ export function updateAST(){
     let JSX = ast_to_jsx(app.state.AST, app.updateSelected)[0];
     app.setState({AST: {...app.state.AST}, JSX});
 }
+
+export function enterMoveMode(){
+    let {selected, toMove} = app.state;
+
+    if (!selected)
+        return;
+
+    if (getName(selected) != 'Map')
+        return;
+    
+    if (toMove){
+        delAttr(toMove, 'toMove');
+    }
+    
+    addAttr(selected, 'toMove', 't');
+    app.setState({toMove: selected});
+
+    updateAST();
+}
+
+export function move(){
+    let {selected, toMove} = app.state;
+
+    if (!selected)
+        return;
+    
+    if (!toMove)
+        return;
+    
+    if (getName(selected) != 'Node')
+        return;
+    
+    delete_element(toMove);
+    selected.children = [toMove];        
+    toMove.parent = selected;
+    
+    app.setState({toMove: null, selected: toMove});
+    delAttr(selected, 'selected');
+    addAttr(toMove, 'selected', 't');
+    delAttr(toMove, 'toMove');
+    
+    updateAST();
+    
+}
