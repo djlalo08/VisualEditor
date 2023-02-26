@@ -17,7 +17,7 @@ export function updateSelected(new_selection){
 
     else {
         if (new_selection)
-            addAttr(new_selection, 'selected', 'true');
+            addAttr(new_selection, 'selected', 't');
         app.setState({selected: new_selection});
     }
 
@@ -28,7 +28,8 @@ export function delete_element(elmt_to_del){
     if (!elmt_to_del)
         return;
 
-    let {parent, idx, children} = elmt_to_del;
+    let {parent, idx} = elmt_to_del;
+
     switch (getName(elmt_to_del)){
         case 'Map':
             parent.children.splice(idx, 1);
