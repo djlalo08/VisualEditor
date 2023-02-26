@@ -145,7 +145,7 @@ function hasChildren(node){
 }
 
 export function nextLine(){
-    let {parent} = app.state.selected;
+    let parent = app.state.selected;
     while (parent && parent.parent && getName(parent.parent) != 'Vertical')
         parent = parent.parent;
 

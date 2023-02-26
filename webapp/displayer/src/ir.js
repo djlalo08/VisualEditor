@@ -29,14 +29,34 @@ export const ex = `Root
                                                     Node
                                                         GetNode[value:c]
                                                 Outs[infix:true]
+                                                    Node
+                                                        SetNode[value:1]
                                             Map[name:Z]
+                                                Ins
+                                                Outs
+                                                    Node
+                                                        SetNode[value:2]
                                         Map[name:W]
+                                            Ins
+                                                Node
+                                                    GetNode[value:1]
+                                                Node
+                                                    GetNode[value:2]
                             Outs[infix:true]
                 Outs
                     Node
                         SetNode[value:discr]
             Map[name:X, className:constant]
             Map[name:Y, className:constant]
+        Map[name:123]
+            Ins
+                Node
+                    GetNode[value:discr]
+                Node
+                    Map[name:"x", className:constant]
+            Outs
+                Node
+                    SetNode[value:end]
     Horizontal
         FileOutput
-            GetNode[value:discr, x:True]`
+            GetNode[value:end, x:True]`
