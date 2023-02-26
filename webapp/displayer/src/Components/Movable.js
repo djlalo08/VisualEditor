@@ -2,8 +2,8 @@ export default function Movable(InnerComponent){
     return (props =>  {
         let myProps = {...props};
 
-        if (props.to_move) 
-            myProps.className = " toMove " + props.className;
+        if (props.second_select) 
+            myProps.className = " secondSelect " + props.className;
         return <InnerComponent {...myProps}/>;
     });
 

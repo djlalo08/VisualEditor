@@ -29,7 +29,7 @@ class App extends React.Component{
     this.state = { AST, JSX, selected, 
       showModal: false,
       modalText: '',
-      toMove: null,
+      secondSelect: null,
     };
   }
   

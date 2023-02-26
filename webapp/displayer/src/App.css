@@ -1,7 +1,9 @@
-.App,
+.App {
+  float: left;
+  padding-left: 100px;
+  text-align: center;
+}
 .Vertical {
-  padding-left: 50px;
-  padding-top: 10px;
   text-align: center;
   float: left;
 }
@@ -52,7 +54,7 @@
 .selected {
   border-color: red;
 }
-.toMove{
+.secondSelect{
   border-color: blue;
 }
 .Horizontal{

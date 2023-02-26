@@ -46,8 +46,11 @@ export const ex = `Root
                 Outs
                     Node
                         SetNode[value:discr]
-            Map[name:X, className:constant]
-            Map[name:Y, className:constant]
+            Vertical
+                Horizontal
+                    Map[name:X, className:constant]
+                Horizontal
+                    Map[name:Y, className:constant]
         Map[name:123]
             Ins
                 Node

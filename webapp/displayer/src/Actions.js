@@ -72,8 +72,8 @@ export function updateAST(){
     app.setState({AST: {...app.state.AST}, JSX});
 }
 
-export function enterMoveMode(){
-    let {selected, toMove} = app.state;
+export function secondSelect(){
+    let {selected, secondSelect} = app.state;
 
     if (!selected)
         return;
@@ -81,36 +81,36 @@ export function enterMoveMode(){
     if (getName(selected) != 'Map')
         return;
     
-    if (toMove){
-        delAttr(toMove, 'to_move');
+    if (secondSelect){
+        delAttr(secondSelect, 'second_select');
     }
     
-    addAttr(selected, 'to_move', 't');
-    app.setState({toMove: selected});
+    addAttr(selected, 'second_select', 't');
+    app.setState({secondSelect: selected});
 
     updateAST();
 }
 
 export function move(){
-    let {selected, toMove} = app.state;
+    let {selected, secondSelect} = app.state;
 
     if (!selected)
         return;
     
-    if (!toMove)
+    if (!secondSelect)
         return;
     
     if (getName(selected) != 'Node')
         return;
     
-    delete_element(toMove);
-    selected.children = [toMove];        
-    toMove.parent = selected;
+    delete_element(secondSelect);
+    selected.children = [secondSelect];        
+    secondSelect.parent = selected;
     
-    app.setState({toMove: null, selected: toMove});
+    app.setState({secondSelect: null, selected: secondSelect});
     delAttr(selected, 'selected');
-    addAttr(toMove, 'selected', 't');
-    delAttr(toMove, 'to_move');
+    addAttr(secondSelect, 'selected', 't');
+    delAttr(secondSelect, 'second_select');
     
     updateAST();
     
