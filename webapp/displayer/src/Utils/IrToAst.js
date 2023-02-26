@@ -1,7 +1,7 @@
 export function parse(ir_text){
     let lines = ir_text.split("\n");
     let last_indent = 0;
-    let root_node = {value: "", children: [], parent: {children: []}};
+    let root_node = {value: "", children: [], parent: {children: []}, idx: 0};
     let last_node = root_node;
     for (let line of lines) {
         let indent = line.search(/\S/)/4;
@@ -11,7 +11,7 @@ export function parse(ir_text){
             parent_to_the_node_we_are_adding = parent_to_the_node_we_are_adding.parent;
         }
 
-        let this_node = {value: line.trim(), children: [], parent: parent_to_the_node_we_are_adding};
+        let this_node = {value: line.trim(), children: [], parent: parent_to_the_node_we_are_adding, idx: parent_to_the_node_we_are_adding.children.length};
 
         parent_to_the_node_we_are_adding.children.push(this_node);
 
