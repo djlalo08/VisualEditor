@@ -14,8 +14,8 @@ import { printAst } from './Utils/NodeUtils';
 // import ExpectedApp from './Components/ExpectedApp';
 
 
-//TODO Verticals and Horizontals don't really work correctly...
-//And also using them breaks m command
+//TODO: Insert nodes to right and left, 
+//TODO: insert node above, below
 class App extends React.Component{
   constructor(props){
     super(props);

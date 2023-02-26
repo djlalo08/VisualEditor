@@ -54,14 +54,15 @@ export function handleClose() {
 }
 
 function handleOpen() {
-    app.setState({showModal: true});
+    app.setState({showModal: true, modalText:''});
 }
 
 export function insertMapFromModal(){
     let {selected, modalText} = app.state;
+    let [name, in_num, out_num] = modalText.trim().split(' ');
     
     if (getName(selected) == 'Node'){
-        selected.children.push(makeMap(selected, modalText, 3, 1));
+        selected.children.push(makeMap(selected, name, in_num, out_num));
         updateAST();
     }
     handleClose();
