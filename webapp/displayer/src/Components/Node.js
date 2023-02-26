@@ -1,7 +1,7 @@
 import Selectable from "./Selectable";
 
 function InnerNode(props) {
-    let {children, className, selected, select_fn, ...other} = props;
+    let {children, className, selected, ...other} = props;
 
     return (<div className={props.className + " Node "} {...other}>
         {props.children}

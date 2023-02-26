@@ -19,7 +19,6 @@ function treeToJsx(tree){
     props.id = id;
     props.key = id;
     props.ast_node = tree;
-    props.select_fn = updateSelected;
     
     if (props['selected']) selected = tree;
     
@@ -45,14 +44,12 @@ function treeToJsx(tree){
         case 'FileOutput':
             return <FileOutput {...props}>{children}</FileOutput>;
         case 'SetNode':
-            props.select_fn = null;
             if (! wires_map[props.value])
                 wires_map[props.value] = [-1,-1];
 
             wires_map[props.value][0] = id;
             return <div {...props}/>;
         case 'GetNode':
-            props.select_fn = null;
             if (! wires_map[props.value])
                 wires_map[props.value] = [-1,-1];
 
@@ -73,8 +70,7 @@ function getWires(){
     return wires;
 }
 
-export function ast_to_jsx(ast, _updateSelected){
-    updateSelected = _updateSelected;
+export function ast_to_jsx(ast){
     clearGlobals(); 
     
     let jsx_root = treeToJsx(ast);
@@ -86,7 +82,6 @@ export function ast_to_jsx(ast, _updateSelected){
 let wires_map = {};
 let id_gen = 0;
 let selected = null;
-let updateSelected = x => x;
 
 function clearGlobals(_setSelected){
     selected = null;
