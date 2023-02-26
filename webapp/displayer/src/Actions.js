@@ -113,7 +113,37 @@ export function move(){
     delAttr(secondSelect, 'second_select');
     
     updateAST();
+}
+
+function insertNode(node, new_parent, position){
+    new_parent.children.splice(position, 0, node);
+    for (let [idx, child] of new_parent.children.entries()){
+        child.idx = idx;
+    }
     
+    node.parent = new_parent;
+    
+    updateAST();
+}
+
+export function extract(){
+    let {selected} = app.state;
+    if (getName(selected) != 'Map')
+        return;
+
+    let curr = moveUpToVertical(selected);
+
+    if (curr.idx <= 0){
+        delete_element(selected);
+
+        let horizontal = {value:"Horizontal", children:[selected], idx:0};
+        insertNode(horizontal, curr.parent, 0) ;
+        return;
+    }
+     
+    let prev = curr.parent.children[curr.idx-1];
+    delete_element(selected);
+    insertNode(selected, prev, 0);
 }
 
 export function moveUp(){
@@ -145,11 +175,7 @@ function hasChildren(node){
 }
 
 export function nextLine(){
-    let parent = app.state.selected;
-    while (parent && parent.parent && getName(parent.parent) != 'Vertical')
-        parent = parent.parent;
-
-    let curr = parent;
+    let curr = moveUpToVertical(app.state.selected);
     if (curr.idx >= curr.parent.children.length-1)
         return;
 
@@ -161,12 +187,7 @@ export function nextLine(){
 }
 
 export function prevLine(){
-    console.log("prevlin");
-    let parent = app.state.selected;
-    while (parent && parent.parent && getName(parent.parent) != 'Vertical')
-        parent = parent.parent;
-
-    let curr = parent;
+    let curr = moveUpToVertical(app.state.selected);
     if (curr.idx <= 0)
         return;
 
@@ -175,4 +196,11 @@ export function prevLine(){
         updateSelected(prev);        
     else
         moveDownFrom(prev);
+}
+
+function moveUpToVertical(node){
+    let parent = node;
+    while (parent && parent.parent && getName(parent.parent) != 'Vertical')
+        parent = parent.parent;
+    return parent;
 }

@@ -51,15 +51,16 @@ export const ex = `Root
                     Map[name:X, className:constant]
                 Horizontal
                     Map[name:Y, className:constant]
-        Map[name:123]
-            Ins
-                Node
-                    GetNode[value:discr]
-                Node
-                    Map[name:"x", className:constant]
-            Outs
-                Node
-                    SetNode[value:end]
+        Horizontal
+            Map[name:123]
+                Ins
+                    Node
+                        GetNode[value:discr]
+                    Node
+                        Map[name:"x", className:constant]
+                Outs
+                    Node
+                        SetNode[value:end]
     Horizontal
         FileOutput
             GetNode[value:end, x:True]`
