@@ -19,10 +19,10 @@ export const ex = `Root
                                             GetNode[value:b]
                                     Outs
                             Node
-                                Map[name:*, infix:true]
+                                Map[name:x, infix:true]
                                     Ins[infix:true]
                                         Node
-                                            Map[name:4, className:constant, selected:' ']
+                                            Map[name:4, className:constant]
                                         Node
                                             GetNode[value:a]
                                         Node

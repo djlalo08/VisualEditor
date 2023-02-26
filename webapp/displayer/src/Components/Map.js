@@ -2,24 +2,18 @@ import React from "react";
 import Selectable from "./Selectable";
 
 function InnerMap(props){
-    let {children, className, selected, ...other} = props;
+    let {children, className, selected, ast_node, ...other} = props;
     
     let ins = children? children[0]: [];
     let ins2 = React.Children.map(ins, x => React.cloneElement(x, {...other}));
     let outs = children? children[1]: [];
 
-    const makeCall = async () => {
-        const response = await fetch(`http://localhost:5000/select/${props.id}`);
-        const text = await response.text(); 
-    }
-
     let on_click = (e) => {
         e.stopPropagation();
-        makeCall();
+        props.select_fn(ast_node);
     }
     
-    
-    return (<div id={props.id} className={props.className || "Map"} onClick={on_click}>
+    return (<div id={props.id} className={props.className + " Map"} onClick={on_click}>
         {ins2}
         {props.infix? <br/> : <div>{props.name}</div>}
         {outs}

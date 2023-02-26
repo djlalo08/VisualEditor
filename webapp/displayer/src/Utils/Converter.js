@@ -9,61 +9,55 @@ import Outs from '../Components/Outs';
 import Root from '../Components/Root';
 import Vertical from '../Components/Vertical';
 import Wire from '../Components/Wire';
+import { getNameAndAttrs } from './NodeUtils';
 
-function readAttrs(attrStr){
-    let attrs = {};
-    if (!attrStr) return attrs;
-
-    for (let attr of attrStr.split(',')){
-        let attrPair = attr.trim().split(':');
-        attrs[attrPair[0]] = attrPair[1];
-    }
-    return attrs;
-}
 
 function treeToJsx(tree){
     let id = ++id_gen + '';
 
-    let values = tree.value.split(/[\[\]]/);
-    let nodeName = values[0];
-
-    let attrs = readAttrs(values[1]);
-    attrs.id = id;
-    attrs.key = id;
-
+    let [nodeName, props]= getNameAndAttrs(tree.value);
+    props.id = id;
+    props.key = id;
+    props.ast_node = tree;
+    props.select_fn = updateSelected;
+    
+    if (props['selected']) selected = tree;
+    
     let children = tree.children.map(treeToJsx);
     
     switch (nodeName) {
         case 'Root':
-            return <Root {...attrs}>{children}</Root>;
+            return <Root {...props}>{children}</Root>;
         case 'Vertical':
-            return <Vertical {...attrs}>{children}</Vertical>;
+            return <Vertical {...props}>{children}</Vertical>;
         case 'Ins':
-            return <Ins {...attrs}>{children}</Ins>;
+            return <Ins {...props}>{children}</Ins>;
         case 'Outs':
-            return <Outs {...attrs}>{children}</Outs>;
+            return <Outs {...props}>{children}</Outs>;
         case 'Node':
-            return <Node {...attrs}>{children}</Node>;
+            return <Node {...props}>{children}</Node>;
         case 'Map':
-            return <Mapx {...attrs}>{children}</Mapx>;
+            return <Mapx {...props}>{children}</Mapx>;
         case 'Horizontal':
-            return <Horizontal {...attrs}>{children}</Horizontal>;
+            return <Horizontal {...props}>{children}</Horizontal>;
         case 'FileInput':
-            return <FileInput {...attrs}>{children}</FileInput>;
+            return <FileInput {...props}>{children}</FileInput>;
         case 'FileOutput':
-            return <FileOutput {...attrs}>{children}</FileOutput>;
+            return <FileOutput {...props}>{children}</FileOutput>;
         case 'SetNode':
-            if (! wires_map[attrs.value])
-                wires_map[attrs.value] = [-1,-1];
+            props.select_fn = null;
+            if (! wires_map[props.value])
+                wires_map[props.value] = [-1,-1];
 
-            wires_map[attrs.value][0] = id;
-            return <div {...attrs}/>;
+            wires_map[props.value][0] = id;
+            return <div {...props}/>;
         case 'GetNode':
-            if (! wires_map[attrs.value])
-                wires_map[attrs.value] = [-1,-1];
+            props.select_fn = null;
+            if (! wires_map[props.value])
+                wires_map[props.value] = [-1,-1];
 
-            wires_map[attrs.value][1] = id;
-            return <div {...attrs}/>;
+            wires_map[props.value][1] = id;
+            return <div {...props}/>;
         default:
             return nodeName;
     }
@@ -79,19 +73,23 @@ function getWires(){
     return wires;
 }
 
-export function ast_to_jsx(ast){
+export function ast_to_jsx(ast, _updateSelected){
+    updateSelected = _updateSelected;
     clearGlobals(); 
     
     let jsx_root = treeToJsx(ast);
     let wires_ls = getWires();
     let children = [jsx_root, ...wires_ls];
-    return (<Xwrapper>{children}</Xwrapper>);
+    return [(<Xwrapper>{children}</Xwrapper>), selected];
 }
 
 let wires_map = {};
 let id_gen = 0;
+let selected = null;
+let updateSelected = x => x;
 
-function clearGlobals(){
+function clearGlobals(_setSelected){
+    selected = null;
     wires_map = {};
     id_gen = 0;
 }
