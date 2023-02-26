@@ -67,3 +67,25 @@ export function getAttrs(node){
     let values = node.value.split(/[\[\]]/);
     return {...readAttrs(values[1])};
 }
+
+export function makeMap(parent, name, ins_num, outs_num){
+    let map = {value: `Map[name:${name}]`, idx:0, parent};
+
+    let ins = {value: 'Ins', idx: 0, parent:map}
+    let ins_nodes = [];
+    for (let i = 0; i < ins_num; i++){
+        ins_nodes.push({value: 'Node', idx:i, children:[], parent:ins});
+    }
+
+    let outs = {value: 'Outs', idx: 1, parent:map}
+    let outs_nodes = [];
+    for (let i = 0; i < outs_num; i++){
+        outs_nodes.push({value: 'Node', idx:i, children:[], parent:outs});
+    }
+
+    map.children = [ins, outs];
+    ins.children = ins_nodes;
+    outs.children = outs_nodes;
+
+    return map;
+}

@@ -1,5 +1,5 @@
 import { ast_to_jsx } from './Utils/Converter';
-import { addAttr, delAttr, getName } from './Utils/NodeUtils';
+import { addAttr, delAttr, getName, makeMap } from './Utils/NodeUtils';
 
 let app = null;
 
@@ -42,6 +42,28 @@ export function delete_element(elmt_to_del){
     }
     
     updateAST();
+}
+
+export function insert_element(node){
+    handleOpen();
+}
+
+export function handleClose() {
+    app.setState({showModal: false, modalText:''});
+}
+
+function handleOpen() {
+    app.setState({showModal: true});
+}
+
+export function insertMapFromModal(){
+    let {selected, modalText} = app.state;
+    
+    if (getName(selected) == 'Node'){
+        selected.children.push(makeMap(selected, modalText, 3, 1));
+        updateAST();
+    }
+    handleClose();
 }
   
 export function updateAST(){

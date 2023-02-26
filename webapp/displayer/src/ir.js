@@ -1,7 +1,6 @@
 export const ex = `Root
     Horizontal
         FileInput
-            SetNode[value:a, x:True]
         FileInput
             SetNode[value:b, x:True]
         FileInput
@@ -24,7 +23,6 @@ export const ex = `Root
                                         Node
                                             Map[name:4, className:constant]
                                         Node
-                                            GetNode[value:x]
                                         Node
                                             GetNode[value:c]
                                     Outs[infix:true]

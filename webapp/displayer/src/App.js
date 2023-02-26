@@ -1,14 +1,16 @@
-import { setApp as setActions } from './Actions';
+import React from 'react';
+import FormControl from 'react-bootstrap/FormControl';
+import Modal from 'react-bootstrap/Modal';
+import { handleClose, setApp as setActions } from './Actions';
 import './App.css';
 import { ex } from './ir';
+import { keypress, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
 import { printAst } from './Utils/NodeUtils';
 
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
-import React from "react";
-import { keypress, setApp as setKeyboard } from './KeyboardController';
 
 class App extends React.Component{
   constructor(props){
@@ -16,9 +18,14 @@ class App extends React.Component{
     setActions(this);
     setKeyboard(this);
     
+    this.handleTextChange = this.handleTextChange.bind(this);
+
     let AST = parse(ex);
     let [JSX, selected] = ast_to_jsx(AST);
-    this.state = { AST, JSX, selected};
+    this.state = { AST, JSX, selected, 
+      showModal: false,
+      modalText: ''
+    };
   }
   
   componentDidMount(){
@@ -29,8 +36,8 @@ class App extends React.Component{
     document.removeEventListener("keydown", keypress);
   }
   
-  shouldComponentUpdate(_, nextState){
-    return this.state.AST != nextState.AST;
+  handleTextChange(e){
+    this.setState({modalText: e.target.value});
   }
 
   render(){
@@ -40,6 +47,16 @@ class App extends React.Component{
           { this.state.JSX }
         </div>
         <button onClick={() => console.log(printAst(this.state.AST))}>Print AST</button> 
+        <Modal show={this.state.showModal} onHide={handleClose}>
+          <Modal.Body>
+            <FormControl
+              onChange={this.handleTextChange}
+              value={this.state.modalText}
+              autoFocus={true}
+              type="text"
+            /> 
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }
