@@ -18,5 +18,7 @@ export function parse(ir_text){
         last_node = this_node; 
         last_indent = indent;
     };
-    return root_node.parent.children[0];
+    root_node = root_node.parent.children[0];
+    root_node.parent = null;
+    return root_node;
 }

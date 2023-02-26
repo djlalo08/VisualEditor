@@ -2,6 +2,7 @@ import { ast_to_jsx } from './Utils/Converter';
 import { addAttr, delAttr, getName, makeMap } from './Utils/NodeUtils';
 
 let app = null;
+let selectables = ['Map', 'Node'];
 
 export function setApp(_app){
     app = _app;
@@ -81,10 +82,10 @@ export function enterMoveMode(){
         return;
     
     if (toMove){
-        delAttr(toMove, 'toMove');
+        delAttr(toMove, 'to_move');
     }
     
-    addAttr(selected, 'toMove', 't');
+    addAttr(selected, 'to_move', 't');
     app.setState({toMove: selected});
 
     updateAST();
@@ -109,8 +110,33 @@ export function move(){
     app.setState({toMove: null, selected: toMove});
     delAttr(selected, 'selected');
     addAttr(toMove, 'selected', 't');
-    delAttr(toMove, 'toMove');
+    delAttr(toMove, 'to_move');
     
     updateAST();
     
+}
+
+export function moveUp(){
+    let {parent} = app.state.selected;
+    while (parent && !selectables.includes(getName(parent)))
+        parent = parent.parent;
+    updateSelected(parent);
+}
+
+export function moveDown(){
+    let {selected} = app.state;
+    if (!hasChildren(selected))
+        return;
+
+    let child = app.state.selected.children[0];
+
+    while (child && !selectables.includes(getName(child))){
+        if (!hasChildren(child)) break;
+        child = child.children[0];
+    }
+    updateSelected(child);
+}
+
+function hasChildren(node){
+    return node.children && node.children.length;
 }

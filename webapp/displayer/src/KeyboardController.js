@@ -1,4 +1,4 @@
-import { delete_element, enterMoveMode, insertMapFromModal, insert_element, move, updateSelected } from "./Actions";
+import { delete_element, enterMoveMode, insertMapFromModal, insert_element, move, moveDown, moveUp, updateSelected } from "./Actions";
 
 const UP = 38;
 const DOWN = 40;
@@ -28,11 +28,10 @@ export function keypress(e){
     let {parent, children, idx} = selected;
     switch (e.keyCode) {
         case UP:
-            updateSelected(parent);
+            moveUp();
             break;
         case DOWN:
-            if (children && children.length) 
-                 updateSelected(children[0]);
+            moveDown();
             break;
         case LEFT:
             if (parent && idx > 0) 
