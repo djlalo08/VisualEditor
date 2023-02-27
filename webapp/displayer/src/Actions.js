@@ -4,6 +4,7 @@ import { addAttr, delAttr, getName, makeMap, printAst } from './Utils/NodeUtils'
 
 let app = null;
 let selectables = ['Map', 'Node'];
+const UNDO_LIMIT = 5;
 
 export function setApp(_app){
     app = _app;
@@ -215,12 +216,28 @@ function moveUpToVertical(node){
     return parent;
 }
 
+//TODO when lastIRs list goes over UNDO_LIMIT keep only the last UNDO_LIMIT
 function save_snapshot(){
-    app.setState({lastIR: printAst(app.state.AST)});
+    app.state.lastIRs.push(printAst(app.state.AST));
+    app.setState({lastIRs: [...app.state.lastIRs], nextIRs: []});
 }
 
 export function undo(){
-    let AST = parse(app.state.lastIR);
+    if (!app.state.lastIRs.length)
+        return;
+    app.state.nextIRs.push(printAst(app.state.AST));
+
+    let AST = parse(app.state.lastIRs.pop());
     let [JSX, selected] = ast_to_jsx(AST);
-    app.setState({AST, JSX, selected, lastIR: null});
+    app.setState({AST, JSX, selected, lastIRs: [...app.state.lastIRs], nextIRs: [...app.state.nextIRs]});
+}
+
+export function redo(){
+    if (!app.state.nextIRs.length)
+        return;
+    app.state.lastIRs.push(printAst(app.state.AST));
+    
+    let AST = parse(app.state.nextIRs.pop());
+    let [JSX, selected] = ast_to_jsx(AST);
+    app.setState({AST, JSX, selected, lastIRs: [...app.state.lastIRs], nextIRs: [...app.state.nextIRs]});
 }

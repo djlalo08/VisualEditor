@@ -68,7 +68,10 @@ export function keypress(e){
             a.extract();
             break;
         case Z:
-            a.undo();
+            if (held_down.has(SHIFT)) 
+                a.redo();
+            else
+                a.undo();
             break;
         case ENTER:
             if (held_down.has(SHIFT)) 
