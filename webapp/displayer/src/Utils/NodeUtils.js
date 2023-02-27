@@ -34,7 +34,7 @@ export function _printAst(ast, depth){
 function n_tabs(n){
     let tabs = '';
     for (let i = 0; i<n; i++){
-        tabs += '\t';
+        tabs += '    ';
     }
     return tabs;
 }

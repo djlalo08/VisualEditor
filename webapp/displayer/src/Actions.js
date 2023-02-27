@@ -1,5 +1,6 @@
 import { ast_to_jsx } from './Utils/Converter';
-import { addAttr, delAttr, getName, makeMap } from './Utils/NodeUtils';
+import { parse } from './Utils/IrToAst';
+import { addAttr, delAttr, getName, makeMap, printAst } from './Utils/NodeUtils';
 
 let app = null;
 let selectables = ['Map', 'Node'];
@@ -26,6 +27,8 @@ export function updateSelected(new_selection){
 }
 
 export function delete_element(elmt_to_del){
+    save_snapshot();
+
     if (!elmt_to_del)
         return;
 
@@ -58,6 +61,8 @@ function handleOpen() {
 }
 
 export function insertMapFromModal(){
+    save_snapshot();
+
     let {selected, modalText} = app.state;
     let [name, in_num, out_num] = modalText.trim().split(' ');
     
@@ -69,7 +74,7 @@ export function insertMapFromModal(){
 }
   
 export function updateAST(){
-    let JSX = ast_to_jsx(app.state.AST, app.updateSelected)[0];
+    let JSX = ast_to_jsx(app.state.AST)[0];
     app.setState({AST: {...app.state.AST}, JSX});
 }
 
@@ -93,6 +98,8 @@ export function secondSelect(){
 }
 
 export function move(){
+    save_snapshot();
+
     let {selected, secondSelect} = app.state;
 
     if (!selected)
@@ -128,6 +135,8 @@ function insertNode(node, new_parent, position){
 }
 
 export function extract(){
+    save_snapshot();
+    
     let {selected} = app.state;
     if (getName(selected) != 'Map')
         return;
@@ -204,4 +213,14 @@ function moveUpToVertical(node){
     while (parent && parent.parent && getName(parent.parent) != 'Vertical')
         parent = parent.parent;
     return parent;
+}
+
+function save_snapshot(){
+    app.setState({lastIR: printAst(app.state.AST)});
+}
+
+export function undo(){
+    let AST = parse(app.state.lastIR);
+    let [JSX, selected] = ast_to_jsx(AST);
+    app.setState({AST, JSX, selected, lastIR: null});
 }

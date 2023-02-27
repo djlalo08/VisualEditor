@@ -13,6 +13,7 @@ const M = 77;
 const T = 84;
 const S = 83;
 const E = 69;
+const Z = 90;
 
 let app = null;
 let held_down = new Set();
@@ -22,7 +23,7 @@ export function keyrelease(e){
 }
 
 export function keypress(e){
-    console.log(e.keyCode);
+    // console.log(e.keyCode);
     held_down.add(e.keyCode);
 
     let {selected, showModal} = app.state;
@@ -65,6 +66,9 @@ export function keypress(e){
             break;
         case E:
             a.extract();
+            break;
+        case Z:
+            a.undo();
             break;
         case ENTER:
             if (held_down.has(SHIFT)) 

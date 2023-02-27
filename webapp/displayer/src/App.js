@@ -30,6 +30,7 @@ class App extends React.Component{
       showModal: false,
       modalText: '',
       secondSelect: null,
+      lastIR: null,
     };
   }
   
