@@ -14,6 +14,8 @@ const T = 84;
 const S = 83;
 const E = 69;
 const Z = 90;
+const A = 65;
+const D = 68;
 
 let app = null;
 let held_down = new Set();
@@ -57,6 +59,9 @@ export function keypress(e){
             break;
         case SPACE:
             a.insert_element(selected);
+            break;
+        case A:
+            A.add_left(selected);
             break;
         case S:
             a.secondSelect();
