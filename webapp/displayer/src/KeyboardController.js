@@ -38,7 +38,6 @@ export function keypress(e){
         return;
     }
 
-    let {parent, idx} = selected;
     switch (e.keyCode) {
         case UP:
             a.moveUp();
@@ -47,12 +46,10 @@ export function keypress(e){
             a.moveDown();
             break;
         case LEFT:
-            if (parent && idx > 0) 
-                a.updateSelected(parent.children[idx-1]);
+            a.moveLeft(selected);
             break;
         case RIGHT:
-            if (parent && idx < parent.children.length-1) 
-                a.updateSelected(parent.children[idx+1]);
+            a.moveRight(selected);
             break;
         case BACKSPACE:
             a.delete_element(selected);

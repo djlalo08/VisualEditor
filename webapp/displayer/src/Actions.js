@@ -4,6 +4,7 @@ import { addAttr, delAttr, getName, makeMap, printAst } from './Utils/NodeUtils'
 
 let app = null;
 let selectables = ['Map', 'Node'];
+let horizontals = ['Map', 'Node', 'Ins', 'Outs', 'Horizontal']
 const UNDO_LIMIT = 5;
 
 export function setApp(_app){
@@ -157,6 +158,42 @@ export function extract(){
     insertNode(selected, prev, 0);
 }
 
+export function moveRight(selected){
+    let curr = moveUpToHorizontal(selected);
+
+    if (!curr.parent)
+        return;
+
+    if (curr.idx >= curr.parent.children.length-1){
+        moveRight(curr.parent);
+        return;
+    }
+
+    let next = curr.parent.children[curr.idx+1];
+    if (selectables.includes(getName(next)))
+        updateSelected(next);        
+    else
+        moveDownFrom(next);
+}
+
+export function moveLeft(selected){
+    let curr = moveUpToHorizontal(selected);
+
+    if (!curr.parent)
+        return;
+
+    if (curr.idx <=0){
+        moveLeft(curr.parent);
+        return;
+    }
+
+    let next = curr.parent.children[curr.idx-1];
+    if (selectables.includes(getName(next)))
+        updateSelected(next);        
+    else
+        moveDownFrom(next);
+}
+
 export function moveUp(){
     let {parent} = app.state.selected;
     while (parent && !selectables.includes(getName(parent)))
@@ -205,9 +242,16 @@ function _nextLine(selected){
 }
 
 export function prevLine(){
-    let curr = moveUpToVertical(app.state.selected);
-    if (curr.idx <= 0)
+    _prevLine(app.state.selected);
+}
+
+function _prevLine(selected){
+    let curr = moveUpToVertical(selected);
+    if (curr.idx <= 0){
+        if (curr.parent)
+            _prevLine(curr.parent);
         return;
+    }
 
     let prev = curr.parent.children[curr.idx-1];
     if (selectables.includes(getName(prev)))
@@ -218,6 +262,12 @@ export function prevLine(){
 
 function moveUpToVertical(node){
     while (node && node.parent && getName(node.parent) != 'Vertical')
+        node = node.parent;
+    return node;
+}
+
+function moveUpToHorizontal(node){
+    while (node && node.parent && !horizontals.includes(getName(node.parent)))
         node = node.parent;
     return node;
 }

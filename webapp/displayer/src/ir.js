@@ -21,6 +21,9 @@ export const ex = `Root
                                             Outs
                                     Node
                                         Vertical
+                                            Map[name: WW]
+                                                Ins
+                                                Outs
                                             Horizontal
                                                 Map[name:*, infix:true]
                                                     Ins[infix:true]
