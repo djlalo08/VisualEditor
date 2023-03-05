@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import { handleClose, setApp as setActions } from './Actions';
@@ -7,6 +8,7 @@ import { ex } from './ir';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
+import { printAst } from './Utils/NodeUtils';
 
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
@@ -30,6 +32,7 @@ class App extends React.Component{
       secondSelect: null,
       lastIRs: [],
       nextIRs: [],
+      insertDir: ''
     };
   }
   
@@ -64,7 +67,7 @@ class App extends React.Component{
         <div>
           { this.state.JSX }
         </div>
-        {/* <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button>  */}
+        <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button> 
         {modal}
       </div>
     );

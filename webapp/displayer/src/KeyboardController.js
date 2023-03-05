@@ -55,10 +55,13 @@ export function keypress(e){
             a.delete_element(selected);
             break;
         case SPACE:
-            a.insert_element(selected);
+            a.insert_element();
+            break;
+        case D:
+            app.setState({insertDir: 'Right'}, a.insert_element);
             break;
         case A:
-            A.add_left(selected);
+            app.setState({insertDir: 'Left'}, a.insert_element);
             break;
         case S:
             a.secondSelect();

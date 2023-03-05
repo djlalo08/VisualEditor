@@ -50,7 +50,7 @@ export function delete_element(elmt_to_del){
     updateAST();
 }
 
-export function insert_element(node){
+export function insert_element(){
     handleOpen();
 }
 
@@ -65,14 +65,58 @@ function handleOpen() {
 export function insertMapFromModal(){
     save_snapshot();
 
-    let {selected, modalText} = app.state;
+    let {selected, modalText, insertDir} = app.state;
     let [name, in_num, out_num] = modalText.trim().split(' ');
+    let m = makeMap(selected, name, in_num, out_num);
     
-    if (getName(selected) == 'Node'){
-        selected.children.push(makeMap(selected, name, in_num, out_num));
-        updateAST();
+    switch (insertDir) {
+        case '':
+            if (getName(selected) == 'Node'){
+                selected.children.push(m);
+                updateAST();
+            }
+            break;
+        case 'Right':
+            add_right(m);
+            break;
+        case 'Left':
+            add_left(m);
+            break;
     }
+    app.setState({insertDir: ''});
     handleClose();
+}
+
+function add_right(m){
+    let {parent, idx} = app.state.selected;
+    
+    if (parent && getName(parent) == 'Horizontal'){
+        insertNode(m, parent, idx+1);
+    } else {
+        wrapIn(app.state.selected, {value:'Horizontal', children:[]});
+        add_right(m);
+    }
+}
+
+function add_left(m){
+    let {parent, idx} = app.state.selected;
+    
+    if (parent && getName(parent) == 'Horizontal'){
+        insertNode(m, parent, Math.max(idx-1, 0));
+    } else {
+        wrapIn(app.state.selected, {value:'Horizontal', children:[]});
+        add_left(m);
+    }
+    
+}
+
+function wrapIn(toWrap, wrapper){
+    if (!toWrap.parent)
+        return //TODO, we might want to wrap the top-level in some cases
+    
+    toWrap.parent.children.splice(toWrap.idx, 1);
+    insertNode(wrapper, toWrap.parent, toWrap.idx);
+    insertNode(toWrap, wrapper, 0);
 }
   
 export function updateAST(){
