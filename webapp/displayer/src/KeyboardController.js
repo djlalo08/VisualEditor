@@ -11,11 +11,12 @@ const SHIFT = 16;
 
 const M = 77;
 const T = 84;
-const S = 83;
 const E = 69;
 const Z = 90;
 const A = 65;
 const D = 68;
+const W = 87;
+const S = 83;
 
 let app = null;
 let held_down = new Set();
@@ -25,7 +26,7 @@ export function keyrelease(e){
 }
 
 export function keypress(e){
-    // console.log(e.keyCode);
+    console.log(e.keyCode);
     held_down.add(e.keyCode);
 
     let {selected, showModal} = app.state;
@@ -57,13 +58,19 @@ export function keypress(e){
         case SPACE:
             a.insert_element();
             break;
+        case W:
+            app.setState({insertDir: 'Up'}, a.insert_element);
+            break;
+        case S:
+            app.setState({insertDir: 'Down'}, a.insert_element);
+            break;
         case D:
             app.setState({insertDir: 'Right'}, a.insert_element);
             break;
         case A:
             app.setState({insertDir: 'Left'}, a.insert_element);
             break;
-        case S:
+        case T:
             a.secondSelect();
             break;
         case M:

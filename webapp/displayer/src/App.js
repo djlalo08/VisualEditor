@@ -13,9 +13,12 @@ import { printAst } from './Utils/NodeUtils';
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
 
-
-//TODO: Insert nodes to right and left, 
-//TODO: insert node above, below
+//TODOs: 
+//Insert node above, below
+//Maybe go back to compiler side
+//Add saving
+//Add ability to pull up actual existing nodes
+//Now that we can freely make stuff, try writing up some code in PO
 class App extends React.Component{
   constructor(props){
     super(props);

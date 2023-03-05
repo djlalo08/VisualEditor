@@ -82,6 +82,12 @@ export function insertMapFromModal(){
         case 'Left':
             add_left(m);
             break;
+        case 'Down':
+            add_next_line(m);
+            break;
+        case 'Up':
+            add_prev_line(m);
+            break;
     }
     app.setState({insertDir: ''});
     handleClose();
@@ -108,6 +114,28 @@ function add_left(m){
         add_left(m);
     }
     
+}
+
+function add_next_line(m){
+    let {parent, idx} = app.state.selected;
+    
+    if (parent && getName(parent) == 'Vertical'){
+        insertNode(m, parent, idx+1);
+    } else {
+        wrapIn(app.state.selected, {value:'Vertical', children:[]});
+        add_next_line(m);
+    }
+}
+
+function add_prev_line(m){
+    let {parent, idx} = app.state.selected;
+    
+    if (parent && getName(parent) == 'Vertical'){
+        insertNode(m, parent, Math.max(idx-1, 0));
+    } else {
+        wrapIn(app.state.selected, {value:'Vertical', children:[]});
+        add_prev_line(m);
+    }
 }
 
 function wrapIn(toWrap, wrapper){
