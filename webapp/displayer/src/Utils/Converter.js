@@ -1,6 +1,4 @@
 import { Xwrapper } from "react-xarrows";
-import FileInput from "../Components/FileInput";
-import FileOutput from "../Components/FileOutput";
 import Horizontal from '../Components/Horizontal';
 import Ins from "../Components/Ins";
 import Mapx from '../Components/Map';
@@ -13,11 +11,8 @@ import { getNameAndAttrs } from './NodeUtils';
 
 
 function treeToJsx(tree){
-    let id = ++id_gen + '';
-
     let [nodeName, props]= getNameAndAttrs(tree);
-    props.id = id;
-    props.key = id;
+    props.key = props.id;
     props.ast_node = tree;
     
     if (props['selected']) selected = tree;
@@ -34,27 +29,23 @@ function treeToJsx(tree){
         case 'Outs':
             return <Outs {...props}>{children}</Outs>;
         case 'Node':
+            if (props.setvalue){
+                if (wires_map[props.setvalue])
+                    console.log(`multiple outs with value [${props.setvalue}]`);
+
+                wires_map[props.setvalue] = [props.id, []];
+            }
+            if (props.getvalue){
+                if (!wires_map[props.getvalue])
+                    console.log(`The wire with value ${props.getvalue} is used but never assigned to`);
+
+                wires_map[props.getvalue][1].push(props.id);
+            }
             return <Node {...props}>{children}</Node>;
         case 'Map':
             return <Mapx {...props}>{children}</Mapx>;
         case 'Horizontal':
             return <Horizontal {...props}>{children}</Horizontal>;
-        case 'FileInput':
-            return <FileInput {...props}>{children}</FileInput>;
-        case 'FileOutput':
-            return <FileOutput {...props}>{children}</FileOutput>;
-        case 'SetNode':
-            if (! wires_map[props.value])
-                wires_map[props.value] = ['', ''];
-
-            wires_map[props.value][0] = id;
-            return <div {...props}/>;
-        case 'GetNode':
-            if (! wires_map[props.value])
-                wires_map[props.value] = ['', ''];
-
-            wires_map[props.value][1] = id;
-            return <div {...props}/>;
         default:
             return nodeName;
     }
@@ -64,9 +55,10 @@ function treeToJsx(tree){
 function getWires(){
     let wires = [];
     for (let value in wires_map){
-        let [start_id, end_id] = wires_map[value];
-        if (start_id && end_id)
-            wires.push(<Wire key={start_id+end_id} start={start_id} end={end_id}/>);
+        let [start_id, end_ids] = wires_map[value];
+        if (start_id && end_ids)
+            for (let end_id of end_ids)
+                wires.push(<Wire key={start_id+end_id} start={start_id} end={end_id}/>);
     }
     return wires;
 }

@@ -1,11 +1,18 @@
 export const ex = `Root
     Vertical
         Horizontal
-            FileInput
-            FileInput
-                SetNode[value:b, x:True]
-            FileInput
-                SetNode[value:c, x:True]
+            Map[name:a, fileinput:t]
+                Ins
+                Outs
+                    Node
+            Map[name:bbb, fileinput:t]
+                Ins
+                Outs
+                    Node[setvalue:b]
+            Map[name:c, fileinput:t]
+                Ins
+                Outs
+                    Node[setvalue:c]
         Vertical
             Horizontal
                 Map[name:sqrt]
@@ -16,46 +23,41 @@ export const ex = `Root
                                     Node
                                         Map[name:sqr]
                                             Ins
-                                                Node
-                                                    GetNode[value:b]
+                                                Node[getvalue:b]
                                             Outs
                                     Node
                                         Vertical
                                             Map[name: WW]
                                                 Ins
+                                                    Node[getvalue:b]
                                                 Outs
+                                                    Node
                                             Horizontal
                                                 Map[name:*, infix:true]
                                                     Ins[infix:true]
                                                         Node
                                                             Map[name:4, className:constant]
                                                         Node
-                                                        Node
-                                                            GetNode[value:c]
+                                                        Node[getvalue:c]
                                                     Outs[infix:true]
-                                                        Node
-                                                            SetNode[value:1]
+                                                        Node[setvalue:1]
                                                 Vertical
                                                     Horizontal
                                                         Map[name:Z]
                                                             Ins
                                                             Outs
-                                                                Node
-                                                                    SetNode[value:2]
+                                                                Node[setvalue:2]
                                                     Horizontal
                                                         Map[name:ZZ]
                                                             Ins
                                                             Outs
                                             Map[name:W]
                                                 Ins
-                                                    Node
-                                                        GetNode[value:1]
-                                                    Node
-                                                        GetNode[value:2]
+                                                    Node[getvalue:1]
+                                                    Node[getvalue:2]
                                 Outs[infix:true]
                     Outs
-                        Node
-                            SetNode[value:discr]
+                        Node[setvalue:discr]
                 Vertical
                     Horizontal
                         Map[name:X, className:constant]
@@ -64,13 +66,13 @@ export const ex = `Root
             Horizontal
                 Map[name:123]
                     Ins
-                        Node
-                            GetNode[value:discr]
+                        Node[getvalue:discr]
                         Node
                             Map[name:"x", className:constant]
                     Outs
-                        Node
-                            SetNode[value:end]
+                        Node[setvalue:end]
         Horizontal
-            FileOutput
-                GetNode[value:end, x:True]`
+            Map[name:, fileoutput:t]
+                Ins
+                    Node[getvalue:end]
+                Outs`

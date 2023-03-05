@@ -68,21 +68,26 @@
 .Horizontal{
   border-bottom: 1px dashed rgba(0, 0, 0, 0.186);
 }
+
 table {
   border-collapse: separate !important;
   border: none;
   /* border-color: white; */
 }
+
 .row_ {
   border-bottom: 1px dashed rgba(0, 0, 0, 0.186) !important;
 }
+
 .col_ {
   /* border-right: 1px dashed rgba(0, 0, 0, 0.186); */
 }
+
 td {
   /* vertical-align: top; */
   padding: 0px;
 }
+
 tr {
   text-align: center;
 }
@@ -90,4 +95,8 @@ td, tr, table {
   /* padding: 0px; */
   /* margin: 0px; */
   border-spacing: 0px;
+}
+
+.to_connect {
+  border: 2px solid rgb(106, 187, 106);
 }

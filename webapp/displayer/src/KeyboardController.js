@@ -17,6 +17,7 @@ const A = 65;
 const D = 68;
 const W = 87;
 const S = 83;
+const C = 67;
 
 let app = null;
 let held_down = new Set();
@@ -26,7 +27,7 @@ export function keyrelease(e){
 }
 
 export function keypress(e){
-    console.log(e.keyCode);
+    // console.log(e.keyCode);
     held_down.add(e.keyCode);
 
     let {selected, showModal} = app.state;
@@ -84,6 +85,12 @@ export function keypress(e){
                 a.redo();
             else
                 a.undo();
+            break;
+        case C:
+            if (app.state.toConnect)
+                a.connect();
+            else 
+                a.setToConnect();
             break;
         case ENTER:
             if (held_down.has(SHIFT)) 

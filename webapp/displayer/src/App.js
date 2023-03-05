@@ -13,12 +13,16 @@ import { printAst } from './Utils/NodeUtils';
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
 
-//TODOs: 
-//Insert node above, below
-//Maybe go back to compiler side
-//Add saving
-//Add ability to pull up actual existing nodes
-//Now that we can freely make stuff, try writing up some code in PO
+/*
+TODOs: 
+-Add ability to connect nodes
+  -1 out can go to many ins
+-Maybe go back to compiler side
+-Add saving
+-Add ability to pull up actual existing nodes
+-Add set/get maps to be used as variables
+-Now that we can freely make stuff, try writing up some code in PO
+*/
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -35,7 +39,8 @@ class App extends React.Component{
       secondSelect: null,
       lastIRs: [],
       nextIRs: [],
-      insertDir: ''
+      insertDir: '',
+      toConnect: null
     };
   }
   
