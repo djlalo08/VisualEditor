@@ -1,19 +1,19 @@
 import React from "react";
+import { addProps } from "../Utils/ReactUtils";
 import Movable from "./Movable";
 import Selectable from "./Selectable";
 
 function InnerMap(props){
     let {children, className, selected, ...other} = props;
     
-    let ins = children? children[0]: [];
-    let ins2 = React.Children.map(ins, x => React.cloneElement(x, {...other}));
+    let ins = children && children[0]? addProps(children[0], {...other}): [];
     let outs = children? children[1]: [];
 
-    return (<div id={props.id} className={props.className + " Map "} {...other}>
-        {ins2}
-        {props.infix? <br/> : <div>{props.name}</div>}
+    return (<table id={props.id} className={props.className + " Map "} {...other}><tbody>
+        {ins}
+        {props.infix? null : <tr><td>{props.name}</td></tr>}
         {outs}
-    </div>);
+    </tbody></table>);
 }
 
 const Map = Movable(Selectable(InnerMap));

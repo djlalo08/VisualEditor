@@ -1,6 +1,20 @@
-import { intersperse } from '../Utils/ListUtils';
+import { intersperse_i } from '../Utils/ListUtils';
+import Grid from './Grid';
+import Trtd from './Trtd';
 
 export default function Ins(props){
     let {children, infix, name} = props
-    return infix? intersperse(children, name) : children;
+
+    if (!children || !children.length)
+        return null;
+    
+    children = children.map((x, i) => <td key={i}>{x}</td>);
+    if (infix)
+        children = intersperse_i(children, i => <td key={name+i}>{name}</td>);
+
+    return (<Trtd>
+        <Grid>
+            <tr>{children}</tr>
+        </Grid>
+    </Trtd>);
 }

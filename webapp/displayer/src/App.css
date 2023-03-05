@@ -10,7 +10,7 @@
 }
 .Map {
   background-color: gold;
-  display: inline-block;
+  /* display: inline-block; */
   /* width: min-content; */
   /* height: min-content; */
   padding: 3px;
@@ -57,7 +57,7 @@
   background-color: #57bec3;
 }
 .selected {
-  border-color: red;
+  border-color: red !important;
 }
 .secondSelect{
   border-color: blue;
@@ -66,22 +66,25 @@
   border-bottom: 1px dashed rgba(0, 0, 0, 0.186);
 }
 table {
-  border-collapse: collapse;
-  border-color: white;
+  border-collapse: separate !important;
+  border: none;
+  /* border-color: white; */
 }
 .row_ {
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.186);
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.186) !important;
 }
 .col_ {
   /* border-right: 1px dashed rgba(0, 0, 0, 0.186); */
 }
 td {
   /* vertical-align: top; */
+  padding: 0px;
 }
 tr {
   text-align: center;
 }
 td, tr, table {
-  padding: 0px;
-  margin: 0px;
+  /* padding: 0px; */
+  /* margin: 0px; */
+  border-spacing: 0px;
 }
