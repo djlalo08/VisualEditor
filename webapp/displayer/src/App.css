@@ -1,6 +1,7 @@
 .App {
   float: left;
   padding-left: 100px;
+  padding-top: 50px;
   text-align: center;
 }
 .Vertical {

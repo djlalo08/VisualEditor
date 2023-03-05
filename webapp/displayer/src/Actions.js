@@ -186,9 +186,16 @@ function hasChildren(node){
 }
 
 export function nextLine(){
-    let curr = moveUpToVertical(app.state.selected);
-    if (curr.idx >= curr.parent.children.length-1)
+    _nextLine(app.state.selected);
+}
+
+function _nextLine(selected){
+    let curr = moveUpToVertical(selected);
+    if (curr.idx >= curr.parent.children.length-1){
+        if (curr.parent)
+            _nextLine(curr.parent);
         return;
+    }
 
     let next = curr.parent.children[curr.idx+1];
     if (selectables.includes(getName(next)))
@@ -210,10 +217,9 @@ export function prevLine(){
 }
 
 function moveUpToVertical(node){
-    let parent = node;
-    while (parent && parent.parent && getName(parent.parent) != 'Vertical')
-        parent = parent.parent;
-    return parent;
+    while (node && node.parent && getName(node.parent) != 'Vertical')
+        node = node.parent;
+    return node;
 }
 
 //TODO when lastIRs list goes over UNDO_LIMIT keep only the last UNDO_LIMIT
