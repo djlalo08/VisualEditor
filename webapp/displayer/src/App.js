@@ -15,8 +15,6 @@ import { printAst } from './Utils/NodeUtils';
 
 /*
 TODOs: 
--Add ability to connect nodes
-  -1 out can go to many ins
 -Maybe go back to compiler side
 -Add saving
 -Add ability to pull up actual existing nodes
@@ -41,10 +39,17 @@ class App extends React.Component{
     setKeyboard(this);
     
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.stateFromIR = this.stateFromIR.bind(this);
+    this.openFile = this.openFile.bind(this);
 
-    let AST = parse(ex);
+    this.state = this.stateFromIR(ex);
+  }
+  
+  stateFromIR(fileText){
+    let AST = parse(fileText);
     let [JSX, selected] = ast_to_jsx(AST);
-    this.state = { AST, JSX, selected, 
+
+    return { AST, JSX, selected, 
       showModal: false,
       modalText: '',
       secondSelect: null,
@@ -54,7 +59,7 @@ class App extends React.Component{
       toConnect: null
     };
   }
-  
+
   componentDidMount(){
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);
@@ -67,6 +72,13 @@ class App extends React.Component{
   
   handleTextChange(e){
     this.setState({modalText: e.target.value});
+  }
+  
+  openFile(){
+    let _this = this;
+    fetch('./irs/ex1.ir')
+    .then(response => response.text())
+    .then(text => _this.setState(_this.stateFromIR(text)));
   }
 
   render(){
@@ -87,6 +99,7 @@ class App extends React.Component{
           { this.state.JSX }
         </div>
         <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button> 
+        <Button onClick={this.openFile}>Load ex1</Button>
         {modal}
       </div>
     );
