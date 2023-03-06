@@ -80,6 +80,19 @@ class App extends React.Component{
     .then(response => response.text())
     .then(text => _this.setState(_this.stateFromIR(text)));
   }
+  
+  download(filename, text){
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+  
+    element.style.display = 'none';
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }
 
   render(){
     let modal = <Modal show={this.state.showModal} onHide={handleClose}>
@@ -100,6 +113,7 @@ class App extends React.Component{
         </div>
         <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button> 
         <Button onClick={this.openFile}>Load ex1</Button>
+        <Button onClick={() => this.download('file.ir', printAst(this.state.AST))}>Save</Button>
         {modal}
       </div>
     );
