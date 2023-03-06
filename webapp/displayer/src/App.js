@@ -23,6 +23,17 @@ TODOs:
 -Add set/get maps to be used as variables
 -Now that we can freely make stuff, try writing up some code in PO
 */
+let id = 0;
+
+export function nextId(){
+  return ++id;
+}
+
+export function resetIds(){
+  id = 0;
+}
+
+
 class App extends React.Component{
   constructor(props){
     super(props);

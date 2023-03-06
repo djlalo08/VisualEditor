@@ -1,4 +1,5 @@
 import { Xwrapper } from "react-xarrows";
+import { nextId, resetIds } from "../App";
 import Horizontal from '../Components/Horizontal';
 import Ins from "../Components/Ins";
 import Mapx from '../Components/Map';
@@ -10,14 +11,17 @@ import Wire from '../Components/Wire';
 import { getNameAndAttrs } from './NodeUtils';
 
 
-function treeToJsx(tree){
-    let [nodeName, props]= getNameAndAttrs(tree);
-    props.key = props.id;
-    props.ast_node = tree;
+function treeToJsx(node){
+    let id = nextId() + '';
+    let [nodeName, props]= getNameAndAttrs(node);
+
+    props.id = id;
+    props.key = id;
+    props.ast_node = node;
     
-    if (props['selected']) selected = tree;
+    if (props['selected']) selected = node;
     
-    let children = tree.children.map(treeToJsx);
+    let children = node.children.map(treeToJsx);
     
     switch (nodeName) {
         case 'Root':
@@ -73,11 +77,10 @@ export function ast_to_jsx(ast){
 }
 
 let wires_map = {};
-let id_gen = 0;
 let selected = null;
 
 function clearGlobals(_setSelected){
     selected = null;
     wires_map = {};
-    id_gen = 0;
+    resetIds();
 }

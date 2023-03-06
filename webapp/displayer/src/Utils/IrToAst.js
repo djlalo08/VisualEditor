@@ -1,11 +1,10 @@
-import { addAttr } from "./NodeUtils";
 
 export function parse(ir_text){
     let lines = ir_text.split("\n");
     let last_indent = 0;
     let root_node = {value: "", children: [], parent: {children: []}, idx: 0};
     let last_node = root_node;
-    for (let [id, line] of lines.entries()) {
+    for (let line of lines) {
         let indent = line.search(/\S/)/4;
 
         let parent_to_the_node_we_are_adding = last_node;
@@ -19,7 +18,6 @@ export function parse(ir_text){
             parent: parent_to_the_node_we_are_adding,
             idx: parent_to_the_node_we_are_adding.children.length,
         };
-        addAttr(this_node, 'id', id);
 
         parent_to_the_node_we_are_adding.children.push(this_node);
 
