@@ -314,3 +314,10 @@ V
     H(<[sum(<z,2>)]>, <out>)
 ]
 
+Another thing I've been thinking but forgot to write down -- this is all lazy evaluation. It means that things are only pulled as needed. So running a (pure) program, results in no output or result or anything, but attempting to access some binding in the program, will "trickle up" to the beginning.
+
+This sort of tells us how actual evaluation works too -- as soon as someone tries to access a node (in a map) that node is computed based on the map that it is an output of - of course, we might not yet know what the inputs of the map evaluate to, so we need to evalute each of the inputs, and so on.
+This allows us to cache results really easy. 
+It might be inefficient to propagate up and back down (like maybe we build a big stack of something), but we're going to go with it for now -- I suspect it will actually perform decently
+
+Another note: the binding type has an attribute that is either "free" or "concrete". For example in line 180, most of those variables are free, because they are not yet determined. I think in practice of evaluationg no real distinction needs to be made, it's just useful for the programmer to be able to distinguish, so we could show them in different colors for example and if something that is labelled as concrete is never defined, throw an error or if something labelled as free is defined, throw an error
