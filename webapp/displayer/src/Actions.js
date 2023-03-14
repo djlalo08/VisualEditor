@@ -414,3 +414,9 @@ export function connect(){
 
     updateAST();
 }
+
+export function openFile(fileName){
+    fetch(`./irs/${fileName}.ir`)
+    .then(response => response.text())
+    .then(text => app.setState(app.stateFromIR(text)));
+}
