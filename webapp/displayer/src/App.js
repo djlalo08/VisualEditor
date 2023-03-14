@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
-import { handleClose, setApp as setActions } from './Actions';
+import { handleClose, openFile, setApp as setActions } from './Actions';
 import './App.css';
 import { ex } from './ir';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
@@ -40,7 +40,6 @@ class App extends React.Component{
     
     this.handleTextChange = this.handleTextChange.bind(this);
     this.stateFromIR = this.stateFromIR.bind(this);
-    this.openFile = this.openFile.bind(this);
 
     this.state = this.stateFromIR(ex);
   }
@@ -74,12 +73,6 @@ class App extends React.Component{
     this.setState({modalText: e.target.value});
   }
   
-  openFile(){
-    let _this = this;
-    fetch('./irs/ex1.ir')
-    .then(response => response.text())
-    .then(text => _this.setState(_this.stateFromIR(text)));
-  }
   
   download(filename, text){
     var element = document.createElement('a');
@@ -112,7 +105,7 @@ class App extends React.Component{
           { this.state.JSX }
         </div>
         <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button> 
-        <Button onClick={this.openFile}>Load ex1</Button>
+        <Button onClick={() => openFile('ex2')}>Load ex1</Button>
         <Button onClick={() => this.download('file.ir', printAst(this.state.AST))}>Save</Button>
         {modal}
       </div>

@@ -16,7 +16,7 @@ Root
         Vertical
             Horizontal
                 Map[name:sqrt]
-                    Ins
+                    I1ns
                         Node
                             Map[name:-, infix:true]
                                 Ins[infix:true]

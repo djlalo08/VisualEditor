@@ -321,3 +321,54 @@ This allows us to cache results really easy.
 It might be inefficient to propagate up and back down (like maybe we build a big stack of something), but we're going to go with it for now -- I suspect it will actually perform decently
 
 Another note: the binding type has an attribute that is either "free" or "concrete". For example in line 180, most of those variables are free, because they are not yet determined. I think in practice of evaluationg no real distinction needs to be made, it's just useful for the programmer to be able to distinguish, so we could show them in different colors for example and if something that is labelled as concrete is never defined, throw an error or if something labelled as free is defined, throw an error
+
+Another note, an H can have a gazillion possible outputs.
+There is a convention for H's -- output bindings have a value attr which tells us which things it is actually outputting
+
+
+Here is the above example a bit more fleshed out:
+[
+H(<A:f,B:f,C:f>, <A1,B1,C1>),
+H(<[
+    H(<[
+        sum(<A1:c,B1:c>, <x>),
+        mul(<C1:c,C1:c>, <y>)
+    ]>, <x1:v=x,y1:v=y>),
+    H(<[sub(<x1,y1>, <z>)]>, <z1:v=z>)        
+]>, <z2:v=z1>),
+H(<[sum(<z2,2>)]>, <out>)
+]
+
+Let's make a super simple example program:
+eval[
+    name:Id,map(ins<3 4> outs<A B>)
+    name:sum,map(ins<A:c B:c> outs<c>)
+    name:print,map(ins<c> outs<>)
+]
+
+As IR:
+Node
+    Map:id
+        Ins
+            constant:3
+            constant:4 
+        Outs
+            binding:A
+            binding:B
+    Map:sum
+        Ins
+            binding:A,concrete
+            binding:B,concrete
+        Outs
+            binding:c
+    Map:print,impure
+        Ins
+            binding:c
+        Outs
+        
+So we need to identify normal lists vs actual nodes. How? We can use annotations! So if we have a normal N-type, we add a Node annotation and now it is executable instead! This can happen in our expansion where we do fn definition vs fn declaration. 
+
+So for actual compilation it's actually very straight-forward. At compile-time we just link up all bindings (might have to think a bit about free bindings for this...). So in the simple example, compiler replaces input <c> with input <sum(<A, B>)[0]>. So now in runtime, we do trickle-up.
+Just a small note, but we aren't actually making copies of c, we just use a pointer.
+
+So for now evalution happens _outside_ of the program (there is no print map). And we'll have to figure out actual impure functions later
