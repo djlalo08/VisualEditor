@@ -372,3 +372,23 @@ So for actual compilation it's actually very straight-forward. At compile-time w
 Just a small note, but we aren't actually making copies of c, we just use a pointer.
 
 So for now evalution happens _outside_ of the program (there is no print map). And we'll have to figure out actual impure functions later
+
+By the way, fileinput/fileoutput don't actually exist. We simply have free or concrete bindings (for in or out) and they can be anywhere -- any bindings that are free (at the file level) are considered the in/outputs for the file
+
+
+How to write compiler:
+    Assume You have a map.
+    How do we evaluate it?
+        -First evaluate each of the inputs
+            -Have to determine whether an input is a primitive/constant, binding, or a map:
+                -For primitive/constant, just parse and return the value
+                -For binding, find the setvalue with the same id as input's getvalue. This will be the output of a map. In order to determine it, evaluate said map
+                -For map, evaluate map. Map attrs should specify which output we are using, return that specific one
+        -Then apply the map to those values
+            This is function evaluation. 
+                -If we have a fn name, lookup that function and apply it
+                    -It might be a built-in function like addition (then it will just perform the specified fn)
+                    -It might a function defined in some other file. Pull up corresponding file and evaluate the free output variables of that fn that are in use as below
+                -If it is an N or a defined function, associate the free outputs with the outputs that we are actually using. Associate the free inputs with the inputs that we are actually using. Then evaluate the outputs like normal (by evalutating ins and applying fn to them)
+        -Return the results as a list
+            -Probably straightforward?
