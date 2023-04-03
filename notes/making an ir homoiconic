@@ -278,7 +278,7 @@ Yeah I like this way of doing it.
 
 Ok so we're back to good old
 
-N = [(<N|bind>, <bind>)]
+N = [(<N|bind|ε>, <bind|ε>)]
 
 Ok great. So now we know how to translate Vs and Hs.
 V -> []
