@@ -32,6 +32,8 @@ function treeToJsx(node){
             return <Ins {...props}>{children}</Ins>;
         case 'Outs':
             return <Outs {...props}>{children}</Outs>;
+        case 'OutBinding':
+        case 'InBinding':
         case 'Node':
             if (props.setvalue){
                 if (wires_map[props.setvalue])
@@ -46,6 +48,7 @@ function treeToJsx(node){
                 wires_map[props.getvalue][1].push(props.id);
             }
             return <Node {...props}>{children}</Node>;
+        case 'Constant':
         case 'Map':
             return <Mapx {...props}>{children}</Mapx>;
         case 'Horizontal':

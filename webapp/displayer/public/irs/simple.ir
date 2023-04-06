@@ -1,0 +1,12 @@
+Root
+    Vertical
+        Constant[name:x, value:3, className:constant]
+            Ins
+            Outs
+                OutBinding[name:a, setvalue:a]
+        Map[name: add]
+            Ins
+                InBinding[getvalue:a]
+                Constant[name:b, value:2, className:constant]
+            Outs
+                OutBinding[setvalue:c, selected:t]

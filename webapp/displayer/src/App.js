@@ -7,6 +7,7 @@ import './App.css';
 import { ex } from './ir';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
+import { eval_ as e, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
 import { printAst } from './Utils/NodeUtils';
 
@@ -16,6 +17,13 @@ import { printAst } from './Utils/NodeUtils';
 /*
 TODOs: 
 -Maybe go back to compiler side
+  -Horizontal is actually a special ID map (will render the same, but this will result in more consistent navigation code)
+  -Now that we've thought about it, need to update IR and code names to match the theory
+-Make maps for control flow:
+  -If/else
+  -For each
+  -Map
+  -Filter
 -Add saving
 -Add ability to pull up actual existing nodes
 -Add set/get maps to be used as variables
@@ -40,8 +48,14 @@ class App extends React.Component{
     
     this.handleTextChange = this.handleTextChange.bind(this);
     this.stateFromIR = this.stateFromIR.bind(this);
+    this.eval_ = this.eval_.bind(this);
 
     this.state = this.stateFromIR(ex);
+  }
+  
+  eval_(){
+    updateOutbindings(this.state.AST);
+    this.setState({eval_result: e(this.state.selected)});
   }
   
   stateFromIR(fileText){
@@ -55,13 +69,15 @@ class App extends React.Component{
       lastIRs: [],
       nextIRs: [],
       insertDir: '',
-      toConnect: null
+      toConnect: null,
+      eval_result: null,
     };
   }
 
   componentDidMount(){
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);
+    openFile('simple');
   }
 
   componentWillUnmount(){
@@ -105,8 +121,10 @@ class App extends React.Component{
           { this.state.JSX }
         </div>
         <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button> 
-        <Button onClick={() => openFile('ex2')}>Load ex1</Button>
+        <Button onClick={() => openFile('simple')}>Load ex1</Button>
         <Button onClick={() => this.download('file.ir', printAst(this.state.AST))}>Save</Button>
+        <Button onClick={() => this.eval_()}>Eval</Button>
+        <p>{this.state.eval_result}</p>
         {modal}
       </div>
     );
