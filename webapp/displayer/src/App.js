@@ -55,7 +55,8 @@ class App extends React.Component{
   
   eval_(){
     updateOutbindings(this.state.AST);
-    this.setState({eval_result: e(this.state.selected)});
+    let eval_result = e(this.state.selected);
+    this.setState({eval_result});
   }
   
   stateFromIR(fileText){
@@ -104,11 +105,17 @@ class App extends React.Component{
   }
 
   render(){
-    let modal = <Modal show={this.state.showModal} onHide={handleClose}>
+    let {eval_result, AST, JSX} = this.state;
+    if (eval_result && eval_result.join){
+      eval_result = eval_result.join(', ');
+    }
+
+    let {showModal, modalText} = this.state;
+    let modal = <Modal show={showModal} onHide={handleClose}>
       <Modal.Body>
         <FormControl
           onChange={this.handleTextChange}
-          value={this.state.modalText}
+          value={modalText}
           autoFocus={true}
           type="text"
         /> 
@@ -118,13 +125,13 @@ class App extends React.Component{
     return (
       <div className="App"> 
         <div>
-          { this.state.JSX }
+          { JSX }
         </div>
-        <Button onClick={() => console.log(printAst(this.state.AST))}>Print AST</Button> 
+        <Button onClick={() => console.log(printAst(AST))}>Print AST</Button> 
         <Button onClick={() => openFile('simple')}>Load ex1</Button>
-        <Button onClick={() => this.download('file.ir', printAst(this.state.AST))}>Save</Button>
+        <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
         <Button onClick={() => this.eval_()}>Eval</Button>
-        <p>{this.state.eval_result}</p>
+        <p>{eval_result}</p>
         {modal}
       </div>
     );

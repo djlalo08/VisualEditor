@@ -1,0 +1,9 @@
+Root
+    Vertical
+        Map[name:id2]
+            Ins
+                Constant[name:a, value:3]
+                Constant[name:b, value:4]
+            Outs
+                OutBinding[setvalue:a]
+                OutBinding[setvalue:b]

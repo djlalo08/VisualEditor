@@ -3,26 +3,21 @@ import { getNameAndAttrs } from "./NodeUtils";
 
 export function eval_(ast_node){
     let [name, attrs] = getNameAndAttrs(ast_node);
-    console.log(`Evaluating ${name}`);
+    console.log(`Evaluating ${name}: ${attrs['name']}`);
     switch (name){
         case 'Outs':
-        case 'OutBinding':
             return eval_(ast_node.parent);
+        case 'OutBinding':
+            return eval_(ast_node.parent)[ast_node.idx];        
         case 'InBinding':
-            console.log(outBindings);
-            console.log(attrs.getvalue);
-            console.log(outBindings[attrs.getvalue]);
             return eval_(outBindings[attrs.getvalue]);
         case 'Map':
             let [ins, outs] = ast_node.children;
-            console.log(ins);
             ins = ins.children.map(eval_);
-            console.log(ins);
             let fn = mapRepo[attrs['name']];
-            fn = mapRepo.add;
             return fn(ins);
         case 'Constant':
-            return parseInt(attrs.value);
+            return [parseInt(attrs.value)];
     }
 }
 

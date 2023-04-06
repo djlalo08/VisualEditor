@@ -1,12 +1,32 @@
 Root
     Vertical
-        Constant[name:x, value:3, className:constant]
+        Map[name:id]
             Ins
+                Constant[name:A, value:2, className:constant]
+                    Ins
+                    Outs
+                        OutBinding[setvalue:a]
+                Constant[name:B, value:5, className:constant]
+                    Ins
+                    Outs
+                        OutBinding[setvalue:b]
+                Constant[name:C, value:2, className:constant]
+                    Ins
+                    Outs
+                        OutBinding[setvalue:c]
             Outs
-                OutBinding[name:a, setvalue:a]
-        Map[name: add]
+        Map[name:sqrt]
             Ins
-                InBinding[getvalue:a]
-                Constant[name:b, value:2, className:constant]
+                Map[name:-, infix:t]
+                    Ins
+                        Map[name:sqr]    
+                            Ins
+                                InBinding[getvalue:b] 
+                        Map[name:*, infix:t]
+                            Ins
+                                Constant[name:4, value:4, className:constant]
+                                InBinding[getvalue:a]
+                                InBinding[getvalue:c]
             Outs
-                OutBinding[setvalue:c, selected:t]
+                OutBinding[setvalue:o1]
+                OutBinding[setvalue:o2]
