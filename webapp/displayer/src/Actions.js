@@ -100,6 +100,7 @@ function add_right(m){
         insertNode(m, parent, idx+1);
     } else {
         let ins = wrapIn(app.state.selected, {value:'Ins', children:[]});
+        wrapIn(ins, {value: 'Map[name:id]', children:[]});
         add_right(m);
     }
 }
