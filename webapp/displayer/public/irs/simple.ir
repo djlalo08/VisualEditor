@@ -15,18 +15,21 @@ Root
                     Outs
                         OutBinding[setvalue:c]
             Outs
-        Map[name:sqrt]
+        Map[name:√, prefix:t]
             Ins
-                Map[name:-, infix:t]
+                Map[name:id]
                     Ins
-                        Map[name:sqr]    
+                        Map[name:-, infix:t]
                             Ins
-                                InBinding[getvalue:b] 
-                        Map[name:*, infix:t]
-                            Ins
-                                Constant[name:4, value:4, className:constant]
-                                InBinding[getvalue:a]
-                                InBinding[getvalue:c]
+                                Map[name:^2, postfix:t]    
+                                    Ins
+                                        InBinding[getvalue:b] 
+                                Map[name:*, infix:t]
+                                    Ins
+                                        Constant[name:4, value:4, className:constant]
+                                        InBinding[getvalue:a]
+                                        InBinding[getvalue:c]
+                    Outs
             Outs
                 OutBinding[setvalue:o1]
                 OutBinding[setvalue:o2]
