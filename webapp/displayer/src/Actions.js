@@ -99,7 +99,7 @@ function add_right(m){
     if (parent && getName(parent) == 'Horizontal'){
         insertNode(m, parent, idx+1);
     } else {
-        wrapIn(app.state.selected, {value:'Horizontal', children:[]});
+        let ins = wrapIn(app.state.selected, {value:'Ins', children:[]});
         add_right(m);
     }
 }

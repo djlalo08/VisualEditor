@@ -1,3 +1,6 @@
+html {
+  background-color: rgb(249, 248, 226);
+}
 .App {
   float: left;
   padding-left: 100px;
@@ -99,4 +102,11 @@ td, tr, table {
 
 .to_connect {
   border: 2px solid rgb(106, 187, 106);
+}
+
+.id {
+  background-color: lemonchiffon;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(194, 218, 239);
 }

@@ -78,7 +78,7 @@ class App extends React.Component{
   componentDidMount(){
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);
-    openFile('simple');
+    openFile('ex1');
   }
 
   componentWillUnmount(){
