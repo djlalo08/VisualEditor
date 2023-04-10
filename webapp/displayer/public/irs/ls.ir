@@ -1,0 +1,16 @@
+Root
+    Vertical
+        Map[name:ls, prefix:t]
+            Ins
+                Constant[name:A, value:2, className:constant, type:Number]
+                Constant[name:B, value:3, className:constant, type:Number]
+                Constant[name:C, value:4, className:constant, type:Number]
+                Constant[name:D, value:5, className:constant, type:Number]
+                Constant[name:E, value:6, className:constant, type:Number]
+            Outs
+                OutBinding[setvalue:o1]
+        Map[name:+]
+            Ins
+                InBinding[getvalue:o1]
+            Outs
+                OutBinding[setvalue:o2]

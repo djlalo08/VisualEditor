@@ -10,6 +10,8 @@ export const mapRepo = {
     'id2': ins => ins,
     'print': ins => {ins.forEach(x =>  console.log(x));},
     '>': ins => [ins[0]>ins[1]],
+    'ls': ins => [ins],
+    'map': ins => [ins[0].map(ins[1])],
 
 }
 

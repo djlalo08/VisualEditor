@@ -17,7 +17,6 @@ import { printAst } from './Utils/NodeUtils';
 /*
 TODOs: 
 -Make maps for control flow:
-  -If/else
   -For each
   -Map
   -Filter
@@ -27,6 +26,7 @@ TODOs:
 -Now that we can freely make stuff, try writing up some code in PO
 */
 let id = 0;
+const FILE = 'ls';
 
 export function nextId(){
   return ++id;
@@ -75,7 +75,7 @@ class App extends React.Component{
   componentDidMount(){
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);
-    openFile('if_test');
+    openFile(FILE);
   }
 
   componentWillUnmount(){
@@ -125,7 +125,7 @@ class App extends React.Component{
           { JSX }
         </div>
         <Button onClick={() => console.log(printAst(AST))}>Print AST</Button> 
-        <Button onClick={() => openFile('simple')}>Load ex1</Button>
+        <Button onClick={() => openFile(FILE)}>Load ex1</Button>
         <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
         <Button onClick={() => this.eval_()}>Eval</Button>
         <p>{eval_result}</p>
