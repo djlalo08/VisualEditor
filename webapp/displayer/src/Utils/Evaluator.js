@@ -6,6 +6,11 @@ export function eval_(ast_node){
     console.log(`Evaluating ${name}: ${attrs.name}`);
     switch (name){
         case 'Outs':
+            if (attrs.returnidx){
+                console.log('this is called');
+                return eval_(ast_node.parent)[attrs.returnidx];                
+            }
+
             return eval_(ast_node.parent);
         case 'OutBinding':
             return eval_(ast_node.parent)[ast_node.idx];        
@@ -18,7 +23,7 @@ export function eval_(ast_node){
 
                 let fn = mapRepo[attrs.name];
 
-                let unbounds = ins.filter(x => x[0] == 'UNBOUND');
+                let unbounds = ins.filter(x =>x && x.length && x[0] == 'UNBOUND');
                 
                 if (unbounds.length){
                     return bindings => {
@@ -44,17 +49,22 @@ export function eval_(ast_node){
                 return fn(ins);
             }
         case 'Constant':
-            switch (attrs.type){
-                case 'Number':
-                    return [parseInt(attrs.value)];
-                case 'Boolean':
-                    return [attrs.value == 't'];
-                case 'String':
-                default:
-                    return [attrs.value];
-            }
+            const res = eval_constant(attrs.type, attrs.value);
+            return attrs.unwrap ? res[0]: res;
         case 'UnBound':
             return ['UNBOUND', attrs.getvalue];
+    }
+}
+
+function eval_constant(type, value){
+    switch (type){
+        case 'Number':
+            return [parseInt(value)];
+        case 'Boolean':
+            return [value == 't'];
+        case 'String':
+        default:
+            return [value];
     }
 }
 

@@ -29,7 +29,7 @@ Root
                                         Constant[name:4, value:4, className:constant, type:Number]
                                         InBinding[getvalue:a]
                                         InBinding[getvalue:c]
-                    Outs
+                    Outs[returnidx: 0]
             Outs
                 OutBinding[setvalue:o1]
                 OutBinding[setvalue:o2]

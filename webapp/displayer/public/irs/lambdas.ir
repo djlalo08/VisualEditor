@@ -12,9 +12,10 @@ Root
         Map[name:map]
             Ins
                 InBinding[getvalue:o1]
-                Map[name:++, postfix:t]
+                Map[name:+, infix:t]
                     Ins
                         UnBound[name:x, getvalue:u1, className:unbound]
+                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
                     Outs
             Outs
                 OutBinding[setvalue:o2]
