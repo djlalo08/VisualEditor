@@ -26,7 +26,7 @@ TODOs:
 -Now that we can freely make stuff, try writing up some code in PO
 */
 let id = 0;
-const FILE = 'ls';
+const FILE = 'lambdas';
 
 export function nextId(){
   return ++id;

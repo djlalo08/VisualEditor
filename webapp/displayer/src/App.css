@@ -110,3 +110,8 @@ td, tr, table {
   border-style: solid;
   border-color: rgb(194, 218, 239);
 }
+
+.unbound {
+  background-color: gray;
+  border-style: groove;
+}

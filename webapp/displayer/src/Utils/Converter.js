@@ -50,6 +50,7 @@ function treeToJsx(node){
             return <Node {...props}>{children}</Node>;
         case 'Constant':
         case 'Map':
+        case 'UnBound':
             return <Mapx {...props}>{children}</Mapx>;
         case 'Horizontal':
             return <Horizontal {...props}>{children}</Horizontal>;

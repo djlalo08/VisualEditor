@@ -11,15 +11,16 @@ export const mapRepo = {
     'print': ins => {ins.forEach(x =>  console.log(x));},
     '>': ins => [ins[0]>ins[1]],
     'ls': ins => [ins],
-    'map': ins => [ins[0].map(ins[1])],
+    'map': ins => {
+        return [ins[0].map(ins[1])];
+    },
+    '++': ins => [ins[0]+1],
 
 }
 
 export const specialMapsRepo = {
     'if': ins => {
-        console.log('here');
         let cond = eval_(ins.children[0])[0][0];
-        console.log(cond);
         if (cond)
             return eval_(ins.children[1]);
         else
