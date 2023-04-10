@@ -1,6 +1,6 @@
 Root
     Vertical
-        Map[name:id2]
+        Map[name:id, returnidx:1]
             Ins
                 Constant[name:a, value:3]
                 Constant[name:b, value:4]

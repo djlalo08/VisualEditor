@@ -18,7 +18,6 @@ import { printAst } from './Utils/NodeUtils';
 TODOs: 
 -Make maps for control flow:
   -For each
-  -Map
   -Filter
 -Add saving
 -Add ability to pull up actual existing nodes
@@ -26,7 +25,7 @@ TODOs:
 -Now that we can freely make stuff, try writing up some code in PO
 */
 let id = 0;
-const FILE = 'lambdas';
+const FILE = 'simple2';
 
 export function nextId(){
   return ++id;
@@ -53,6 +52,8 @@ class App extends React.Component{
   eval_(){
     updateOutbindings(this.state.AST);
     let eval_result = e(this.state.selected);
+    if (typeof eval_result === 'function')
+      eval_result += ' ';
     this.setState({eval_result});
   }
   
