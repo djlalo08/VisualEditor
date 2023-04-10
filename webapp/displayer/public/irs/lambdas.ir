@@ -2,20 +2,23 @@ Root
     Vertical
         Map[name:ls, prefix:t]
             Ins
-                Constant[name:A, value:2, className:constant, type:Number]
-                Constant[name:B, value:3, className:constant, type:Number]
-                Constant[name:C, value:4, className:constant, type:Number]
-                Constant[name:D, value:5, className:constant, type:Number]
-                Constant[name:E, value:6, className:constant, type:Number]
+                Constant[name:2, value:2, className:constant, type:Number]
+                Constant[name:3, value:3, className:constant, type:Number]
+                Constant[name:4, value:4, className:constant, type:Number]
+                Constant[name:5, value:5, className:constant, type:Number]
+                Constant[name:6, value:6, className:constant, type:Number]
             Outs
                 OutBinding[setvalue:o1]
         Map[name:map]
             Ins
                 InBinding[getvalue:o1]
-                Map[name:+, infix:t]
+                Map[name:id, returnidx:0]
                     Ins
-                        UnBound[name:x, getvalue:u1, className:unbound]
-                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                        Map[name:+, infix:t]
+                            Ins
+                                UnBound[name:x, getvalue:u1, className:unbound]
+                                Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                            Outs
                     Outs
-            Outs
-                OutBinding[setvalue:o2]
+                        OutBinding[setvalue:o2]
+                Outs
