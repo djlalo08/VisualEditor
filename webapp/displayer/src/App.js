@@ -16,9 +16,6 @@ import { printAst } from './Utils/NodeUtils';
 
 /*
 TODOs: 
--Maybe go back to compiler side
-  -Horizontal is actually a special ID map (will render the same, but this will result in more consistent navigation code)
-  -Now that we've thought about it, need to update IR and code names to match the theory
 -Make maps for control flow:
   -If/else
   -For each
@@ -78,7 +75,7 @@ class App extends React.Component{
   componentDidMount(){
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);
-    openFile('simple');
+    openFile('if_test');
   }
 
   componentWillUnmount(){

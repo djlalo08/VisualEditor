@@ -1,3 +1,5 @@
+import { eval_ } from "./Utils/Evaluator";
+
 export const mapRepo = {
     '+': ins => [ins.reduce( (acc, elt) => acc+elt, 0)],
     '*': ins => [ins.reduce( (acc, elt) => acc*elt, 1)],
@@ -6,4 +8,19 @@ export const mapRepo = {
     '√': ins => {let abs = ins.map(x=>Math.sqrt(x)); return [abs, -abs]},
     'id': ins => ins,
     'id2': ins => ins,
+    'print': ins => {ins.forEach(x =>  console.log(x));},
+    '>': ins => [ins[0]>ins[1]],
+
+}
+
+export const specialMapsRepo = {
+    'if': ins => {
+        console.log('here');
+        let cond = eval_(ins.children[0])[0][0];
+        console.log(cond);
+        if (cond)
+            return eval_(ins.children[1]);
+        else
+            return eval_(ins.children[2]);
+    },
 }

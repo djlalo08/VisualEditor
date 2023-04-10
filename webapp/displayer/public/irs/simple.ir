@@ -2,15 +2,15 @@ Root
     Vertical
         Map[name:id]
             Ins
-                Constant[name:A, value:2, className:constant]
+                Constant[name:A, value:2, className:constant, type:Number]
                     Ins
                     Outs
                         OutBinding[setvalue:a]
-                Constant[name:B, value:5, className:constant]
+                Constant[name:B, value:5, className:constant, type:Number]
                     Ins
                     Outs
                         OutBinding[setvalue:b]
-                Constant[name:C, value:2, className:constant]
+                Constant[name:C, value:2, className:constant, type:Number]
                     Ins
                     Outs
                         OutBinding[setvalue:c]
@@ -26,7 +26,7 @@ Root
                                         InBinding[getvalue:b] 
                                 Map[name:*, infix:t]
                                     Ins
-                                        Constant[name:4, value:4, className:constant]
+                                        Constant[name:4, value:4, className:constant, type:Number]
                                         InBinding[getvalue:a]
                                         InBinding[getvalue:c]
                     Outs

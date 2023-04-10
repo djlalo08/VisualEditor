@@ -1,9 +1,9 @@
-import { mapRepo } from "../MapRepo";
+import { mapRepo, specialMapsRepo } from "../MapRepo";
 import { getNameAndAttrs } from "./NodeUtils";
 
 export function eval_(ast_node){
     let [name, attrs] = getNameAndAttrs(ast_node);
-    console.log(`Evaluating ${name}: ${attrs['name']}`);
+    console.log(`Evaluating ${name}: ${attrs.name}`);
     switch (name){
         case 'Outs':
             return eval_(ast_node.parent);
@@ -13,11 +13,24 @@ export function eval_(ast_node){
             return eval_(outBindings[attrs.getvalue]);
         case 'Map':
             let [ins, outs] = ast_node.children;
-            ins = ins.children.map(eval_);
-            let fn = mapRepo[attrs['name']];
-            return fn(ins);
+            if (attrs.name in mapRepo){
+                ins = ins.children.map(eval_);
+                let fn = mapRepo[attrs.name];
+                return fn(ins);
+            }
+            if (attrs.name in specialMapsRepo){
+                let fn = specialMapsRepo[attrs.name];
+                return fn(ins);
+            }
         case 'Constant':
-            return [parseInt(attrs.value)];
+            switch (attrs.type){
+                case 'Number':
+                    return [parseInt(attrs.value)];
+                case 'Boolean':
+                    return [attrs.value == 't'];
+                case 'String':
+                    return [attrs.value];
+            }
     }
 }
 

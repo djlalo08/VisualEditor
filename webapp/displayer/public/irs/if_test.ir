@@ -1,0 +1,21 @@
+Root
+    Vertical
+        Map[name:if]
+            Ins
+                Map[name:id]
+                    Ins
+                        Map[name:>, infix:t]
+                            Ins
+                                Constant[name:3, value:3, className:constant, type:Number]
+                                Constant[name:4, value:4, className:constant, type:Number]
+                            Outs
+                    Outs
+                Map[name:print]
+                    Ins
+                        Constant[name:HelloWorld, value:HelloWorld, className:constant, type:String]
+                    Outs
+                Map[name:print]
+                    Ins
+                        Constant[name:ByeWorld, value:ByeWorld, className:constant, type:String]
+                    Outs
+            Outs
