@@ -29,12 +29,14 @@ Root
                 Map[name:filter]
                     Ins
                         InBinding[getvalue:o1]
-                        Map[name:>]
+                        Map[name:>, infix:t]
                             Ins
                                 UnBound[name:x, getvalue:u1, className:unbound]
                                 Constant[name:3, value:3, className:constant, type:Number]
                             Outs
                         Outs
+                    Outs
+                        OutBinding[setvalue:o2]
                 Map[name:filter]
                     Ins
                         InBinding[getvalue:o1]
@@ -43,3 +45,12 @@ Root
                                 Constant[name:F, value:f, className:constant, type:Boolean]
                             Outs
                         Outs
+        Map[name:map]
+            Ins
+                InBinding[getvalue:o2]
+                Map[name:+, infix:t]
+                    Ins
+                        UnBound[name:x, getvalue:u1, className:unbound]
+                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                    Outs
+            Outs

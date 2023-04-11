@@ -19,7 +19,7 @@ export const mapRepo = {
             if (ins[1](x)[0])
                 res.push(x);
         }
-        return res;
+        return [res];
     },
 }
 
