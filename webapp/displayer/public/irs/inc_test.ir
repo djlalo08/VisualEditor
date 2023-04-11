@@ -1,0 +1,7 @@
+Root[inc dinc]
+    Vertical
+        Map[name:inc]
+            Ins
+                Constant[name:5, value:5, className:constant, unwrap:t, type:Number]
+            Outs
+                OutBinding[setvalue:a]

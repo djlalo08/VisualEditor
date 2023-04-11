@@ -89,3 +89,53 @@ export function makeMap(parent, name, ins_num, outs_num){
 
     return map;
 }
+
+let outBounds = [];
+export function getOutBounds(node){
+    outBounds = [];
+    getOutBounds_(node);
+    return outBounds;
+}
+
+function getOutBounds_(node){
+    if (getName(node) == 'OutBound')
+       outBounds.push(node);
+
+    for (let child of node.children)
+        getOutBounds_(child);
+}
+
+let inBounds = [];
+export function getInBounds(node){
+    inBounds = [];
+    getInBounds_(node);
+    return inBounds;
+}
+
+function getInBounds_(node){
+    if (getName(node) == 'InBound')
+       inBounds.push(node);
+
+    for (let child of node.children)
+        getInBounds_(child);
+}
+
+export function updateInBindings(inBounds, bindings){
+    let binding_idx = 0;
+    for (let inBound of inBounds){
+        replaceWithValueBox(inBound, bindings[binding_idx]);
+        binding_idx++;
+    }
+}
+
+export function getRoot(node){
+    return node.parent? getRoot(node.parent): node;
+}
+
+export function replaceWithValueBox(oldNode, newValue){
+    let newNode = {value:'ValueBox', supplier: ()=> newValue, index:oldNode.index};
+
+    newNode.parent = oldNode.parent;
+    newNode.parent?.children?.splice(oldNode.index, 1, newNode);
+    newNode.children = oldNode.children || [];
+}

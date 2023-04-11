@@ -4,28 +4,28 @@ import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import { handleClose, openFile, setApp as setActions } from './Actions';
 import './App.css';
-import { ex } from './ir';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
-import { eval_ as e, updateOutbindings } from './Utils/Evaluator';
+import { evaluate as e, eval_ as e_, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
-import { printAst } from './Utils/NodeUtils';
+import { getInBounds, getOutBounds, getRoot, printAst, updateInBindings } from './Utils/NodeUtils';
 
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
 
 /*
 TODOs: 
+-Add ability to pull up actual existing nodes
 -Make maps for control flow:
   -For each
-  -Filter
+-Test suite
 -Add saving
--Add ability to pull up actual existing nodes
 -Add set/get maps to be used as variables
 -Now that we can freely make stuff, try writing up some code in PO
 */
 let id = 0;
-const FILE = 'filter';
+const FILE = 'inc_test';
+// const FILE = 'inc';
 // const FILE = 'if_test';
 // const FILE = 'lambdas';
 
@@ -47,23 +47,29 @@ class App extends React.Component{
     this.handleTextChange = this.handleTextChange.bind(this);
     this.stateFromIR = this.stateFromIR.bind(this);
     this.eval_ = this.eval_.bind(this);
+    this.addImport = this.addImport.bind(this);
 
-    this.state = this.stateFromIR(ex);
+    this.state = {
+      imports: {},
+      ...this.emptyState()
+    }
+    
   }
   
   eval_(){
     updateOutbindings(this.state.AST);
-    let eval_result = e(this.state.selected);
+    let eval_result = e(this.state.selected, this.state.imports);
+    console.log(eval_result);
     if (typeof eval_result === 'function')
       eval_result += ' ';
     this.setState({eval_result});
   }
   
-  stateFromIR(fileText){
-    let AST = parse(fileText);
-    let [JSX, selected] = ast_to_jsx(AST);
-
-    return { AST, JSX, selected, 
+  emptyState(){
+    return { 
+      AST: null,
+      JSX: null,
+      selected: null, 
       showModal: false,
       modalText: '',
       secondSelect: null,
@@ -73,6 +79,43 @@ class App extends React.Component{
       toConnect: null,
       eval_result: null,
     };
+  }
+  
+  stateFromIR(fileText){
+    let AST = parse(fileText);
+    let [JSX, selected] = ast_to_jsx(AST);
+    return {
+      ...this.emptyState(),
+      AST, JSX, selected,
+    } 
+  }
+  
+  addImport(importName, importIR){
+    if (!this || !this.state)
+      return;
+
+    let AST = parse(importIR);
+    let outBounds = getOutBounds(AST);
+    let inBounds = getInBounds(AST);
+
+    let imports = {...this.state.imports};
+    let fn = bindings => {
+        let root = getRoot(inBounds[0]);
+
+        console.log(printAst(root));
+        updateInBindings(inBounds, bindings);
+        console.log(printAst(root));
+      
+        let res = [];
+        for (let outBound of outBounds){
+          let x = e_(outBound);
+          res.push(x);
+        }
+      return res;
+    }
+
+    imports[importName] = fn;
+    this.setState({imports});
   }
 
   componentDidMount(){

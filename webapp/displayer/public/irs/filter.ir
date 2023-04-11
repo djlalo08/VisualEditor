@@ -26,7 +26,7 @@ Root
                 OutBinding[setvalue:o1]
         Map[name:id]
             Ins
-                Map[name:filter]
+                Map[name:filter, infix:t]
                     Ins
                         InBinding[getvalue:o1]
                         Map[name:>, infix:t]
@@ -37,7 +37,7 @@ Root
                         Outs
                     Outs
                         OutBinding[setvalue:o2]
-                Map[name:filter]
+                Map[name:filter, infix:t]
                     Ins
                         InBinding[getvalue:o1]
                         Map[name:supplier, returnidx:0, className:supplier]
@@ -45,7 +45,7 @@ Root
                                 Constant[name:F, value:f, className:constant, type:Boolean]
                             Outs
                         Outs
-        Map[name:map]
+        Map[name:map, infix:t]
             Ins
                 InBinding[getvalue:o2]
                 Map[name:+, infix:t]

@@ -1,4 +1,5 @@
 import { Xwrapper } from "react-xarrows";
+import { loadImports as loadImportsAction } from "../Actions";
 import { nextId, resetIds } from "../App";
 import Horizontal from '../Components/Horizontal';
 import Ins from "../Components/Ins";
@@ -51,6 +52,8 @@ function treeToJsx(node){
         case 'Constant':
         case 'Map':
         case 'UnBound':
+        case 'InBound':
+        case 'OutBound':
             return <Mapx {...props}>{children}</Mapx>;
         case 'Horizontal':
             return <Horizontal {...props}>{children}</Horizontal>;
@@ -71,9 +74,16 @@ function getWires(){
     return wires;
 }
 
+function loadImports(root){
+    let imports = root.value.split(/[\[\]]/)[1];
+    imports = imports && imports.split(' ');
+    loadImportsAction(imports);
+}
+
 export function ast_to_jsx(ast){
     clearGlobals(); 
     
+    loadImports(ast);
     let jsx_root = treeToJsx(ast);
     let wires_ls = getWires();
     let children = [jsx_root, ...wires_ls];
@@ -82,9 +92,11 @@ export function ast_to_jsx(ast){
 
 let wires_map = {};
 let selected = null;
+let imports = {};
 
 function clearGlobals(_setSelected){
     selected = null;
     wires_map = {};
+    imports = {};
     resetIds();
 }

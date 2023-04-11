@@ -421,3 +421,14 @@ export function openFile(fileName){
     .then(response => response.text())
     .then(text => app.setState(app.stateFromIR(text)));
 }
+
+export function loadImports(imports){
+    if (!imports || !imports.length)
+        return;
+
+    for (let importName of imports){
+        fetch(`./irs/${importName}.ir`)
+        .then(response => response.text())
+        .then(importCode => app.addImport(importName, importCode));
+    }
+}

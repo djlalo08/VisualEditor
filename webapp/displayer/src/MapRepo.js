@@ -12,7 +12,6 @@ export const mapRepo = {
     '>': ins => [ins[0]>ins[1]],
     'ls': ins => [ins],
     'map': ins => {console.log(ins[0]); return [ins[0].map(ins[1])]},
-    '++': ins => [ins[0]+1],
     'filter': ins => {
         let res = [];
         for (let x of ins[0]){
@@ -21,6 +20,7 @@ export const mapRepo = {
         }
         return [res];
     },
+    // 'inc': ins => [ins.map(x => x+1)],
 }
 
 export const specialMapsRepo = {
@@ -32,3 +32,7 @@ export const specialMapsRepo = {
             return eval_(ins.children[2]);
     },
 }
+
+export const externalMaps = new Set([
+    'inc'
+]);
