@@ -1,0 +1,28 @@
+Root
+    Vertical
+        Map[name:id]
+            Ins
+                Map[name:ls, prefix:t]
+                    Ins
+                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                        Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
+                    Outs
+                        OutBinding[setvalue:b1]
+                Map[name:ls, prefix:t]
+                    Ins
+                        Constant[name:8, value:8, className:constant, type:Number, unwrap:t]
+                        Constant[name:9, value:9, className:constant, type:Number, unwrap:t]
+                    Outs
+                        OutBinding[setvalue:b2]
+            Outs
+        Map[name:2map]
+            Ins
+                InBinding[getvalue:b1]
+                InBinding[getvalue:b2]
+                Map[name:+!]
+                    Ins
+                        UnBound[name:x, className:unbound, getvalue:u1]
+                        UnBound[name:y, className:unbound, getvalue:u2]
+                    Outs
+            Outs
+                OutBinding[setvalue:b3]

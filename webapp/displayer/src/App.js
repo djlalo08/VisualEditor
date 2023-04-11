@@ -29,10 +29,11 @@ TODOs:
 */
 let id = 0;
 // const FILE = 'inc_test';
-const FILE = 'lambda_nest';
+// const FILE = 'lambda_nest';
 // const FILE = 'inc';
 // const FILE = 'if_test';
 // const FILE = 'lambdas';
+const FILE = '2_arg_lambda';
 
 export function nextId(){
   return ++id;
@@ -108,9 +109,7 @@ class App extends React.Component{
     let fn = bindings => {
         let root = getRoot(inBounds[0]);
 
-        console.log(printAst(root));
         updateInBindings(inBounds, bindings);
-        console.log(printAst(root));
       
         let res = [];
         for (let outBound of outBounds){

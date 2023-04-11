@@ -16,7 +16,16 @@ export const mapRepo = {
     'print': ins => {ins.forEach(x =>  console.log(x));},
     '>': ins => [ins[0]>ins[1]],
     'ls': ins => [ins],
-    'map': ins => {console.log(ins[0]); return [ins[0].map(ins[1])]},
+    'map': ins => [ins[0].map(ins[1])],
+    '2map': ins => {
+        let [as, bs, fn] = ins;
+        const n = Math.min(as.length, bs.length);
+        let result = [];
+        for (let i=0; i<n; i++){
+            result.push(fn([as[i], bs[i]]));
+        }
+        return result;
+    },
     'filter': ins => {
         let res = [];
         for (let x of ins[0]){

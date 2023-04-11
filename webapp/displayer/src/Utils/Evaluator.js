@@ -4,7 +4,6 @@ import { getNameAndAttrs } from "./NodeUtils";
 let externalMaps = {};
 export function evaluate(root, externalMaps_){
     externalMaps = externalMaps_;
-    console.log(externalMaps);
     return eval_(root);
 }
 
@@ -36,10 +35,7 @@ export function eval_(ast_node){
             }
             if (attrs.name in externalMaps){
                 ins = ins.children.map(eval_);
-                console.log(ins);
                 let fn = externalMaps[attrs.name];
-                console.log(fn);
-                console.log(fn(ins));
                 result = fn(ins);
             }
             return attrs.returnidx? result[attrs.returnidx]: result;
@@ -90,7 +86,6 @@ let outBindings = {};
 export function updateOutbindings(node){
     outBindings = {};
     updateOutbindings_(node);
-    console.log(outBindings);
 }
 
 function updateOutbindings_(node){

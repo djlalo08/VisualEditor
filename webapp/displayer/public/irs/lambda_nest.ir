@@ -2,19 +2,19 @@ Root
     Vertical
         Map[name:ls]
             Ins
-                Map[name:ls]
+                Map[name:ls, prefix:t]
                     Ins
                         Constant[name:1, value:1, className:constant, type:Number]
                         Constant[name:2, value:2, className:constant, type:Number]
                         Constant[name:3, value:3, className:constant, type:Number]
                     Outs
-                Map[name:ls]
+                Map[name:ls, prefix:t]
                     Ins
                         Constant[name:1, value:1, className:constant, type:Number]
                         Constant[name:2, value:2, className:constant, type:Number]
                         Constant[name:3, value:3, className:constant, type:Number]
                     Outs
-                Map[name:ls]
+                Map[name:ls, prefix:t]
                     Ins
                         Constant[name:1, value:1, className:constant, type:Number]
                         Constant[name:2, value:2, className:constant, type:Number]
@@ -22,17 +22,37 @@ Root
                     Outs
             Outs
                 OutBinding[setvalue:b1]
-        Map[name:map, infix:t]
+        Map[name:id2]
             Ins
-                InBinding[getvalue:b1]
                 Map[name:map, infix:t]
                     Ins
-                        UnBound[name:x, getvalue:u1, className:unbound]
-                        Map[name:+, infix:t]
+                        InBinding[getvalue:b1]
+                        Map[name:map, infix:t]
                             Ins
-                                UnBound[name:y, getvalue:u2, className:unbound]
-                                Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                                UnBound[name:x, getvalue:u1, className:unbound]
+                                Map[name:+, infix:t]
+                                    Ins
+                                        UnBound[name:y, getvalue:u2, className:unbound]
+                                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                                    Outs
                             Outs
                     Outs
+                        OutBinding[setvalue:b2]
+                Map[name:map, infix:t]
+                    Ins
+                        InBinding[getvalue:b1]
+                        Map[name:map, infix:t]
+                            Ins
+                                UnBound[name:x, getvalue:u1, className:unbound]
+                                Map[name:+, infix:t]
+                                    Ins
+                                        UnBound[name:y, getvalue:u2, className:unbound]
+                                        Constant[name:20, value:20, className:constant, type:Number, unwrap:t]
+                                        Constant[name:20, value:20, className:constant, type:Number, unwrap:t]
+                                    Outs
+                            Outs
+                    Outs
+                        OutBinding[setvalue:b2]
             Outs
-                OutBinding[setvalue:b2]
+                OutBinding[setvalue:b3]
+                OutBinding[setvalue:b4]
