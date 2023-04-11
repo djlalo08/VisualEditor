@@ -6,10 +6,22 @@ Root
                     Ins
                         Map[name:>, infix:t]
                             Ins
-                                Constant[name:3, value:3, className:constant, type:Number]
+                                Constant[name:5, value:5, className:constant, type:Number]
                                 Constant[name:4, value:4, className:constant, type:Number]
                             Outs
                     Outs
+                Map[name:print]
+                    Ins
+                        Constant[name:HelloWorld, value:HelloWorld, className:constant, type:String]
+                    Outs
+                Map[name:print]
+                    Ins
+                        Constant[name:ByeWorld, value:ByeWorld, className:constant, type:String]
+                    Outs
+            Outs
+        Map[name:if]
+            Ins
+                Constant[name:t, value:t, className:constant, type:Boolean]
                 Map[name:print]
                     Ins
                         Constant[name:HelloWorld, value:HelloWorld, className:constant, type:String]

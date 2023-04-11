@@ -24,16 +24,22 @@ Root
                     Outs
             Outs
                 OutBinding[setvalue:o1]
-        Map[name:map]
+        Map[name:id]
             Ins
-                InBinding[getvalue:o1]
-                Map[name:id, returnidx:0]
+                Map[name:filter]
                     Ins
-                        Map[name:+, infix:t]
+                        InBinding[getvalue:o1]
+                        Map[name:>]
                             Ins
                                 UnBound[name:x, getvalue:u1, className:unbound]
-                                Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                                Constant[name:3, value:3, className:constant, type:Number]
                             Outs
-                    Outs
-                        OutBinding[setvalue:o2]
-                Outs
+                        Outs
+                Map[name:filter]
+                    Ins
+                        InBinding[getvalue:o1]
+                        Map[name:supplier, returnidx:0, className:supplier]
+                            Ins
+                                Constant[name:F, value:f, className:constant, type:Boolean]
+                            Outs
+                        Outs

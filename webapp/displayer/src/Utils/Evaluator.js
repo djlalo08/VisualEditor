@@ -35,7 +35,7 @@ export function eval_(ast_node){
     }
 }
 
-function getFunctionPendingBindings(ins, fn){
+export function getFunctionPendingBindings(ins, fn){
     function myFn(bindings){
         let binding_idx = 0;
         let new_ins = [];

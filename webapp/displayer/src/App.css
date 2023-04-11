@@ -115,3 +115,10 @@ td, tr, table {
   background-color: gray;
   border-style: groove;
 }
+
+.supplier {
+  background-color: gray;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(194, 218, 239);
+}
