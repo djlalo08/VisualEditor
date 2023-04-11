@@ -10,7 +10,7 @@ export function evaluate(root, externalMaps_){
 
 export function eval_(ast_node){
     let [name, attrs] = getNameAndAttrs(ast_node);
-    console.log(`Evaluating ${name}: ${attrs.name}`);
+    // console.log(`Evaluating ${name}: ${attrs.name}`);
     let res;
     switch (name){
         case 'Outs':

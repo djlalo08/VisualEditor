@@ -2,6 +2,11 @@ import { eval_ } from "./Utils/Evaluator";
 
 export const mapRepo = {
     '+': ins => [ins.reduce( (acc, elt) => acc+elt, 0)],
+    '+!': ins => {
+        console.log('logging +'); 
+        console.log(ins);
+        return [ins.reduce( (acc, elt) => acc+elt, 0)];
+    },
     '*': ins => [ins.reduce( (acc, elt) => acc*elt, 1)],
     '-': ins => [ins[0]- mapRepo['+'](ins.slice(1))],
     '^2': ins => [ins.map(x=>x*x)],

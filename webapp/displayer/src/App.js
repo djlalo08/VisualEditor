@@ -14,17 +14,22 @@ import { getInBounds, getOutBounds, getRoot, printAst, updateInBindings } from '
 // import ExpectedApp from './Components/ExpectedApp';
 
 /*
+  * 
+Working on:
+-Check that lambdas can nest
+
 TODOs: 
--Add ability to pull up actual existing nodes
 -Make maps for control flow:
   -For each
 -Test suite
+-Update readme
 -Add saving
 -Add set/get maps to be used as variables
 -Now that we can freely make stuff, try writing up some code in PO
 */
 let id = 0;
-const FILE = 'inc_test';
+// const FILE = 'inc_test';
+const FILE = 'lambda_nest';
 // const FILE = 'inc';
 // const FILE = 'if_test';
 // const FILE = 'lambdas';
@@ -59,6 +64,7 @@ class App extends React.Component{
   eval_(){
     updateOutbindings(this.state.AST);
     let eval_result = e(this.state.selected, this.state.imports);
+    console.log('eval result:');
     console.log(eval_result);
     if (typeof eval_result === 'function')
       eval_result += ' ';
