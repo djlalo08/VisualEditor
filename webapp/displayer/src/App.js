@@ -35,8 +35,8 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-const FILE = 'test';
-// const FILE = '!';
+// const FILE = 'test';
+const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
 

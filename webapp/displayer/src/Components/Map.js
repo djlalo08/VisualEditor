@@ -20,6 +20,25 @@ function InnerMap(props){
             {ins}
         </tbody></table>);
     }
+    
+    if (props.name=='if'){
+        ins = addProps(ins, {prefix:'t'});
+        return (<table id={props.id} className={className} {...other}><tbody>
+            <tr>
+                <td>if</td>
+                <td>{addProps(ins, {onlyShowIdx:0, name:'if'})}</td>
+            </tr>
+            <tr>
+                <td>then</td>
+                <td>{addProps(ins, {onlyShowIdx:1})}</td>
+            </tr>
+            <tr>
+                <td>else</td>
+                <td>{addProps(ins, {onlyShowIdx:2})}</td>
+            </tr>
+        </tbody></table>);
+        
+    }
 
     return (<table id={props.id} className={className} {...other}><tbody>
         {ins}

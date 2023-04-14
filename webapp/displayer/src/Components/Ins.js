@@ -3,7 +3,8 @@ import Grid from './Grid';
 import Trtd from './Trtd';
 
 export default function Ins(props){
-    let {children, infix, prefix, postfix, name} = props
+    let {children, infix, prefix, postfix, name, onlyShowIdx} = props
+
 
     if (!children || !children.length)
         return null;
@@ -15,6 +16,10 @@ export default function Ins(props){
         children.splice(0, 0, <td key={name}>{name}</td>);
     else if (postfix)
         children.push(<td key={name}>{name}</td>);
+
+    if (onlyShowIdx || onlyShowIdx===0){
+        children = children[onlyShowIdx+1];
+    }
 
     return (<Trtd>
         <Grid>
