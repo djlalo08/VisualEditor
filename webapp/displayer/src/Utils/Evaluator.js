@@ -1,14 +1,13 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
 import { getNameAndAttrs } from "./NodeUtils";
 
-export function evaluate(outBindings, selected, externalMaps){
-    let evaluator = new Evaluationator(outBindings, selected, externalMaps);
+export function evaluate(selected, outBindings, externalMaps){
+    let evaluator = new Evaluationator(outBindings, externalMaps);
     return evaluator.evaluate(selected);
 }
 
 class Evaluationator {
-    constructor(outBindings, selected, externalMaps){
-        this.selected = selected;
+    constructor(outBindings, externalMaps){
         this.outBindings = outBindings;
         this.externalMaps = externalMaps;
         
@@ -16,12 +15,8 @@ class Evaluationator {
     }
     
     evaluate(ast_node){
-        if (!ast_node) ast_node = this.selected;
-        ast_node = ast_node || this.selected;
-
         let [name, attrs] = getNameAndAttrs(ast_node);
         console.log(`Evaluating ${name}: ${attrs.name}`);
-        let res;
         switch (name){
             case 'Outs':
                 return this.evaluate(ast_node.parent);
@@ -54,7 +49,7 @@ class Evaluationator {
                 }
                 return attrs.returnidx? result[attrs.returnidx]: result;
             case 'Constant':
-                res = eval_constant(attrs.type, attrs.value);
+                let res = eval_constant(attrs.type, attrs.value);
                 return attrs.unwrap ? res[0]: res;
             case 'UnBound':
                 return ['UNBOUND', attrs.getvalue];

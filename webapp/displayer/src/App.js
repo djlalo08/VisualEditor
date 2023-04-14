@@ -32,8 +32,8 @@ let id = 0;
 // const FILE = 'inc';
 // const FILE = 'if_test';
 // const FILE = 'lambdas';
-const FILE = '2_arg_lambda';
-// const FILE = 'fib';
+// const FILE = '2_arg_lambda';
+const FILE = 'fib';
 // const FILE = 'fib_runner';
 
 export function nextId(){
@@ -65,7 +65,7 @@ class App extends React.Component{
   
   eval_(){
     let outbindings = updateOutbindings(this.state.AST);
-    let eval_result = evaluate(outbindings, this.state.selected, this.state.imports);
+    let eval_result = evaluate(this.state.selected, outbindings, this.state.imports);
     console.log('eval result:');
     console.log(eval_result);
     if (typeof eval_result === 'function')
@@ -103,14 +103,14 @@ class App extends React.Component{
       return;
 
     let AST = parse(importIR);
-    updateOutbindings(AST);
+    let outbindings = updateOutbindings(AST);
     let outBounds = getOutBounds(AST);
     let inBounds = getInBounds(AST);
 
     let imports = {...this.state.imports};
     let fn = bindings => {
       updateInBindings(inBounds, bindings);
-      return outBounds.map(evaluate);
+      return outBounds.map(ob => evaluate(ob, outbindings, {}));
     }
 
     imports[importName] = fn;
