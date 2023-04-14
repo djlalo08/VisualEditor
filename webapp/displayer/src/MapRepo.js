@@ -1,4 +1,4 @@
-import { eval_ } from "./Utils/Evaluator";
+import { evaluate } from "./Utils/Evaluator";
 
 export const mapRepo = {
     '+': ins => [ins.reduce( (acc, elt) => acc+elt, 0)],
@@ -15,6 +15,7 @@ export const mapRepo = {
     'id2': ins => ins,
     'print': ins => {ins.forEach(x =>  console.log(x));},
     '>': ins => [ins[0]>ins[1]],
+    '<': ins => [ins[0]<ins[1]],
     'ls': ins => [ins],
     'map': ins => [ins[0].map(ins[1])],
     '2map': ins => {
@@ -39,11 +40,11 @@ export const mapRepo = {
 
 export const specialMapsRepo = {
     'if': ins => {
-        let cond = eval_(ins.children[0])[0];
+        let cond = evaluate(ins.children[0])[0];
         if (cond)
-            return eval_(ins.children[1]);
+            return evaluate(ins.children[1]);
         else
-            return eval_(ins.children[2]);
+            return evaluate(ins.children[2]);
     },
 }
 

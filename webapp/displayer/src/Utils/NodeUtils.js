@@ -133,7 +133,7 @@ export function getRoot(node){
 }
 
 export function replaceWithValueBox(oldNode, newValue){
-    let newNode = {value:'ValueBox', supplier: ()=> newValue, index:oldNode.index};
+    let newNode = {value:`ValueBox[name:${newValue}]`, supplier: ()=> newValue, index:oldNode.index};
 
     newNode.parent = oldNode.parent;
     newNode.parent?.children?.splice(oldNode.index, 1, newNode);

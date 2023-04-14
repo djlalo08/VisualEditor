@@ -6,9 +6,9 @@ import { handleClose, openFile, setApp as setActions } from './Actions';
 import './App.css';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
-import { evaluate as e, eval_ as e_, updateOutbindings } from './Utils/Evaluator';
+import { evaluate, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
-import { getInBounds, getOutBounds, getRoot, printAst, updateInBindings } from './Utils/NodeUtils';
+import { getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
 
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
@@ -16,14 +16,13 @@ import { getInBounds, getOutBounds, getRoot, printAst, updateInBindings } from '
 /*
   * 
 Working on:
--Check that lambdas can nest
+-Recursion
 
 TODOs: 
 -Make maps for control flow:
   -For each
 -Test suite
 -Update readme
--Add saving
 -Add set/get maps to be used as variables
 -Now that we can freely make stuff, try writing up some code in PO
 */
@@ -34,6 +33,8 @@ let id = 0;
 // const FILE = 'if_test';
 // const FILE = 'lambdas';
 const FILE = '2_arg_lambda';
+// const FILE = 'fib';
+// const FILE = 'fib_runner';
 
 export function nextId(){
   return ++id;
@@ -63,8 +64,8 @@ class App extends React.Component{
   }
   
   eval_(){
-    updateOutbindings(this.state.AST);
-    let eval_result = e(this.state.selected, this.state.imports);
+    let outbindings = updateOutbindings(this.state.AST);
+    let eval_result = evaluate(outbindings, this.state.selected, this.state.imports);
     console.log('eval result:');
     console.log(eval_result);
     if (typeof eval_result === 'function')
@@ -102,21 +103,14 @@ class App extends React.Component{
       return;
 
     let AST = parse(importIR);
+    updateOutbindings(AST);
     let outBounds = getOutBounds(AST);
     let inBounds = getInBounds(AST);
 
     let imports = {...this.state.imports};
     let fn = bindings => {
-        let root = getRoot(inBounds[0]);
-
-        updateInBindings(inBounds, bindings);
-      
-        let res = [];
-        for (let outBound of outBounds){
-          let x = e_(outBound);
-          res.push(x);
-        }
-      return res;
+      updateInBindings(inBounds, bindings);
+      return outBounds.map(evaluate);
     }
 
     imports[importName] = fn;
@@ -172,6 +166,7 @@ class App extends React.Component{
 
     return (
       <div className="App"> 
+        <h1>{FILE}.ir</h1>
         <div>
           { JSX }
         </div>
