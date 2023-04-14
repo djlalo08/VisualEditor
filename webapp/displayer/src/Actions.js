@@ -68,13 +68,12 @@ export function insertMapFromModal(){
     let {selected, modalText, insertDir} = app.state;
     let [name, in_num, out_num] = modalText.trim().split(' ');
     let m = makeMap(selected, name, in_num, out_num);
+    console.log(m);
     
     switch (insertDir) {
         case '':
-            if (getName(selected) == 'Node'){
-                selected.children.push(m);
-                updateAST();
-            }
+            selected.children.push(m);
+            updateAST();
             break;
         case 'Right':
             add_right(m);

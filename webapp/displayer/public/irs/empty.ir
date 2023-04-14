@@ -1,0 +1,8 @@
+Root
+    Vertical
+        Map[name:+, selected:t]
+            Ins
+                Node
+                Node
+            Outs
+                Node

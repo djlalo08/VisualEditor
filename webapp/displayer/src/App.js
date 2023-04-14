@@ -4,6 +4,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import { handleClose, openFile, setApp as setActions } from './Actions';
 import './App.css';
+import { Sidebar } from './Components/Sidebar';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx, loadImports } from './Utils/Converter';
 import { evaluate, updateOutbindings } from './Utils/Evaluator';
@@ -16,7 +17,8 @@ import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, upda
 /*
   * 
 Working on:
--Cacheing
+-Added sidebar. Begin to make it functional
+-Clean up UI, and make it possible to write code in UI!
 
 TODOs: 
 -Make maps for control flow:
@@ -40,7 +42,8 @@ let id = 0;
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
-const FILE = 'test';
+// const FILE = 'test';
+const FILE = 'empty';
 
 export function nextId(){
   return ++id;
@@ -192,6 +195,7 @@ class App extends React.Component{
         <Button onClick={() => this.eval_()}>Eval</Button>
         <p>{eval_result}</p>
         {modal}
+        <Sidebar node={this.state.selected}/>
       </div>
     );
   }
