@@ -9,7 +9,7 @@ import Outs from '../Components/Outs';
 import Root from '../Components/Root';
 import Vertical from '../Components/Vertical';
 import Wire from '../Components/Wire';
-import { getNameAndAttrs } from './NodeUtils';
+import { getImports, getNameAndAttrs } from './NodeUtils';
 
 
 function treeToJsx(node){
@@ -75,9 +75,7 @@ function getWires(){
 }
 
 export function loadImports(root){
-    let imports = root.value.split(/[\[\]]/)[1];
-    imports = imports && imports.split(' ');
-    loadImportsAction(imports);
+    loadImportsAction(getImports(root));
 }
 
 export function ast_to_jsx(ast){

@@ -27,8 +27,15 @@ class Evaluationator {
             case 'InBinding':
                 return this.evaluate(this.outBindings[attrs.getvalue]);
             case 'Map':
-                let mapval = this.evaluate_map(attrs, ast_node);
-                return attrs.returnidx? mapval[attrs.returnidx]: mapval;
+                if (ast_node.cached_result && !attrs.dontCache){
+                    console.log(`${name}: ${attrs.name} has already been evaluated. Using cache value: ${ast_node.cached_result}`);
+                    return ast_node.cached_result;
+                }
+
+                let result = this.evaluate_map(attrs, ast_node);
+                result =  attrs.returnidx? result[attrs.returnidx]: result;
+                ast_node.cached_result = result;
+                return result;
             case 'Constant':
                 let res = eval_constant(attrs.type, attrs.value);
                 return attrs.unwrap ? res[0]: res;
@@ -43,10 +50,6 @@ class Evaluationator {
     
     evaluate_map(attrs, ast_node){
         let [ins, outs] = ast_node.children;
-        if (attrs.recursive){
-            let y = 0;
-            //TODO figure something out over here...
-        }
         if (attrs.name in mapRepo){
             ins = ins.children.map(this.evaluate);
             let fn = mapRepo[attrs.name];

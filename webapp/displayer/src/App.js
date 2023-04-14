@@ -8,7 +8,7 @@ import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardControlle
 import { ast_to_jsx, loadImports } from './Utils/Converter';
 import { evaluate, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
-import { getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
+import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
 
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
@@ -16,7 +16,7 @@ import { getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/N
 /*
   * 
 Working on:
--Recursion
+-Cacheing
 
 TODOs: 
 -Make maps for control flow:
@@ -35,11 +35,12 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-// const FILE = 'test';
-const FILE = '!';
+// const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
-
+// const FILE = 'simple';
+// const FILE = 'cacheing_test';
+const FILE = 'test';
 
 export function nextId(){
   return ++id;
@@ -111,6 +112,12 @@ class App extends React.Component{
       return;
 
     let AST = parse(importIR);
+    
+    let importsList = new Set(getImports(AST));
+    if (importsList.has(importName)){
+      forEach(AST, node => addAttr(node, 'dontCache', 't'))  
+    }
+
     loadImports(AST);
     let outbindings = updateOutbindings(AST);
     let outBounds = getOutBounds(AST);

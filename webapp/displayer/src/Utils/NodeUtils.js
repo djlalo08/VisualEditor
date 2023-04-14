@@ -138,3 +138,15 @@ export function replaceWithValueBox(oldNode, newValue){
     newNode.parent?.children?.splice(oldNode.index, 1, newNode);
     newNode.children = oldNode.children || [];
 }
+
+export function getImports(root){
+    let imports = root.value.split(/[\[\]]/)[1];
+    return imports && imports.split(' ');
+}
+
+export function forEach(root, fn){
+    for (let child of root.children){
+        fn(child);
+        forEach(child, fn);
+    }
+}
