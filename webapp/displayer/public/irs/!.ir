@@ -1,0 +1,26 @@
+Root[!]
+    Vertical
+        Map[name:id2]
+            Ins
+                InBound[name:a, className:unbound]
+            Outs
+                OutBinding[setvalue:o11, name:o1]
+        Map[name:if]
+            Ins
+                Map[name:>, infix:t]
+                    Ins
+                        InBinding[getvalue:o11, name:ib1]
+                        Constant[value:0, name:0, type:Number, unwrap:t, className:constant]
+                Map[name:*, infix:t]
+                    Ins
+                        InBinding[getvalue:o11, name:ib2]
+                        Map[name:!, postfix:t, recursive:t]
+                            Ins
+                                Map[name:dec, prefix:t]
+                                    Ins
+                                        InBinding[getvalue:ib3]
+                                    Outs
+                            Outs
+                Constant[value:1, name:1, type:Number, unwrap:t, className:constant]
+            Outs
+                OutBound[name:b, className:unbound]

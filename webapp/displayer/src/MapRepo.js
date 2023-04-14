@@ -1,4 +1,3 @@
-import { evaluate } from "./Utils/Evaluator";
 
 export const mapRepo = {
     '+': ins => [ins.reduce( (acc, elt) => acc+elt, 0)],
@@ -9,7 +8,7 @@ export const mapRepo = {
     },
     '*': ins => [ins.reduce( (acc, elt) => acc*elt, 1)],
     '-': ins => [ins[0]- mapRepo['+'](ins.slice(1))],
-    '^2': ins => [ins.map(x=>x*x)],
+    '^2': ins => ins.map(x=>x*x),
     '√': ins => {let abs = ins.map(x=>Math.sqrt(x)); return [abs, -abs]},
     'id': ins => ins,
     'id2': ins => ins,
@@ -35,17 +34,20 @@ export const mapRepo = {
         }
         return [res];
     },
+    'dec': ins => ins.map(x => x-1),
     // 'inc': ins => [ins.map(x => x+1)],
 }
 
-export const specialMapsRepo = {
-    'if': ins => {
-        let cond = evaluate(ins.children[0])[0];
-        if (cond)
-            return evaluate(ins.children[1]);
-        else
-            return evaluate(ins.children[2]);
-    },
+export function specialMapsRepo(evaluator) {
+    return {
+        'if': ins => {
+            let cond = evaluator.evaluate(ins.children[0])[0];
+            if (cond)
+                return evaluator.evaluate(ins.children[1]);
+            else
+                return evaluator.evaluate(ins.children[2]);
+        },
+    }
 }
 
 export const externalMaps = new Set([

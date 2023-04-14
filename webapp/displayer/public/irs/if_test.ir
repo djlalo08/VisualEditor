@@ -21,7 +21,7 @@ Root
             Outs
         Map[name:if]
             Ins
-                Constant[name:t, value:t, className:constant, type:Boolean]
+                Constant[name:F, value:f, className:constant, type:Boolean]
                 Map[name:print]
                     Ins
                         Constant[name:HelloWorld, value:HelloWorld, className:constant, type:String]

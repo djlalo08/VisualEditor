@@ -22,32 +22,14 @@ class Evaluationator {
                 return this.evaluate(ast_node.parent);
             case 'OutBinding':
             case 'OutBound':
-                return this.evaluate(ast_node.parent)[ast_node.idx];        
+                let x = this.evaluate(ast_node.parent)[ast_node.idx];        
+                console.log(`Value of ${name}: ${attrs.name} is ${x}`);
+                return x;
             case 'InBinding':
-                console.log('hi');
-                console.log(this);
-                console.log(this.outBindings);
                 return this.evaluate(this.outBindings[attrs.getvalue]);
             case 'Map':
-                let [ins, outs] = ast_node.children;
-                let result;
-                if (attrs.name in mapRepo){
-                    ins = ins.children.map(this.evaluate);
-                    let fn = mapRepo[attrs.name];
-
-                    let unbounds = ins.filter(x =>x && x.length && x[0] == 'UNBOUND');
-                    result = unbounds.length? getFunctionPendingBindings(ins, fn): fn(ins);
-                }
-                if (attrs.name in specialMapsRepo){
-                    let fn = specialMapsRepo[attrs.name];
-                    result = fn(ins);
-                }
-                if (attrs.name in this.externalMaps){
-                    ins = ins.children.map(this.evaluate);
-                    let fn = this.externalMaps[attrs.name];
-                    result = fn(ins);
-                }
-                return attrs.returnidx? result[attrs.returnidx]: result;
+                let mapval = this.evaluate_map(attrs, ast_node);
+                return attrs.returnidx? mapval[attrs.returnidx]: mapval;
             case 'Constant':
                 let res = eval_constant(attrs.type, attrs.value);
                 return attrs.unwrap ? res[0]: res;
@@ -58,6 +40,32 @@ class Evaluationator {
             case 'ValueBox':
                 return ast_node.supplier();
         }
+    }
+    
+    evaluate_map(attrs, ast_node){
+        let [ins, outs] = ast_node.children;
+        if (attrs.recursive){
+            let y = 0;
+            //TODO figure something out over here...
+        }
+        if (attrs.name in mapRepo){
+            ins = ins.children.map(this.evaluate);
+            let fn = mapRepo[attrs.name];
+
+            let unbounds = ins.filter(x =>x && x.length && x[0] == 'UNBOUND');
+            return unbounds.length? getFunctionPendingBindings(ins, fn): fn(ins);
+        }
+        let specialMaps = specialMapsRepo(this);
+        if (attrs.name in specialMaps){
+            let fn = specialMaps[attrs.name];
+            return fn(ins);
+        }
+        if (attrs.name in this.externalMaps){
+            ins = ins.children.map(this.evaluate);
+            let fn = this.externalMaps[attrs.name];
+            return fn(ins, this.externalMaps);
+        }
+
     }
 }
 

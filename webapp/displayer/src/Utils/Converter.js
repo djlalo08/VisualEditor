@@ -74,7 +74,7 @@ function getWires(){
     return wires;
 }
 
-function loadImports(root){
+export function loadImports(root){
     let imports = root.value.split(/[\[\]]/)[1];
     imports = imports && imports.split(' ');
     loadImportsAction(imports);

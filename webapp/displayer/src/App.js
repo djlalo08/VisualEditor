@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { handleClose, openFile, setApp as setActions } from './Actions';
 import './App.css';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
-import { ast_to_jsx } from './Utils/Converter';
+import { ast_to_jsx, loadImports } from './Utils/Converter';
 import { evaluate, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
 import { getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
@@ -33,8 +33,13 @@ let id = 0;
 // const FILE = 'if_test';
 // const FILE = 'lambdas';
 // const FILE = '2_arg_lambda';
-const FILE = 'fib';
+// const FILE = 'fib';
 // const FILE = 'fib_runner';
+// const FILE = 'test';
+// const FILE = '!';
+const FILE = 'x';
+// const FILE = 'import_chain_test';
+
 
 export function nextId(){
   return ++id;
@@ -103,14 +108,15 @@ class App extends React.Component{
       return;
 
     let AST = parse(importIR);
+    loadImports(AST);
     let outbindings = updateOutbindings(AST);
     let outBounds = getOutBounds(AST);
     let inBounds = getInBounds(AST);
 
     let imports = {...this.state.imports};
-    let fn = bindings => {
+    let fn = (bindings, externalMaps) => {
       updateInBindings(inBounds, bindings);
-      return outBounds.map(ob => evaluate(ob, outbindings, {}));
+      return outBounds.map(ob => evaluate(ob, outbindings, externalMaps));
     }
 
     imports[importName] = fn;

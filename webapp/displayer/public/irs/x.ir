@@ -1,0 +1,11 @@
+Root[inc]
+    Vertical
+        Map[name:*, infix:t]
+            Ins
+                Map[name:inc, prefix:t] 
+                    Ins
+                        InBound[name:a1, className:unbound] 
+                    Outs
+                Constant[value:3, name:3, unwrap:t, className:constant, type:Number]
+            Outs
+                OutBound[name:b1, className:unbound]
