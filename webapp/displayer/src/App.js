@@ -35,9 +35,9 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-// const FILE = 'test';
+const FILE = 'test';
 // const FILE = '!';
-const FILE = 'x';
+// const FILE = 'x';
 // const FILE = 'import_chain_test';
 
 
@@ -105,6 +105,9 @@ class App extends React.Component{
   
   addImport(importName, importIR){
     if (!this || !this.state)
+      return;
+
+    if (importName in this.state.imports)
       return;
 
     let AST = parse(importIR);

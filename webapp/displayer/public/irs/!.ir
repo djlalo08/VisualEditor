@@ -18,9 +18,9 @@ Root[!]
                             Ins
                                 Map[name:dec, prefix:t]
                                     Ins
-                                        InBinding[getvalue:ib3]
+                                        InBinding[getvalue:o11, name:ib3]
                                     Outs
                             Outs
-                Constant[value:1, name:1, type:Number, unwrap:t, className:constant]
+                Constant[value:1, name:1, type:Number, className:constant]
             Outs
                 OutBound[name:b, className:unbound]

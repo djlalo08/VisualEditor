@@ -10,6 +10,7 @@ class Evaluationator {
     constructor(outBindings, externalMaps){
         this.outBindings = outBindings;
         this.externalMaps = externalMaps;
+        this.cache = {};
         
         this.evaluate = this.evaluate.bind(this)
     }
@@ -22,9 +23,7 @@ class Evaluationator {
                 return this.evaluate(ast_node.parent);
             case 'OutBinding':
             case 'OutBound':
-                let x = this.evaluate(ast_node.parent)[ast_node.idx];        
-                console.log(`Value of ${name}: ${attrs.name} is ${x}`);
-                return x;
+                return this.evaluate(ast_node.parent)[ast_node.idx];
             case 'InBinding':
                 return this.evaluate(this.outBindings[attrs.getvalue]);
             case 'Map':
