@@ -121,10 +121,9 @@ function getInBounds_(node){
 }
 
 export function updateInBindings(inBounds, bindings){
-    let binding_idx = 0;
     for (let inBound of inBounds){
-        replaceWithValueBox(inBound, bindings[binding_idx]);
-        binding_idx++;
+        let { bind_idx } = getAttrs(inBound);
+        replaceWithValueBox(inBound, bindings[bind_idx]);
     }
 }
 
