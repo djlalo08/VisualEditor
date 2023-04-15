@@ -1,6 +1,6 @@
 Root
     Vertical
-        Map[name:+, selected:t]
+        Map[name:+, selected:t, infix:t]
             Ins
                 Node
                 Node
