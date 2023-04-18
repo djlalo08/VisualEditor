@@ -3,28 +3,27 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import { updateAST } from '../Actions';
-import { addAttr, delAttr } from '../Utils/NodeUtils';
+import { updateToMatchLength } from '../Utils/ListUtils';
+import { addAttr, delAttr, makeNode } from '../Utils/NodeUtils';
 
 const positions = ['infix', 'postfix', 'underfix', 'prefix'];
 
 export function MapSidebar({attrs, node}){
 
 let [ins, outs] = node.children;
+let {variableinput} = attrs;
 
 let onChangeInCount = e => {
-    let newValue = e.target.value;
-    if (newValue > ins.children.length){
-        ins.children.push({value:'Node', parent:node, children:[]});
-        updateAST();
-    }
+    let newLength = e.target.value;
+    console.log(newLength);
+    updateToMatchLength(newLength, ins.children, () => makeNode(node));
+    updateAST();
 }
 
 let onChangeOutCount = e => {
-    let newValue = e.target.value;
-    if (newValue > outs.children.length){
-        outs.children.push({value:'Node', parent:node, children:[]});
-        updateAST();
-    }
+    let newLength = e.target.value;
+    updateToMatchLength(newLength, outs.children, () => makeNode(node));
+    updateAST();
 }
 
 let onChangeVisual = e => {
@@ -36,9 +35,9 @@ let onChangeVisual = e => {
     updateAST();
 }
     
-    
+
 let insCount = ins.children.length;
-let outsCount = outs.children.length;
+let outsCount = outs && outs.children? outs.children.length: 0;
 
 let position = 'underfix';
 for (let p of positions){
@@ -52,7 +51,7 @@ return <>
     <Row>
       <Form.Label column>Ins</Form.Label>
       <Col><Form.Control type="number" value={insCount} 
-            onChange={onChangeInCount}/></Col>
+            onChange={onChangeInCount} disabled={!variableinput}/></Col>
     </Row>
     <Row>
       <Form.Label column>Outs</Form.Label>

@@ -19,12 +19,12 @@ Root
             Ins
                 Map[name:id]
                     Ins
-                        Map[name:-, infix:t]
+                        Map[name:-, infix:t, variableinput:t]
                             Ins
                                 Map[name:^2, postfix:t]    
                                     Ins
                                         InBinding[getvalue:b] 
-                                Map[name:*, infix:t]
+                                Map[name:*, infix:t, variableinput:t]
                                     Ins
                                         Constant[name:4, value:4, className:constant, type:Number]
                                         InBinding[getvalue:a]

@@ -27,7 +27,18 @@ TODOs:
 -Update readme
 -Add set/get maps to be used as variables
 -Now that we can freely make stuff, try writing up some code in PO
+
+
+IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
+-Hashing doesn't work on recursive fn calls
+-Shouldn't be rerendering _everything_ every time
+
+BUGS:
+-
 */
+  
+
+
 let id = 0;
 // const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
@@ -40,10 +51,10 @@ let id = 0;
 // const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
-// const FILE = 'simple';
+const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';
-const FILE = 'empty';
+// const FILE = 'empty';
 
 export function nextId(){
   return ++id;

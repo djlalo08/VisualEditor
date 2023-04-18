@@ -90,6 +90,10 @@ export function makeMap(parent, name, ins_num, outs_num){
     return map;
 }
 
+export function makeNode(parent){
+    return {value:'Node', parent, children:[]};
+}
+
 let outBounds = [];
 export function getOutBounds(node){
     outBounds = [];
