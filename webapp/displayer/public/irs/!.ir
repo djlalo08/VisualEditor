@@ -6,12 +6,12 @@ Root[!]
                     Ins
                         InBound[name:a, className:unbound, bind_idx:0]
                         Constant[value:0, name:0, type:Number, unwrap:t, className:constant]
-                Map[name:*, infix:t]
+                Map[name:*, infix:t, inline:t, className:inline]
                     Ins
                         InBound[name:a, className:unbound, bind_idx:0]
-                        Map[name:!, postfix:t, recursive:t]
+                        Map[name:!, postfix:t, recursive:t, inline:t, className:inline]
                             Ins
-                                Map[name:dec, prefix:t]
+                                Map[name:dec, prefix:t, inline:t, className:inline]
                                     Ins
                                         InBound[name:a, className:unbound, bind_idx:0]
                                     Outs

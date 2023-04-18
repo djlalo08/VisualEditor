@@ -6,6 +6,7 @@ import Selectable from "./Selectable";
 function InnerMap(props){
     let {children, className, selected, fileinput, fileoutput, ...other} = props;
     let {infix, prefix, postfix} = props;
+    let {inline} = props;
     
     let ins = children && children[0]? addProps(children[0], {...other}): [];
     let outs = children? children[1]: [];
@@ -40,14 +41,16 @@ function InnerMap(props){
         
     }
 
-    return (
-    <div className="Node">
-    <table id={props.id} className={className} {...other}><tbody>
+    let map = <table id={props.id} className={className} {...other}><tbody>
         {ins}
         {infix || prefix || postfix? null : <tr><td>{props.name}</td></tr>}
         {outs}
     </tbody></table>
-    </div>);
+
+    if (inline)
+        return map;
+
+    return <div className="Node"> {map} </div>;
 }
 
 const Map = Movable(Selectable(InnerMap));
