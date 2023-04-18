@@ -11,7 +11,7 @@ const positions = ['infix', 'postfix', 'underfix', 'prefix'];
 export function MapSidebar({attrs, node}){
 
 let [ins, outs] = node.children;
-let {variableinput} = attrs;
+let {variableinput, inline} = attrs;
 
 let onChangeInCount = e => {
     let newLength = e.target.value;
@@ -34,6 +34,15 @@ let onChangeVisual = e => {
     addAttr(node, e.target.value, 't');
     updateAST();
 }
+
+let onChangeInLine = e => {
+    console.log(e.target.checked);
+    if (e.target.checked)
+        addAttr(node, 'inline', 't');
+    else
+        delAttr(node, 'inline');
+    updateAST();
+}
     
 
 let insCount = ins.children.length;
@@ -46,6 +55,7 @@ for (let p of positions){
         break;
     }
 }
+
 
 return <>
     <Row>
@@ -61,7 +71,7 @@ return <>
     <br/>
     <br/>
     <Row>
-        <Form.Label column>Visual</Form.Label>
+        <Form.Label column>Text Position</Form.Label>
         <Col> <Form.Select value={position} onChange={onChangeVisual}>
             <option value='underfix'>Underfix</option>
             <option value='prefix'>Prefix</option>
@@ -69,6 +79,14 @@ return <>
             <option value='postfix'>Postfix</option>
         </Form.Select> </Col>
     </Row>
+    <br/>
+    <Row>
+        <Form.Label column>Inline</Form.Label>
+        <Col> <Form.Check checked={inline || false} onChange={onChangeInLine} type="switch">
+        </Form.Check> </Col>
+    </Row>
 </>;
 
 }
+
+//TODO line 83 needs to be a boolean option

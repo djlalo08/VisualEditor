@@ -128,7 +128,7 @@ td, tr, table {
   padding: 1px 5px 1px 5px;
   border-radius: 7px;
   border-style: solid;
-  border-top: none;
-  border-bottom: none;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.186) !important;
+  border-top: 1px dashed rgba(0, 0, 0, 0.186) !important;
   text-align: center !important;
 }

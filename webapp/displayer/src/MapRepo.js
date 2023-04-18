@@ -34,7 +34,7 @@ export const mapRepo = {
         }
         return [res];
     },
-    'dec': ins => ins.map(x => x-1),
+    '-1': ins => ins.map(x => x-1),
     // 'inc': ins => [ins.map(x => x+1)],
 }
 

@@ -22,18 +22,8 @@ export default function Ins(props){
         children = children[onlyShowIdx+1];
     }
     
-    if (name=='*') {
-    console.log('before');
-    console.log(children);
-    }
-
     let propagateProps = child => child && addProps(child, {...other});
     children = children.length ? children.map(propagateProps) : propagateProps(children);
-
-    if (name=='*') {
-    console.log('after');
-    console.log(children);
-    }
 
     return (<Trtd>
         <Grid>
