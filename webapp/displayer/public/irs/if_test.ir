@@ -1,12 +1,10 @@
 Map[name:if]
     Ins
-        Map[name:id]
+        Map[name:>, infix:t]
             Ins
-                Map[name:>, infix:t]
-                    Ins
-                        Constant[name:5, value:5, className:constant, type:Number]
-                        Constant[name:4, value:4, className:constant, type:Number]
-                    Outs
+                Constant[name:5, value:5, className:constant, type:Number]
+                Constant[name:4, value:4, className:constant, type:Number]
+            Outs
             Outs
         Map[name:print]
             Ins

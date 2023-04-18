@@ -1,6 +1,7 @@
 import { Xwrapper } from "react-xarrows";
 import { loadImports as loadImportsAction } from "../Actions";
 import { nextId, resetIds } from "../App";
+import Block from "../Components/Block";
 import Horizontal from '../Components/Horizontal';
 import Ins from "../Components/Ins";
 import Mapx from '../Components/Map';
@@ -50,10 +51,11 @@ function treeToJsx(node){
             }
             return <Node {...props}>{children}</Node>;
         case 'Constant':
-        case 'Map':
         case 'UnBound':
         case 'InBound':
         case 'OutBound':
+            return <Block {...props}></Block>
+        case 'Map':
             return <Mapx {...props}>{children}</Mapx>;
         case 'Horizontal':
             return <Horizontal {...props}>{children}</Horizontal>;

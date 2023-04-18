@@ -17,7 +17,7 @@ import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, upda
 /*
   * 
 Working on:
--Put homoiconicity to work -- make a Node be able to be treated as a function
+-Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
 Also:
 -Added sidebar. Begin to make it functional

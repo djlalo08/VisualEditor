@@ -40,11 +40,14 @@ function InnerMap(props){
         
     }
 
-    return (<table id={props.id} className={className} {...other}><tbody>
+    return (
+    <div className="Node">
+    <table id={props.id} className={className} {...other}><tbody>
         {ins}
         {infix || prefix || postfix? null : <tr><td>{props.name}</td></tr>}
         {outs}
-    </tbody></table>);
+    </tbody></table>
+    </div>);
 }
 
 const Map = Movable(Selectable(InnerMap));
