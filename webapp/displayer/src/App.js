@@ -34,7 +34,11 @@ TODOs:
 
 IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
 -Hashing doesn't work on recursive fn calls
+-Data unpacking (output node can return components of a result obj, rather than the obj itself, if user wants)
 -Shouldn't be rerendering _everything_ every time
+
+FAR FUTURE:
+-Any arbitrary code can be run (unbound elements list their pending bounds, and we can set values for them in side bar)
 
 BUGS:
 -

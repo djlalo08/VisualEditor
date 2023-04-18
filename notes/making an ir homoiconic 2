@@ -166,8 +166,4 @@ Our grammar (roughly):
 
 
 
-
-
-
-
 *Side note: We can run unbound programs by supplying them with bindings (and that can be supplied to the compiler). A nice idea to be able to do at some point is You write some unbound code. Select something in it (say a random outbinding), and the side-panel lists out all the unbound values in the eval chain. You can select test values in the side panel for each of the unbound values and see how the function behaves!
