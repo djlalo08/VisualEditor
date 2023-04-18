@@ -17,6 +17,9 @@ import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, upda
 /*
   * 
 Working on:
+-Put homoiconicity to work -- make a Node be able to be treated as a function
+
+Also:
 -Added sidebar. Begin to make it functional
 -Clean up UI, and make it possible to write code in UI!
 
@@ -43,7 +46,7 @@ let id = 0;
 // const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
 // const FILE = 'inc';
-// const FILE = 'if_test';
+const FILE = 'if_test';
 // const FILE = 'lambdas';
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
@@ -51,7 +54,7 @@ let id = 0;
 // const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
-const FILE = 'simple';
+// const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';
 // const FILE = 'empty';

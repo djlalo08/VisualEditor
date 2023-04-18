@@ -1,0 +1,173 @@
+Now that I've built a IR that works and actually evaluable, it is time to come back to hwo we represent IR as homoiconic. I think I understand things better.
+
+For one, Node is not nearly as fundamental as I thought. 
+
+So we can significantly simplify how we build our homoiconic theory.
+
+In particular, we can say:
+M = (<[M]|M|ε|bind>, <ε,bind>)
+
+Basically, we still have access to vertical, as we would hope/imagine, but the major difference is that they are just straight S-lists that can be an argument to a map. If an S-list is going to produce multiple values that are going to be different inputs for our map, then I think the map just needs to be extracted.
+
+Generally thinking, I think a Map can only take a Map as an argument if that map returns a single, unambiguous result? Otherwise, how do we know what to select from the map? 
+
+This sacrifices a lot of convenience, though, so we can add a special feature: selectors!
+
+Any input node can have a selected item within it. That selected item, is, as the name suggests, selected and that is the value that will be used.
+
+For Maps, this shouldn't be strictly necessary: we could just add something to a map like a returnidx, which specifies which value we want to use.
+
+Actually why not do that?
+
+Maybe that's all we need...
+
+Ok but let's think about S-lists as input to a Map
+
+How does an S-list select which map we want as the input value? Easy! S-list can also be annotated and it selects a returnidx. Say an S-list has 3 Maps in it, and returnidx = 1, then the value being put into the input is the value of the 1th (second) map. What is the value of the 1th map? That's the Map's return idx.
+
+For maps that return a single value, the retun idx is obviously just that value
+
+In IR, a new line's meaning is contextual based on the parent:
+    -For a tuple, every new line is a tuple element
+    -For an S-list, every new line is an S-list element
+    -For a P-list, every new line is a P-list element
+
+With that in mind, we can define some convenience types:
+-Ins is a p-list<Vertical|Map|ε|bind>
+-Outs is a p-list<ε|bind>
+-Map is a tuple<Ins, Outs>
+-Vertical is an s-list<Map>
+
+And that's it!
+
+So all we need are these 4 maps types and our binds, empties, constants, etc
+
+More compactly:
+I = <V|M|ε|b>
+O = <ε|b>
+M = (I,O)
+V = [M]
+
+or all in terms of M:
+M = (<[M]|M|ε|b>, <ε,b>)
+
+Now we have the nice feature that every program is a map, which means every program takes inputs and gives outputs, which is exactly what we want.
+
+But we have a problem! How can we feed inputs to a map?
+
+Inputs to our maps must come from outside the program! (Crazy stuff!)
+
+So when we call up the chain of evals, starting from some output, eventually we get to the inputs for the current file, so at this point we need to ask the user for a value!
+
+I'm thinking of it wrong.
+
+At the top level, needs to be a Map. This map is a trivial map, in the sense that it doesn't have outputs. You'd think we want to do something where the ouputs of the top-level map are the ouputs of our program. The problem is that --/sentence abruptly terminated/--
+
+We can think of Ins as where the evaluation happens
+
+We actually require our entire Program to be a single input to the root map. Since inputs are P-lists, if there were multiple inputs in the our root map, they couldn't communicate with each other (i.e. it'd actually be different programs).
+
+This means that our S-list that makes up our program (really a program is an S-list that we are putting inside the input node of a map) has no return idx, but rather returns every output of every map? It also means that a program has to take no inputs?
+
+I'm running into a bit of a wall here. I think I need to eat, pause and rethink it all.
+
+//After going to pee and considering whether real life is more plot-based (one event leads to another), or more of a call-of-the-wild / into-the-wild style, stuff happens, and then You're somewhere doing something else, and then somewhere else doing something else. I guess it depends on perspective. Realistically life tends to probably be more like the second thing, but the way we tell stories and think of things and interpret order in our lives makes us try to visualize life as plot-based//
+
+
+That said, I think things are making a bit more sense. We have everything built out of maps. Maps, works as we suspect. We go up the call stack until we reach everything being a constant or a supplier. When that's the case, we return a value. If we don't end at all constants, then we have an unbound value we missed.
+
+So it makes sense what we are doing on evaluation side -- just recurse up. But how does this match with what we want to do on the theory side? 
+
+Let's be more concrete and consider a specific case: increment function
+
+An increment function's IR, could look like this:
+Map[name:+, infix:t]
+    Ins
+        InBound[name:a, getvalue:u1, className:unbound]
+        Constant[name:1, value:1, type:Number, unwrap:t]
+    Outs
+        OutBound[name:b, className:unbound]
+        
+In data terms, that's
+
++(<InBound:a, Constant:1>, <OutBound:b>)
+
+or
++(<InBound:a, get1(<>, <>)>, <OutBound:b>)
+(get1 is a map that takes 0 inputs and returns a 1. We have no outs here because we don't need outbindings, we can just use get! with returnidz 0)
+
+So to use inc, we'd do:
+
+inc(<Constant:5>, <OutBinding:o1>)
+
+WHen we call eval on o1,
+inc gets replaced like this:
+
++(<Constant:5, Constant:1>, <OutBinding:o1>)
+
+What happens if we have multiple lines?
+
+Map:id
+    Ins
+        InBound:A
+    Outs
+        OutBinding:b1
+Map:+
+    Ins
+        InBinding:b1
+        Constant:1
+    Outs
+        OutBound:B
+        
+
+That's:
+
+[ id(<InBound:A>, <OutBinding:o1>), +(<InBinding:b1, Constant:1>, <OutBound:B>) ]
+
+But that's not a map!
+It's a Vertical.
+But it's actually ok. Any thing can return a value.
+So not only are valid maps valid programs, but so are valid Verticals, valid Ins, valid Outs, valid bindings, etc.
+
+Do note, though, in order to evaluate an out, we need to access a map to evaluate. So while <OutBinding:o1> is a valid program, o1 will return a value of undefined (and that's ok. It's what we'd want)
+
+So generally speaking, programs we're actually interesting in writing will typically be a single map, a p-list of maps(ins node), or an s-list of maps(vertical)
+
+What's more, valid programs actually don't have inputs or outputs -- if it has inputs, that means its unbound.
+
+Maybe a better word is complete or fully bound.
+
+Most of the code programmers would write is actually not fully bound. That's totally fine (this is like most files in a java codebase don't have a main )
+
+The point here, is that only code that is fully bound can be run.
+
+And that's really all there is to it!
+
+
+FINDINGS:
+So to recap, it's actually sinple:
+
+We define a map as follows:
+M = (<[M]|M|ε|b>, <ε,b>)
+
+A program is, generally speaking, a Map, an S-list of Maps or a p-list of maps (M, [M], <M>)
+
+A program can be fully bound or unbound. 
+Only fully bound programs can be evaluated.
+
+Most of the code we write are unbound programs, all being called by one fully bound program at the top-level (our  "main")*
+
+Our grammar (roughly):
+    $ -> M, V, I,
+    M -> (I, O)
+    I -> <M|[M]|V|ε|b|c>
+    O -> <b|ε>
+    V -> [M]
+
+
+
+
+
+
+
+*Side note: We can run unbound programs by supplying them with bindings (and that can be supplied to the compiler). A nice idea to be able to do at some point is You write some unbound code. Select something in it (say a random outbinding), and the side-panel lists out all the unbound values in the eval chain. You can select test values in the side panel for each of the unbound values and see how the function behaves!
