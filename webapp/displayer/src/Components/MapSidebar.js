@@ -79,7 +79,6 @@ return <>
             <option value='postfix'>Postfix</option>
         </Form.Select> </Col>
     </Row>
-    <br/>
     <Row>
         <Form.Label column>Inline</Form.Label>
         <Col> <Form.Check checked={inline || false} onChange={onChangeInLine} type="switch">

@@ -75,3 +75,4 @@ flask-project/flask_session/*
 flask-project/venv/lib/*
 .DS_Store
 .DS_Store
+.lsp/.cache/db.transit.json
