@@ -15,6 +15,7 @@ function InnerMap(props){
     if (fileinput || fileoutput)
         className += ' io ';
     className += ' Map ';
+    className += props.recursive? ' Recursive ' : '';
 
     if (props.name=='id'){
         className += 'id';

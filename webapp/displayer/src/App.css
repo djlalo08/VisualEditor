@@ -60,6 +60,11 @@ html {
   border-style: outset;
   background-color: #57bec3;
 }
+
+.Recursive{
+  background-color: #c097db;  
+}
+
 .selected {
   border-color: red !important;
 }
