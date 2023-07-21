@@ -1,13 +1,17 @@
-POO 💩 is general purpose, strongly typed, functional, homoiconic visual programming language.
+# POO 💩
+
+POO is general purpose, strongly typed, functional, homoiconic visual programming language.
 
 There are many ideas packed into this language, so feel free to explore!
+
+### How it works 
 
 Code in the POO editor is represented by maps that have input and output nodes, and wires that connect them. This view largely inspired by LabView (a language I hate), but avoiding many of its major downfalls (cluttered code, confusing control, bad complexity management, too much hassle worrying about wire management and box placement, heavy-weight proprietary editor). However, I contend that functional programming is actually very well suited for LabView-style visual display as chains of operations affecting data. One of the goals of POO is to visually capture the intuition of functional programming.
 
 The full specification of any program is determined in the Intermediate Representation (IR). While much of my efforts are currently focused on the editor, and trying to understand what is really possible with it, the editor itself is not POO. The IR is at the heart of POO, and it is also quite simple, but has many valuable properties. Most importantly, the IR has a one-to-one correspondence with what is seen in the editor, and can also be either directly run by the editor, or compiled into machine code. 
 
 
-Some features of POO:
+### Some features of POO
 
 - Contextual: POO is a contextual language. This means that the source code contains an abundance of information, but that information is shown contextually as desired. This can allow for very powerful clarity and specificity in code, without adding clutter or noise to the code reading/writing experience. This kind of contextual information, for example, can allow for a very deep and rich type system, which would otherwise be nightmare-ish to handle and represent.
 
