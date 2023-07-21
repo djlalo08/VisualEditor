@@ -7,6 +7,7 @@ Transpiler.java
 *.json
 .clj-kondo/.cache/v1/clj/user.transit.json
 *.json
+**/.DS_Store
 venv/lib/python3.10/weakref.py
 venv/lib/python3.10/warnings.py
 venv/lib/python3.10/types.py
