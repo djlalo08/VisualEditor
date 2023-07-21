@@ -1,4 +1,4 @@
-POO is general purpose, strongly typed, functional, homoiconic visual programming language.
+POO 💩 is general purpose, strongly typed, functional, homoiconic visual programming language.
 
 There are many ideas packed into this language, so feel free to explore!
 
