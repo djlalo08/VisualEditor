@@ -1,7 +1,8 @@
 import React from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { getNameAndAttrs } from '../Utils/NodeUtils';
-import { MapSidebar } from './MapSidebar';
+import { ConstantSidebar } from './Sidebars/ConstantSidebar';
+import { MapSidebar } from './Sidebars/MapSidebar';
 
 export function Sidebar({node}) {
     if (!node)
@@ -26,5 +27,7 @@ function body(name, attrs, node){
     switch(name){
         case 'Map':
             return <MapSidebar {...props}/>;
+        case 'Constant':
+            return <ConstantSidebar {...props}/>;
     }
 }

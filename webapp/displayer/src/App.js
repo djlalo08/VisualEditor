@@ -17,6 +17,12 @@ import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, upda
 /*
   * 
 Working on:
+-Navigation is wonky. Let's fix it!
+-Let's make quicksort!
+-Sidebar should be able to modify constants
+-Sidebar can give set values for inbounds to simulate as 
+
+
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
 Also:
@@ -40,6 +46,9 @@ IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
 FAR FUTURE:
 -Any arbitrary code can be run (unbound elements list their pending bounds, and we can set values for them in side bar)
 
+INTERESTING IDEAS:
+- IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version)
+
 BUGS:
 -
 */
@@ -55,13 +64,14 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-const FILE = '!';
+// const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
-// const FILE = 'test';
+const FILE = 'test';
 // const FILE = 'empty';
+// const FILE = 'ls';
 
 export function nextId(){
   return ++id;

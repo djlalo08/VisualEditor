@@ -2,9 +2,9 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { updateAST } from '../Actions';
-import { updateToMatchLength } from '../Utils/ListUtils';
-import { addAttr, delAttr, makeNode } from '../Utils/NodeUtils';
+import { updateAST } from '../../Actions';
+import { updateToMatchLength } from '../../Utils/ListUtils';
+import { addAttr, delAttr, makeNode } from '../../Utils/NodeUtils';
 
 const positions = ['infix', 'postfix', 'underfix', 'prefix'];
 
