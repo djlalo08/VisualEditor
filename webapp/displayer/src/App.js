@@ -87,6 +87,7 @@ class App extends React.Component{
     setKeyboard(this);
     
     this.handleTextChange = this.handleTextChange.bind(this);
+    this.onShow = this.onShow.bind(this);
     this.stateFromIR = this.stateFromIR.bind(this);
     this.eval_ = this.eval_.bind(this);
     this.addImport = this.addImport.bind(this);
@@ -178,6 +179,9 @@ class App extends React.Component{
     this.setState({modalText: e.target.value});
   }
   
+  onShow(){
+    setTimeout(() =>  this.setState({modalText: ''}), 10);
+  }
   
   download(filename, text){
     var element = document.createElement('a');
@@ -199,7 +203,7 @@ class App extends React.Component{
     }
 
     let {showModal, modalText} = this.state;
-    let modal = <Modal show={showModal} onHide={handleClose}>
+    let modal = <Modal show={showModal} onHide={handleClose} onShow={this.onShow}>
       <Modal.Body>
         <FormControl
           onChange={this.handleTextChange}
