@@ -23,7 +23,6 @@ Working on:
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
 Also:
--Added sidebar. Begin to make it functional
 -Clean up UI, and make it possible to write code in UI!
 
 TODOs: 
@@ -34,17 +33,17 @@ TODOs:
 -Add set/get maps to be used as variables
 -Now that we can freely make stuff, try writing up some code in PO
 
+VISUAL/AESTHETIC:
+-Make if look better (condition on top, then/else side-by-side
+
 
 IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
 -Hashing doesn't work on recursive fn calls
 -Data unpacking (output node can return components of a result obj, rather than the obj itself, if user wants)
 -Shouldn't be rerendering _everything_ every time
 
-FAR FUTURE:
--Any arbitrary code can be run (unbound elements list their pending bounds, and we can set values for them in side bar)
-
 INTERESTING IDEAS:
-- IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version)
+- IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version). Now that I'm back, I like textual IR again. Could be possible to compress it, but not necessary atm. Parsing is relatively trivial and already take care of -- not a major issue
 
 BUGS:
 -

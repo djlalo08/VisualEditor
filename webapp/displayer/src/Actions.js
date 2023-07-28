@@ -3,8 +3,8 @@ import { parse } from './Utils/IrToAst';
 import { addAttr, delAttr, getAttrs, getName, makeMap, printAst } from './Utils/NodeUtils';
 
 let app = null;
-let selectables = ['Map', 'Node'];
-let horizontals = ['Map', 'Node', 'Ins', 'Outs', 'Horizontal']
+let selectables = ['Map', 'Node', 'InBound', 'OutBound', 'Constant'];
+let horizontals = ['Map', 'Node', 'Ins', 'Outs', 'Horizontal', 'InBound', 'OutBound', 'Constant']
 const UNDO_LIMIT = 5;
 
 export function setApp(_app){
