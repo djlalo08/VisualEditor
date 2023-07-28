@@ -2,9 +2,10 @@ import React from 'react';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { getNameAndAttrs } from '../Utils/NodeUtils';
 import { ConstantSidebar } from './Sidebars/ConstantSidebar';
+import { InBoundSidebar } from './Sidebars/InBoundSidebar';
 import { MapSidebar } from './Sidebars/MapSidebar';
 
-export function Sidebar({node}) {
+export function Sidebar({node, AST}) {
     if (!node)
         return;
 
@@ -16,18 +17,17 @@ export function Sidebar({node}) {
                 <Offcanvas.Title>{name}: {attrs.name}</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-                {body(name, attrs, node)}
+                {body(name, attrs, node, AST)}
             </Offcanvas.Body>
         </Offcanvas>
     );
 }
 
-function body(name, attrs, node){
-    let props = {attrs, node};
+function body(name, attrs, node, AST){
+    let props = {attrs, node, AST};
     switch(name){
-        case 'Map':
-            return <MapSidebar {...props}/>;
-        case 'Constant':
-            return <ConstantSidebar {...props}/>;
+        case 'Map':         return <MapSidebar {...props}/>;
+        case 'Constant':    return <ConstantSidebar {...props}/>;
+        case 'InBound':     return <InBoundSidebar {...props}/>;
     }
 }

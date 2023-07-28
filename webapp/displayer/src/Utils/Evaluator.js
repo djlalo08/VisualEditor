@@ -12,7 +12,7 @@ class Evaluationator {
         this.externalMaps = externalMaps;
         this.cache = {};
         
-        this.evaluate = this.evaluate.bind(this)
+        this.evaluate = this.evaluate.bind(this);
     }
     
     evaluate(ast_node){
@@ -27,14 +27,14 @@ class Evaluationator {
             case 'InBinding':
                 return this.evaluate(this.outBindings[attrs.getvalue]);
             case 'Map':
-                if (ast_node.cached_result && !attrs.dontCache){
+                if (this.cache[ast_node] && !attrs.dontCache){
                     console.log(`${name}: ${attrs.name} has already been evaluated. Using cache value: ${ast_node.cached_result}`);
-                    return ast_node.cached_result;
+                    return this.cache[ast_node];
                 }
 
                 let result = this.evaluate_map(attrs, ast_node);
-                result =  attrs.returnidx? result[attrs.returnidx]: result;
-                ast_node.cached_result = result;
+                result = attrs.returnidx? result[attrs.returnidx]: result;
+                this.cache[ast_node] = result;
                 return result;
             case 'Constant':
                 let res = eval_constant(attrs.type, attrs.value);
@@ -42,9 +42,7 @@ class Evaluationator {
             case 'UnBound':
                 return ['UNBOUND', attrs.getvalue];
             case 'InBound':
-                return ['INBOUND', attrs.getvalue];
-            case 'ValueBox':
-                return ast_node.supplier();
+                return ast_node.supplier? ast_node.supplier() :['INBOUND', attrs.getvalue];
         }
     }
     
@@ -54,20 +52,21 @@ class Evaluationator {
             ins = ins.children.map(this.evaluate);
             let fn = mapRepo[attrs.name];
 
-            let unbounds = ins.filter(x =>x && x.length && x[0] == 'UNBOUND');
+            let unbounds = ins.filter(x => x && x.length && x[0] == 'UNBOUND');
             return unbounds.length? getFunctionPendingBindings(ins, fn): fn(ins);
         }
+
         let specialMaps = specialMapsRepo(this);
         if (attrs.name in specialMaps){
             let fn = specialMaps[attrs.name];
             return fn(ins);
         }
+
         if (attrs.name in this.externalMaps){
             ins = ins.children.map(this.evaluate);
             let fn = this.externalMaps[attrs.name];
             return fn(ins, this.externalMaps);
         }
-
     }
 }
 

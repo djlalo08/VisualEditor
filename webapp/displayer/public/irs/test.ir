@@ -2,8 +2,5 @@ Root[!]
     Vertical
         Map[name:!, postfix:t]
             Ins
-                Map[name:id]
-                    Ins
-                        Constant[name:5, value:5, type:Number, unwrap:t, className:constant]
-                    Outs
+                Constant[name:5, value:5, type:Number, unwrap:t, className:constant]
             Outs

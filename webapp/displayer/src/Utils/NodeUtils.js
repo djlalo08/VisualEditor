@@ -127,20 +127,12 @@ function getInBounds_(node){
 export function updateInBindings(inBounds, bindings){
     for (let inBound of inBounds){
         let { bind_idx } = getAttrs(inBound);
-        replaceWithValueBox(inBound, bindings[bind_idx]);
+        inBound.supplier = () => bindings[bind_idx];
     }
 }
 
 export function getRoot(node){
     return node.parent? getRoot(node.parent): node;
-}
-
-export function replaceWithValueBox(oldNode, newValue){
-    let newNode = {value:`ValueBox[name:${newValue}]`, supplier: ()=> newValue, index:oldNode.index};
-
-    newNode.parent = oldNode.parent;
-    newNode.parent?.children?.splice(oldNode.index, 1, newNode);
-    newNode.children = oldNode.children || [];
 }
 
 export function getImports(root){

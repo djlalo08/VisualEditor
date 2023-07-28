@@ -19,7 +19,6 @@ import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, upda
 Working on:
 -Navigation is wonky. Let's fix it!
 -Let's make quicksort!
--Sidebar should be able to modify constants
 -Sidebar can give set values for inbounds to simulate as 
 
 
@@ -64,12 +63,12 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-// const FILE = '!';
+const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
-const FILE = 'test';
+// const FILE = 'test';
 // const FILE = 'empty';
 // const FILE = 'ls';
 
@@ -145,7 +144,8 @@ class App extends React.Component{
     let AST = parse(importIR);
     
     let importsList = new Set(getImports(AST));
-    if (importsList.has(importName)){
+    let isRecursive = importsList.has(importName);
+    if (isRecursive){
       forEach(AST, node => addAttr(node, 'dontCache', 't'))  
     }
 
@@ -154,12 +154,12 @@ class App extends React.Component{
     let outBounds = getOutBounds(AST);
     let inBounds = getInBounds(AST);
 
-    let imports = {...this.state.imports};
     let fn = (bindings, externalMaps) => {
       updateInBindings(inBounds, bindings);
       return outBounds.map(ob => evaluate(ob, outbindings, externalMaps));
     }
 
+    let imports = {...this.state.imports};
     imports[importName] = fn;
     this.setState({imports});
   }
@@ -223,7 +223,7 @@ class App extends React.Component{
         <Button onClick={() => this.eval_()}>Eval</Button>
         <p>{eval_result}</p>
         {modal}
-        <Sidebar node={this.state.selected}/>
+        <Sidebar node={this.state.selected} AST={AST}/>
       </div>
     );
   }
