@@ -15,15 +15,17 @@ import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, upda
 // import ExpectedApp from './Components/ExpectedApp';
 
 /*
-  * 
-Working on:
--Navigation is wonky. Let's fix it!
+WORKING ON:
+-Clean up UI, and make it possible to write code in UI!
+    -Insert needs to pull from library
+    -A and D behavior is a bit weird
+    -Navigation is wonky
+
+UP NEXT:
 -Let's make quicksort!
 
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
-Also:
--Clean up UI, and make it possible to write code in UI!
 
 TODOs: 
 -Make maps for control flow:
