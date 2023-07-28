@@ -50,9 +50,11 @@ function treeToJsx(node){
                 wires_map[props.getvalue][1].push(props.id);
             }
             return <Node {...props}>{children}</Node>;
+        case 'InBound':
+            if (node.supplier)
+                props.className += ' simulated ';
         case 'Constant':
         case 'UnBound':
-        case 'InBound':
         case 'OutBound':
             return <Block {...props}></Block>
         case 'Map':

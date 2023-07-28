@@ -14,7 +14,10 @@ let onChangeValue = e => {
     let newValue = e.target.value;
     for (let inBound of inBounds){
         if (getAttrs(inBound).bind_idx == bind_idx)
-            inBound.supplier = () => newValue;
+            if (newValue == '')
+                delete inBound.supplier;
+            else
+                inBound.supplier = () => newValue;
     }
     updateAST();
 }

@@ -62,15 +62,15 @@ html {
 }
 
 .Recursive{
-  background-color: #c097db;  
+  background-color: #f6c3f4;  
 }
 
 .selected {
-  border-color: red !important;
+  border-color: rgb(180, 68, 68) !important;
 }
 
 .secondSelect{
-  border-color: blue;
+  border-color: rgb(48, 105, 225);
 }
 
 .Horizontal{
@@ -117,7 +117,7 @@ td, tr, table {
 }
 
 .unbound {
-  background-color: gray;
+  background-color: rgb(208, 198, 198);
   border-style: groove;
 }
 
@@ -138,3 +138,6 @@ td, tr, table {
   text-align: center !important;
 }
 
+.simulated {
+  background: linear-gradient(#57bec3, rgb(208,198,198));
+}
