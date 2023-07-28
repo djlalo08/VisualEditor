@@ -19,8 +19,6 @@ import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, upda
 Working on:
 -Navigation is wonky. Let's fix it!
 -Let's make quicksort!
--Sidebar can give set values for inbounds to simulate as 
-
 
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
