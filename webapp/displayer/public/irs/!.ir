@@ -9,7 +9,7 @@ Root[!]
                 Map[name:*, infix:t]
                     Ins
                         InBound[name:a, className:unbound, bind_idx:0]
-                        Map[name:!, postfix:t, recursive:t, inline:t, className:inline]
+                        Map[name:!, postfix:t, recursive:t, inline:t, className:inline, import_from:./irs/]
                             Ins
                                 Map[name:-1, postfix:t, inline:t, className:inline]
                                     Ins

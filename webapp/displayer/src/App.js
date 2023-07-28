@@ -91,6 +91,7 @@ class App extends React.Component{
     this.stateFromIR = this.stateFromIR.bind(this);
     this.eval_ = this.eval_.bind(this);
     this.addImport = this.addImport.bind(this);
+    this.getIRsList = this.getIRsList.bind(this);
 
     this.state = {
       imports: {},
@@ -122,6 +123,8 @@ class App extends React.Component{
       insertDir: '',
       toConnect: null,
       eval_result: null,
+      irDirHandle: null,
+      irs: new Set(),
     };
   }
   
@@ -143,8 +146,8 @@ class App extends React.Component{
 
     let AST = parse(importIR);
     
-    let importsList = new Set(getImports(AST));
-    let isRecursive = importsList.has(importName);
+    let importsMap = getImports(AST);
+    let isRecursive = importsMap.hasOwnProperty(importName);
     if (isRecursive){
       forEach(AST, node => addAttr(node, 'dontCache', 't'))  
     }
@@ -168,6 +171,15 @@ class App extends React.Component{
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);
     openFile(FILE);
+  }
+
+  async getIRsList(){
+    let handle = this.state.irDirHandle || await window.showDirectoryPicker();
+    let irs= new Set();
+    for await (let key of handle.keys())
+      irs.add(key.slice(0,-3));
+
+    this.setState({irs, irDirHandle: handle});
   }
 
   componentWillUnmount(){
@@ -224,6 +236,7 @@ class App extends React.Component{
         <Button onClick={() => openFile(FILE)}>Load ex1</Button>
         <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
         <Button onClick={() => this.eval_()}>Eval</Button>
+        <Button onClick={this.getIRsList}>FileStuff</Button>
         <p>{eval_result}</p>
         {modal}
         <Sidebar node={this.state.selected} AST={AST}/>

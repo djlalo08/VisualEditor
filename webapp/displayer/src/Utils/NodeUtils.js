@@ -136,8 +136,23 @@ export function getRoot(node){
 }
 
 export function getImports(root){
-    let imports = root.value.split(/[\[\]]/)[1];
-    return imports && imports.split(' ');
+    let IF = new ImportsFinder();
+    IF.findImports(root);
+    return IF.imports;
+}
+
+class ImportsFinder {
+    constructor(){
+        this.imports = {};
+        this.findImports = this.findImports.bind(this);
+    }
+
+    findImports(node){
+        let {import_from, name} = getAttrs(node);
+        if (import_from && import_from != 'mapRepo')
+            this.imports[name] = import_from; //TODO: this needs to really be a unique ID we are holding. What if there are 2 different impls of +, we don't want to use the same import for both
+        forEach(node, this.findImports);
+    }
 }
 
 export function forEach(root, fn){

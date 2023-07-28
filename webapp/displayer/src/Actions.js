@@ -66,9 +66,11 @@ export function insertMapFromModal(){
     save_snapshot();
 
     let {selected, modalText, insertDir} = app.state;
-    let [name, in_num, out_num] = modalText.trim().split(' ');
+
     let m = makeMap(selected, name, in_num, out_num);
     console.log(m);
+
+    let [name, in_num, out_num] = modalText.trim().split(' ');
     
     switch (insertDir) {
         case '':
@@ -422,11 +424,11 @@ export function openFile(fileName){
 }
 
 export function loadImports(imports){
-    if (!imports || !imports.length)
+    if (!imports || !Object.entries(imports).length)
         return;
 
-    for (let importName of imports){
-        fetch(`./irs/${importName}.ir`)
+    for (let [importName, importLocation] of Object.entries(imports)){
+        fetch(`${importLocation}${importName}.ir`)
         .then(response => response.text())
         .then(importCode => app.addImport(importName, importCode));
     }

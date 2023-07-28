@@ -1,4 +1,4 @@
-Root[fib x]
+Root[imports:fib x]
     Vertical
         Map[name:fib]
             Ins
