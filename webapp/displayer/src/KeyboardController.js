@@ -29,8 +29,6 @@ export function keyrelease(e){
 export function keypress(e){
     // console.log(e.keyCode);
     held_down.add(e.keyCode);
-    if (!app.state.showModal)
-        e.preventDefault();
 
     let {selected, showModal} = app.state;
 

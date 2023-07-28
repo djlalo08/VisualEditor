@@ -1,2 +1,8 @@
 Root
-    Vertical[selected:true]
+    Vertical
+        Map[name:+, selected:t, infix:t]
+            Ins
+                Node
+                Node
+            Outs
+                Node

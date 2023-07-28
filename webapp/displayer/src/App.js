@@ -60,13 +60,13 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-// const FILE = '!';
+const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';
-const FILE = 'empty';
+// const FILE = 'empty';
 // const FILE = 'ls';
 
 export function nextId(){
@@ -175,7 +175,8 @@ class App extends React.Component{
   handleTextChange(e){
     this.setState({modalText: e.target.value});
   }
-
+  
+  
   download(filename, text){
     var element = document.createElement('a');
     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
