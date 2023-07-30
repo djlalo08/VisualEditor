@@ -17,7 +17,6 @@ import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, p
 /*
 WORKING ON:
 -Clean up UI, and make it possible to write code in UI!
-    -Insert needs to pull from library
     -A and D behavior is a bit weird
     -Navigation is wonky
 
@@ -29,6 +28,8 @@ UP NEXT:
 
 
 TODOs: 
+-Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
+-Make maps from mapRepo import necessary knowledge (insCount, outsCount, nfix, inline, etc)
 -Make maps for control flow:
   -For each
 -Test suite
@@ -67,11 +68,11 @@ let id = 0;
 // const FILE = 'lambda_nest';
 // const FILE = 'inc';
 // const FILE = 'if_test';
-// const FILE = 'lambdas';
+const FILE = 'lambdas';
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-const FILE = '!';
+// const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
@@ -158,7 +159,7 @@ class App extends React.Component{
     let importsMap = getImports(AST);
     let isRecursive = importsMap.hasOwnProperty(importName);
     if (isRecursive){
-      forEach(AST, node => addAttr(node, 'dontCache', 't'))  
+      forEach(AST, node => addAttr(node, 'dont_cache', 't'))  
     }
 
     loadImports(AST);
