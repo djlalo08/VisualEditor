@@ -2,7 +2,7 @@ Root[inc]
     Vertical
         Map[name:*, infix:t]
             Ins
-                Map[name:inc, prefix:t] 
+                Map[name:inc, prefix:t, import_from:./irs/] 
                     Ins
                         InBound[name:a1, className:unbound] 
                     Outs

@@ -9,7 +9,7 @@ import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardControlle
 import { ast_to_jsx, loadImports } from './Utils/Converter';
 import { evaluate, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
-import { addAttr, forEach, getImports, getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
+import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
 
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
@@ -20,6 +20,7 @@ WORKING ON:
     -Insert needs to pull from library
     -A and D behavior is a bit weird
     -Navigation is wonky
+
 
 UP NEXT:
 -Let's make quicksort!
@@ -46,6 +47,14 @@ IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
 
 INTERESTING IDEAS:
 - IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version). Now that I'm back, I like textual IR again. Could be possible to compress it, but not necessary atm. Parsing is relatively trivial and already take care of -- not a major issue
+
+Q and A:
+-What is the difference between In/OutBinding and In/OutBound? 
+  Binding is for wire connections
+  Bound is for params (i.e. InBound are function arguments, OutBound are for function returns)
+
+APPARENT INCONSISTENCIES:
+-It seems that in some places InBound is characterized by getvalue, and in other cases by bind_idx. In yet other cases by name?
 
 BUGS:
 -
@@ -124,7 +133,7 @@ class App extends React.Component{
       toConnect: null,
       eval_result: null,
       irDirHandle: null,
-      irs: new Set(),
+      irs: {},
     };
   }
   
@@ -175,9 +184,17 @@ class App extends React.Component{
 
   async getIRsList(){
     let handle = this.state.irDirHandle || await window.showDirectoryPicker();
-    let irs= new Set();
-    for await (let key of handle.keys())
-      irs.add(key.slice(0,-3));
+    let irs = {};
+    for await (const [fileName, fileHandle] of handle.entries()){
+      let file = await fileHandle.getFile();
+      let fileText = await file.text();
+      let AST = parse(fileText);
+      let [inCount, outCount] = countBounds(AST);
+      irs[fileName.slice(0,-3)] = {
+        import_from:'./irs/',
+        inCount, outCount
+      };
+    }
 
     this.setState({irs, irDirHandle: handle});
   }

@@ -67,11 +67,17 @@ export function insertMapFromModal(){
 
     let {selected, modalText, insertDir} = app.state;
 
-    let m = makeMap(selected, name, in_num, out_num);
-    console.log(m);
+    let name = modalText.trim();
+    let in_num, out_num;
 
-    let [name, in_num, out_num] = modalText.trim().split(' ');
-    
+    if (app.state.irs.hasOwnProperty(name)){
+        let {inCount, outCount, import_from} = app.state.irs[name];
+        in_num = inCount;
+        out_num = outCount;
+    }
+
+    let m = makeMap(selected, name, in_num, out_num);
+
     switch (insertDir) {
         case '':
             selected.children.push(m);

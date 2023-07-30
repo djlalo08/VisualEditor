@@ -155,6 +155,29 @@ class ImportsFinder {
     }
 }
 
+export function countBounds(root){
+    let BC = new BoundsCounter();
+    BC.countBounds(root);
+    return [BC.inBounds.size, BC.outBounds.size];
+}
+
+class BoundsCounter {
+    constructor(){
+        this.inBounds = new Set();
+        this.outBounds = new Set();
+        this.countBounds = this.countBounds.bind(this);
+    }
+
+    countBounds(node) {
+        let [name, attrs] = getNameAndAttrs(node);
+        if (name == 'InBound')
+            this.inBounds.add(attrs.name);
+        if (name == 'OutBound')
+            this.outBounds.add(attrs.name);
+        forEach(node, this.countBounds);
+    }
+}
+
 export function forEach(root, fn){
     for (let child of root.children){
         fn(child);
