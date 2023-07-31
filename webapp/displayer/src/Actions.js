@@ -55,6 +55,10 @@ export function insert_element(){
     handleOpen();
 }
 
+export function wrap_element(){
+    //TODO: implement this
+}
+
 export function handleClose() {
     app.setState({showModal: false, modalText:''});
 }
@@ -149,7 +153,7 @@ function add_prev_line(m){
 }
 
 function wrapIn(toWrap, wrapper){
-    if (!toWrap.parent)
+    if (!toWrap || !toWrap.parent)
         return //TODO, we might want to wrap the top-level in some cases
     
     toWrap.parent.children.splice(toWrap.idx, 1);

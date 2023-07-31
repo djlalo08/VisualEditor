@@ -57,7 +57,10 @@ export function keypress(e){
             a.delete_element(selected);
             break;
         case SPACE:
-            a.insert_element();
+            if (held_down.has(SHIFT))
+                a.wrap_element();
+            else
+                a.insert_element();
             break;
         case W:
             app.setState({insertDir: 'Up'}, a.insert_element);

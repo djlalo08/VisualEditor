@@ -20,6 +20,7 @@ WORKING ON:
     -A and D behavior is a bit weird
     -Navigation is wonky
     -When map are added with space into a node, they should replace the node rather than become its children
+    -Wrap functionality (Shift+Space)
 
 
 UP NEXT:
@@ -30,13 +31,11 @@ UP NEXT:
 
 TODOs: 
 -Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
--Make maps from mapRepo import necessary knowledge (insCount, outsCount, nfix, inline, etc)
 -Make maps for control flow:
   -For each
 -Test suite
 -Update readme
 -Add set/get maps to be used as variables
--Now that we can freely make stuff, try writing up some code in PO
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side
