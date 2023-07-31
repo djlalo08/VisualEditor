@@ -52,7 +52,9 @@ export const mapRepo = {
         },
         in_num: 2, out_num:1, underfix:'t', 
     },
-    '-1': { fn:  ins => ins.map(x => x-1) },
+    '-1': { fn:  ins => ins.map(x => x-1), 
+        in_num: 1, out_num: 1, postfix:'t',
+    },
     // 'inc': { fn:  ins => [ins.map(x => x+1)] },
 }
 
