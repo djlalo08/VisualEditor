@@ -68,7 +68,7 @@ let id = 0;
 // const FILE = 'lambda_nest';
 // const FILE = 'inc';
 // const FILE = 'if_test';
-// const FILE = 'lambdas';
+const FILE = 'lambdas';
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
@@ -78,7 +78,7 @@ let id = 0;
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';
-const FILE = 'empty';
+// const FILE = 'empty';
 // const FILE = 'ls';
 
 export function nextId(){
