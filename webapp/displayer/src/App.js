@@ -17,8 +17,6 @@ import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, p
 /*
 WORKING ON:
 -Clean up UI, and make it possible to write code in UI!
-    -Navigation is wonky
-    -When map are added with space into a node, they should replace the node rather than become its children
     -Wrap functionality (Shift+Space)
 
 THINK ABOUT:

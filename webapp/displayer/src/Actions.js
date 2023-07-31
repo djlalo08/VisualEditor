@@ -55,10 +55,6 @@ export function insert_element(){
     handleOpen();
 }
 
-export function wrap_element(){
-    //TODO: implement this
-}
-
 export function handleClose() {
     app.setState({showModal: false, modalText:''});
 }
@@ -85,9 +81,10 @@ export function insertMapFromModal(){
     let m = makeMap(selected, name, otherData);
 
     switch (insertDir) {
-        case '':
-            selected.children.push(m);
-            updateAST();
+        case 'In':
+            replaceNode(m, selected, 0);
+            break;
+        case 'Wrap':
             break;
         case 'Right_Out':
             add_right_out(m);
@@ -239,6 +236,12 @@ function insertNode(node, new_parent, position){
     node.parent = new_parent;
     
     updateAST();
+}
+
+function replaceNode(new_node, old_node){
+    let {idx, parent} = old_node;
+    parent.children.splice(idx, 1);
+    insertNode(new_node, parent, 0);
 }
 
 export function extract(){
