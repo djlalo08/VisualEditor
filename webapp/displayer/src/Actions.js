@@ -1,3 +1,4 @@
+import { mapRepo } from './MapRepo';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
 import { addAttr, delAttr, getAttrs, getName, makeMap, printAst } from './Utils/NodeUtils';
@@ -68,14 +69,15 @@ export function insertMapFromModal(){
     let {selected, modalText, insertDir} = app.state;
 
     let name = modalText.trim();
-    let in_num, out_num;
+    let mapData;
 
     if (app.state.irs.hasOwnProperty(name)){
-        let {inCount, outCount, import_from} = app.state.irs[name];
-        in_num = inCount;
-        out_num = outCount;
+        mapData = app.state.irs[name];
+    } else if (mapRepo.hasOwnProperty(name)){
+        mapData = mapRepo[name];
     }
 
+    let { in_num, out_num } = mapData;
     let m = makeMap(selected, name, in_num, out_num);
 
     switch (insertDir) {

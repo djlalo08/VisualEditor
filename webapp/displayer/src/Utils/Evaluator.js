@@ -50,7 +50,7 @@ class Evaluationator {
         let [ins, outs] = ast_node.children;
         if (attrs.name in mapRepo){
             ins = ins.children.map(this.evaluate);
-            let fn = mapRepo[attrs.name];
+            let { fn } = mapRepo[attrs.name];
 
             let unbounds = ins.filter(x => x && x.length && x[0] == 'UNBOUND');
             return unbounds.length? getFunctionPendingBindings(ins, fn): fn(ins);

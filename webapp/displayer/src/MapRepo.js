@@ -1,23 +1,27 @@
 
 export const mapRepo = {
-    '+': ins => [ins.reduce( (acc, elt) => acc+elt, 0)],
-    '+!': ins => {
-        console.log('logging +'); 
-        console.log(ins);
-        return [ins.reduce( (acc, elt) => acc+elt, 0)];
+    '+': { fn: ins => [ins.reduce( (acc, elt) => acc+elt, 0)] ,
+            in_num: 2, out_num: 1,
     },
-    '*': ins => [ins.reduce( (acc, elt) => acc*elt, 1)],
-    '-': ins => [ins[0]- mapRepo['+'](ins.slice(1))],
-    '^2': ins => ins.map(x=>x*x),
-    '√': ins => {let abs = ins.map(x=>Math.sqrt(x)); return [abs, -abs]},
-    'id': ins => ins,
-    'id2': ins => ins,
-    'print': ins => {ins.forEach(x =>  console.log(x));},
-    '>': ins => [ins[0]>ins[1]],
-    '<': ins => [ins[0]<ins[1]],
-    'ls': ins => [ins],
-    'map': ins => [ins[0].map(ins[1])],
-    '2map': ins => {
+    '+!': { fn: ins => {
+            console.log('logging +'); 
+            console.log(ins);
+            return [ins.reduce( (acc, elt) => acc+elt, 0)];
+        },
+        in_num: 2, out_num: 1,
+    },
+    '*': { fn: ins => [ins.reduce( (acc, elt) => acc*elt, 1)] },
+    '-': { fn: ins => [ins[0]- mapRepo['+'](ins.slice(1))] },
+    '^2': { fn: ins => ins.map(x=>x*x) },
+    '√': { fn: ins => {let abs = ins.map(x=>Math.sqrt(x)); return [abs, -abs]} },
+    'id': { fn: ins => ins },
+    'id2': { fn: ins => ins } ,
+    'print': { fn:  ins => {ins.forEach(x =>  console.log(x));}},
+    '>': { fn:  ins => [ins[0]>ins[1]]},
+    '<': { fn:  ins => [ins[0]<ins[1]]},
+    'ls': { fn:  ins => [ins]},
+    'map': { fn:  ins => [ins[0].map(ins[1])]},
+    '2map': { fn:  ins => {
         let [as, bs, fn] = ins;
         const n = Math.min(as.length, bs.length);
         let result = [];
@@ -25,17 +29,17 @@ export const mapRepo = {
             result.push(fn([as[i], bs[i]]));
         }
         return result;
-    },
-    'filter': ins => {
+    } },
+    'filter': { fn:  ins => {
         let res = [];
         for (let x of ins[0]){
             if (ins[1](x)[0])
                 res.push(x);
         }
         return [res];
-    },
-    '-1': ins => ins.map(x => x-1),
-    // 'inc': ins => [ins.map(x => x+1)],
+    } },
+    '-1': { fn:  ins => ins.map(x => x-1) },
+    // 'inc': { fn:  ins => [ins.map(x => x+1)] },
 }
 
 export function specialMapsRepo(evaluator) {
