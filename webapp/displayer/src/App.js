@@ -17,11 +17,12 @@ import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, p
 /*
 WORKING ON:
 -Clean up UI, and make it possible to write code in UI!
-    -A and D behavior is a bit weird
     -Navigation is wonky
     -When map are added with space into a node, they should replace the node rather than become its children
     -Wrap functionality (Shift+Space)
 
+THINK ABOUT:
+-Have to reconcile horizontals with homiconic repr
 
 UP NEXT:
 -Let's make quicksort!
@@ -37,6 +38,7 @@ TODOs:
 -Test suite
 -Update readme
 -Add set/get maps to be used as variables
+-Add left_out, right_out inserts
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side

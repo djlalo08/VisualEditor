@@ -40,6 +40,8 @@ export function keypress(e){
         return;
     }
 
+    let shift = held_down.has(SHIFT);
+
     switch (e.keyCode) {
         case UP:
             a.moveUp();
@@ -57,7 +59,7 @@ export function keypress(e){
             a.delete_element(selected);
             break;
         case SPACE:
-            if (held_down.has(SHIFT))
+            if (shift)
                 a.wrap_element();
             else
                 a.insert_element();
@@ -69,10 +71,10 @@ export function keypress(e){
             app.setState({insertDir: 'Down'}, a.insert_element);
             break;
         case D:
-            app.setState({insertDir: 'Right'}, a.insert_element);
+            app.setState({insertDir: shift? 'Right_Out' : 'Right_In'}, a.insert_element);
             break;
         case A:
-            app.setState({insertDir: 'Left'}, a.insert_element);
+            app.setState({insertDir: shift? 'Left_Out' : 'Left_In'}, a.insert_element);
             break;
         case T:
             a.secondSelect();
@@ -84,7 +86,7 @@ export function keypress(e){
             a.extract();
             break;
         case Z:
-            if (held_down.has(SHIFT)) 
+            if (shift)
                 a.redo();
             else
                 a.undo();
@@ -96,7 +98,7 @@ export function keypress(e){
                 a.setToConnect();
             break;
         case ENTER:
-            if (held_down.has(SHIFT)) 
+            if (shift)
                 a.prevLine();
             else
                 a.nextLine();

@@ -1,2 +1,12 @@
 Root
     Vertical[selected:t]
+        Map[name:hi, inline:t]
+            Ins
+                Node
+                Node
+            Outs
+        Map[name:hi, inline:t]
+            Ins
+                Node
+                Node
+            Outs

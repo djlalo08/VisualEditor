@@ -89,11 +89,17 @@ export function insertMapFromModal(){
             selected.children.push(m);
             updateAST();
             break;
-        case 'Right':
-            add_right(m);
+        case 'Right_Out':
+            add_right_out(m);
             break;
-        case 'Left':
-            add_left(m);
+        case 'Right_In':
+            add_right_in(m);
+            break;
+        case 'Left_In':
+            add_left_in(m);
+            break;
+        case 'Left_Out':
+            add_left_out(m);
             break;
         case 'Down':
             add_next_line(m);
@@ -106,28 +112,41 @@ export function insertMapFromModal(){
     handleClose();
 }
 
-function add_right(m){
-    let {parent, idx} = app.state.selected;
+function add_right_in(m){
+    let parent_0  = app.state.selected.parent;
     
-    if (parent && getName(parent) == 'Horizontal'){
-        insertNode(m, parent, idx+1);
-    } else {
-        let ins = wrapIn(app.state.selected, {value:'Ins', children:[]});
-        wrapIn(ins, {value: 'Map[name:id]', children:[]});
-        add_right(m);
-    }
+    if (!parent_0 || getName(parent_0) != 'Horizontal')
+        wrapIn(app.state.selected, {value:'Horizontal', children:[]});
+
+    let {parent, idx} = app.state.selected;
+
+    insertNode(m, parent, idx+1);
 }
 
-function add_left(m){
+function add_right_out(m){
+    
+}
+
+function add_left_in(m){
+    let parent_0  = app.state.selected.parent;
+    
+    if (!parent_0 || getName(parent_0) != 'Horizontal')
+        wrapIn(app.state.selected, {value:'Horizontal', children:[]});
+
+    let {parent, idx} = app.state.selected;
+
+    insertNode(m, parent, Math.max(idx-1,0));
+}
+
+function add_left_out(m){
     let {parent, idx} = app.state.selected;
     
     if (parent && getName(parent) == 'Horizontal'){
         insertNode(m, parent, Math.max(idx-1, 0));
     } else {
         wrapIn(app.state.selected, {value:'Horizontal', children:[]});
-        add_left(m);
+        // add_left(m);
     }
-    
 }
 
 function add_next_line(m){
