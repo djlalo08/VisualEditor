@@ -10,6 +10,13 @@ export function delAttr(node, key){
     node.value = name + stringifyAttrs(attrs);
 }
 
+export function appendAttrObj(node, new_attrs) {
+    let [name, attrs] = getNameAndAttrs(node);
+    attrs = {...attrs, ...new_attrs};
+    console.log(attrs);
+    node.value = name + stringifyAttrs(attrs);
+}
+
 export function stringifyAttrs(attrs){
     if (!len(attrs)) 
         return '';
@@ -68,18 +75,21 @@ export function getAttrs(node){
     return {...readAttrs(values[1])};
 }
 
-export function makeMap(parent, name, ins_num, outs_num){
+export function makeMap(parent, name, mapData){
+    let {in_num, out_num, ...otherData} = mapData;
+
     let map = {value: `Map[name:${name}]`, idx:0, parent};
+    appendAttrObj(map, otherData);
 
     let ins = {value: 'Ins', idx: 0, parent:map}
     let ins_nodes = [];
-    for (let i = 0; i < ins_num; i++){
+    for (let i = 0; i < in_num; i++){
         ins_nodes.push({value: 'Node', idx:i, children:[], parent:ins});
     }
 
     let outs = {value: 'Outs', idx: 1, parent:map}
     let outs_nodes = [];
-    for (let i = 0; i < outs_num; i++){
+    for (let i = 0; i < out_num; i++){
         outs_nodes.push({value: 'Node', idx:i, children:[], parent:outs});
     }
 

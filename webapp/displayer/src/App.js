@@ -19,6 +19,7 @@ WORKING ON:
 -Clean up UI, and make it possible to write code in UI!
     -A and D behavior is a bit weird
     -Navigation is wonky
+    -When map are added with space into a node, they should replace the node rather than become its children
 
 
 UP NEXT:

@@ -1,7 +1,7 @@
 
 export const mapRepo = {
     '+': { fn: ins => [ins.reduce( (acc, elt) => acc+elt, 0)] ,
-            in_num: 2, out_num: 1,
+            in_num: 2, out_num: 1, infix:'t'
     },
     '+!': { fn: ins => {
             console.log('logging +'); 
@@ -16,7 +16,7 @@ export const mapRepo = {
     '√': { fn: ins => {let abs = ins.map(x=>Math.sqrt(x)); return [abs, -abs]} },
     'id': { fn: ins => ins },
     'id2': { fn: ins => ins } ,
-    'print': { fn:  ins => {ins.forEach(x =>  console.log(x));}},
+    'print': { fn:  ins => ins.forEach(x =>  console.log(x))},
     '>': { fn:  ins => [ins[0]>ins[1]]},
     '<': { fn:  ins => [ins[0]<ins[1]]},
     'ls': { fn:  ins => [ins]},

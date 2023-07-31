@@ -77,8 +77,8 @@ export function insertMapFromModal(){
         mapData = mapRepo[name];
     }
 
-    let { in_num, out_num } = mapData;
-    let m = makeMap(selected, name, in_num, out_num);
+    let { fn, ...otherData } = mapData;
+    let m = makeMap(selected, name, otherData);
 
     switch (insertDir) {
         case '':
