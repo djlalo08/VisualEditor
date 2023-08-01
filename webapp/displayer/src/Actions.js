@@ -246,7 +246,7 @@ function insertNode(node, new_parent, position){
 function replaceNode(new_node, old_node){
     let {idx, parent} = old_node;
     parent.children.splice(idx, 1);
-    insertNode(new_node, parent, 0);
+    insertNode(new_node, parent, idx);
 }
 
 export function extract(){
