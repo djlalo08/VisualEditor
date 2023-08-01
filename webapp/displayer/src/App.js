@@ -17,10 +17,10 @@ import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, p
 /*
 WORKING ON:
 -Clean up UI, and make it possible to write code in UI!
-    -Wrap functionality (Shift+Space)
 
 THINK ABOUT:
 -Have to reconcile horizontals with homiconic repr
+-Maybe we do need nodes after all: 1) consider homoiconicity. 2) Say You want to select, or delete, or replace entire contents of a Node, You need to be able to select the Node, which means Node needs to exist
 
 UP NEXT:
 -Let's make quicksort!

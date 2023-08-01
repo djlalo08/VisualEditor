@@ -82,9 +82,10 @@ export function insertMapFromModal(){
 
     switch (insertDir) {
         case 'In':
-            replaceNode(m, selected, 0);
+            replaceNode(m, selected);
             break;
         case 'Wrap':
+            wrapIn(selected, m);
             break;
         case 'Right_Out':
             add_right_out(m);
@@ -174,7 +175,11 @@ function wrapIn(toWrap, wrapper){
     
     toWrap.parent.children.splice(toWrap.idx, 1);
     insertNode(wrapper, toWrap.parent, toWrap.idx);
-    insertNode(toWrap, wrapper, 0);
+    if (getName(wrapper) == 'Map')
+        replaceNode(toWrap, wrapper.children[0].children[0]);
+    else 
+        insertNode(toWrap, wrapper, 0);
+
 }
   
 export function updateAST(){
