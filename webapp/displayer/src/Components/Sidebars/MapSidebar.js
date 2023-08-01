@@ -15,14 +15,16 @@ let {variableinput, inline} = attrs;
 
 let onChangeInCount = e => {
     let newLength = e.target.value;
-    console.log(newLength);
-    updateToMatchLength(newLength, ins.children, () => makeNode(node));
+    updateToMatchLength(newLength, ins.children, () => makeNode(ins));
+    for (let i = 0; i < ins.children.length; i++){
+        ins.children[i].idx = i;
+    }
     updateAST();
 }
 
 let onChangeOutCount = e => {
     let newLength = e.target.value;
-    updateToMatchLength(newLength, outs.children, () => makeNode(node));
+    updateToMatchLength(newLength, outs.children, () => makeNode(outs));
     updateAST();
 }
 
