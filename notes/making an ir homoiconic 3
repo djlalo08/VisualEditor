@@ -1,0 +1,90 @@
+It's time to reconcile what our programs actually look like, and how they evaluate and behave with our homoiconic descriptions.
+
+1. Code can be arbitrarily evaluated. This means any Map, constant, or value (that is fully bound) can be evaluated
+2. We have an IR that does not 'look like data' even if it represents data
+
+We have 2 ways forward: 
+    1) Continue with our pretty IRs as they are and understand that ins, outs, maps, etc are actually representations of things
+    2) Start making IR look like data
+
+So let's just start with translation as semantic sugar.
+-Map is a Tuple2 with code:Map
+-Vertical is an SList
+-Horizontal is a PList
+-Ins is a PList
+-Outs is a PList
+
+So we still do have the old thing:
+
+M = (<b, M, [M], c>, <b>)
+
+It's actually quite simple, which is nice
+
+Now evaluation does get a bit tricky because evaluation happens bottom-up
+This is complicated when it comes to bindings
+
+Take this program
+Root
+   Vertical
+        Map[name:ls, prefix:t, dont_cache:t]
+            Ins
+                Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
+            Outs
+                OutBinding[setvalue:b1]
+        Map[name:map]
+            Ins
+                InBinding[getvalue:b1]
+                Map[name:+!]
+                    Ins
+                        UnBound[name:x, className:unbound, getvalue:u1]
+                        Constant[name:c, value:5]
+                    Outs
+            Outs
+                OutBinding[setvalue:b3]
+
+Evaluating ls is simple, we just evlauate ls.
+But evluating map is complicated because it depends on ls, which isn't part of it
+
+If we had:
+                
+Root
+   Vertical
+        Map[name:map]
+            Ins
+                Map[name:ls, prefix:t, dont_cache:t]
+                    Ins
+                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                        Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
+                    Outs
+                        OutBinding[setvalue:b1]
+                Map[name:+!]
+                    Ins
+                        UnBound[name:x, className:unbound, getvalue:u1]
+                        Constant[name:c, value:5]
+                    Outs
+            Outs
+                OutBinding[setvalue:b3]
+Then it is simple, to evaluate map, we just evaluate its ins, which are all self-contained.
+
+But in the first example we have to defer to our broader context to understand the value of map.
+
+THis makes defining a unit of evaluation a bit confusing. A unit of evaluation can almost just be a map. But that's not really correct because in the first scenario we would want map to be a unit of evaluation, but it isn't fully. When we try to evaluate map, we end up using information from its slist
+
+So it's almost like we have to simulate transforming the code in the first example into the code in the second example. InBindings are pointers (which is sort of obvious), but we treat (theoretically) the thing they point to as existing uniquely _inside_ our map
+
+And so we have an answer -- our unit of evaluation is a map. This is nice because maps are also our homoiconic unit
+
+Let's rewrite it yet again:
+
+M = (<E>, <outbinding, outbound>)
+With E meaning evaluable element: Map, [Map], c, inbinding, inbound, unbound
+
+And so slists aren't fundamentally a part of our homoiconic model. Slists are simply a structure that happens to be evaluable, and it is useful to us
+
+Note that for an slist to be evaluable, it must be indexed (to select values)
+
+Can an indexed plist be evaluable? I don't really see what the value would be... p-list will never be a map input
+
+Note that slists and plists are constants (or fns) and in that sense, they're evaluable: plist(2,3,5) = <2,3,5>
+But an indexed slist or plist only evaluates the selected elements
