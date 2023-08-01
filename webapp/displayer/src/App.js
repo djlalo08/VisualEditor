@@ -82,9 +82,9 @@ let id = 0;
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';
-// const FILE = 'empty';
+const FILE = 'empty';
 // const FILE = 'ls';
-const FILE = 'quicksort';
+// const FILE = 'quicksort';
 
 export function nextId(){
   return ++id;

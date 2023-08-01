@@ -12,6 +12,7 @@ export function MapSidebar({attrs, node}){
 
 let [ins, outs] = node.children;
 let {variableinput, inline} = attrs;
+let {hide_outs, returnidx} = attrs;
 
 let onChangeInCount = e => {
     let newLength = e.target.value;
@@ -38,14 +39,27 @@ let onChangeVisual = e => {
 }
 
 let onChangeInLine = e => {
-    console.log(e.target.checked);
     if (e.target.checked)
         addAttr(node, 'inline', 't');
     else
         delAttr(node, 'inline');
     updateAST();
 }
-    
+
+let onChangeHideOuts = e => {
+    if (e.target.checked)
+        addAttr(node, 'hide_outs', 't');
+    else
+        delAttr(node, 'hide_outs');
+    updateAST();
+}
+
+let onChangeReturnIdx = e => {
+    let newIdx = e.target.value;
+    addAttr(node, 'returnidx', newIdx);
+    updateAST();
+}
+
 
 let insCount = ins.children.length;
 let outsCount = outs && outs.children? outs.children.length: 0;
@@ -63,12 +77,12 @@ return <>
     <Row>
       <Form.Label column>Ins</Form.Label>
       <Col><Form.Control type="number" value={insCount} 
-            onChange={onChangeInCount} disabled={!variableinput}/></Col>
+            onChange={onChangeInCount} disabled={!variableinput} min={0}/></Col>
     </Row>
     <Row>
       <Form.Label column>Outs</Form.Label>
       <Col><Form.Control type="number" value={outsCount} 
-            onChange={onChangeOutCount}/></Col>
+            onChange={onChangeOutCount} min={0}/></Col>
     </Row>
     <br/>
     <br/>
@@ -84,10 +98,17 @@ return <>
     <Row>
         <Form.Label column>Inline</Form.Label>
         <Col> <Form.Check checked={inline || false} onChange={onChangeInLine} type="switch">
-        </Form.Check> </Col>
+        </Form.Check></Col>
     </Row>
+    <Row>
+        <Form.Label column>HideOuts</Form.Label>
+        <Col> <Form.Check checked={hide_outs || false} onChange={onChangeHideOuts} type="switch">
+        </Form.Check></Col>
+        <Form.Label column>ReturnIdx</Form.Label>
+        <Col><Form.Control type="number" disabled={!hide_outs} 
+            onChange={onChangeReturnIdx} value={!hide_outs? '': returnidx} max={outsCount-1} min={0}/></Col>
+    </Row>
+
 </>;
 
 }
-
-//TODO line 83 needs to be a boolean option
