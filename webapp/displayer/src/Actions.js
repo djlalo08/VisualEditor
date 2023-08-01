@@ -1,7 +1,7 @@
 import { mapRepo } from './MapRepo';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
-import { addAttr, appendAttrObj, delAttr, getAttrs, getName, makeMap, printAst } from './Utils/NodeUtils';
+import { addAttr, appendAttrObj, delAttr, getAttrs, getName, makeMap, makeNode, printAst } from './Utils/NodeUtils';
 
 let app = null;
 let selectables = ['Map', 'Node', 'InBound', 'OutBound', 'Constant'];
@@ -35,20 +35,7 @@ export function delete_element(elmt_to_del){
     if (!elmt_to_del)
         return;
 
-    let {parent, idx} = elmt_to_del;
-
-    switch (getName(elmt_to_del)){
-        case 'Map':
-            parent.children.splice(idx, 1);
-            break;
-        case 'Node':
-            elmt_to_del.children = [];
-            break;        
-        default:
-            return;
-    }
-    
-    updateAST();
+    replaceNode(makeNode(), elmt_to_del);
 }
 
 export function insert_element(){
