@@ -19,6 +19,9 @@ class Evaluationator {
         let [name, attrs] = getNameAndAttrs(ast_node);
         console.log(`Evaluating ${name}: ${attrs.name}`);
         switch (name){
+            case 'Node':
+                let x = this.evaluate(ast_node.parent);
+                return x[ast_node.idx];
             case 'Outs':
                 return this.evaluate(ast_node.parent);
             case 'OutBinding':
