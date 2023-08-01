@@ -37,6 +37,7 @@ TODOs:
 -Update readme
 -Add set/get maps to be used as variables
 -Add left_out, right_out inserts
+-Adding a constant assumes it is a number. Make flexible for other constant types
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side
@@ -54,6 +55,7 @@ Q and A:
 -What is the difference between In/OutBinding and In/OutBound? 
   Binding is for wire connections
   Bound is for params (i.e. InBound are function arguments, OutBound are for function returns)
+-What does unwrap attr in constants mean?
 
 APPARENT INCONSISTENCIES:
 -It seems that in some places InBound is characterized by getvalue, and in other cases by bind_idx. In yet other cases by name?
