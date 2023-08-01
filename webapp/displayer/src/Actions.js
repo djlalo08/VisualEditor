@@ -1,7 +1,7 @@
 import { mapRepo } from './MapRepo';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
-import { addAttr, delAttr, getAttrs, getName, makeMap, printAst } from './Utils/NodeUtils';
+import { addAttr, appendAttrObj, delAttr, getAttrs, getName, makeMap, printAst } from './Utils/NodeUtils';
 
 let app = null;
 let selectables = ['Map', 'Node', 'InBound', 'OutBound', 'Constant'];
@@ -69,8 +69,8 @@ export function insertMapFromModal(){
     let {selected, modalText, insertDir} = app.state;
 
     let name = modalText.trim();
-    let mapData;
-
+    let mapData = {fn:null};
+    
     if (app.state.irs.hasOwnProperty(name)){
         mapData = app.state.irs[name];
     } else if (mapRepo.hasOwnProperty(name)){
@@ -78,7 +78,19 @@ export function insertMapFromModal(){
     }
 
     let { fn, ...otherData } = mapData;
-    let m = makeMap(selected, name, otherData);
+    let name_split = name.split(' ');
+    let m;
+    
+    if (name_split[0] == 'c'){
+        m = {value:'Constant', parent:selected, children:[]}
+        appendAttrObj(m, { 
+            className:'constant', 
+            value:name_split[1], name:name_split[1],
+            type:'Number', unwrap:'t',
+        });
+    } else {
+        m = makeMap(selected, name, otherData);
+    }
 
     switch (insertDir) {
         case 'In':
