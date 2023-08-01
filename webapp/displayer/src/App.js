@@ -29,6 +29,7 @@ UP NEXT:
 
 
 TODOs: 
+-Logic for whether stuff or isn't in lists when evaluating is sort of confusing and maybe wrong
 -Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
 -Use window.showDirectoryPicker() to enable opening and saving files more directly
 -Make maps for control flow:
