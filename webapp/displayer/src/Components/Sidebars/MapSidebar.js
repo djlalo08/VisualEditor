@@ -2,7 +2,7 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import { updateAST } from '../../Actions';
+import { setMapIns, updateAST } from '../../Actions';
 import { updateToMatchLength } from '../../Utils/ListUtils';
 import { addAttr, delAttr, makeNode } from '../../Utils/NodeUtils';
 
@@ -15,12 +15,7 @@ let {variableinput, inline} = attrs;
 let {hide_outs, returnidx} = attrs;
 
 let onChangeInCount = e => {
-    let newLength = e.target.value;
-    updateToMatchLength(newLength, ins.children, () => makeNode(ins));
-    for (let i = 0; i < ins.children.length; i++){
-        ins.children[i].idx = i;
-    }
-    updateAST();
+    setMapIns(node, e.target.value);
 }
 
 let onChangeOutCount = e => {

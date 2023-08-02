@@ -11,6 +11,9 @@ const SHIFT = 16;
 const COMMAND_L = 91;
 const COMMAND_R = 93;
 
+const PLUS = 187;
+const MINUS = 189;
+
 const M = 77;
 const T = 84;
 const E = 69;
@@ -20,6 +23,8 @@ const D = 68;
 const W = 87;
 const S = 83;
 const C = 67;
+const I = 73;
+const O = 79;
 
 let app = null;
 let held_down = new Set();
@@ -44,6 +49,8 @@ export function keypress(e){
 
     let shift = held_down.has(SHIFT);
     let command = held_down.has(COMMAND_L) || held_down.has(COMMAND_R);
+    let i_key = held_down.has(I);
+    let o_key = held_down.has(O);
 
     switch (e.keyCode) {
         case UP:
@@ -105,6 +112,19 @@ export function keypress(e){
             else
                 a.nextLine();
             break;
+        case PLUS:
+            if (i_key){
+                a.incMapIns(selected);
+            } else if (o_key){
+                //Can we really ever modify out count?
+            }
+            break;
+        case MINUS:
+            if (i_key){
+                a.decMapIns(selected);
+            } else if (o_key){
+                //Can we ever really modify outcount?
+            }
     }
 }
 

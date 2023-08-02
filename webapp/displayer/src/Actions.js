@@ -1,6 +1,7 @@
 import { mapRepo } from './MapRepo';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
+import { updateToMatchLength } from './Utils/ListUtils';
 import { addAttr, appendAttrObj, delAttr, getAttrs, getName, makeMap, makeNode, printAst } from './Utils/NodeUtils';
 
 let app = null;
@@ -35,7 +36,9 @@ export function delete_element(elmt_to_del){
     if (!elmt_to_del)
         return;
 
-    replaceNode(makeNode(), elmt_to_del);
+    let node = makeNode();
+    replaceNode(node, elmt_to_del);
+    updateSelected(node);
 }
 
 export function insert_element(){
@@ -105,6 +108,7 @@ export function insertMapFromModal(){
             add_prev_line(m);
             break;
     }
+    updateSelected(m);
     app.setState({insertDir: ''});
     handleClose();
 }
@@ -470,4 +474,23 @@ export function loadImports(imports){
         .then(response => response.text())
         .then(importCode => app.addImport(importName, importCode));
     }
+}
+
+export function setMapIns(map, count){
+    let [ins, _] = map.children;
+    updateToMatchLength(count, ins.children, () => makeNode(ins));
+    for (let i = 0; i < ins.children.length; i++){
+        ins.children[i].idx = i;
+    }
+    updateAST();
+}
+
+export function incMapIns(map){
+    let oldLength = map.children[0].children.length;
+    setMapIns(map, oldLength+1);
+}
+
+export function decMapIns(map){
+    let oldLength = map.children[0].children.length;
+    setMapIns(map, oldLength-1);
 }
