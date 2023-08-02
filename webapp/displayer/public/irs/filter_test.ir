@@ -1,0 +1,18 @@
+Root
+    Vertical
+        Map[name:filter]
+            Ins
+                Map[name:ls, variableinput:t, unwrap:t, returnidx:0]
+                    Ins
+                        Constant[name:5, value:5, className:constant, type:Number, unwrap:t]
+                        Constant[name:4, value:4, className:constant, type:Number, unwrap:t]
+                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                        Constant[name:8, value:8, className:constant, type:Number, unwrap:t]
+                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                    Outs
+                Map[name:<, infix:t]
+                    Ins
+                        UnBound[name:x, getvalue:u1, className:unbound]
+                        Constant[name:5, value:5, className:constant, type:Number, unwrap:t]
+                    Outs
+            Outs

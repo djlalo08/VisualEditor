@@ -16,7 +16,9 @@ import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, p
 
 /*
 WORKING ON:
--Clean up UI, and make it possible to write code in UI!
+General goal: Try to get working quicksort, and fix any issues along the way
+Specifically: Make filter work. There are issues with nesting levels
+
 
 THINK ABOUT:
 -Have to reconcile horizontals with homiconic repr
@@ -82,9 +84,10 @@ let id = 0;
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';
-const FILE = 'empty';
+// const FILE = 'empty';
 // const FILE = 'ls';
 // const FILE = 'quicksort';
+const FILE = 'filter_test';
 
 export function nextId(){
   return ++id;

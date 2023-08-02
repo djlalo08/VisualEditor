@@ -51,12 +51,8 @@ export const mapRepo = {
         return result;
     } },
     'filter': { fn:  ins => {
-            let res = [];
-            for (let x of ins[0]){
-                if (ins[1](x)[0])
-                    res.push(x);
-            }
-            return [res];
+            let [ls, f] = ins;
+            return [ls.filter(x => f([x])[0])];
         },
         in_num: 2, out_num:1, underfix:'t', 
     },
@@ -75,7 +71,7 @@ export const mapRepo = {
     '++': { fn: ins => {
             let result = [];
             for (let input of ins) result = result.concat(input);
-            return result;
+            return [result];
         },
         in_num: 2, out_num:1, infix:'t', variableinput:'t', inline:'t',
     },
