@@ -72,12 +72,15 @@ export function insertMapFromModal(){
     let m;
     
     if (name_split[0] == 'c'){
-        m = {value:'Constant', parent:selected, children:[]}
+        m = {value:'Constant', parent:selected, children:[]};
         appendAttrObj(m, { 
             className:'constant', 
             value:name_split[1], name:name_split[1],
             type:'Number', unwrap:'t',
         });
+    } else if (name_split[0] == 'u') {
+        m = {value:'UnBound', parent:selected, children:[]};
+        appendAttrObj(m, { className:'unbound', name:name_split[1],});
     } else {
         m = makeMap(selected, name, otherData);
     }
