@@ -64,13 +64,20 @@ export const mapRepo = {
         in_num: 1, out_num: 1, postfix:'t',
     },
     'spl': {fn: ins => {
-        let ls = ins[0];
-        console.log(ls);
-        console.log(ls.slice(0,1));
-        console.log(ls.slice(1));
-        return [ls.slice(0,1), ls.slice(1)];
-    },
+            let ls = ins[0];
+            console.log(ls);
+            console.log(ls.slice(0,1));
+            console.log(ls.slice(1));
+            return [ls.slice(0,1), ls.slice(1)];
+        },
         in_num: 1, out_num: 2, underfix:'t',
+    },
+    '++': { fn: ins => {
+            let result = [];
+            for (let input of ins) result = result.concat(input);
+            return result;
+        },
+        in_num: 2, out_num:1, infix:'t', variableinput:'t', inline:'t',
     },
     // 'inc': { fn:  ins => [ins.map(x => x+1)] },
 }
