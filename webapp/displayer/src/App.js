@@ -17,7 +17,11 @@ import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, p
 /*
 WORKING ON:
 General goal: Try to get working quicksort, and fix any issues along the way
-Specifically: Make filter work. There are issues with nesting levels
+Specifically: Make filter work. There are issues with connecting wires.
+
+InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
+
+Elements' unique IDs are line number in IR. Since there can only be 1 element per line, we know id is unique
 
 
 THINK ABOUT:

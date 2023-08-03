@@ -37,7 +37,7 @@ export const mapRepo = {
     '<=': { fn:  ins => [ins[0]<=ins[1]],
         in_num: 2, out_num: 1, infix:'t', inline:'t', variableinput:'t',
     },
-    'ls': { fn:  ins => [ins],
+    'ls': { fn:  ins => [[ins]],
         in_num: 2, out_num: 1, prefix:'t', inline:'t', variableinput:'t',
     },
     'map': { fn:  ins => [ins[0].map(ins[1])]},

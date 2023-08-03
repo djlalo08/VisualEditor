@@ -14,17 +14,17 @@ const COMMAND_R = 93;
 const PLUS = 187;
 const MINUS = 189;
 
-const M = 77;
-const T = 84;
-const E = 69;
-const Z = 90;
 const A = 65;
-const D = 68;
-const W = 87;
-const S = 83;
 const C = 67;
+const D = 68;
+const E = 69;
 const I = 73;
+const M = 77;
 const O = 79;
+const S = 83;
+const T = 84;
+const W = 87;
+const Z = 90;
 
 let app = null;
 let held_down = new Set();

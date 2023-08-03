@@ -451,7 +451,7 @@ export function connect(){
     }
     
     let startAttrs = getAttrs(start);
-    let value = startAttrs.setvalue || startAttrs.id*100;
+    let value = startAttrs.setvalue || startAttrs.id*100 || start.id;
     
     addAttr(start, 'setvalue', value);
     addAttr(end, 'getvalue', value);

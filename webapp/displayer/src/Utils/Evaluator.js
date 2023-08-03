@@ -20,6 +20,9 @@ class Evaluationator {
         console.log(`Evaluating ${name}: ${attrs.name}`);
         switch (name){
             case 'Node':
+                if (attrs.hasOwnProperty('getvalue')){
+                    return this.evaluate(this.outBindings[attrs.getvalue]);
+                }
                 return this.evaluate(ast_node.parent)[ast_node.idx];
             case 'Outs':
                 return this.evaluate(ast_node.parent);
@@ -115,7 +118,8 @@ class OutBinder{
     
     updateOutbindings(node){
         let [name, attrs] = getNameAndAttrs(node);
-        if (name == 'OutBinding'){
+        if (name == 'OutBinding' ||
+        (name == 'Node' && attrs.hasOwnProperty('setvalue'))){
             this.outBindings[attrs.setvalue] = node;
         }
 
