@@ -37,7 +37,7 @@ export const mapRepo = {
     '<=': { fn:  ins => [ins[0]<=ins[1]],
         in_num: 2, out_num: 1, infix:'t', inline:'t', variableinput:'t',
     },
-    'ls': { fn:  ins => [[ins]],
+    'ls': { fn:  ins => [ins],
         in_num: 2, out_num: 1, prefix:'t', inline:'t', variableinput:'t',
     },
     'map': { fn:  ins => [ins[0].map(ins[1])]},
@@ -61,9 +61,6 @@ export const mapRepo = {
     },
     'spl': {fn: ins => {
             let ls = ins[0];
-            console.log(ls);
-            console.log(ls.slice(0,1));
-            console.log(ls.slice(1));
             return [ls.slice(0,1), ls.slice(1)];
         },
         in_num: 1, out_num: 2, underfix:'t',

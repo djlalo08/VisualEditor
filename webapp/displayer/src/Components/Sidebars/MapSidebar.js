@@ -46,6 +46,7 @@ let onChangeHideOuts = e => {
         addAttr(node, 'hide_outs', 't');
     else
         delAttr(node, 'hide_outs');
+        delAttr(node, 'returnidx');
     updateAST();
 }
 

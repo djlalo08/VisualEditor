@@ -1,6 +1,6 @@
 Root
     Vertical
-        Map[name:ls, variableinput:t, unwrap:t, returnidx:0]
+        Map[name:ls, variableinput:t, unwrap:t]
             Ins
                 Constant[name:5, value:5, className:constant, type:Number, unwrap:t]
                 Constant[name:4, value:4, className:constant, type:Number, unwrap:t]
