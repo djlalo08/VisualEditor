@@ -58,7 +58,7 @@ class Evaluationator {
             let { fn } = mapRepo[attrs.name];
 
             let unbounds = ins.filter(x => x && x.length && x[0] == 'UNBOUND');
-            return unbounds.length? getFunctionPendingBindings(ins, fn): fn(ins);
+            return unbounds.length? [getFunctionPendingBindings(ins, fn)]: fn(ins);
         }
 
         let specialMaps = specialMapsRepo(this);

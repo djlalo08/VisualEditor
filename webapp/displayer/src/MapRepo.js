@@ -61,7 +61,7 @@ export const mapRepo = {
     },
     'spl': {fn: ins => {
             let ls = ins[0];
-            return [ls.slice(0,1), ls.slice(1)];
+            return [ls[0], ls.slice(1)];
         },
         in_num: 1, out_num: 2, underfix:'t',
     },

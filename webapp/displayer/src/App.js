@@ -90,8 +90,8 @@ let id = 0;
 // const FILE = 'test';
 // const FILE = 'empty';
 // const FILE = 'ls';
-// const FILE = 'quicksort';
-const FILE = 'filter_test';
+const FILE = 'quicksort';
+// const FILE = 'filter_test';
 
 export function nextId(){
   return ++id;

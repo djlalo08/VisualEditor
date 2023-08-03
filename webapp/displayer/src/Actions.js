@@ -80,7 +80,7 @@ export function insertMapFromModal(){
         });
     } else if (name_split[0] == 'u') {
         m = {value:'UnBound', parent:selected, children:[]};
-        appendAttrObj(m, { className:'unbound', name:name_split[1],});
+        appendAttrObj(m, { className:'unbound', name:name_split[1], getvalue:name_split[1]});
     } else {
         m = makeMap(selected, name, otherData);
     }
