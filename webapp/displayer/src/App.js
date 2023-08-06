@@ -74,7 +74,7 @@ BUGS:
 
 
 let id = 0;
-// const FILE = 'inc_test';
+const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
 // const FILE = 'inc';
 // const FILE = 'if_test';
@@ -90,7 +90,7 @@ let id = 0;
 // const FILE = 'test';
 // const FILE = 'empty';
 // const FILE = 'ls';
-const FILE = 'quicksort';
+// const FILE = 'quicksort';
 // const FILE = 'filter_test';
 
 export function nextId(){

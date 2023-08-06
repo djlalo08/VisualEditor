@@ -53,78 +53,78 @@ export function keypress(e){
     let o_key = held_down.has(O);
 
     switch (e.keyCode) {
-        case UP:
-            a.moveUp();
-            break;
-        case DOWN:
-            a.moveDown();
-            break;
-        case LEFT:
-            a.moveLeft(selected);
-            break;
-        case RIGHT:
-            a.moveRight(selected);
-            break;
-        case BACKSPACE:
-            a.delete_element(selected);
-            break;
-        case SPACE:
-            app.setState({insertDir: shift? 'Wrap' : 'In'}, a.insert_element);
-            break;
-        case W:
-            app.setState({insertDir: 'Up'}, a.insert_element);
-            break;
-        case S:
-            app.setState({insertDir: 'Down'}, a.insert_element);
-            break;
-        case D:
-            app.setState({insertDir: shift? 'Right_Out' : 'Right_In'}, a.insert_element);
-            break;
-        case A:
-            app.setState({insertDir: shift? 'Left_Out' : 'Left_In'}, a.insert_element);
-            break;
-        case T:
-            a.secondSelect();
-            break;
-        case M:
-            a.move();
-            break;
-        case E:
-            a.extract();
-            break;
-        case Z:
-            if (shift)
-                a.redo();
-            else
-                a.undo();
-            break;
-        case C:
-            if (app.state.toConnect)
-                a.connect();
-            else 
-                a.setToConnect();
-            break;
-        case ENTER:
-            if (shift)
-                a.prevLine();
-            else if (command)
-                app.eval_();
-            else
-                a.nextLine();
-            break;
-        case PLUS:
-            if (i_key){
-                a.incMapIns(selected);
-            } else if (o_key){
-                //Can we really ever modify out count?
-            }
-            break;
-        case MINUS:
-            if (i_key){
-                a.decMapIns(selected);
-            } else if (o_key){
-                //Can we ever really modify outcount?
-            }
+    case UP:
+        a.moveUp();
+        break;
+    case DOWN:
+        a.moveDown();
+        break;
+    case LEFT:
+        a.moveLeft(selected);
+        break;
+    case RIGHT:
+        a.moveRight(selected);
+        break;
+    case BACKSPACE:
+        a.delete_element(selected);
+        break;
+    case SPACE:
+        app.setState({insertDir: shift? 'Wrap' : 'In'}, a.insert_element);
+        break;
+    case W:
+        app.setState({insertDir: 'Up'}, a.insert_element);
+        break;
+    case S:
+        app.setState({insertDir: 'Down'}, a.insert_element);
+        break;
+    case D:
+        app.setState({insertDir: shift? 'Right_Out' : 'Right_In'}, a.insert_element);
+        break;
+    case A:
+        app.setState({insertDir: shift? 'Left_Out' : 'Left_In'}, a.insert_element);
+        break;
+    case T:
+        a.secondSelect();
+        break;
+    case M:
+        a.move();
+        break;
+    case E:
+        a.extract();
+        break;
+    case Z:
+        if (shift)
+            a.redo();
+        else
+            a.undo();
+        break;
+    case C:
+        if (app.state.toConnect)
+            a.connect();
+        else 
+            a.setToConnect();
+        break;
+    case ENTER:
+        if (shift)
+            a.prevLine();
+        else if (command)
+            app.eval_();
+        else
+            a.nextLine();
+        break;
+    case PLUS:
+        if (i_key){
+            a.incMapIns(selected);
+        } else if (o_key){
+            //Can we really ever modify out count?
+        }
+        break;
+    case MINUS:
+        if (i_key){
+            a.decMapIns(selected);
+        } else if (o_key){
+            //Can we ever really modify outcount?
+        }
     }
 }
 

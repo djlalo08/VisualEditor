@@ -1,10 +1,26 @@
 Root
-    Vertical[selected:t]
-        Map[name:ls, variableinput:t, unwrap:t, returnidx:0]
+    Vertical
+        Map[name:spl]
             Ins
-                Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
-                Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
-                Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
-                Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
-                Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
+                Map[name:ls, variableinput:t, unwrap:t, returnidx:0]
+                    Ins
+                        Constant[name:5, value:5, className:constant, type:Number, unwrap:t]
+                        Constant[name:4, value:4, className:constant, type:Number, unwrap:t]
+                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                        Constant[name:8, value:8, className:constant, type:Number, unwrap:t]
+                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                    Outs
             Outs
+                Node
+                Node
+        Map[name:filter]
+            Ins
+                Node
+                Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0]
+                    Ins
+                        UnBound[className:unbound, name:x, getvalue:x]
+                        Node
+                    Outs
+                        Node
+            Outs
+                Node

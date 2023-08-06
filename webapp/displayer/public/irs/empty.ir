@@ -1,2 +1,13 @@
 Root
-    Vertical[selected:t]
+    Vertical
+        Map[name:+, returnidx:0, hide_outs:t, infix:t, inline:t, variableinput:t]
+            Ins
+                Map[name:+, returnidx:0, hide_outs:t, infix:t, inline:t, variableinput:t]
+                    Ins
+                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+                    Outs
+                        Node
+                Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
+            Outs
+                Node

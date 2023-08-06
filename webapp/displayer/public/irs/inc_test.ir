@@ -1,6 +1,6 @@
 Root[inc dinc]
     Vertical
-        Map[name:inc]
+        Map[name:inc, import_from:./irs/]
             Ins
                 Constant[name:5, value:5, className:constant, unwrap:t, type:Number]
             Outs

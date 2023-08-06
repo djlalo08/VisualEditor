@@ -3,6 +3,6 @@ Root
         Map[name:+, infix:t]
             Ins
                 InBound[name:a, getvalue:u1, className:unbound]
-                Constant[name:1, value:1, type:Number, unwrap:t]
+                Constant[name:1, value:1, type:Number, unwrap:t, className:constant]
             Outs
                 OutBound[name:b, className:unbound]
