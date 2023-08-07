@@ -130,8 +130,11 @@ class App extends React.Component{
     let eval_result = evaluate(this.state.selected, outbindings, this.state.imports);
     console.log('eval result:');
     console.log(eval_result);
-    if (expectedResult && eval_result != expectedResult)
-      console.log('Wrong value!');
+    if (expectedResult && eval_result != expectedResult){
+      console.log(`Wrong value at ${'lambdas'}!`);
+      console.log(`Expected ${expectedResult} at id ${0} but got:`);
+      console.log(eval_result);
+    }
     if (typeof eval_result === 'function')
       eval_result += ' ';
     this.setState({eval_result});
@@ -249,7 +252,7 @@ class App extends React.Component{
       eval_result = eval_result.join(', ');
     }
 
-    let {showModal, modalText} = this.state;
+    let {showModal, modalText, selected} = this.state;
     let modal = <Modal show={showModal} onHide={handleClose} onShow={this.onShow}>
       <Modal.Body>
         <FormControl
@@ -273,7 +276,8 @@ class App extends React.Component{
         <Button onClick={() => this.eval_()}>Eval</Button>
         <Button onClick={this.getIRsList}>FileStuff</Button>
         <Button onClick={() => runTests(this)}>Run Tests</Button>
-        <p>{eval_result}</p>
+        <p>Result: {eval_result}</p>
+        <p>Selected Id: {selected ? selected.id : null}</p>
         {modal}
         <Sidebar node={this.state.selected} AST={AST}/>
       </div>

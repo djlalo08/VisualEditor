@@ -2,38 +2,21 @@ Root
     Vertical
         Map[name:ls, prefix:t]
             Ins
-                Map[name:id, returnidx:0]
-                    Ins
-                        Constant[name:2, value:2, className:constant, type:Number]
-                    Outs
-                Map[name:id, returnidx:0]
-                    Ins
-                        Constant[name:3, value:3, className:constant, type:Number]
-                    Outs
-                Map[name:id, returnidx:0]
-                    Ins
-                        Constant[name:4, value:4, className:constant, type:Number]
-                    Outs
-                Map[name:id, returnidx:0]
-                    Ins
-                        Constant[name:5, value:5, className:constant, type:Number]
-                    Outs
-                Map[name:id, returnidx:0]
-                    Ins
-                        Constant[name:6, value:6, className:constant, type:Number]
-                    Outs
+                Constant[name:2, value:2, className:constant, type:Number]
+                Constant[name:3, value:3, className:constant, type:Number]
+                Constant[name:4, value:4, className:constant, type:Number]
+                Constant[name:5, value:5, className:constant, type:Number]
+                Constant[name:6, value:6, className:constant, type:Number]
             Outs
                 OutBinding[setvalue:o1]
-        Map[name:map]
+        Map[name:map, returnidx:0]
             Ins
                 InBinding[getvalue:o1]
-                Map[name:id, returnidx:0]
+                Map[name:+, infix:t, returnidx:0]
                     Ins
-                        Map[name:+, infix:t, returnidx:0]
-                            Ins
-                                UnBound[name:x, className:unbound]
-                                Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
-                            Outs
+                        UnBound[name:x, className:unbound]
+                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
                     Outs
-                        OutBinding[setvalue:o2]
-                Outs
+                        Node
+            Outs
+                Node

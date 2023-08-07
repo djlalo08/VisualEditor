@@ -1,9 +1,9 @@
 import { openFile, setSelectedById } from "../Actions";
 
-export function runTests(app){
+export async function runTests(app){
 
-    // runTest(app, 'lambdas', 26, [8,9,10,11,12]);
-    runTest(app, 'lambdas', 7, 2);
+    await runTest(app, 'lambdas', 11, [8,9,10,11,12]);
+    // await runTest(app, 'lambdas', 4, 2);
 
 
 }

@@ -42,8 +42,7 @@ class Evaluationator {
                 this.cache[ast_node] = result;
                 return result;
             case 'Constant':
-                let res = eval_constant(attrs.type, attrs.value);
-                return attrs.unwrap ? res[0]: res;
+                return eval_constant(attrs.type, attrs.value);
             case 'UnBound':
                 return ['UNBOUND', attrs.getvalue];
             case 'InBound':
@@ -96,12 +95,12 @@ function getFunctionPendingBindings(ins, fn){
 function eval_constant(type, value){
     switch (type){
         case 'Number':
-            return [parseInt(value)];
+            return parseInt(value);
         case 'Boolean':
-            return [value == 't'];
+            return value == 't';
         case 'String':
         default:
-            return [value];
+            return value;
     }
 }
 
