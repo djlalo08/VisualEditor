@@ -77,11 +77,11 @@ BUGS:
 
 
 let id = 0;
+const FILE = 'inc';
 // const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
-// const FILE = 'inc';
 // const FILE = 'if_test';
-const FILE = 'lambdas';
+// const FILE = 'lambdas';
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';

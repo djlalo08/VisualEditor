@@ -11,7 +11,7 @@ let {bind_idx} = attrs;
 let inBounds = getInBounds(AST);
 
 let onChangeValue = e => {
-    let newValue = e.target.value;
+    let newValue = e.target.valueAsNumber;
     for (let inBound of inBounds){
         if (getAttrs(inBound).bind_idx == bind_idx)
             if (newValue == '')
