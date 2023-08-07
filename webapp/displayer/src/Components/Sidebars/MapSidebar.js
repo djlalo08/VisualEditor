@@ -42,11 +42,13 @@ let onChangeInLine = e => {
 }
 
 let onChangeHideOuts = e => {
-    if (e.target.checked)
+    if (e.target.checked){
         addAttr(node, 'hide_outs', 't');
-    else
+        addAttr(node, 'returnidx', 0);
+    } else {
         delAttr(node, 'hide_outs');
         delAttr(node, 'returnidx');
+    }
     updateAST();
 }
 
