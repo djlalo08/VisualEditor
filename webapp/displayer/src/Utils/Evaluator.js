@@ -17,7 +17,8 @@ class Evaluationator {
     
     evaluate(ast_node){
         let [name, attrs] = getNameAndAttrs(ast_node);
-        console.log(`Evaluating ${name}: ${attrs.name}`);
+        // console.log(`Evaluating ${name}: ${attrs.name}`);
+        
         switch (name){
             case 'Node':
                 if (attrs.hasOwnProperty('getvalue')){

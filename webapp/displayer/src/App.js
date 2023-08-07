@@ -125,16 +125,17 @@ class App extends React.Component{
     
   }
   
-  eval_(expectedResult){
+  eval_(assertFn){
     let outbindings = updateOutbindings(this.state.AST);
     let eval_result = evaluate(this.state.selected, outbindings, this.state.imports);
-    console.log('eval result:');
-    console.log(eval_result);
-    if (expectedResult && eval_result != expectedResult){
-      console.log(`Wrong value at ${'fileName'}!`);
-      console.log(`Expected ${expectedResult} at id ${0} but got:`);
+
+    if (assertFn) {
+      assertFn(eval_result);
+    } else {
+      console.log('eval result:');
       console.log(eval_result);
     }
+    
     if (typeof eval_result === 'function')
       eval_result += ' ';
     this.setState({eval_result});
