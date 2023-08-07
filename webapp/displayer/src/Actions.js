@@ -13,7 +13,7 @@ export function setApp(_app){
     app = _app;
 }
 
-export function updateSelected(new_selection){
+export function updateSelected(new_selection, callback){
     let {selected} = app.state;
     if (selected) 
         delAttr(selected, 'selected');
@@ -27,7 +27,25 @@ export function updateSelected(new_selection){
         app.setState({selected: new_selection});
     }
 
-    updateAST();
+    updateAST(callback);
+}
+
+export function setSelectedById(id, callback){
+    updateSelected(findNodeWithId(id, app.state.AST), callback);
+}
+
+function findNodeWithId(id, node){
+    let cur_id  = node.id;
+    if (cur_id == id)
+        return node;
+    
+    for (let child of node.children){
+        let result = findNodeWithId(id, child);
+        if (result)
+            return result;
+    }
+
+    return null;
 }
 
 export function delete_element(elmt_to_del){
@@ -188,9 +206,9 @@ function wrapIn(toWrap, wrapper){
 
 }
   
-export function updateAST(){
+export function updateAST(callback){
     let JSX = ast_to_jsx(app.state.AST)[0];
-    app.setState({AST: {...app.state.AST}, JSX});
+    app.setState({AST: {...app.state.AST}, JSX}, callback);
 }
 
 export function secondSelect(){
@@ -462,10 +480,10 @@ export function connect(){
     updateAST();
 }
 
-export function openFile(fileName){
-    fetch(`./irs/${fileName}.ir`)
-    .then(response => response.text())
-    .then(text => app.setState(app.stateFromIR(text)));
+export async function openFile(fileName, callback){
+    let response = await fetch(`./irs/${fileName}.ir`);
+    let text = await response.text();
+    app.setState(app.stateFromIR(text), callback);
 }
 
 export function loadImports(imports){

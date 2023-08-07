@@ -10,12 +10,15 @@ import { ast_to_jsx, loadImports } from './Utils/Converter';
 import { evaluate, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
 import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
+import { runTests } from './Utils/Tests';
 
 // import GeneratedApp from './Components/GeneratedApp';
 // import ExpectedApp from './Components/ExpectedApp';
 
 /*
 WORKING ON:
+first: Make a way to test existing code and make a test suite
+
 General goal: Try to get working quicksort, and fix any issues along the way
 Specifically: Make filter work. There are issues with connecting wires.
 
@@ -74,9 +77,9 @@ BUGS:
 
 
 let id = 0;
-const FILE = 'inc_test';
+// const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
-// const FILE = 'inc';
+const FILE = 'inc';
 // const FILE = 'if_test';
 // const FILE = 'lambdas';
 // const FILE = '2_arg_lambda';
@@ -122,11 +125,13 @@ class App extends React.Component{
     
   }
   
-  eval_(){
+  eval_(expectedResult){
     let outbindings = updateOutbindings(this.state.AST);
     let eval_result = evaluate(this.state.selected, outbindings, this.state.imports);
     console.log('eval result:');
     console.log(eval_result);
+    if (expectedResult && eval_result != expectedResult)
+      console.log('Wrong value!');
     if (typeof eval_result === 'function')
       eval_result += ' ';
     this.setState({eval_result});
@@ -267,6 +272,7 @@ class App extends React.Component{
         <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
         <Button onClick={() => this.eval_()}>Eval</Button>
         <Button onClick={this.getIRsList}>FileStuff</Button>
+        <Button onClick={() => runTests(this)}>Run Tests</Button>
         <p>{eval_result}</p>
         {modal}
         <Sidebar node={this.state.selected} AST={AST}/>

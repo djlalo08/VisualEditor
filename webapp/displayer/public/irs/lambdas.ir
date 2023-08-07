@@ -29,7 +29,7 @@ Root
                 InBinding[getvalue:o1]
                 Map[name:id, returnidx:0]
                     Ins
-                        Map[name:+, infix:t]
+                        Map[name:+, infix:t, returnidx:0]
                             Ins
                                 UnBound[name:x, className:unbound]
                                 Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
