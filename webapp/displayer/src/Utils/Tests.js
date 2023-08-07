@@ -2,11 +2,12 @@ import { openFile, setSelectedById } from "../Actions";
 
 export function runTests(app){
 
-    testLambdas(app);
+    // runTest(app, 'lambdas', 26, [8,9,10,11,12]);
+    runTest(app, 'lambdas', 7, 2);
+
 
 }
 
-
-async function testLambdas(app){
-    await openFile('lambdas', () => setSelectedById(26, () => app.eval_([8,9,10,11,12])));
+async function runTest(app, fileName, id, expectedVal){
+    await openFile(fileName, () => setSelectedById(id, () => app.eval_(expectedVal)));
 }
