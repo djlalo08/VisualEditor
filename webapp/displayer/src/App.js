@@ -77,8 +77,8 @@ BUGS:
 
 
 let id = 0;
-const FILE = 'inc';
-// const FILE = 'inc_test';
+// const FILE = 'inc';
+const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
 // const FILE = 'if_test';
 // const FILE = 'lambdas';

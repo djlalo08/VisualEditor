@@ -4,6 +4,7 @@ export async function runTests(app){
 
     await assertList(app, 'lambdas', 11, [8,9,10,11,12]);
     await assertValue(app, 'lambdas', 4, 2);
+    await assertValue(app, 'inc_test', 2, 6);
 
 }
 
