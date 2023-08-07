@@ -75,7 +75,7 @@ class Evaluationator {
 }
 
 function getFunctionPendingBindings(ins, fn){
-    function myFn(bindings){
+    function myFn(bindings){            
         let binding_idx = 0;
         let new_ins = [];
         for (let input of ins){

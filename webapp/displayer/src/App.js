@@ -79,9 +79,9 @@ BUGS:
 let id = 0;
 // const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
-const FILE = 'inc';
+// const FILE = 'inc';
 // const FILE = 'if_test';
-// const FILE = 'lambdas';
+const FILE = 'lambdas';
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
@@ -131,7 +131,7 @@ class App extends React.Component{
     console.log('eval result:');
     console.log(eval_result);
     if (expectedResult && eval_result != expectedResult){
-      console.log(`Wrong value at ${'lambdas'}!`);
+      console.log(`Wrong value at ${'fileName'}!`);
       console.log(`Expected ${expectedResult} at id ${0} but got:`);
       console.log(eval_result);
     }

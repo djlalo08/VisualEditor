@@ -40,7 +40,14 @@ export const mapRepo = {
     'ls': { fn:  ins => [ins],
         in_num: 2, out_num: 1, prefix:'t', inline:'t', variableinput:'t',
     },
-    'map': { fn:  ins => [ins[0].map(ins[1])]},
+    'map': { fn:  ([ls, fn]) => {
+            let res = [];
+            for (let item of ls){
+                res.push(fn([item])[0]);           
+            }
+            return [res];
+        }
+    },
     '2map': { fn:  ins => {
         let [as, bs, fn] = ins;
         const n = Math.min(as.length, bs.length);
