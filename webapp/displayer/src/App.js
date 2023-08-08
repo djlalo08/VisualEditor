@@ -44,6 +44,7 @@ TODOs:
 -Use window.showDirectoryPicker() to enable opening and saving files more directly
 -Make maps for control flow:
   -For each
+-Constants should have output nodes (and thus outBindings) [by default we can do hide_outs, returnidx:0]
 -Test suite
 -Update readme
 -Add set/get maps to be used as variables
@@ -84,10 +85,10 @@ let id = 0;
 // const FILE = 'lambda_nest';
 // const FILE = 'lambdas';
 // const FILE = 'if_test';
-const FILE = '2_arg_lambda';
+// const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-// const FILE = '!';
+const FILE = '!';
 // const FILE = 'x';
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';

@@ -84,12 +84,9 @@ export const mapRepo = {
 
 export function specialMapsRepo(evaluator) {
     return {
-        'if': ins => {
-            let cond = evaluator.evaluate(ins.children[0]);
-            if (cond)
-                return [evaluator.evaluate(ins.children[1])];
-            else
-                return [evaluator.evaluate(ins.children[2])];
+        'if': ([cond, then_, else_]) => {
+            cond = evaluator.evaluate(cond);
+            return cond? [evaluator.evaluate(then_)]: [evaluator.evaluate(else_)];
         },
     }
 }

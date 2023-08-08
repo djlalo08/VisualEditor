@@ -1,5 +1,5 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
-import { getNameAndAttrs } from "./NodeUtils";
+import { addAttr, getNameAndAttrs } from "./NodeUtils";
 
 export function evaluate(selected, outBindings, externalMaps){
     let evaluator = new Evaluationator(outBindings, externalMaps);
@@ -14,8 +14,15 @@ class Evaluationator {
         
         this.evaluate = this.evaluate.bind(this);
     }
-    
+
     evaluate(ast_node){
+        let result = this.evaluate_(ast_node);
+        addAttr(ast_node, 'result', result);
+        console.log(ast_node.value);
+        return result;
+    }
+    
+    evaluate_(ast_node){
         let [name, attrs] = getNameAndAttrs(ast_node);
         // console.log(`Evaluating ${name}: ${attrs.name}`);
         
@@ -29,7 +36,8 @@ class Evaluationator {
                 return this.evaluate(ast_node.parent);
             case 'OutBinding':
             case 'OutBound':
-                return this.evaluate(ast_node.parent)[ast_node.idx];
+                let r = this.evaluate(ast_node.parent);
+                return r[ast_node.idx];
             case 'InBinding':
                 return this.evaluate(this.outBindings[attrs.getvalue]);
             case 'Map':
@@ -56,6 +64,7 @@ class Evaluationator {
         if (attrs.name in mapRepo){
             ins = ins.children.map(this.evaluate);
             let { fn } = mapRepo[attrs.name];
+            console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
 
             let unbounds = ins.filter(x => x && x.length && x[0] == 'UNBOUND');
             return unbounds.length? [getFunctionPendingBindings(ins, fn)]: fn(ins);
@@ -64,11 +73,12 @@ class Evaluationator {
         let specialMaps = specialMapsRepo(this);
         if (attrs.name in specialMaps){
             let fn = specialMaps[attrs.name];
-            return fn(ins);
+            return fn(ins.children);
         }
 
         if (attrs.name in this.externalMaps){
             ins = ins.children.map(this.evaluate);
+            console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
             let fn = this.externalMaps[attrs.name];
             return fn(ins, this.externalMaps);
         }

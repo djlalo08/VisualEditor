@@ -2,20 +2,26 @@ Root[!]
     Vertical
         Map[name:if]
             Ins
-                Map[name:>, infix:t]
+                Map[name:>, infix:t, hide_outs:t, returnidx:0]
                     Ins
                         InBound[name:a, className:unbound, bind_idx:0]
                         Constant[value:0, name:0, type:Number, unwrap:t, className:constant]
-                Map[name:*, infix:t]
+                    Outs
+                        Node
+                Map[name:*, infix:t, hide_outs:t, returnidx:0]
                     Ins
                         InBound[name:a, className:unbound, bind_idx:0]
-                        Map[name:!, postfix:t, recursive:t, inline:t, className:inline, import_from:./irs/]
+                        Map[name:!, postfix:t, recursive:t, inline:t, className:inline, import_from:./irs/, hide_outs:t]
                             Ins
-                                Map[name:-1, postfix:t, inline:t, className:inline]
+                                Map[name:-1, postfix:t, inline:t, className:inline, hide_outs:t, returnidx:0]
                                     Ins
                                         InBound[name:a, className:unbound, bind_idx:0]
                                     Outs
+                                        Node
                             Outs
+                                Node
+                    Outs   
+                        Node
                 Constant[value:1, name:1, type:Number, className:constant]
             Outs
                 OutBound[name:b, className:unbound]

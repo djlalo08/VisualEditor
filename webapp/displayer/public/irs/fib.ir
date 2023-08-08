@@ -1,13 +1,26 @@
 Root
    Vertical
-        Map[name:id2]
-            Ins
-                Constant[name:2, value:2, unwrap:t, className:constant, type:Number]
-            Outs
-                OutBinding[setvalue:b2, name:o1]
         Map[name:+, infix:t]
             Ins
-                InBound[name:a, getvalue:u1, className:unbound]
-                InBinding[getvalue:b2, name:o1]
+                Map[name:fib, recursive:t, hide_outs:t, returnidx:0, inline:t]
+                    Ins
+                        Map[name:-, hide_outs:t, returnidx:0, infix:t, inline:t]
+                            Ins
+                                InBound[name:a, getvalue:u1, className:unbound]
+                                Constant[name:1, value:1, unwrap:t, className:constant, type:Number]
+                            Outs   
+                                Node
+                    Outs
+                        Node
+                Map[name:fib, recursive:t, hide_outs:t, returnidx:0, inline:t]
+                    Ins
+                        Map[name:-, hide_outs:t, returnidx:0, infix:t, inline:t]
+                            Ins
+                                InBound[name:a, getvalue:u1, className:unbound]
+                                Constant[name:2, value:2, unwrap:t, className:constant, type:Number]
+                            Outs   
+                                Node
+                    Outs
+                        Node
             Outs
                 OutBound[name:b, className:unbound]
