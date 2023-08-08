@@ -51,7 +51,8 @@ TODOs:
 -Adding a constant assumes it is a number. Make flexible for other constant types
 
 VISUAL/AESTHETIC:
--Make if look better (condition on top, then/else side-by-side
+-Make if look better (condition on top, then/else side-by-side)
+-If doesn't highlight when selected 
 
 
 IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
@@ -78,11 +79,11 @@ BUGS:
 
 
 let id = 0;
-const FILE = 'inc';
+// const FILE = 'inc';
 // const FILE = 'inc_test';
 // const FILE = 'lambda_nest';
-// const FILE = 'if_test';
 // const FILE = 'lambdas';
+const FILE = 'if_test';
 // const FILE = '2_arg_lambda';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
