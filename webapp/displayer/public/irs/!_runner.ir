@@ -1,0 +1,7 @@
+Root
+    Vertical
+        Map[name:!, import_from:./irs/]
+            Ins
+                Constant[name:8, value:8, type:Number, className:constant]
+            Outs
+                Node

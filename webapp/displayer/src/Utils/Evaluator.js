@@ -18,7 +18,7 @@ class Evaluationator {
     evaluate(ast_node){
         let result = this.evaluate_(ast_node);
         addAttr(ast_node, 'result', result);
-        console.log(ast_node.value);
+        // console.log(ast_node.value);
         return result;
     }
     
@@ -64,7 +64,7 @@ class Evaluationator {
         if (attrs.name in mapRepo){
             ins = ins.children.map(this.evaluate);
             let { fn } = mapRepo[attrs.name];
-            console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
+            // console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
 
             let unbounds = ins.filter(x => x && x.length && x[0] == 'UNBOUND');
             return unbounds.length? [getFunctionPendingBindings(ins, fn)]: fn(ins);
@@ -78,7 +78,7 @@ class Evaluationator {
 
         if (attrs.name in this.externalMaps){
             ins = ins.children.map(this.evaluate);
-            console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
+            // console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
             let fn = this.externalMaps[attrs.name];
             return fn(ins, this.externalMaps);
         }
