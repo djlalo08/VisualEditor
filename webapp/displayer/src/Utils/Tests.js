@@ -8,8 +8,7 @@ export async function runTests(app){
     await assertValue(app, 'lambdas', 4, 2);
     await assertValue(app, 'if_test', 2, 'ByeWorld');
     await assertValue(app, 'if_test', 14, 'HelloWorld');
-
-
+    await assertList(app, '2_arg_lambda', 27, [10,12]);
 }
 
 async function assertNestedList(app, fileName, id, expectedList){

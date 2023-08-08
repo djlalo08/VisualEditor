@@ -19,7 +19,7 @@ Root
             Ins
                 InBinding[getvalue:b1]
                 InBinding[getvalue:b2]
-                Map[name:+!, returnidx:0]
+                Map[name:+, returnidx:0]
                     Ins
                         UnBound[name:x, className:unbound, getvalue:u1]
                         UnBound[name:y, className:unbound, getvalue:u2]

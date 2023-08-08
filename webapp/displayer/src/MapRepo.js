@@ -55,7 +55,7 @@ export const mapRepo = {
         for (let i=0; i<n; i++){
             result.push(fn([as[i], bs[i]]));
         }
-        return result;
+        return [result];
     } },
     'filter': { fn:  ins => {
             let [ls, f] = ins;
