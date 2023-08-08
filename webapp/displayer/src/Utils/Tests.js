@@ -10,6 +10,7 @@ export async function runTests(app){
     await assertValue(app, 'if_test', 14, 'HelloWorld');
     await assertList(app, '2_arg_lambda', 27, [10,12]);
     await assertValue(app, '!_runner', 6, 40320);
+    await assertValue(app, 'import_chain_test', 6, 15);
 }
 
 async function assertNestedList(app, fileName, id, expectedList){

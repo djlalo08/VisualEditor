@@ -1,5 +1,7 @@
 Root[x]
     Vertical
-        Map[name:x]
+        Map[name:x, import_from:./irs/]
             Ins
                 Constant[name:4, value:4, type:Number, unwrap:t, className:constant]
+            Outs
+                Node
