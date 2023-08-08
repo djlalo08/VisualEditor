@@ -2,10 +2,13 @@ import { openFile, setSelectedById } from "../Actions";
 
 export async function runTests(app){
 
-    await assertList(app, 'lambdas', 11, [8,9,10,11,12]);
-    await assertValue(app, 'lambdas', 4, 2);
     await assertValue(app, 'inc_test', 2, 6);
     await assertNestedList(app, 'lambda_nest', 28, [[3,4,5], [3,4,5], [3,4,5]]);
+    await assertList(app, 'lambdas', 11, [8,9,10,11,12]);
+    await assertValue(app, 'lambdas', 4, 2);
+    await assertValue(app, 'if_test', 2, 'ByeWorld');
+    await assertValue(app, 'if_test', 14, 'HelloWorld');
+
 
 }
 
@@ -56,6 +59,7 @@ async function runTest(app, fileName, id, assertFn){
     setSelectedById(id);
     await sleep(1);
     app.eval_(assertFn);
+    await sleep(1);
 }
 
 function sleep(ms){
