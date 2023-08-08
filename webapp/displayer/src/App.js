@@ -17,7 +17,7 @@ import { runTests } from './Utils/Tests';
 
 /*
 WORKING ON:
-first: Make a way to test existing code and make a test suite
+First: Go through all existing IRs and make sure they work and have tests
 
 General goal: Try to get working quicksort, and fix any issues along the way
 Specifically: Make filter work. There are issues with connecting wires.
@@ -30,6 +30,7 @@ Elements' unique IDs are line number in IR. Since there can only be 1 element pe
 THINK ABOUT:
 -Have to reconcile horizontals with homiconic repr
 -Maybe we do need nodes after all: 1) consider homoiconicity. 2) Say You want to select, or delete, or replace entire contents of a Node, You need to be able to select the Node, which means Node needs to exist
+-Code has race conditions? See runTest having to call sleep() for more info
 
 UP NEXT:
 -Let's make quicksort!
