@@ -18,6 +18,7 @@ import { runTests } from './Utils/Tests';
 /*
 WORKING ON:
 First: Go through all existing IRs and make sure they work and have tests
+  -Fib isn't working. I think it's to do with having a recursive call with same inBound (a) twice. Gets confused with current val of a.
 
 General goal: Try to get working quicksort, and fix any issues along the way
 Specifically: Make filter work. There are issues with connecting wires.
@@ -89,9 +90,9 @@ let id = 0;
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
 // const FILE = '!';
-const FILE = '!_runner';
+// const FILE = '!_runner';
 // const FILE = 'x';
-// const FILE = 'import_chain_test';
+const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';

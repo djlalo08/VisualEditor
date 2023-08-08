@@ -13,7 +13,7 @@ export const mapRepo = {
     '*': { fn: ins => [ins.reduce( (acc, elt) => acc*elt, 1)],
         in_num: 2, out_num: 1, infix:'t', inline:'t', variableinput:'t',
     },
-    '-': { fn: ins => [ins[0]- mapRepo['+'](ins.slice(1))],
+    '-': { fn: ins => [ins[0]- ins.slice(1).reduce((acc, elt) => acc+elt, 0)],
         in_num: 2, out_num: 1, infix:'t', inline:'t', variableinput:'t',
     },
     '^2': { fn: ins => ins.map(x=>x*x),

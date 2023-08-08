@@ -4,7 +4,7 @@ Root[inc]
             Ins
                 Map[name:inc, prefix:t, import_from:./irs/] 
                     Ins
-                        InBound[name:a1, className:unbound] 
+                        InBound[name:a1, className:unbound, bind_idx:0] 
                     Outs
                 Constant[value:3, name:3, unwrap:t, className:constant, type:Number]
             Outs
