@@ -51,6 +51,7 @@ TODOs:
 -Add set/get maps to be used as variables
 -Add left_out, right_out inserts
 -Adding a constant assumes it is a number. Make flexible for other constant types
+-Left/Right navigation in out nodes seems to not really work
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side)
@@ -92,8 +93,8 @@ let id = 0;
 // const FILE = '!';
 // const FILE = '!_runner';
 // const FILE = 'x';
-const FILE = 'import_chain_test';
-// const FILE = 'simple';
+// const FILE = 'import_chain_test';
+const FILE = 'simple';
 // const FILE = 'cacheing_test';
 // const FILE = 'test';
 // const FILE = 'empty';

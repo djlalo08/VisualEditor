@@ -1,20 +1,14 @@
 Root
     Vertical
-        Map[name:id]
+        Map[name:id2]
             Ins
                 Constant[name:A, value:2, className:constant, type:Number]
-                    Ins
-                    Outs
-                        OutBinding[setvalue:a]
                 Constant[name:B, value:5, className:constant, type:Number]
-                    Ins
-                    Outs
-                        OutBinding[setvalue:b]
                 Constant[name:C, value:2, className:constant, type:Number]
-                    Ins
-                    Outs
-                        OutBinding[setvalue:c]
             Outs
+                OutBinding[setvalue:a]
+                OutBinding[setvalue:b]
+                OutBinding[setvalue:c]
         Map[name:√, prefix:t]
             Ins
                 Map[name:id]

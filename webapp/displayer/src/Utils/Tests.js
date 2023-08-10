@@ -11,6 +11,9 @@ export async function runTests(app){
     await assertList(app, '2_arg_lambda', 27, [10,12]);
     await assertValue(app, '!_runner', 6, 40320);
     await assertValue(app, 'import_chain_test', 6, 15);
+    await assertValue(app, 'simple', 27, 3);
+    await assertValue(app, 'simple', 28, -3);
+    
 }
 
 async function assertNestedList(app, fileName, id, expectedList){
