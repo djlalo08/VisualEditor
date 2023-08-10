@@ -88,19 +88,21 @@ let id = 0;
 // const FILE = 'lambdas';
 // const FILE = 'if_test';
 // const FILE = '2_arg_lambda';
-// const FILE = 'fib';
-// const FILE = 'fib_runner';
 // const FILE = '!';
 // const FILE = '!_runner';
-// const FILE = 'x';
 // const FILE = 'import_chain_test';
-const FILE = 'simple';
-// const FILE = 'cacheing_test';
-// const FILE = 'test';
-// const FILE = 'empty';
-// const FILE = 'ls';
+// const FILE = 'simple';
+const FILE = 'ls';
 // const FILE = 'quicksort';
 // const FILE = 'filter_test';
+// const FILE = 'cacheing_test';
+// const FILE = 'x';
+// const FILE = 'fib';
+// const FILE = 'fib_runner';
+
+// const FILE = 'empty';
+
+// const FILE = 'test';
 
 export function nextId(){
   return ++id;
