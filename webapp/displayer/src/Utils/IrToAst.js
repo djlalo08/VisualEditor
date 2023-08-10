@@ -6,6 +6,11 @@ export function parse(ir_text){
     let last_node = root_node;
     let line_number = 0;
     for (let line of lines) {
+        if (line.trim().startsWith('//') || line.trim().length == 0){
+            line_number++;
+            continue;
+        }
+
         let indent = line.search(/\S/)/4;
 
         let parent_to_the_node_we_are_adding = last_node;
