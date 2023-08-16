@@ -17,6 +17,8 @@ import { runTests } from './Utils/Tests';
 
 /*
 WORKING ON:
+-Need to decide on what and how vertical returns. This calls for thinking about IR and homoiconicity again...
+
 First: Go through all existing IRs and make sure they work and have tests
   -Fib isn't working. I think it's to do with having a recursive call with same inBound (a) twice. Gets confused with current val of a.
 
