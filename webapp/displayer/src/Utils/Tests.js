@@ -13,7 +13,8 @@ export async function runTests(app){
     await assertValue(app, 'import_chain_test', 6, 15);
     await assertValue(app, 'simple', 27, 3);
     await assertValue(app, 'simple', 28, -3);
-    
+    await assertList(app, 'filter_test', 11, [4,2]);
+
 }
 
 async function assertNestedList(app, fileName, id, expectedList){

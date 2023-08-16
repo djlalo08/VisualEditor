@@ -92,13 +92,13 @@ let id = 0;
 // const FILE = '!_runner';
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
-const FILE = 'ls';
+const FILE = 'filter_test';
 // const FILE = 'quicksort';
-// const FILE = 'filter_test';
 // const FILE = 'cacheing_test';
 // const FILE = 'x';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
+// const FILE = 'ls';
 
 // const FILE = 'empty';
 
