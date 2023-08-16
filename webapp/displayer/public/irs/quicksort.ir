@@ -1,26 +1,35 @@
 Root
     Vertical
-        Map[name:spl]
+        Map[name:spl, prefix:t]
             Ins
-                Map[name:ls, variableinput:t, unwrap:t, returnidx:0]
-                    Ins
-                        Constant[name:5, value:5, className:constant, type:Number, unwrap:t]
-                        Constant[name:4, value:4, className:constant, type:Number, unwrap:t]
-                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
-                        Constant[name:8, value:8, className:constant, type:Number, unwrap:t]
-                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
-                    Outs
+                InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
             Outs
-                Node
-                Node
-        Map[name:filter]
+                Node[setvalue:13]
+                Node[setvalue:14]
+        Map[name:++, infix:t]
             Ins
-                Node
-                Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0]
+                Map[name:filter, returnidx:0, hide_outs:t, inline:t, className:inline]
                     Ins
-                        UnBound[className:unbound, name:x, getvalue:x]
-                        Node
+                        Node[getvalue:14]
+                        Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0, inline:t]
+                            Ins
+                                UnBound[className:unbound, name:x, getvalue:x]
+                                Node[getvalue:13]
+                            Outs
+                                Node
                     Outs
                         Node
+                Node[getvalue:13]
+                Map[name:filter, returnidx:0, hide_outs:t, inline:t]
+                    Ins
+                        Node[getvalue:14]
+                        Map[name:>, infix:t, variableinput:t, hide_outs:t, returnidx:0, inline:t]
+                            Ins
+                                UnBound[className:unbound, name:x, getvalue:x]
+                                Node[getvalue:13]
+                            Outs
+                                Node
+                    Outs
+                        Node
             Outs
-                Node
+                OutBound[name:b, className:unbound]
