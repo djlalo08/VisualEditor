@@ -2,7 +2,7 @@ Root
     Vertical
         Map[name:quicksort, import_from:./irs/, returnidx:0, hide_outs:t]
             Ins
-                Map[name:ls, prefix:t, returnidx:0, hide_outs:t]
+                Map[name:ls, prefix:t, returnidx:0, hide_outs:t, variableinput:t]
                     Ins
                         Constant[name:5, value:5, className:constant, type:Number, unwrap:t]
                         Constant[name:4, value:4, className:constant, type:Number, unwrap:t]
