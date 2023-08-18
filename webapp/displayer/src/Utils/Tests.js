@@ -19,7 +19,6 @@ export async function runTests(app){
     await assertList(app, 'filter_test', 11, [4,2]);
 
     console.log(`Testing completed. ${successful_tests}/${total_tests} tests successful`);
-
 }
 
 async function assertNestedList(app, fileName, id, expectedList){
