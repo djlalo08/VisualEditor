@@ -79,7 +79,7 @@ export const mapRepo = {
         },
         in_num: 2, out_num:1, infix:'t', variableinput:'t', inline:'t',
     },
-    'isEmpty': { fn: ([ls]) => !!(ls && ls.length),
+    'isEmpty': { fn: (ins) => !!(ins[0] && ins[0].length),
         in_num:1, out_num:1, prefix:'t', inline:'t',
     }
     // 'inc': { fn:  ins => [ins.map(x => x+1)] },

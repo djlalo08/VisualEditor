@@ -1,5 +1,8 @@
 import { openFile, setSelectedById } from "../Actions";
 
+let successful_tests = 0;
+let total_tests = 0;
+
 export async function runTests(app){
 
     await assertValue(app, 'inc_test', 2, 6);
@@ -15,6 +18,8 @@ export async function runTests(app){
     await assertValue(app, 'simple', 28, -3);
     await assertList(app, 'filter_test', 11, [4,2]);
 
+    console.log(`Testing completed. ${successful_tests}/${total_tests} tests successful`);
+
 }
 
 async function assertNestedList(app, fileName, id, expectedList){
@@ -26,6 +31,7 @@ async function assertNestedList(app, fileName, id, expectedList){
                 ))
         ){
             console.log(`Correct value of id ${id} at ${fileName}`);
+            successful_tests++;
         } else {
             console.log(`Wrong value at '${fileName}'! Expected ${expectedList} at id ${id} but got:`);
             console.log(actualValue);
@@ -38,6 +44,7 @@ async function assertList(app, fileName, id, expectedList){
     let assertFn = actualValue => {
         if (expectedList.every((val, idx) => actualValue[idx] == val)){
             console.log(`Correct value of id ${id} at ${fileName}`);
+            successful_tests++;
         } else {
             console.log(`Wrong value at '${fileName}'! Expected ${expectedList} at id ${id} but got:`);
             console.log(actualValue);
@@ -50,6 +57,7 @@ async function assertValue(app, fileName, id, expectedValue){
     let assertFn = actualValue => {
         if (actualValue == expectedValue){
             console.log(`Correct value of id ${id} at ${fileName}`);
+            successful_tests++;
         } else {
             console.log(`Wrong value at '${fileName}'! Expected ${expectedValue} at id ${id} but got:`);
             console.log(actualValue);
@@ -65,6 +73,7 @@ async function runTest(app, fileName, id, assertFn){
     await sleep(1);
     app.eval_(assertFn);
     await sleep(1);
+    total_tests++;
 }
 
 function sleep(ms){
