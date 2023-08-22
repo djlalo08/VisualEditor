@@ -141,3 +141,11 @@ td, tr, table {
 .simulated {
   background: linear-gradient(#57bec3, rgb(208,198,198));
 }
+
+.setvariable {
+  background: linear-gradient(#a7d5d7, rgb(243, 90, 197));
+}
+
+.getvariable {
+  background: linear-gradient(rgb(243, 90, 197), #a7d5d7);
+}
