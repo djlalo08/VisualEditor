@@ -1,19 +1,19 @@
 Root
     Vertical
-        Map[name:+]
+        Map[name:+, infix:t]
             Ins 
                 Constant[name:2, value:2, className:constant, type:Number]
                 Constant[name:3, value:3, className:constant, type:Number]
             Outs
                 Variable[name:x, setvalue:x, className:setvariable]
         Horizontal
-            Map[name:+]
+            Map[name:+, infix:t]
                 Ins
                     Variable[name:x, getvalue:x, className:getvariable]
                     Constant[name:2, value:2, className:constant, type:Number]
                 Outs
                     Node
-            Map[name:*]
+            Map[name:*, infix:t]
                 Ins
                     Variable[name:x, getvalue:x, className:getvariable]
                     Constant[name:2, value:2, className:constant, type:Number]
