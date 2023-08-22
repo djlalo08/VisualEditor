@@ -29,6 +29,7 @@ class Evaluationator {
         // console.log(`Evaluating ${name}: ${attrs.name}`);
         
         switch (name){
+            case 'Variable':
             case 'Node':
                 if (attrs.hasOwnProperty('getvalue')){
                     return this.evaluate(this.outBindings[attrs.getvalue]);
@@ -58,8 +59,6 @@ class Evaluationator {
                 return ['UNBOUND', attrs.getvalue];
             case 'InBound':
                 return ast_node.supplier? ast_node.supplier() :['INBOUND', attrs.getvalue];
-            case 'Variable':
-                return 0;
         }
     }
     
@@ -133,7 +132,7 @@ class OutBinder{
     updateOutbindings(node){
         let [name, attrs] = getNameAndAttrs(node);
         if (name == 'OutBinding' ||
-        (name == 'Node' && attrs.hasOwnProperty('setvalue'))){
+        ((name == 'Node' || name == 'Variable') && attrs.hasOwnProperty('setvalue'))){
             this.outBindings[attrs.setvalue] = node;
         }
 
