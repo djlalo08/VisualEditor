@@ -95,10 +95,9 @@ let id = 0;
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'filter_test';
+// const FILE = 'variable_test';
 
-const FILE = 'variable_test';
-
-// const FILE = 'quicksort';
+const FILE = 'quicksort';
 // const FILE = 'quicksort_test';
 // const FILE = 'cacheing_test';
 // const FILE = 'x';
