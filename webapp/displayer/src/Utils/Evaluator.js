@@ -1,7 +1,7 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
 import { addAttr, getNameAndAttrs } from "./NodeUtils";
 
-const VERBOSE = true;
+const VERBOSE = false;
 
 export function evaluate(selected, outBindings, externalMaps){
     let evaluator = new Evaluationator(outBindings, externalMaps);
