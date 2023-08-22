@@ -58,6 +58,8 @@ class Evaluationator {
                 return ['UNBOUND', attrs.getvalue];
             case 'InBound':
                 return ast_node.supplier? ast_node.supplier() :['INBOUND', attrs.getvalue];
+            case 'Variable':
+                return 0;
         }
     }
     

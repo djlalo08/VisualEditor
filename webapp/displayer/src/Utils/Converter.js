@@ -53,6 +53,7 @@ function treeToJsx(node){
         case 'InBound':
             if (node.supplier)
                 props.className += ' simulated ';
+        case 'Variable':
         case 'Constant':
         case 'UnBound':
         case 'OutBound':
