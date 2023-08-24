@@ -1,0 +1,8 @@
+Verticals (i.e. s-lists) ALWAYS return their last value. We don't need s-lists to ever return more than one value -- 
+- If they are _in_ a node, then any node can only ever take 1 value, so we have no reason to return multiple vals
+- If they are not in a node, then anything they generate only matters as outbindings and (aha!) if we are outbinding, we don't need to return anything at all!
+
+On the other hand, a p-list returns all of its values -- it's literally just an array. 
+That's why we can use it for ins and outs.
+
+It all makes sense. Everything is right in the world :)
