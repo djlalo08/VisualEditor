@@ -29,7 +29,7 @@ function treeToJsx(node){
         case 'Root':
             return <Root {...props}>{children}</Root>;
         case 'Vertical':
-            return <Node><Vertical {...props}>{children}</Vertical></Node>;
+            return <Node {...props}><Vertical {...props}>{children}</Vertical></Node>;
         case 'Ins':
             return <Ins {...props}>{children}</Ins>;
         case 'Outs':
