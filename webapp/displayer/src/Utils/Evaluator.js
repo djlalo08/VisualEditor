@@ -29,6 +29,8 @@ class Evaluationator {
         // console.log(`Evaluating ${name}: ${attrs.name}`);
         
         switch (name){
+            case 'Vertical':
+                return this.evaluate(ast_node.children[ast_node.children.length-1]);
             case 'Variable':
             case 'Node':
                 if (attrs.hasOwnProperty('getvalue')){

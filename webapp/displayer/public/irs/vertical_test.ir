@@ -1,0 +1,29 @@
+Root
+    Vertical
+        Map[name:+]
+            Ins
+                Vertical
+                    Map[5:undefined, name:ls, inline:t, result:5,5,5,5,5]
+                        Ins
+                            Constant[name:5, value:5, className: constant, type:Number, result:5]
+                            Constant[name:5, value:5, className: constant, type:Number, result:5]
+                            Constant[name:5, value:5, className: constant, type:Number, result:5]
+                            Constant[name:5, value:5, className: constant, type:Number, result:5]
+                            Constant[name:5, value:5, className: constant, type:Number, result:5]
+                        Outs[result:5,5,5,5,5]
+                            Node[setvalue:13, result:5,5,5,5,5]
+                    Map[5:undefined, name:spl, inline:t, result:5]
+                        Ins
+                            Node[getvalue:13, result:5,5,5,5,5]
+                        Outs
+                            Node[setvalue:18]
+                            Node
+                    Map[name:+, hide_outs:t, returnidx:0, inline:t, infix:t, selected:t]
+                        Ins
+                            Node[getvalue:18]
+                            Constant[name:1, value:1, className:constant, type:Number, result:3]
+                        Outs
+                            Node
+                Constant[name:3, value:3, className:constant, type:Number, result:3]
+            Outs
+                Node
