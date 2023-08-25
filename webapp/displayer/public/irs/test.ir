@@ -1,8 +1,13 @@
 Root
     Vertical
-        Map[name:+]
+        Map[name:spl]
             Ins
-                Node
-                Node
+                Map[name:ls, hide_outs:t, returnidx:0]
+                    Ins
+                        Constant[name:A, value:2, className:constant, type:Number]
+                        Constant[name:B, value:5, className:constant, type:Number]
+                    Outs
+                        Node
             Outs
-                Node
+                OutBinding[setvalue:a]
+                OutBinding[setvalue:b]

@@ -78,7 +78,7 @@ APPARENT INCONSISTENCIES:
 -It seems that in some places InBound is characterized by getvalue, and in other cases by bind_idx. In yet other cases by name?
 
 BUGS:
--
+- When a map has more than 1 output, and it is called twice, the second time it's called it will add the output value as an attribute
 */
   
 
@@ -96,7 +96,7 @@ let id = 0;
 // const FILE = 'simple';
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
-const FILE = 'vertical_test';
+// const FILE = 'vertical_test';
 // const FILE = 'quicksort';
 // const FILE = 'quicksort_test';
 // const FILE = 'cacheing_test';
@@ -107,7 +107,7 @@ const FILE = 'vertical_test';
 
 // const FILE = 'empty';
 
-// const FILE = 'test';
+const FILE = 'test';
 
 export function nextId(){
   return ++id;
