@@ -1,14 +1,14 @@
 Root
-    Map[name:if, returnidx:0, hide_outs:t]
+    Map[name:if]
         Ins
             //cond
-            Map[name:isEmpty, returnidx:0, hide_outs:t]
+            Map[name:l1, returnidx:0, hide_outs:t]
                 Ins
                     InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
                 Outs
                     Node
             //then
-            Constant[value:0, name:0]
+            InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
             
             //else
             Vertical

@@ -1,7 +1,7 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
 import { addAttr, getNameAndAttrs } from "./NodeUtils";
 
-const VERBOSE = false;
+const VERBOSE = true;
 
 export function evaluate(selected, outBindings, externalMaps){
     let evaluator = new Evaluationator(outBindings, externalMaps);
@@ -12,6 +12,7 @@ class Evaluationator {
     constructor(outBindings, externalMaps){
         this.outBindings = outBindings;
         this.externalMaps = externalMaps;
+        this.recusion_count = 0;
         this.cache = {};
         
         this.evaluate = this.evaluate.bind(this);
@@ -20,7 +21,13 @@ class Evaluationator {
     evaluate(ast_node){
         let result = this.evaluate_(ast_node);
         addAttr(ast_node, 'result', result);
-        if (VERBOSE) console.log(ast_node.value);
+        let [name, attrs] = getNameAndAttrs(ast_node);
+        if (VERBOSE) {
+            console.log(ast_node.value);
+            console.log(`${name}:${attrs.name} evaluates to :`);
+            console.log(result);
+            console.log('');
+        }
         return result;
     }
     
@@ -28,6 +35,7 @@ class Evaluationator {
         let [name, attrs] = getNameAndAttrs(ast_node);
         // console.log(`Evaluating ${name}: ${attrs.name}`);
         
+
         switch (name){
             case 'Vertical':
                 return this.evaluate(ast_node.children[ast_node.children.length-1]);
@@ -69,7 +77,10 @@ class Evaluationator {
         if (attrs.name in mapRepo){
             ins = ins.children.map(this.evaluate);
             let { fn } = mapRepo[attrs.name];
-            if (VERBOSE) console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
+            if (VERBOSE) {
+                console.log(`Evaluating map [${attrs.name}] with ins:`);
+                ins.forEach(x => console.log(x));
+            }
 
             let unbounds = ins.filter(x => x && x.length && x[0] == 'UNBOUND');
             return unbounds.length? [getFunctionPendingBindings(ins, fn)]: fn(ins);
@@ -83,7 +94,10 @@ class Evaluationator {
 
         if (attrs.name in this.externalMaps){
             ins = ins.children.map(this.evaluate);
-            if (VERBOSE) console.log(`Evaluating map: ${attrs.name} with ins: ${ins}`);
+            if (VERBOSE) {
+                console.log(`Evaluating map [${attrs.name}] with ins:`);
+                ins.forEach(x => console.log(x));
+            }
             let fn = this.externalMaps[attrs.name];
             return fn(ins, this.externalMaps);
         }

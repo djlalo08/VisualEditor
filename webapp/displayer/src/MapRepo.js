@@ -81,6 +81,9 @@ export const mapRepo = {
     },
     'isEmpty': { fn: (ins) => [!(ins[0] && ins[0].length)],
         in_num:1, out_num:1, prefix:'t', inline:'t',
+    },
+    'l1': { fn: ([ls]) => [ls.length <= 1],
+        in_num:1, out_num:1, prefix:'t', inline:'t',
     }
     // 'inc': { fn:  ins => [ins.map(x => x+1)] },
 }
@@ -89,7 +92,7 @@ export function specialMapsRepo(evaluator) {
     return {
         'if': ([cond, then_, else_]) => {
             cond = evaluator.evaluate(cond);
-            return cond? [evaluator.evaluate(then_)]: [evaluator.evaluate(else_)];
+            return  [evaluator.evaluate(cond? then_: else_)];
         },
     }
 }

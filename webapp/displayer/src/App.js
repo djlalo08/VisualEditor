@@ -17,7 +17,8 @@ import { runTests } from './Utils/Tests';
 
 /*
 WORKING ON:
--Need to decide on what and how vertical returns. This calls for thinking about IR and homoiconicity again...
+- We have an issues with variables and recursion. It gets confused.
+We need to somehow isolate things when they occur recursively...
 
 First: Go through all existing IRs and make sure they work and have tests
   -Fib isn't working. I think it's to do with having a recursive call with same inBound (a) twice. Gets confused with current val of a.
@@ -98,7 +99,9 @@ let id = 0;
 // const FILE = 'variable_test';
 // const FILE = 'vertical_test';
 // const FILE = 'quicksort';
-// const FILE = 'quicksort_test';
+// const FILE = 'quicksort_simple';
+
+const FILE = 'quicksort_test';
 // const FILE = 'cacheing_test';
 // const FILE = 'x';
 // const FILE = 'fib';
@@ -107,7 +110,7 @@ let id = 0;
 
 // const FILE = 'empty';
 
-const FILE = 'test';
+// const FILE = 'test';
 
 export function nextId(){
   return ++id;
