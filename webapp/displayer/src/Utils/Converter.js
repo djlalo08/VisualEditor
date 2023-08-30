@@ -1,5 +1,4 @@
 import { Xwrapper } from "react-xarrows";
-import { loadImports as loadImportsAction } from "../Actions";
 import { nextId, resetIds } from "../App";
 import Block from "../Components/Block";
 import Horizontal from '../Components/Horizontal';
@@ -10,7 +9,7 @@ import Outs from '../Components/Outs';
 import Root from '../Components/Root';
 import Vertical from '../Components/Vertical';
 import Wire from '../Components/Wire';
-import { getImports, getNameAndAttrs } from './NodeUtils';
+import { getNameAndAttrs } from './NodeUtils';
 
 
 function treeToJsx(node){
@@ -79,14 +78,9 @@ function getWires(){
     return wires;
 }
 
-export function loadImports(root){
-    loadImportsAction(getImports(root));
-}
-
 export function ast_to_jsx(ast){
     clearGlobals(); 
     
-    loadImports(ast);
     let jsx_root = treeToJsx(ast);
     let wires_ls = getWires();
     let children = [jsx_root, ...wires_ls];

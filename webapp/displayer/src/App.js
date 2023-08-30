@@ -6,10 +6,10 @@ import { handleClose, openFile, setApp as setActions } from './Actions';
 import './App.css';
 import { Sidebar } from './Components/Sidebar';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
-import { ast_to_jsx, loadImports } from './Utils/Converter';
+import { ast_to_jsx } from './Utils/Converter';
 import { evaluate, updateOutbindings } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
-import { addAttr, countBounds, forEach, getImports, getInBounds, getOutBounds, printAst, updateInBindings } from './Utils/NodeUtils';
+import { countBounds, printAst } from './Utils/NodeUtils';
 import { runTests } from './Utils/Tests';
 
 // import GeneratedApp from './Components/GeneratedApp';
@@ -134,7 +134,6 @@ class App extends React.Component{
     this.onShow = this.onShow.bind(this);
     this.stateFromIR = this.stateFromIR.bind(this);
     this.eval_ = this.eval_.bind(this);
-    this.addImport = this.addImport.bind(this);
     this.getIRsList = this.getIRsList.bind(this);
 
     this.state = {
@@ -188,36 +187,6 @@ class App extends React.Component{
     } 
   }
   
-  addImport(importName, importIR){
-    if (!this || !this.state)
-      return;
-
-    if (importName in this.state.imports)
-      return;
-
-    let AST = parse(importIR);
-    
-    let importsMap = getImports(AST);
-    let isRecursive = importsMap.hasOwnProperty(importName);
-    if (isRecursive){
-      forEach(AST, node => addAttr(node, 'dont_cache', 't'))  
-    }
-
-    loadImports(AST);
-    let outbindings = updateOutbindings(AST);
-    let outBounds = getOutBounds(AST);
-    let inBounds = getInBounds(AST);
-
-    let fn = (bindings, externalMaps) => {
-      updateInBindings(inBounds, bindings);
-      return outBounds.map(ob => evaluate(ob, [], outbindings, externalMaps));
-    }
-
-    let imports = {...this.state.imports};
-    imports[importName] = fn;
-    this.setState({imports});
-  }
-
   componentDidMount(){
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);

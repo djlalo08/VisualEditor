@@ -508,17 +508,6 @@ function loadImports3(node){
     }
 }
 
-export function loadImports(imports){
-    if (!imports || !Object.entries(imports).length)
-        return;
-
-    for (let [importName, importLocation] of Object.entries(imports)){
-        fetch(`${importLocation}${importName}.ir`)
-        .then(response => response.text())
-        .then(importCode => app.addImport(importName, importCode));
-    }
-}
-
 export function setMapIns(map, count){
     let [ins, _] = map.children;
     updateToMatchLength(count, ins.children, () => makeNode(ins));
