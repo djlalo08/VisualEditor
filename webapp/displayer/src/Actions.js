@@ -480,10 +480,10 @@ export function connect(){
     updateAST();
 }
 
-export async function openFile(fileName, callback){
+export async function openFile(fileName){
     let response = await fetch(`./irs/${fileName}.ir`);
     let text = await response.text();
-    app.setState(app.stateFromIR(text), callback);
+    app.setState(app.stateFromIR(text));
 }
 
 export function loadImports(imports){
