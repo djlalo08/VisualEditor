@@ -19,12 +19,15 @@ import { runTests } from './Utils/Tests';
 WORKING ON:
 - We have an issues with variables and recursion. It gets confused.
 We need to somehow isolate things when they occur recursively...
+Turns out this is sort of complicated... we need a completely new solution...
+Currently -- outbindings are assigned during eval. They are also assigned for any given import when it is imported
+We are overloading names when we do this.
+I think imports shouldn't be loaded until evaluation time. This way, we only import the functions that we actuall use. This resolves infinite loop of loading for recursive functions, and also makes everything make more sense.
+Obviously, at some point importing live during execution is not efficient, but we can deal with that later.
 
 First: Go through all existing IRs and make sure they work and have tests
-  -Fib isn't working. I think it's to do with having a recursive call with same inBound (a) twice. Gets confused with current val of a.
 
 General goal: Try to get working quicksort, and fix any issues along the way
-Specifically: Make filter work. There are issues with connecting wires.
 
 InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
 
