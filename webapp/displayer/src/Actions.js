@@ -483,14 +483,10 @@ export function connect(){
 export async function openFile(fileName){
     let response = await fetch(`./irs/${fileName}.ir`);
     let text = await response.text();
-    app.setState(app.stateFromIR(text), loadImports2);
+    app.setState(app.stateFromIR(text), () => loadImports(app.state.AST));
 }
 
-function loadImports2(){
-    loadImports3(app.state.AST);
-}
-
-function loadImports3(node){
+function loadImports(node){
     let imports = getImports(node);
     for (let [name, location] of Object.entries(imports)){
         fetch(`${location}${name}.ir`)
@@ -502,7 +498,7 @@ function loadImports3(node){
             }
             let ast = parse(importCode);
             import_irs[name] = ast;
-            loadImports3(ast);
+            loadImports(ast);
             app.setState({import_irs});
         });
     }

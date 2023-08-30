@@ -96,7 +96,7 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = '!';
 // const FILE = '!_runner';
-const FILE = 'import_chain_test';
+// const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
@@ -104,7 +104,7 @@ const FILE = 'import_chain_test';
 // const FILE = 'quicksort';
 // const FILE = 'quicksort_simple';
 
-// const FILE = 'quicksort_test';
+const FILE = 'quicksort_test';
 // const FILE = 'cacheing_test';
 // const FILE = 'x';
 // const FILE = 'fib';
@@ -137,7 +137,6 @@ class App extends React.Component{
     this.getIRsList = this.getIRsList.bind(this);
 
     this.state = {
-      imports: {},
       ...this.emptyState()
     }
     
