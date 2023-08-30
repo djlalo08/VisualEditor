@@ -96,7 +96,7 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = '!';
 // const FILE = '!_runner';
-// const FILE = 'import_chain_test';
+const FILE = 'import_chain_test';
 // const FILE = 'simple';
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
@@ -104,7 +104,7 @@ let id = 0;
 // const FILE = 'quicksort';
 // const FILE = 'quicksort_simple';
 
-const FILE = 'quicksort_test';
+// const FILE = 'quicksort_test';
 // const FILE = 'cacheing_test';
 // const FILE = 'x';
 // const FILE = 'fib';
@@ -146,7 +146,7 @@ class App extends React.Component{
   
   eval_(assertFn){
     let outbindings = updateOutbindings(this.state.AST);
-    let eval_result = evaluate(this.state.selected, outbindings, this.state.imports);
+    let eval_result = evaluate(this.state.selected, [], outbindings, this.state.import_irs);
 
     if (assertFn) {
       assertFn(eval_result);
@@ -175,6 +175,7 @@ class App extends React.Component{
       eval_result: null,
       irDirHandle: null,
       irs: {},
+      import_irs: {},
     };
   }
   
@@ -209,7 +210,7 @@ class App extends React.Component{
 
     let fn = (bindings, externalMaps) => {
       updateInBindings(inBounds, bindings);
-      return outBounds.map(ob => evaluate(ob, outbindings, externalMaps));
+      return outBounds.map(ob => evaluate(ob, [], outbindings, externalMaps));
     }
 
     let imports = {...this.state.imports};

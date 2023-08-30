@@ -104,20 +104,27 @@ export function makeNode(parent){
     return {value:'Node', parent, children:[]};
 }
 
-let outBounds = [];
 export function getOutBounds(node){
-    outBounds = [];
-    getOutBounds_(node);
-    return outBounds;
+    let obg = new OutBoundsGetter();
+    obg.getOutBounds(node);
+    return obg.outBounds;
 }
 
-function getOutBounds_(node){
-    if (getName(node) == 'OutBound')
-       outBounds.push(node);
+class OutBoundsGetter{
+    constructor(){
+        this.outBounds = [];
+    }
 
-    for (let child of node.children)
-        getOutBounds_(child);
+    getOutBounds(node){
+        if (getName(node) == 'OutBound')
+           this.outBounds.push(node);
+    
+        for (let child of node.children)
+            this.getOutBounds(child);
+    }
+
 }
+
 
 let inBounds = [];
 export function getInBounds(node){

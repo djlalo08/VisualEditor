@@ -1,15 +1,16 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
-import { addAttr, getNameAndAttrs } from "./NodeUtils";
+import { addAttr, getNameAndAttrs, getOutBounds } from "./NodeUtils";
 
-const VERBOSE = true;
+const VERBOSE = false;
 
-export function evaluate(selected, outBindings, externalMaps){
-    let evaluator = new Evaluationator(outBindings, externalMaps);
+export function evaluate(selected, inBounds, outBindings, externalMaps){
+    let evaluator = new Evaluationator(inBounds, outBindings, externalMaps);
     return evaluator.evaluate(selected);
 }
 
 class Evaluationator {
-    constructor(outBindings, externalMaps){
+    constructor(inBounds, outBindings, externalMaps){
+        this.inBounds = inBounds;
         this.outBindings = outBindings;
         this.externalMaps = externalMaps;
         this.recusion_count = 0;
@@ -68,6 +69,9 @@ class Evaluationator {
             case 'UnBound':
                 return ['UNBOUND', attrs.getvalue];
             case 'InBound':
+                if (attrs.bind_idx){
+                    return this.inBounds[attrs.bind_idx];
+                }
                 return ast_node.supplier? ast_node.supplier() :['INBOUND', attrs.getvalue];
         }
     }
@@ -92,14 +96,17 @@ class Evaluationator {
             return fn(ins.children);
         }
 
-        if (attrs.name in this.externalMaps){
+        if (attrs.import_from){
             ins = ins.children.map(this.evaluate);
+            
             if (VERBOSE) {
                 console.log(`Evaluating map [${attrs.name}] with ins:`);
-                ins.forEach(x => console.log(x));
+                // outBindings.forEach(x => console.log(x));
             }
-            let fn = this.externalMaps[attrs.name];
-            return fn(ins, this.externalMaps);
+            
+            let mapToEval = this.externalMaps[attrs.name];
+            let outBounds = getOutBounds(mapToEval);
+            return outBounds.map(outBound => evaluate(outBound, ins, {}, this.externalMaps));
         }
     }
 }

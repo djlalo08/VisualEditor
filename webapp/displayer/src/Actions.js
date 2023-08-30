@@ -2,7 +2,7 @@ import { mapRepo } from './MapRepo';
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
 import { updateToMatchLength } from './Utils/ListUtils';
-import { addAttr, appendAttrObj, delAttr, getAttrs, getName, makeMap, makeNode, printAst } from './Utils/NodeUtils';
+import { addAttr, appendAttrObj, delAttr, getAttrs, getImports, getName, makeMap, makeNode, printAst } from './Utils/NodeUtils';
 
 let app = null;
 let selectables = ['Map', 'Node', 'InBound', 'OutBound', 'Constant'];
@@ -483,7 +483,29 @@ export function connect(){
 export async function openFile(fileName){
     let response = await fetch(`./irs/${fileName}.ir`);
     let text = await response.text();
-    app.setState(app.stateFromIR(text));
+    app.setState(app.stateFromIR(text), loadImports2);
+}
+
+function loadImports2(){
+    loadImports3(app.state.AST);
+}
+
+function loadImports3(node){
+    let imports = getImports(node);
+    for (let [name, location] of Object.entries(imports)){
+        fetch(`${location}${name}.ir`)
+        .then(response => response.text())
+        .then(importCode => {
+            let import_irs = {};
+            for (let [name, ast] of Object.entries(app.state.import_irs)){
+                import_irs[name] = ast;
+            }
+            let ast = parse(importCode);
+            import_irs[name] = ast;
+            loadImports3(ast);
+            app.setState({import_irs});
+        });
+    }
 }
 
 export function loadImports(imports){
