@@ -489,6 +489,9 @@ export async function openFile(fileName){
 function loadImports(node){
     let imports = getImports(node);
     for (let [name, location] of Object.entries(imports)){
+        if (app.state.import_irs[name])
+            continue;
+
         fetch(`${location}${name}.ir`)
         .then(response => response.text())
         .then(importCode => {
