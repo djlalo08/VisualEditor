@@ -17,13 +17,7 @@ import { runTests } from './Utils/Tests';
 
 /*
 WORKING ON:
-- New solution, to avoid async during eval:
-  -AST for all IRs is loaded in on page load
-  -New context (i.e. new Evaluationator object) is created for each exernal map loaded in
-  -This means outBindings are replenished for each evaluationator
-  -But we need to associate getvalues with setvalues, which we currently are only doing at the very beginning
--Idea: when AST is produced for all external maps, we also generate pointers for all getvalue about which node they are meant to correspond with.
-- No that's not quite right. We only have 1 copy of AST so we get into some issues (i.e. if we have 2 instances of AST, then the same node is being pointed to by getvalues in each instance, which means that one value will copy the other)...
+Recursion works!!
 
 First: Go through all existing IRs and make sure they work and have tests
 
