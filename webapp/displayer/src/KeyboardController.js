@@ -108,7 +108,7 @@ export function keypress(e){
         if (shift)
             a.prevLine();
         else if (command)
-            app.eval_();
+            a.callEval();
         else
             a.nextLine();
         break;

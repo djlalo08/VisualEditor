@@ -2,12 +2,11 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
-import { handleClose, openFile, setApp as setActions } from './Actions';
+import { callEval, handleClose, openFile, setApp as setActions } from './Actions';
 import './App.css';
 import { Sidebar } from './Components/Sidebar';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
-import { evaluate } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
 import { countBounds, printAst } from './Utils/NodeUtils';
 import { runTests } from './Utils/Tests';
@@ -90,8 +89,8 @@ let id = 0;
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
 // const FILE = 'vertical_test';
-// const FILE = 'quicksort';
-const FILE = 'quicksort_test';
+const FILE = 'quicksort';
+// const FILE = 'quicksort_test';
 
 // const FILE = 'cacheing_test';
 // const FILE = 'x';
@@ -121,7 +120,6 @@ class App extends React.Component{
     this.handleTextChange = this.handleTextChange.bind(this);
     this.onShow = this.onShow.bind(this);
     this.stateFromIR = this.stateFromIR.bind(this);
-    this.eval_ = this.eval_.bind(this);
     this.getIRsList = this.getIRsList.bind(this);
 
     this.state = {
@@ -129,22 +127,7 @@ class App extends React.Component{
     }
     
   }
-  
-  eval_(assertFn){
-    let eval_result = evaluate(this.state.selected, [], this.state.AST, this.state.import_irs);
-
-    if (assertFn) {
-      assertFn(eval_result);
-    } else {
-      console.log('eval result:');
-      console.log(eval_result);
-    }
     
-    if (typeof eval_result === 'function')
-      eval_result += ' ';
-    this.setState({eval_result});
-  }
-  
   emptyState(){
     return { 
       AST: null,
@@ -249,7 +232,7 @@ class App extends React.Component{
         <Button onClick={() => console.log(printAst(AST))}>Print AST</Button> 
         <Button onClick={() => openFile(FILE)}>Load ex1</Button>
         <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
-        <Button onClick={() => this.eval_()}>Eval</Button>
+        <Button onClick={callEval}>Eval</Button>
         <Button onClick={this.getIRsList}>FileStuff</Button>
         <Button onClick={() => runTests(this)}>Run Tests</Button>
         <p>Result: {eval_result}</p>

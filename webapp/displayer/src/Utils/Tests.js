@@ -1,4 +1,4 @@
-import { openFile, setSelectedById } from "../Actions";
+import { callEval, openFile, setSelectedById } from "../Actions";
 
 let successful_tests = 0;
 let total_tests = 0;
@@ -74,7 +74,7 @@ async function runTest(app, fileName, id, assertFn){
     await sleep(100);
     setSelectedById(id);
     await sleep(1);
-    app.eval_(assertFn);
+    callEval(assertFn);
     await sleep(1);
     total_tests++;
 }

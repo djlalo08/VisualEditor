@@ -1,5 +1,6 @@
 import { mapRepo } from './MapRepo';
 import { ast_to_jsx } from './Utils/Converter';
+import { evaluate } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
 import { updateToMatchLength } from './Utils/ListUtils';
 import { addAttr, appendAttrObj, delAttr, getAttrs, getImports, getName, makeMap, makeNode, printAst } from './Utils/NodeUtils';
@@ -506,6 +507,23 @@ function loadImports(node){
         });
     }
 }
+
+export function callEval(assertFn){
+    let {selected, AST, import_irs} = app.state;
+    let eval_result = evaluate(selected, [], AST, import_irs);
+
+    if (assertFn) {
+      assertFn(eval_result);
+    } else {
+      console.log('eval result:');
+      console.log(eval_result);
+    }
+    
+    if (typeof eval_result === 'function')
+      eval_result += ' ';
+    app.setState({eval_result});
+  }
+
 
 export function setMapIns(map, count){
     let [ins, _] = map.children;
