@@ -1,10 +1,11 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
 import { addAttr, getNameAndAttrs, getOutBounds } from "./NodeUtils";
 
-const VERBOSE = false;
+const VERBOSE = true;
 
-export function evaluate(selected, inBounds, outBindings, externalMaps){
-    let evaluator = new Evaluationator(inBounds, outBindings, externalMaps);
+export function evaluate(selected, inBounds, mapRoot, externalMaps){
+    let outbindings = updateOutbindings(mapRoot);
+    let evaluator = new Evaluationator(inBounds, outbindings, externalMaps);
     return evaluator.evaluate(selected);
 }
 
@@ -106,7 +107,7 @@ class Evaluationator {
             
             let mapToEval = this.externalMaps[attrs.name];
             let outBounds = getOutBounds(mapToEval);
-            return outBounds.map(outBound => evaluate(outBound, ins, {}, this.externalMaps));
+            return outBounds.map(outBound => evaluate(outBound, ins, mapToEval, this.externalMaps));
         }
     }
 }

@@ -77,3 +77,5 @@ flask-project/venv/lib/*
 .DS_Store
 .DS_Store
 .lsp/.cache/db.transit.json
+.lsp/.cache/db.transit.json
+.lsp/.cache/db.transit.json

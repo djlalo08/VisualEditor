@@ -7,7 +7,7 @@ import './App.css';
 import { Sidebar } from './Components/Sidebar';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
 import { ast_to_jsx } from './Utils/Converter';
-import { evaluate, updateOutbindings } from './Utils/Evaluator';
+import { evaluate } from './Utils/Evaluator';
 import { parse } from './Utils/IrToAst';
 import { countBounds, printAst } from './Utils/NodeUtils';
 import { runTests } from './Utils/Tests';
@@ -17,13 +17,13 @@ import { runTests } from './Utils/Tests';
 
 /*
 WORKING ON:
-- We have an issues with variables and recursion. It gets confused.
-We need to somehow isolate things when they occur recursively...
-Turns out this is sort of complicated... we need a completely new solution...
-Currently -- outbindings are assigned during eval. They are also assigned for any given import when it is imported
-We are overloading names when we do this.
-I think imports shouldn't be loaded until evaluation time. This way, we only import the functions that we actuall use. This resolves infinite loop of loading for recursive functions, and also makes everything make more sense.
-Obviously, at some point importing live during execution is not efficient, but we can deal with that later.
+- New solution, to avoid async during eval:
+  -AST for all IRs is loaded in on page load
+  -New context (i.e. new Evaluationator object) is created for each exernal map loaded in
+  -This means outBindings are replenished for each evaluationator
+  -But we need to associate getvalues with setvalues, which we currently are only doing at the very beginning
+-Idea: when AST is produced for all external maps, we also generate pointers for all getvalue about which node they are meant to correspond with.
+- No that's not quite right. We only have 1 copy of AST so we get into some issues (i.e. if we have 2 instances of AST, then the same node is being pointed to by getvalues in each instance, which means that one value will copy the other)...
 
 First: Go through all existing IRs and make sure they work and have tests
 
@@ -143,8 +143,7 @@ class App extends React.Component{
   }
   
   eval_(assertFn){
-    let outbindings = updateOutbindings(this.state.AST);
-    let eval_result = evaluate(this.state.selected, [], outbindings, this.state.import_irs);
+    let eval_result = evaluate(this.state.selected, [], this.state.AST, this.state.import_irs);
 
     if (assertFn) {
       assertFn(eval_result);
