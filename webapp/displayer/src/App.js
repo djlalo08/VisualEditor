@@ -17,24 +17,19 @@ import { runTests } from './Utils/Tests';
 
 /*
 WORKING ON:
-Recursion works!!
 
 First: Go through all existing IRs and make sure they work and have tests
 
-General goal: Try to get working quicksort, and fix any issues along the way
-
-InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
-
-Elements' unique IDs are line number in IR. Since there can only be 1 element per line, we know id is unique
+Notes:
+-InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
+-Elements' unique IDs are line number in IR. Since there can only be 1 element per line, we know id is unique
 
 
 THINK ABOUT:
--Have to reconcile horizontals with homiconic repr
 -Maybe we do need nodes after all: 1) consider homoiconicity. 2) Say You want to select, or delete, or replace entire contents of a Node, You need to be able to select the Node, which means Node needs to exist
 -Code has race conditions? See runTest having to call sleep() for more info
 
 UP NEXT:
--Let's make quicksort!
 
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
@@ -96,9 +91,8 @@ let id = 0;
 // const FILE = 'variable_test';
 // const FILE = 'vertical_test';
 // const FILE = 'quicksort';
-// const FILE = 'quicksort_simple';
-
 const FILE = 'quicksort_test';
+
 // const FILE = 'cacheing_test';
 // const FILE = 'x';
 // const FILE = 'fib';

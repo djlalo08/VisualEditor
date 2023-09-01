@@ -1,7 +1,7 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
 import { addAttr, getNameAndAttrs, getOutBounds } from "./NodeUtils";
 
-const VERBOSE = true;
+const VERBOSE = false;
 
 export function evaluate(selected, inBounds, mapRoot, externalMaps){
     let outbindings = updateOutbindings(mapRoot);

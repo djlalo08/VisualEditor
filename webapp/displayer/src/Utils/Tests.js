@@ -20,6 +20,7 @@ export async function runTests(app){
     await assertValue(app, 'variable_test', 14, 7);
     await assertValue(app, 'variable_test', 20, 10);
     await assertValue(app, 'vertical_test', 28, 9);    
+    await assertList(app, 'quicksort_test', 2, [2,4,5,6,8]);
 
     console.log(`Testing completed. ${successful_tests}/${total_tests} tests successful`);
 }
