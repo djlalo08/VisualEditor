@@ -70,10 +70,11 @@ class Evaluationator {
             case 'UnBound':
                 return ['UNBOUND', attrs.getvalue];
             case 'InBound':
-                if (attrs.bind_idx){
+                if (ast_node.supplier)
+                    return ast_node.supplier();
+                if (attrs.bind_idx)
                     return this.inBounds[attrs.bind_idx];
-                }
-                return ast_node.supplier? ast_node.supplier() :['INBOUND', attrs.getvalue];
+                return ['INBOUND', attrs.getvalue];
         }
     }
     
