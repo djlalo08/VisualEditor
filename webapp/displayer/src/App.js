@@ -11,60 +11,6 @@ import { parse } from './Utils/IrToAst';
 import { countBounds, printAst } from './Utils/NodeUtils';
 import { runTests } from './Utils/Tests';
 
-/*
-WORKING ON:
--Use window.showDirectoryPicker() to enable opening and saving files more directly
-
-
-UP NEXT:
-
--Put homoiconicity to work -- make a (I,O) be able to be treated as a function
-
-
-TODOs: 
--Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
--Make maps for control flow:
--For each
--Constants should have output nodes (and thus outBindings) [by default we can do hide_outs, returnidx:0]
--Update readme
--Add left_out, right_out inserts
--Adding a constant assumes it is a number. Make flexible for other constant types
--Left/Right navigation in out nodes seems to not really work
-
-VISUAL/AESTHETIC:
--Make if look better (condition on top, then/else side-by-side)
--If doesn't highlight when selected 
-
-
-IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
--Hashing doesn't work on recursive fn calls
--Data unpacking (output node can return components of a result obj, rather than the obj itself, if user wants)
--Shouldn't be rerendering _everything_ every time
-
-Notes:
--InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
--Elements' unique IDs are line number in IR. Since there can only be 1 element per line, we know id is unique
-
-THINK ABOUT:
--Maybe we do need nodes after all: 1) consider homoiconicity. 2) Say You want to select, or delete, or replace entire contents of a Node, You need to be able to select the Node, which means Node needs to exist
--Code has race conditions? See runTest having to call sleep() for more info
--IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version). Now that I'm back, I like textual IR again. Could be possible to compress it, but not necessary atm. Parsing is relatively trivial and already take care of -- not a major issue
-
-Q and A:
--What is the difference between In/OutBinding and In/OutBound? 
-  Binding is for wire connections
-  Bound is for params (i.e. InBound are function arguments, OutBound are for function returns)
--What does unwrap attr in constants mean?
-
-APPARENT INCONSISTENCIES:
--It seems that in some places InBound is characterized by getvalue, and in other cases by bind_idx. In yet other cases by name?
-
-BUGS:
-- When a map has more than 1 output, and it is called twice, the second time it's called it will add the output value as an attribute
-*/
-  
-
-
 let id = 0;
 // const FILE = 'inc';
 // const FILE = 'inc_test';
