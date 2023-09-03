@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
-import { callEval, handleClose, openFile, setApp as setActions } from './Actions';
+import { callEval, handleClose, openFile, save, setApp as setActions } from './Actions';
 import './App.css';
 import { Sidebar } from './Components/Sidebar';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
@@ -79,6 +79,7 @@ class App extends React.Component{
       irDirHandle: null,
       irs: {},
       import_irs: {},
+      activeFile: 'x',
     };
   }
   
@@ -170,6 +171,7 @@ class App extends React.Component{
         <Button onClick={callEval}>Eval</Button>
         <Button onClick={this.getIRsList}>FileStuff</Button>
         <Button onClick={() => runTests(this)}>Run Tests</Button>
+        <Button onClick={save}>Save</Button>
         <p>Result: {eval_result}</p>
         <p>Selected Id: {selected ? selected.id : null}</p>
         {modal}
@@ -178,6 +180,5 @@ class App extends React.Component{
     );
   }
 }
-
 
 export default App;

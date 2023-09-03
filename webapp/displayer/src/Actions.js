@@ -543,3 +543,7 @@ export function decMapIns(map){
     let oldLength = map.children[0].children.length;
     setMapIns(map, oldLength-1);
 }
+
+export function save(){
+    console.log(`${app.state.activeFile} saved!`);
+}
