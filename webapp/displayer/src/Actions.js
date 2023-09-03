@@ -553,6 +553,10 @@ export function decMapIns(map){
     setMapIns(map, oldLength-1);
 }
 
-export function save(){
+export async function save(){
     console.log(`${app.state.activeFile} saved!`);
+    let fileHandle = await app.state.irDirHandle.getFileHandle(`${app.state.activeFile}.ir`);
+    let writable = await fileHandle.createWritable();
+    await writable.write(printAst(app.state.AST));
+    await writable.close();
 }
