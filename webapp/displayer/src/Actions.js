@@ -131,7 +131,7 @@ export function insertMapFromModal(){
             break;
     }
     updateSelected(m);
-    app.setState({insertDir: ''});
+    app.setState({modalAction: null, insertDir: ''});
     handleClose();
 }
 
@@ -485,6 +485,15 @@ export async function openFile(fileName){
     let response = await fetch(`./irs/${fileName}.ir`);
     let text = await response.text();
     app.setState(app.stateFromIR(text), () => loadImports(app.state.AST));
+}
+
+export async function openFileFromModal(){
+    await openFile(app.state.modalText);
+    app.setState({activeFile: app.state.modalText});
+}
+
+export async function openFileFromDir(){
+    app.setState({modalAction: openFileFromModal, modalText:'', showModal:true});
 }
 
 function loadImports(node){

@@ -1,8 +1,11 @@
 WORKING ON:
 -Use window.showDirectoryPicker() to enable opening and saving files more directly
-
+    -Open brings up the insert modal and uses it to decide which file to open
+    -Save saves current file
 
 UP NEXT:
+
+- Split actions into multple files
 
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 

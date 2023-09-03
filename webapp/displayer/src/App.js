@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
-import { callEval, handleClose, openFile, save, setApp as setActions } from './Actions';
+import { callEval, handleClose, openFile, openFileFromDir, save, setApp as setActions } from './Actions';
 import './App.css';
 import { Sidebar } from './Components/Sidebar';
 import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardController';
@@ -74,12 +74,13 @@ class App extends React.Component{
       lastIRs: [],
       nextIRs: [],
       insertDir: '',
+      modalAction: null,
       toConnect: null,
       eval_result: null,
       irDirHandle: null,
       irs: {},
       import_irs: {},
-      activeFile: 'x',
+      activeFile: FILE,
     };
   }
   
@@ -95,7 +96,7 @@ class App extends React.Component{
   componentDidMount(){
     document.addEventListener("keydown", keypress);
     document.addEventListener("keyup", keyrelease);
-    openFile(FILE);
+    openFile(this.state.activeFile);
   }
 
   async getIRsList(){
@@ -147,7 +148,7 @@ class App extends React.Component{
       eval_result = eval_result.join(', ');
     }
 
-    let {showModal, modalText, selected} = this.state;
+    let {showModal, modalText, selected, activeFile} = this.state;
     let modal = <Modal show={showModal} onHide={handleClose} onShow={this.onShow}>
       <Modal.Body>
         <FormControl
@@ -161,19 +162,21 @@ class App extends React.Component{
 
     return (
       <div className="App"> 
-        <h1>{FILE}.ir</h1>
+        <h1>{activeFile}.ir</h1>
         <div>
           { JSX }
         </div>
         <Button onClick={() => console.log(printAst(AST))}>Print AST</Button> 
-        <Button onClick={() => openFile(FILE)}>Load ex1</Button>
         <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
         <Button onClick={callEval}>Eval</Button>
         <Button onClick={this.getIRsList}>FileStuff</Button>
         <Button onClick={() => runTests(this)}>Run Tests</Button>
+        <Button onClick={openFileFromDir}>Open</Button>
         <Button onClick={save}>Save</Button>
+
         <p>Result: {eval_result}</p>
         <p>Selected Id: {selected ? selected.id : null}</p>
+        
         {modal}
         <Sidebar node={this.state.selected} AST={AST}/>
       </div>

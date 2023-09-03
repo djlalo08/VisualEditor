@@ -34,19 +34,20 @@ export function keyrelease(e){
 }
 
 export function keypress(e){
-    // console.log(e.keyCode);
+    console.log(e.keyCode);
     held_down.add(e.keyCode);
 
-    let {selected, showModal} = app.state;
+    let {selected, showModal, modalAction} = app.state;
 
-    if (!selected) return;
     if (showModal) {
         if (e.keyCode == ENTER){
-            a.insertMapFromModal();
+            modalAction();
         }
         return;
     }
-
+    
+    if (!selected) return;
+    
     let shift = held_down.has(SHIFT);
     let command = held_down.has(COMMAND_L) || held_down.has(COMMAND_R);
     let i_key = held_down.has(I);
@@ -69,19 +70,19 @@ export function keypress(e){
         a.delete_element(selected);
         break;
     case SPACE:
-        app.setState({insertDir: shift? 'Wrap' : 'In'}, a.insert_element);
+        app.setState({modalAction: a.insertMapFromModal, insertDir: shift? 'Wrap' : 'In'}, a.insert_element);
         break;
     case W:
-        app.setState({insertDir: 'Up'}, a.insert_element);
+        app.setState({modalAction: a.insertMapFromModal, insertDir: 'Up'}, a.insert_element);
         break;
     case S:
-        app.setState({insertDir: 'Down'}, a.insert_element);
+        app.setState({modalAction: a.insertMapFromModal, insertDir: 'Down'}, a.insert_element);
         break;
     case D:
-        app.setState({insertDir: shift? 'Right_Out' : 'Right_In'}, a.insert_element);
+        app.setState({modalAction: a.insertMapFromModal, insertDir: shift? 'Right_Out' : 'Right_In'}, a.insert_element);
         break;
     case A:
-        app.setState({insertDir: shift? 'Left_Out' : 'Left_In'}, a.insert_element);
+        app.setState({modalAction: a.insertMapFromModal, insertDir: shift? 'Left_Out' : 'Left_In'}, a.insert_element);
         break;
     case T:
         a.secondSelect();
