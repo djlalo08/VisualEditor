@@ -11,22 +11,10 @@ import { parse } from './Utils/IrToAst';
 import { countBounds, printAst } from './Utils/NodeUtils';
 import { runTests } from './Utils/Tests';
 
-// import GeneratedApp from './Components/GeneratedApp';
-// import ExpectedApp from './Components/ExpectedApp';
-
 /*
 WORKING ON:
+-Use window.showDirectoryPicker() to enable opening and saving files more directly
 
-First: Go through all existing IRs and make sure they work and have tests
-
-Notes:
--InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
--Elements' unique IDs are line number in IR. Since there can only be 1 element per line, we know id is unique
-
-
-THINK ABOUT:
--Maybe we do need nodes after all: 1) consider homoiconicity. 2) Say You want to select, or delete, or replace entire contents of a Node, You need to be able to select the Node, which means Node needs to exist
--Code has race conditions? See runTest having to call sleep() for more info
 
 UP NEXT:
 
@@ -34,15 +22,11 @@ UP NEXT:
 
 
 TODOs: 
--Logic for whether stuff or isn't in lists when evaluating is sort of confusing and maybe wrong
 -Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
--Use window.showDirectoryPicker() to enable opening and saving files more directly
 -Make maps for control flow:
-  -For each
+-For each
 -Constants should have output nodes (and thus outBindings) [by default we can do hide_outs, returnidx:0]
--Test suite
 -Update readme
--Add set/get maps to be used as variables
 -Add left_out, right_out inserts
 -Adding a constant assumes it is a number. Make flexible for other constant types
 -Left/Right navigation in out nodes seems to not really work
@@ -57,8 +41,14 @@ IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
 -Data unpacking (output node can return components of a result obj, rather than the obj itself, if user wants)
 -Shouldn't be rerendering _everything_ every time
 
-INTERESTING IDEAS:
-- IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version). Now that I'm back, I like textual IR again. Could be possible to compress it, but not necessary atm. Parsing is relatively trivial and already take care of -- not a major issue
+Notes:
+-InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
+-Elements' unique IDs are line number in IR. Since there can only be 1 element per line, we know id is unique
+
+THINK ABOUT:
+-Maybe we do need nodes after all: 1) consider homoiconicity. 2) Say You want to select, or delete, or replace entire contents of a Node, You need to be able to select the Node, which means Node needs to exist
+-Code has race conditions? See runTest having to call sleep() for more info
+-IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version). Now that I'm back, I like textual IR again. Could be possible to compress it, but not necessary atm. Parsing is relatively trivial and already take care of -- not a major issue
 
 Q and A:
 -What is the difference between In/OutBinding and In/OutBound? 
