@@ -91,12 +91,11 @@ let id = 0;
 // const FILE = 'vertical_test';
 // const FILE = 'quicksort';
 // const FILE = 'quicksort_test';
-const FILE = 'x';
-
-// const FILE = 'cacheing_test';
 // const FILE = 'fib';
-// const FILE = 'fib_runner';
-// const FILE = 'ls';
+const FILE = 'fib_runner';
+
+// const FILE = 'x';
+// const FILE = 'cacheing_test';
 
 // const FILE = 'empty';
 
