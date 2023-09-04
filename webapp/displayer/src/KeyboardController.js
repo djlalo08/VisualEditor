@@ -34,7 +34,7 @@ export function keyrelease(e){
 }
 
 export function keypress(e){
-    console.log(e.keyCode);
+    // console.log(e.keyCode);
     held_down.add(e.keyCode);
 
     let {selected, showModal, modalAction} = app.state;
@@ -47,7 +47,7 @@ export function keypress(e){
     }
     
     if (!selected) return;
-    
+
     let shift = held_down.has(SHIFT);
     let command = held_down.has(COMMAND_L) || held_down.has(COMMAND_R);
     let i_key = held_down.has(I);

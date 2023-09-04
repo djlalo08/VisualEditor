@@ -1,20 +1,15 @@
 WORKING ON:
--Use window.showDirectoryPicker() to enable opening and saving files more directly
-    -Open brings up the insert modal and uses it to decide which file to open [done!]
-    -Save saves current file
+- Split Actions.js into multple files
 
 UP NEXT:
 
-- Split Actions.js into multple files
-
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
-
 
 TODOs: 
 -Can't type normally when using modal or other sidebar. Need to rethink how keyboard controls work
 -Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
 -Make maps for control flow:
--For each
+    -For each
 -Constants should have output nodes (and thus outBindings) [by default we can do hide_outs, returnidx:0]
 -Update readme
 -Add left_out, right_out inserts

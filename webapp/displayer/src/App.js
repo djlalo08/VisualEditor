@@ -55,6 +55,7 @@ class App extends React.Component{
     this.handleTextChange = this.handleTextChange.bind(this);
     this.onShow = this.onShow.bind(this);
     this.stateFromIR = this.stateFromIR.bind(this);
+    this.requestDirHandler = this.requestDirHandler.bind(this);
     this.getIRsList = this.getIRsList.bind(this);
 
     this.state = {
@@ -142,6 +143,13 @@ class App extends React.Component{
     document.body.removeChild(element);
   }
 
+  requestDirHandler(){
+    if (!this.state.irDirHandle){
+      let r = window.showDirectoryPicker();
+      this.setState({irDirHandle: r});
+    }
+  }
+
   render(){
     let {eval_result, AST, JSX} = this.state;
     if (eval_result && eval_result.join){
@@ -161,7 +169,7 @@ class App extends React.Component{
     </Modal>
 
     return (
-      <div className="App"> 
+      <div className="App" onMouseDown={this.requestDirHandler}> 
         <h1>{activeFile}.ir</h1>
         <div>
           { JSX }
