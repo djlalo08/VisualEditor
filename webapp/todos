@@ -15,6 +15,7 @@ TODOs:
 -Add left_out, right_out inserts
 -Adding a constant assumes it is a number. Make flexible for other constant types
 -Left/Right navigation in out nodes seems to not really work
+-Every time npm starts, app.css is changed or reverted. This probably has to do with LESS files. Maybe try actualy using app.less?
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side)
