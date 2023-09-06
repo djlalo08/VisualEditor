@@ -1,4 +1,4 @@
-import { updateSelected } from "../Actions";
+import { updateSelected } from '../Actions/SelectionActions';
 
 export default function Selectable(InnerComponent){
     return (props =>  {

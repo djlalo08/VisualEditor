@@ -1,4 +1,9 @@
 import * as a from "./Actions";
+import * as insert_element from './Actions/InsertionActions';
+import * as moveUpToVertical from './Actions/NavigationActions';
+import * as updateSelected from './Actions/SelectionActions';
+import * as UNDO_LIMIT from './Actions/UndoActions';
+import * as setToConnect from './Actions/WireActions';
 
 const UP = 38;
 const DOWN = 40;
@@ -55,63 +60,63 @@ export function keypress(e){
 
     switch (e.keyCode) {
     case UP:
-        a.moveUp();
+        moveUpToVertical.moveUp();
         break;
     case DOWN:
-        a.moveDown();
+        moveUpToVertical.moveDown();
         break;
     case LEFT:
-        a.moveLeft(selected);
+        moveUpToVertical.moveLeft(selected);
         break;
     case RIGHT:
-        a.moveRight(selected);
+        moveUpToVertical.moveRight(selected);
         break;
     case BACKSPACE:
-        a.delete_element(selected);
+        insert_element.delete_element(selected);
         break;
     case SPACE:
-        app.setState({modalAction: a.insertMapFromModal, insertDir: shift? 'Wrap' : 'In'}, a.insert_element);
+        app.setState({modalAction: insert_element.insertMapFromModal, insertDir: shift? 'Wrap' : 'In'}, insert_element.insert_element);
         break;
     case W:
-        app.setState({modalAction: a.insertMapFromModal, insertDir: 'Up'}, a.insert_element);
+        app.setState({modalAction: insert_element.insertMapFromModal, insertDir: 'Up'}, insert_element.insert_element);
         break;
     case S:
-        app.setState({modalAction: a.insertMapFromModal, insertDir: 'Down'}, a.insert_element);
+        app.setState({modalAction: insert_element.insertMapFromModal, insertDir: 'Down'}, insert_element.insert_element);
         break;
     case D:
-        app.setState({modalAction: a.insertMapFromModal, insertDir: shift? 'Right_Out' : 'Right_In'}, a.insert_element);
+        app.setState({modalAction: insert_element.insertMapFromModal, insertDir: shift? 'Right_Out' : 'Right_In'}, insert_element.insert_element);
         break;
     case A:
-        app.setState({modalAction: a.insertMapFromModal, insertDir: shift? 'Left_Out' : 'Left_In'}, a.insert_element);
+        app.setState({modalAction: insert_element.insertMapFromModal, insertDir: shift? 'Left_Out' : 'Left_In'}, insert_element.insert_element);
         break;
     case T:
-        a.secondSelect();
+        updateSelected.secondSelect();
         break;
     case M:
-        a.move();
+        insert_element.move();
         break;
     case E:
-        a.extract();
+        insert_element.extract();
         break;
     case Z:
         if (shift)
-            a.redo();
+            UNDO_LIMIT.redo();
         else
-            a.undo();
+            UNDO_LIMIT.undo();
         break;
     case C:
         if (app.state.toConnect)
-            a.connect();
+            setToConnect.connect();
         else 
-            a.setToConnect();
+            setToConnect.setToConnect();
         break;
     case ENTER:
         if (shift)
-            a.prevLine();
+            moveUpToVertical.prevLine();
         else if (command)
             a.callEval();
         else
-            a.nextLine();
+            moveUpToVertical.nextLine();
         break;
     case PLUS:
         if (i_key){

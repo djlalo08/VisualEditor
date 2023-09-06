@@ -1,4 +1,6 @@
-import { callEval, openFile, setSelectedById } from "../Actions";
+import { callEval } from "../Actions";
+import { openFile } from '../Actions/FileActions';
+import { setSelectedById } from '../Actions/SelectionActions';
 
 let successful_tests = 0;
 let total_tests = 0;
