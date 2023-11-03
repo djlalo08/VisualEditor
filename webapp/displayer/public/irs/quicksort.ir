@@ -2,13 +2,15 @@ Root
     Map[name:if]
         Ins
             //cond
-            Map[name:l1, returnidx:0, hide_outs:t, inline:t]
+            Map[name:l1, returnidx:0, hide_outs:t, prefix:t]
                 Ins
                     InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
                 Outs
                     Node
             //then
-            InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+            Map[name:id]
+                Ins
+                    InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
             
             //else
             Vertical

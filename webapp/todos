@@ -1,4 +1,9 @@
 WORKING ON:
+
+-Make if/else actually nice -- if/else is actually just boolean case structure.
+  -Think about how pattern matching could work. Take quicksort as an example
+  -This will set the basis for object decomposition, case structures, etc (think Haskell polymorphism)
+
 -UI. Try to build a program from scratch in editor and get a feel for what works, what doesn't, and what do we need to add/fix/change?
 -Maybe try to build out both quicksort and quadratic formula as exercises
 
