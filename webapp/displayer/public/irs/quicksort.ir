@@ -8,9 +8,7 @@ Root
                 Outs
                     Node
             //then
-            Map[name:id]
-                Ins
-                    InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+            InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
             
             //else
             Vertical
