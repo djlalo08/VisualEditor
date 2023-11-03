@@ -3,6 +3,17 @@ import { addProps } from "../Utils/ReactUtils";
 export function IfMap(props){
     let {id, className, ins, other} = props;
     let newIns = addProps(ins, {prefix:'t'}) ;
+    let divider = (<>
+        <td style={{width: '8px'}}></td>
+        <td style={{width: '1px', backgroundColor: 'lightgray'}}></td>
+        <td style={{width: '1px'}}></td>
+        <td style={{width: '1px', backgroundColor: 'dimgray'}}></td>
+        <td style={{width: '1px'}}></td>
+        <td style={{width: '1px', backgroundColor: 'lightgray'}}></td>
+        <td style={{width: '8px'}}></td>
+    </>
+    );
+
     return (<div id={id} style={{textAlign: 'center'}} className={className} {...other}>
         <span>
         <table style={{display: 'inline-block'}}>
@@ -14,11 +25,12 @@ export function IfMap(props){
         <table>
             <tr>
                 <td> then </td>
-                <td> {addProps(newIns, {onlyShowIdx:1})} </td>
-                <td style={{width: '12px'}}></td>
-                <td style={{width: '1px', backgroundColor: 'gray'}}></td>
-                <td style={{width: '25px'}}></td>
+                {divider}
                 <td> else </td>
+            </tr>
+            <tr>
+                <td> {addProps(newIns, {onlyShowIdx:1})} </td>
+                {divider}
                 <td> {addProps(newIns, {onlyShowIdx:2})} </td>
             </tr>
         </table>
