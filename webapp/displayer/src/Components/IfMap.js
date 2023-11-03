@@ -5,15 +5,10 @@ export function IfMap(props){
     let newIns = addProps(ins, {prefix:'t'}) ;
     return (<div id={id} style={{textAlign: 'center'}} className={className} {...other}>
         <span>
-
         <table style={{display: 'inline-block'}}>
             <tr>
-                <td>
-                    if
-                </td>
-                <td>
-                {addProps(newIns, {onlyShowIdx:0, name:'if'})}
-                </td>
+                <td>if</td>
+                <td>{addProps(newIns, {onlyShowIdx:0, name:'if'})}</td>
             </tr>
         </table>
         <table>
@@ -25,11 +20,8 @@ export function IfMap(props){
                 <td style={{width: '25px'}}></td>
                 <td> else </td>
                 <td> {addProps(newIns, {onlyShowIdx:2})} </td>
-
             </tr>
-
         </table>
         </span>
-
     </div>)
 }
