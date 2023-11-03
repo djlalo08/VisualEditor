@@ -1,6 +1,6 @@
 Root
     Vertical
-        Map[name:+]
+        Map[name:+, variableinput:t]
             Ins
                 Vertical
                     Map[5:undefined, name:ls, inline:t, result:5,5,5,5,5]
