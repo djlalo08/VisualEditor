@@ -3,14 +3,10 @@ import { addProps } from "../Utils/ReactUtils";
 export function IfMap(props){
     let {id, className, ins, other} = props;
     let newIns = addProps(ins, {prefix:'t'}) ;
-    return (<div id={id} className={className} {...other}>
+    return (<div id={id} style={{textAlign: 'center'}} className={className} {...other}>
         <span>
 
-        <table style={
-            {  display: 'block',
-            'margin-left': 'auto',
-            'margin-right': 'auto',
-            width: '5%'}}>
+        <table style={{display: 'inline-block'}}>
             <tr>
                 <td>
                     if
