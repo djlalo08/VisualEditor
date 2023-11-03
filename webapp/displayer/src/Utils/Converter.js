@@ -4,6 +4,7 @@ import Block from "../Components/Block";
 import Horizontal from '../Components/Horizontal';
 import Ins from "../Components/Ins";
 import Mapx from '../Components/Map';
+import { MapDef } from "../Components/MapDef";
 import Node from '../Components/Node';
 import Outs from '../Components/Outs';
 import Root from '../Components/Root';
@@ -25,6 +26,7 @@ function treeToJsx(node){
     let children = node.children.map(treeToJsx);
     
     switch (nodeName) {
+        case 'Body':
         case 'Root':
             return <Root {...props}>{children}</Root>;
         case 'Vertical':
@@ -57,6 +59,8 @@ function treeToJsx(node){
         case 'UnBound':
         case 'OutBound':
             return <Block {...props}></Block>
+        case 'MapDef':
+            return <MapDef {...props}>{children}</MapDef>
         case 'Map':
             return <Mapx {...props}>{children}</Mapx>;
         case 'Horizontal':

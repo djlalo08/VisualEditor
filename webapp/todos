@@ -1,6 +1,20 @@
 WORKING ON:
 
--Make if/else actually nice -- if/else is actually just boolean case structure.
+- Make functions as dicussed
+  MapDef[name:x]
+    Ins
+      InBound[]
+      InBound[]
+    Outs
+      OutBound[]
+      OutBound[]
+    Body
+      Map[name:+]
+        ...
+This defines function in the scope of current file. We'll have to think about exports and stuff soon...
+
+
+-If/else is actually just boolean case structure.
   -Think about how pattern matching could work. Take quicksort as an example
   -This will set the basis for object decomposition, case structures, etc (think Haskell polymorphism)
 
