@@ -1,36 +1,46 @@
 Root
-   Vertical
-        Map[name:if]
-            Ins
-                Map[name:<, infix:t, hide_outs:t, returnidx:0]
-                    Ins
-                        InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
-                        Constant[name:2, value:2, unwrap:t, className:constant, type:Number]
-                    Outs
-                Constant[name:1, value:1, unwrap:t, className:constant, type:Number]
-                Map[name:+, infix:t, inline:t, returnidx:0, hide_outs:t]
-                    Ins
-                        Map[name:fib, recursive:t, hide_outs:t, returnidx:0, inline:t, className:inline, import_from:./irs/]
-                            Ins
-                                Map[name:-, hide_outs:t, returnidx:0, infix:t, inline:t, className:inline]
-                                    Ins
-                                        InBound[name:a, getvalue:u1, className:unbound inline, bind_idx:0]
-                                        Constant[name:1, value:1, unwrap:t, className:constant inline, type:Number]
-                                    Outs   
-                                        Node
-                            Outs
-                                Node
-                        Map[name:fib, recursive:t, hide_outs:t, returnidx:0, inline:t, import_from:./irs/]
-                            Ins
-                                Map[name:-, hide_outs:t, returnidx:0, infix:t, inline:t]
-                                    Ins
-                                        InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
-                                        Constant[name:2, value:2, unwrap:t, className:constant, type:Number]
-                                    Outs   
-                                        Node
-                            Outs
-                                Node
-                    Outs
-                        Node
-            Outs
-                Node[name:b, return:0, className:unbound]
+
+    Map[name:fib, import_from:./irs/fib]
+        Ins
+            Constant[name:10, value:10, unwrap:t, className:constant, type:Number]
+        Outs
+            Node[name:final_program_outs, setvalue:b1]
+
+   MapDef[name:fib]
+        Ins
+        Outs
+        Body
+            Map[name:if]
+                Ins
+                    Map[name:<, infix:t, hide_outs:t, returnidx:0]
+                        Ins
+                            InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                            Constant[name:2, value:2, unwrap:t, className:constant, type:Number]
+                        Outs
+                    Constant[name:1, value:1, unwrap:t, className:constant, type:Number]
+                    Map[name:+, infix:t, inline:t, returnidx:0, hide_outs:t]
+                        Ins
+                            Map[name:fib, recursive:t, hide_outs:t, returnidx:0, inline:t, className:inline, import_from:./irs/fib]
+                                Ins
+                                    Map[name:-, hide_outs:t, returnidx:0, infix:t, inline:t, className:inline]
+                                        Ins
+                                            InBound[name:a, getvalue:u1, className:unbound inline, bind_idx:0]
+                                            Constant[name:1, value:1, unwrap:t, className:constant inline, type:Number]
+                                        Outs   
+                                            Node
+                                Outs
+                                    Node
+                            Map[name:fib, recursive:t, hide_outs:t, returnidx:0, inline:t, import_from:./irs/fib]
+                                Ins
+                                    Map[name:-, hide_outs:t, returnidx:0, infix:t, inline:t]
+                                        Ins
+                                            InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                                            Constant[name:2, value:2, unwrap:t, className:constant, type:Number]
+                                        Outs   
+                                            Node
+                                Outs
+                                    Node
+                        Outs
+                            Node
+                Outs
+                    Node[name:b, return:0, className:unbound]

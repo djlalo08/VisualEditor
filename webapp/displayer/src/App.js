@@ -15,10 +15,9 @@ import { runTests } from './Utils/Tests';
 
 let devMode = true;
 let id = 0;
-// const FILE = 'inc';
-// const FILE = 'inc_test';
+const FILE = 'inc_test';
 // const FILE = '2_outs';
-const FILE = '2_outs_test';
+// const FILE = '2_outs_test';
 // const FILE = 'lambda_nest';
 // const FILE = 'lambdas';
 // const FILE = 'if_test';

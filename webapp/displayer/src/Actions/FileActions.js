@@ -1,6 +1,6 @@
 import { app } from '../Actions';
 import { parse } from '../Utils/IrToAst';
-import { getImports, printAst } from '../Utils/NodeUtils';
+import { getFunctions, getImports, printAst } from '../Utils/NodeUtils';
 
 
 export async function openFile(fileName) {
@@ -23,7 +23,7 @@ function loadImports(node) {
         if (app.state.import_irs[name])
             continue;
 
-        fetch(`${location}${name}.ir`)
+        fetch(`${location}.ir`)
             .then(response => response.text())
             .then(importCode => {
                 let import_irs = {};
@@ -31,8 +31,11 @@ function loadImports(node) {
                     import_irs[name] = ast;
                 }
                 let ast = parse(importCode);
-                import_irs[name] = ast;
-                loadImports(ast);
+                let functions = getFunctions(ast);
+                if (functions[name]){
+                    import_irs[name] = functions[name];
+                    loadImports(functions[name]);
+                }
                 app.setState({ import_irs });
             });
     }

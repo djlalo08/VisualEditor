@@ -1,8 +1,26 @@
 Root
-    Map[name:2_outs, import_from:./irs/]
+    Map[name:2_outs, import_from:./irs/2_outs_test]
         Ins
             Constant[name:5, value:5, className:constant, type:Number]
             Constant[name:3, value:3, className:constant, type:Number]
         Outs
             Node[name:a, className:unbound]
             Node[name:b, className:unbound]
+
+    MapDef[name:2_outs]
+        Ins
+        Outs
+        Body
+            Horizontal
+                Map[name:+, infix:t]
+                    Ins
+                        InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                        InBound[name:b, getvalue:u2, className:unbound, bind_idx:1]
+                    Outs
+                        Node[name:b, className:unbound, return:0]
+                Map[name:-, infix:t]
+                    Ins
+                        InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                        InBound[name:b, getvalue:u2, className:unbound, bind_idx:1]
+                    Outs
+                        Node[name:b, className:unbound, return:1]

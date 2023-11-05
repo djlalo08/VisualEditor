@@ -155,11 +155,34 @@ export function getRoot(node) {
     return node.parent ? getRoot(node.parent) : node;
 }
 
+export function getFunctions(node){
+    let FF = new FunctionsFinder();
+    FF.findFunctions(node);
+    return FF.functions;
+}
+
+class FunctionsFinder {
+    constructor() {
+        this.functions = {};
+        this.findFunctions = this.findFunctions.bind(this);
+    }
+
+    findFunctions(node){
+        let [name, attrs] = getNameAndAttrs(node);
+        if (name == 'MapDef'){
+            this.functions[attrs.name] = node;
+            return;
+        }
+        forEach(node, this.findFunctions);
+    }
+}
+
 export function getImports(root) {
     let IF = new ImportsFinder();
     IF.findImports(root);
     return IF.imports;
 }
+
 
 class ImportsFinder {
     constructor() {

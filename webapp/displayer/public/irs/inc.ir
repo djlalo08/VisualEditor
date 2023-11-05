@@ -1,8 +1,0 @@
-Root
-    Vertical
-        Map[name:+, infix:t]
-            Ins
-                InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
-                Constant[name:1, value:1, type:Number, unwrap:t, className:constant]
-            Outs
-                Node[name:b, className:unbound, return:0]

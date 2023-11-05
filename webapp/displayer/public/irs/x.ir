@@ -1,11 +1,14 @@
 Root[inc]
-    Vertical
-        Map[name:*, infix:t]
-            Ins
-                Map[name:inc, prefix:t, import_from:./irs/] 
-                    Ins
-                        InBound[name:a1, className:unbound, bind_idx:0] 
-                    Outs
-                Constant[value:3, name:3, unwrap:t, className:constant, type:Number]
-            Outs
-                Node[name:b1, return:0, className:unbound]
+    MapDef[name:x]
+        Ins
+        Outs
+        Body
+            Map[name:*, infix:t]
+                Ins
+                    Map[name:inc, prefix:t, import_from:./irs/inc_test] 
+                        Ins
+                            InBound[name:a1, className:unbound, bind_idx:0] 
+                        Outs
+                    Constant[value:3, name:3, unwrap:t, className:constant, type:Number]
+                Outs
+                    Node[name:b1, return:0, className:unbound]

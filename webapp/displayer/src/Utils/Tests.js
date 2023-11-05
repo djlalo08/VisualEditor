@@ -7,14 +7,14 @@ let total_tests = 0;
 
 export async function runTests(app){
 
-    await assertValue(app, 'inc_test', 2, 6);
+    await assertValue(app, 'inc_test', 9, 6);
     await assertNestedList(app, 'lambda_nest', 28, [[3,4,5], [3,4,5], [3,4,5]]);
     await assertList(app, 'lambdas', 11, [8,9,10,11,12]);
     await assertValue(app, 'lambdas', 4, 2);
     await assertValue(app, 'if_test', 2, 'ByeWorld');
     await assertValue(app, 'if_test', 14, 'HelloWorld');
     await assertList(app, '2_arg_lambda', 27, [10,12]);
-    await assertValue(app, '!_runner', 6, 40320);
+    await assertValue(app, '!', 6, 40320);
     await assertValue(app, 'import_chain_test', 6, 15);
     await assertValue(app, 'simple', 27, 3);
     await assertValue(app, 'simple', 28, -3);
@@ -22,8 +22,8 @@ export async function runTests(app){
     await assertValue(app, 'variable_test', 14, 7);
     await assertValue(app, 'variable_test', 20, 10);
     await assertValue(app, 'vertical_test', 28, 9);    
-    await assertList(app, 'quicksort_test', 2, [2,4,5,6,8]);
-    await assertValue(app, 'fib_runner', 6, 89);
+    await assertList(app, 'quicksort', 1, [2,4,5,6,8]);
+    await assertValue(app, 'fib', 6, 89);
     await assertList(app, '2_outs_test', 1, [8,2]);
 
     console.log(`Testing completed. ${successful_tests}/${total_tests} tests successful`);
@@ -75,11 +75,11 @@ async function assertValue(app, fileName, id, expectedValue){
 
 async function runTest(app, fileName, id, assertFn){
     openFile(fileName);
-    await sleep(100);
+    await sleep(300);
     setSelectedById(id);
-    await sleep(1);
+    await sleep(10);
     callEval(assertFn);
-    await sleep(1);
+    await sleep(10);
     total_tests++;
 }
 
