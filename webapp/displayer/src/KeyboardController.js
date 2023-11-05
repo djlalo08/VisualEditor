@@ -131,6 +131,12 @@ export function keypress(e){
         } else if (o_key){
             //Can we ever really modify outcount?
         }
+        break;
+    case I:
+        if (command){
+            a.toggleInLine(selected);
+        }
+        break;
     }
 }
 
