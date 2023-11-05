@@ -13,6 +13,7 @@ import { parse } from './Utils/IrToAst';
 import { countBounds, printAst } from './Utils/NodeUtils';
 import { runTests } from './Utils/Tests';
 
+let devMode = true;
 let id = 0;
 // const FILE = 'inc';
 // const FILE = 'inc_test';
@@ -32,6 +33,7 @@ let id = 0;
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
 const FILE = 'fnsTest';
+// const FILE = 'fnsTestSimpl';
 
 // const FILE = 'x';
 // const FILE = 'cacheing_test';
@@ -147,6 +149,7 @@ class App extends React.Component{
   }
 
   requestDirHandler(){
+    if (devMode) return;
     if (!this.state.irDirHandle){
       let r = window.showDirectoryPicker();
       this.setState({irDirHandle: r});
