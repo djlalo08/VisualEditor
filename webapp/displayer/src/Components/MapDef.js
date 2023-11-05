@@ -1,3 +1,4 @@
+import Node from "./Node";
 
 export function MapDef(props){
     let {id, className, children, other, name} = props;
@@ -7,7 +8,9 @@ export function MapDef(props){
         {name}
         {ins}
         </span>
+            <Node>
             {body}
+            </Node>
         <div style={{display:'flex', justifyContent:'flex-end'}}>
             {outs}
         </div>
