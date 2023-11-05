@@ -5,5 +5,5 @@ Root
                 Constant[name:a, value:3]
                 Constant[name:b, value:4]
             Outs
-                OutBinding[setvalue:a]
-                OutBinding[setvalue:b]
+                Node[setvalue:a]
+                Node[setvalue:b]

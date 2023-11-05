@@ -1,14 +1,14 @@
 Root
     MapDef[name:determinant]
         Ins
-            InBound[name:A, value:2, className:constant, type:Number]
+            InBound[name:A, getvalue:u1, className:unbound, bind_idx:0]
             InBound[name:B, value:5, className:constant, type:Number]
             InBound[name:C, value:2, className:constant, type:Number]
         Outs
             Constant[name:A, value:2, className:constant, type:Number]
             Constant[name:B, value:5, className:constant, type:Number]
         Body
-            Map[name:√, prefix:t]
+            Map[name:√, prefix:t, return:x]
                 Ins
                     Map[name:id]
                         Ins
@@ -16,16 +16,17 @@ Root
                                 Ins
                                     Map[name:^2, postfix:t]    
                                         Ins
-                                            InBound[name:B, value:5, className:constant, type:Number]
-                                    Map[name:*, infix:t, variableinput:t]
+                                            Constant[name:B, value:5, className:constant, type:Number]
+                                    Map[name:*, infix:t, variableinput:t, return:y]
                                         Ins
                                             Constant[name:4, value:4, className:constant, type:Number]
-                                            InBound[name:A, value:2, className:constant, type:Number]
-                                            InBound[name:C, value:2, className:constant, type:Number]
+                                            Constant[name:A, value:2, className:constant, type:Number]
+                                            Constant[name:C, value:2, className:constant, type:Number]
+
                         Outs[returnidx: 0]
                 Outs
-                    OutBinding[setvalue:o1]
-                    OutBinding[setvalue:o2] 
+                    Node[setvalue:o1]
+                    Node[setvalue:o2] 
 
     MapDef[name:determinant2]
         Ins
@@ -52,5 +53,5 @@ Root
                                             InBound[name:C, value:2, className:constant, type:Number]
                         Outs[returnidx: 0]
                 Outs
-                    OutBinding[setvalue:o1]
-                    OutBinding[setvalue:o2] 
+                    Node[setvalue:o1]
+                    Node[setvalue:o2] 

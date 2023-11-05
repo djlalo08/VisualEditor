@@ -24,7 +24,7 @@ let id = 0;
 // const FILE = '!';
 // const FILE = '!_runner';
 // const FILE = 'import_chain_test';
-// const FILE = 'simple';
+const FILE = 'simple';
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
 // const FILE = 'vertical_test';
@@ -32,7 +32,7 @@ let id = 0;
 // const FILE = 'quicksort_test';
 // const FILE = 'fib';
 // const FILE = 'fib_runner';
-const FILE = 'fnsTest';
+// const FILE = 'fnsTest';
 // const FILE = 'fnsTestSimpl';
 
 // const FILE = 'x';

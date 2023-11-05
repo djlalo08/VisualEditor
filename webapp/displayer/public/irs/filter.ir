@@ -23,7 +23,7 @@ Root
                         Constant[name:6, value:6, className:constant, type:Number]
                     Outs
             Outs
-                OutBinding[setvalue:o1]
+                Node[setvalue:o1]
         Map[name:id]
             Ins
                 Map[name:filter, infix:t]
@@ -36,7 +36,7 @@ Root
                             Outs
                         Outs
                     Outs
-                        OutBinding[setvalue:o2]
+                        Node[setvalue:o2]
                 Map[name:filter, infix:t]
                     Ins
                         Node[getvalue:o1]

@@ -9,5 +9,5 @@ Root
                     Outs
                         Node
             Outs
-                OutBinding[setvalue:a]
-                OutBinding[setvalue:b]
+                Node[setvalue:a]
+                Node[setvalue:b]

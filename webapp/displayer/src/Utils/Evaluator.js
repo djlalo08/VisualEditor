@@ -1,5 +1,5 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
-import { addAttr, getNameAndAttrs, getOutBounds } from "./NodeUtils";
+import { addAttr, getAttrs, getNameAndAttrs, getOutBounds } from "./NodeUtils";
 
 const VERBOSE = false;
 
@@ -49,10 +49,8 @@ class Evaluationator {
                 return this.evaluate(ast_node.parent)[ast_node.idx];
             case 'Outs':
                 return this.evaluate(ast_node.parent);
-            case 'OutBinding':
             case 'OutBound':
-                let r = this.evaluate(ast_node.parent);
-                return r[ast_node.idx];
+                return this.evaluate(ast_node.parent)[ast_node.idx];
             case 'Map':
                 if (this.cache[ast_node] && attrs.dont_cache != 't' && false){
                     console.log(`${name}: ${attrs.name} has already been evaluated. Using cache value: ${ast_node.cached_result}`);
@@ -153,9 +151,8 @@ class OutBinder{
     }
     
     updateOutbindings(node){
-        let [name, attrs] = getNameAndAttrs(node);
-        if (name == 'OutBinding' ||
-        ((name == 'Node' || name == 'Variable') && attrs.hasOwnProperty('setvalue'))){
+        let attrs = getAttrs(node);
+        if (attrs.hasOwnProperty('setvalue')){
             this.outBindings[attrs.setvalue] = node;
         }
 

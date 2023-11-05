@@ -6,9 +6,9 @@ Root
                 Constant[name:B, value:5, className:constant, type:Number]
                 Constant[name:C, value:2, className:constant, type:Number]
             Outs
-                OutBinding[setvalue:a]
-                OutBinding[setvalue:b]
-                OutBinding[setvalue:c]
+                Node[setvalue:a]
+                Node[setvalue:b]
+                Node[setvalue:c]
         Map[name:√, prefix:t]
             Ins
                 Map[name:id]
@@ -25,5 +25,5 @@ Root
                                         Node[getvalue:c]
                     Outs[returnidx: 0]
             Outs
-                OutBinding[setvalue:o1]
-                OutBinding[setvalue:o2]
+                Node[setvalue:o1]
+                Node[setvalue:o2]

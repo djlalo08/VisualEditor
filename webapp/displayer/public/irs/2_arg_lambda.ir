@@ -7,13 +7,13 @@ Root
                         Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
                         Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
                     Outs
-                        OutBinding[setvalue:b1]
+                        Node[setvalue:b1]
                 Map[name:ls, prefix:t, dont_cache:t]
                     Ins
                         Constant[name:8, value:8, className:constant, type:Number, unwrap:t]
                         Constant[name:9, value:9, className:constant, type:Number, unwrap:t]
                     Outs
-                        OutBinding[setvalue:b2]
+                        Node[setvalue:b2]
             Outs
         Map[name:2map]
             Ins
@@ -25,4 +25,4 @@ Root
                         UnBound[name:y, className:unbound, getvalue:u2]
                     Outs
             Outs
-                OutBinding[setvalue:b3]
+                Node[setvalue:b3]

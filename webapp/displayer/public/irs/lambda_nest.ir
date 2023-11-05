@@ -24,7 +24,7 @@ Root
                     Outs
                         Node
             Outs
-                OutBinding[setvalue:b1]
+                Node[setvalue:b1]
         Horizontal
             Map[name:map, infix:t, returnidx:0, hide_outs:t]
                 Ins
@@ -41,7 +41,7 @@ Root
                         Outs
                             Node
                 Outs
-                    OutBinding[setvalue:b2]
+                    Node[setvalue:b2]
             Map[name:map, infix:t, returnidx:0, hide_outs:t]
                 Ins
                     Node[getvalue:b1]
@@ -58,4 +58,4 @@ Root
                         Outs
                             Node
                 Outs
-                    OutBinding[setvalue:b2]
+                    Node[setvalue:b2]

@@ -4,4 +4,4 @@ Root
             Ins
                 Constant[name:5, value:5, className:constant, type:Number]
             Outs
-                OutBinding[setvalue:a]
+                Node[setvalue:a]

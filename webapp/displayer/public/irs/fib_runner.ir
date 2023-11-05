@@ -4,4 +4,4 @@ Root[imports:fib x]
             Ins
                 Constant[name:10, value:10, unwrap:t, className:constant, type:Number]
             Outs
-                OutBinding[name:final_program_outs, setvalue:b1]
+                Node[name:final_program_outs, setvalue:b1]

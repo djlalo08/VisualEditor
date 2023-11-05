@@ -8,7 +8,7 @@ Root
                 Constant[name:5, value:5, className:constant, type:Number]
                 Constant[name:6, value:6, className:constant, type:Number]
             Outs
-                OutBinding[setvalue:o1]
+                Node[setvalue:o1]
         Map[name:map, returnidx:0, hide_outs:t]
             Ins
                 Node[getvalue:o1]
