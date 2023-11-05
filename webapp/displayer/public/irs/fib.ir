@@ -33,4 +33,4 @@ Root
                     Outs
                         Node
             Outs
-                OutBound[name:b, className:unbound]
+                Node[name:b, return:0, className:unbound]

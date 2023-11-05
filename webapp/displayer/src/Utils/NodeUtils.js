@@ -1,10 +1,10 @@
-export function addAttr(node, key, value){
+export function addAttr(node, key, value) {
     let [name, attrs] = getNameAndAttrs(node);
     attrs[key] = value;
     node.value = name + stringifyAttrs(attrs);
 }
 
-export function delAttr(node, key){
+export function delAttr(node, key) {
     let [name, attrs] = getNameAndAttrs(node);
     delete attrs[key];
     node.value = name + stringifyAttrs(attrs);
@@ -12,85 +12,85 @@ export function delAttr(node, key){
 
 export function appendAttrObj(node, new_attrs) {
     let [name, attrs] = getNameAndAttrs(node);
-    attrs = {...attrs, ...new_attrs};
+    attrs = { ...attrs, ...new_attrs };
     console.log(attrs);
     node.value = name + stringifyAttrs(attrs);
 }
 
-export function stringifyAttrs(attrs){
-    if (!len(attrs)) 
+export function stringifyAttrs(attrs) {
+    if (!len(attrs))
         return '';
 
     let attrs_strs = Object.entries(attrs).map(([k, v]) => `${k}:${v}`);
     return '[' + attrs_strs.join(', ') + ']';
 }
 
-export function printAst(ast){
+export function printAst(ast) {
     return _printAst(ast, 0);
 }
 
-export function _printAst(ast, depth){
+export function _printAst(ast, depth) {
     let result = '';
     result += n_tabs(depth) + ast.value + '\n';
-    for (let child of ast.children){
-        result += _printAst(child, depth+1);
+    for (let child of ast.children) {
+        result += _printAst(child, depth + 1);
     }
     return result;
 }
 
-function n_tabs(n){
+function n_tabs(n) {
     let tabs = '';
-    for (let i = 0; i<n; i++){
+    for (let i = 0; i < n; i++) {
         tabs += '    ';
     }
     return tabs;
 }
 
-function len(obj){
+function len(obj) {
     return Object.keys(obj).length;
 }
 
-export function readAttrs(attrStr){
+export function readAttrs(attrStr) {
     let attrs = {};
     if (!attrStr) return attrs;
 
-    for (let attr of attrStr.split(',')){
+    for (let attr of attrStr.split(',')) {
         let attrPair = attr.trim().split(':');
         attrs[attrPair[0]] = attrPair[1];
     }
     return attrs;
 }
 
-export function getNameAndAttrs(node){
+export function getNameAndAttrs(node) {
     let values = node.value.split(/[\[\]]/);
-    return [values[0], {...readAttrs(values[1])}];
+    return [values[0], { ...readAttrs(values[1]) }];
 }
 
-export function getName(node){
+export function getName(node) {
     return node.value.split(/[\[\]]/)[0];
 }
 
-export function getAttrs(node){
+export function getAttrs(node) {
     let values = node.value.split(/[\[\]]/);
-    return {...readAttrs(values[1])};
+    return { ...readAttrs(values[1]) };
 }
 
-export function makeMap(parent, name, mapData){
-    let {in_num, out_num, ...otherData} = mapData;
+export function makeMap(parent, name, mapData) {
+    let { in_num, out_num, ...otherData } = mapData;
 
-    let map = {value: `Map[name:${name}]`, idx:0, parent};
+    let map = { value: `Map[name:${name}]`, idx: 0, parent };
     appendAttrObj(map, otherData);
 
-    let ins = {value: 'Ins', idx: 0, parent:map}
+    let ins = { value: 'Ins', idx: 0, parent: map }
     let ins_nodes = [];
-    for (let i = 0; i < in_num; i++){
-        ins_nodes.push({value: 'Node', idx:i, children:[], parent:ins});
+    for (let i = 0; i < in_num; i++) {
+        ins_nodes.push({ value: 'Node', idx: i, children: [], parent: ins });
     }
 
-    let outs = {value: 'Outs', idx: 1, parent:map}
+    let outs = { value: 'Outs', idx: 1, parent: map }
     let outs_nodes = [];
-    for (let i = 0; i < out_num; i++){
-        outs_nodes.push({value: 'Node', idx:i, children:[], parent:outs});
+    for (let i = 0; i < out_num; i++) {
+        outs_nodes.push({ value: 'Node', idx: i, children: [], parent: outs });
     }
 
     map.children = [ins, outs];
@@ -100,88 +100,91 @@ export function makeMap(parent, name, mapData){
     return map;
 }
 
-export function makeNode(parent){
-    return {value:'Node', parent, children:[]};
+export function makeNode(parent) {
+    return { value: 'Node', parent, children: [] };
 }
 
-export function getOutBounds(node){
-    let obg = new OutBoundsGetter();
-    obg.getOutBounds(node);
-    return obg.outBounds;
+export function getReturns(node) {
+    let obg = new ReturnsGetter();
+    obg.getReturns(node);
+    obg.outBounds.sort(([x, a], [y, b]) => a - b);
+    return obg.outBounds.map(([a, _]) => a);
 }
 
-class OutBoundsGetter{
-    constructor(){
+class ReturnsGetter {
+    constructor() {
         this.outBounds = [];
     }
 
-    getOutBounds(node){
-        if (getName(node) == 'OutBound')
-           this.outBounds.push(node);
-    
+    getReturns(node) {
+        let attrs = getAttrs(node);
+        if (attrs.hasOwnProperty('return')) {
+            this.outBounds.push([node, attrs.return]);
+        }
+
         for (let child of node.children)
-            this.getOutBounds(child);
+            this.getReturns(child);
     }
 
 }
 
 
 let inBounds = [];
-export function getInBounds(node){
+export function getInBounds(node) {
     inBounds = [];
     getInBounds_(node);
     return inBounds;
 }
 
-function getInBounds_(node){
+function getInBounds_(node) {
     if (getName(node) == 'InBound')
-       inBounds.push(node);
+        inBounds.push(node);
 
     for (let child of node.children)
         getInBounds_(child);
 }
 
-export function updateInBindings(inBounds, bindings){
-    for (let inBound of inBounds){
+export function updateInBindings(inBounds, bindings) {
+    for (let inBound of inBounds) {
         let { bind_idx } = getAttrs(inBound);
         inBound.supplier = () => bindings[bind_idx];
     }
 }
 
-export function getRoot(node){
-    return node.parent? getRoot(node.parent): node;
+export function getRoot(node) {
+    return node.parent ? getRoot(node.parent) : node;
 }
 
-export function getImports(root){
+export function getImports(root) {
     let IF = new ImportsFinder();
     IF.findImports(root);
     return IF.imports;
 }
 
 class ImportsFinder {
-    constructor(){
+    constructor() {
         this.imports = {};
         this.findImports = this.findImports.bind(this);
     }
 
-    findImports(node){
-        let {import_from, name} = getAttrs(node);
+    findImports(node) {
+        let { import_from, name } = getAttrs(node);
         if (import_from && import_from != 'mapRepo')
             this.imports[name] = import_from; //TODO: this needs to really be a unique ID we are holding. What if there are 2 different impls of +, we don't want to use the same import for both
         forEach(node, this.findImports);
     }
 }
 
-export function countBounds(root){
+export function countBounds(root) {
     let BC = new BoundsCounter();
     BC.countBounds(root);
-    return [BC.inBounds.size, BC.outBounds.size];
+    return [BC.inBounds.size, BC.returns.size];
 }
 
 class BoundsCounter {
-    constructor(){
+    constructor() {
         this.inBounds = new Set();
-        this.outBounds = new Set();
+        this.returns = new Set();
         this.countBounds = this.countBounds.bind(this);
     }
 
@@ -189,14 +192,14 @@ class BoundsCounter {
         let [name, attrs] = getNameAndAttrs(node);
         if (name == 'InBound')
             this.inBounds.add(attrs.name);
-        if (name == 'OutBound')
-            this.outBounds.add(attrs.name);
+        if (attrs.hasOwnProperty('return'))
+            this.returns.add(attrs.name);
         forEach(node, this.countBounds);
     }
 }
 
-export function forEach(root, fn){
-    for (let child of root.children){
+export function forEach(root, fn) {
+    for (let child of root.children) {
         fn(child);
         forEach(child, fn);
     }

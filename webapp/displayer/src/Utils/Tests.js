@@ -24,6 +24,7 @@ export async function runTests(app){
     await assertValue(app, 'vertical_test', 28, 9);    
     await assertList(app, 'quicksort_test', 2, [2,4,5,6,8]);
     await assertValue(app, 'fib_runner', 6, 89);
+    await assertList(app, '2_outs_test', 1, [8,2]);
 
     console.log(`Testing completed. ${successful_tests}/${total_tests} tests successful`);
 }

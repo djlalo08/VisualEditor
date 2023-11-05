@@ -1,5 +1,5 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
-import { addAttr, getAttrs, getNameAndAttrs, getOutBounds } from "./NodeUtils";
+import { addAttr, getAttrs, getNameAndAttrs, getReturns } from "./NodeUtils";
 
 const VERBOSE = false;
 
@@ -49,8 +49,6 @@ class Evaluationator {
                 return this.evaluate(ast_node.parent)[ast_node.idx];
             case 'Outs':
                 return this.evaluate(ast_node.parent);
-            case 'OutBound':
-                return this.evaluate(ast_node.parent)[ast_node.idx];
             case 'Map':
                 if (this.cache[ast_node] && attrs.dont_cache != 't' && false){
                     console.log(`${name}: ${attrs.name} has already been evaluated. Using cache value: ${ast_node.cached_result}`);
@@ -103,7 +101,7 @@ class Evaluationator {
             }
             
             let mapToEval = this.externalMaps[attrs.name];
-            let outBounds = getOutBounds(mapToEval);
+            let outBounds = getReturns(mapToEval);
             return outBounds.map(outBound => evaluate(outBound, ins, mapToEval, this.externalMaps));
         }
     }

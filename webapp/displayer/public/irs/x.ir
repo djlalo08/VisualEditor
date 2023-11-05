@@ -8,4 +8,4 @@ Root[inc]
                     Outs
                 Constant[value:3, name:3, unwrap:t, className:constant, type:Number]
             Outs
-                OutBound[name:b1, className:unbound]
+                Node[name:b1, return:0, className:unbound]

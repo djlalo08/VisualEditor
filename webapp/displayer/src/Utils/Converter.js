@@ -55,7 +55,6 @@ function treeToJsx(node){
         case 'Variable':
         case 'Constant':
         case 'UnBound':
-        case 'OutBound':
             return <Block {...props}></Block>
         case 'MapDef':
             return <MapDef {...props}>{children}</MapDef>

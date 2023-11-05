@@ -1,0 +1,26 @@
+Root
+    MapDef[name:caller]
+        Ins
+        Outs
+        Body
+            Map[name:addify]
+                Ins
+                    Constant[name:A]
+                    Constant[name:A]
+                Outs
+                    Node[setvalue:o1]
+                    
+
+    MapDef[name:addify]
+        Ins
+            InBound[name:A, className:constant, type:Number]
+            InBound[name:B, className:constant, type:Number]
+        Outs
+            Constant[name:A, value:2, className:constant, type:Number]
+        Body
+            Map[name:+, infix:t]
+                Ins
+                    Node[]
+                    Node[]
+                Outs
+                    Node[setvalue:o2] 

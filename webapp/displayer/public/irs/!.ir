@@ -24,4 +24,4 @@ Root[!]
                         Node
                 Constant[value:1, name:1, type:Number, className:constant]
             Outs
-                OutBound[name:b, className:unbound]
+                Node[return:0, name:b, className:unbound]

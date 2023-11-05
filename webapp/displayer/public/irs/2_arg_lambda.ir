@@ -19,7 +19,7 @@ Root
             Ins
                 Node[getvalue:b1]
                 Node[getvalue:b2]
-                Map[name:+, returnidx:0]
+                Map[name:+, returnidx:0, infix:t]
                     Ins
                         UnBound[name:x, className:unbound, getvalue:u1]
                         UnBound[name:y, className:unbound, getvalue:u2]

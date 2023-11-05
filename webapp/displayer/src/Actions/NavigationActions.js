@@ -2,8 +2,8 @@ import { app } from '../Actions';
 import { getName } from '../Utils/NodeUtils';
 import { updateSelected } from './SelectionActions';
 
-let selectables = ['Map', 'Node', 'InBound', 'OutBound', 'Constant'];
-let horizontals = ['Map', 'Node', 'Ins', 'Outs', 'Horizontal', 'InBound', 'OutBound', 'Constant']
+let selectables = ['Map', 'Node', 'InBound', 'Constant'];
+let horizontals = ['Map', 'Node', 'Ins', 'Outs', 'Horizontal', 'InBound', 'Constant']
 
 export function moveRight(selected) {
     let curr = moveUpToHorizontal(selected);

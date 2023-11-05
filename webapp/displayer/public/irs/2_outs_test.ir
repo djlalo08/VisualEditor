@@ -1,0 +1,8 @@
+Root
+    Map[name:2_outs, import_from:./irs/]
+        Ins
+            Constant[name:5, value:5, className:constant, type:Number]
+            Constant[name:3, value:3, className:constant, type:Number]
+        Outs
+            Node[name:a, className:unbound]
+            Node[name:b, className:unbound]

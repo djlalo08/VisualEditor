@@ -1,0 +1,15 @@
+Root
+    Vertical
+        Horizontal
+            Map[name:+, infix:t]
+                Ins
+                    InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                    InBound[name:b, getvalue:u2, className:unbound, bind_idx:1]
+                Outs
+                    Node[name:b, className:unbound, return:0]
+            Map[name:-, infix:t]
+                Ins
+                    InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                    InBound[name:b, getvalue:u2, className:unbound, bind_idx:1]
+                Outs
+                    Node[name:b, className:unbound, return:1]
