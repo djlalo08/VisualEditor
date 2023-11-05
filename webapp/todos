@@ -1,5 +1,7 @@
 WORKING ON:
 
+- Functions sort of work!! We need in and outbounds to be a little nicer. 
+
 - Make functions as dicussed
   MapDef[name:x]
     Ins
