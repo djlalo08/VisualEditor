@@ -8,7 +8,7 @@ Root
                 OutBinding[setvalue:o1]
         Map[name:+, infix:t]
             Ins
-                InBinding[getvalue:o1]
-                InBinding[getvalue:o1]
+                Node[getvalue:o1]
+                Node[getvalue:o1]
             Outs
                 OutBinding[setvalue:o2]

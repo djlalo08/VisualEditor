@@ -17,8 +17,8 @@ Root
             Outs
         Map[name:2map]
             Ins
-                InBinding[getvalue:b1]
-                InBinding[getvalue:b2]
+                Node[getvalue:b1]
+                Node[getvalue:b2]
                 Map[name:+, returnidx:0]
                     Ins
                         UnBound[name:x, className:unbound, getvalue:u1]

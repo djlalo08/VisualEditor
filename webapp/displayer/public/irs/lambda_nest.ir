@@ -28,7 +28,7 @@ Root
         Horizontal
             Map[name:map, infix:t, returnidx:0, hide_outs:t]
                 Ins
-                    InBinding[getvalue:b1]
+                    Node[getvalue:b1]
                     Map[name:map, infix:t, returnidx:0, hide_outs:t]
                         Ins
                             UnBound[name:x, getvalue:u1, className:unbound]
@@ -44,7 +44,7 @@ Root
                     OutBinding[setvalue:b2]
             Map[name:map, infix:t, returnidx:0, hide_outs:t]
                 Ins
-                    InBinding[getvalue:b1]
+                    Node[getvalue:b1]
                     Map[name:map, infix:t, returnidx:0, hide_outs:t]
                         Ins
                             UnBound[name:x, getvalue:u1, className:unbound]

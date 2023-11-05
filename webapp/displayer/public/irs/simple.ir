@@ -17,12 +17,12 @@ Root
                             Ins
                                 Map[name:^2, postfix:t]    
                                     Ins
-                                        InBinding[getvalue:b] 
+                                        Node[getvalue:b] 
                                 Map[name:*, infix:t, variableinput:t]
                                     Ins
                                         Constant[name:4, value:4, className:constant, type:Number]
-                                        InBinding[getvalue:a]
-                                        InBinding[getvalue:c]
+                                        Node[getvalue:a]
+                                        Node[getvalue:c]
                     Outs[returnidx: 0]
             Outs
                 OutBinding[setvalue:o1]

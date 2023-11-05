@@ -53,8 +53,6 @@ class Evaluationator {
             case 'OutBound':
                 let r = this.evaluate(ast_node.parent);
                 return r[ast_node.idx];
-            case 'InBinding':
-                return this.evaluate(this.outBindings[attrs.getvalue]);
             case 'Map':
                 if (this.cache[ast_node] && attrs.dont_cache != 't' && false){
                     console.log(`${name}: ${attrs.name} has already been evaluated. Using cache value: ${ast_node.cached_result}`);
