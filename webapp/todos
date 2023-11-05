@@ -62,8 +62,12 @@ THINK ABOUT:
 
 Q and A:
 -What is the difference between In/OutBinding and In/OutBound? 
-  Binding is for wire connections
-  Bound is for params (i.e. InBound are function arguments, OutBound are for function returns)
+  • In/OutBinding no longer exist. They used to represent nodes connected by wires. They are replaced with Node[set/getvalue:x]
+  • OutBound has been replaced with the [return:idx] attr
+  • Currently thinking about the InBound situtation. InBound represents unspecified input parameters
+  • Not super clear on unbound, but they seem to be similar to InBounds. Maybe UnBounds are specifically used in lambdas? Have to think about this a bit more too...
+
+
 -What does unwrap attr in constants mean?
 
 APPARENT INCONSISTENCIES:
