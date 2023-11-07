@@ -14,7 +14,8 @@ const SPACE = 32;
 const ENTER = 13;
 const SHIFT = 16;
 const COMMAND_L = 91;
-const COMMAND_R = 93;
+const COMMAND_R = 93
+const CTRL = 17;
 
 const PLUS = 187;
 const MINUS = 189;
@@ -23,6 +24,7 @@ const A = 65;
 const C = 67;
 const D = 68;
 const E = 69;
+const H = 72;
 const I = 73;
 const M = 77;
 const O = 79;
@@ -55,6 +57,7 @@ export function keypress(e){
 
     let shift = held_down.has(SHIFT);
     let command = held_down.has(COMMAND_L) || held_down.has(COMMAND_R);
+    let ctrl = held_down.has(CTRL);
     let i_key = held_down.has(I);
     let o_key = held_down.has(O);
 
@@ -137,6 +140,10 @@ export function keypress(e){
             a.toggleInLine(selected);
         }
         break;
+    case H:
+        if (ctrl){
+            a.toggleHideOuts(selected);
+        }
     }
 }
 

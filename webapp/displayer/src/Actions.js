@@ -60,3 +60,15 @@ export function toggleInLine(map){
   }
   updateAST();
 }
+
+export function toggleHideOuts(map){
+  let hasHideOuts = getAttrs(map).hide_outs || false;
+  if (hasHideOuts){
+    delAttr(map, 'hide_outs');
+    delAttr(map, 'returnidx');
+  } else {
+    addAttr(map, 'hide_outs', 't');
+    addAttr(map, 'returnidx', 0);
+  }
+  updateAST();
+}
