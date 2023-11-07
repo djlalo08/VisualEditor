@@ -143,9 +143,9 @@ td, tr, table {
 }
 
 .setvariable {
-  background: linear-gradient(#a7d5d7, rgb(243, 90, 197));
+  background: linear-gradient(rgb(208, 198, 198), rgb(37, 194, 37));
 }
 
 .getvariable {
-  background: linear-gradient(rgb(243, 90, 197), #a7d5d7);
+  background: rgb(37, 194, 37);
 }

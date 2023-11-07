@@ -62,6 +62,20 @@ function pre_expand(lines){
             new_lines.push(`${n_tabs(indent+2)}Node`);
             continue;
         }
+        if ('SetVariable' == name){
+            new_lines.push(`${n_tabs(indent)}Map[name:${attrs.name}, setvalue:${attrs.name}, className:setvariable, inline:t, hide_outs:t, returnidx:0]`);
+            new_lines.push(`${n_tabs(indent+1)}Ins`);
+            new_lines.push(`${n_tabs(indent+1)}Outs`);
+            new_lines.push(`${n_tabs(indent+2)}Node`);       
+            continue;     
+        }
+        if ('GetVariable' == name){
+            new_lines.push(`${n_tabs(indent)}Map[name:${attrs.name}, setvalue:${attrs.name}, className:getvariable, inline:t, hide_outs:t, returnidx:0]`);
+            new_lines.push(`${n_tabs(indent+1)}Ins`);
+            new_lines.push(`${n_tabs(indent+1)}Outs`);
+            new_lines.push(`${n_tabs(indent+2)}Node`);       
+            continue;     
+        }
                      
         new_lines.push(line);
     }

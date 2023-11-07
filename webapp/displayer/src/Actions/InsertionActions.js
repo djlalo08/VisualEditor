@@ -33,7 +33,8 @@ export function insertMapFromModal() {
             className: 'constant',
             value: name_split[1],
             type: 'Number',
-            hideOuts: 't', returnidx: 0, inline: 't'
+            hide_outs: 't', returnidx: 0, inline: 't',
+            out_num:1,
         };
         m = makeMap(selected, name_split[1], objInfo);
     } else if (name_split[0] == 'u') {

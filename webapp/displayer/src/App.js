@@ -20,7 +20,7 @@ let id = 0;
 // const FILE = '2_outs_test';
 // const FILE = 'lambda_nest';
 // const FILE = 'lambdas';
-const FILE = 'if_test';
+// const FILE = 'if_test';
 // const FILE = '2_arg_lambda';
 // const FILE = '!';
 // const FILE = 'import_chain_test';
@@ -40,7 +40,7 @@ const FILE = 'if_test';
 
 // const FILE = 'empty';
 
-// const FILE = 'test';
+const FILE = 'test';
 
 export function nextId(){
   return ++id;

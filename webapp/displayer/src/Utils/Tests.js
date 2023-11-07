@@ -13,7 +13,7 @@ export async function runTests(app){
     await assertList(app, 'lambdas', 26, [8,9,10,11,12]);
     await assertValue(app, 'lambdas', 4, 2);
     await assertValue(app, 'if_test', 2, 'ByeWorld');
-    await assertValue(app, 'if_test', 20, 'HelloWorld');
+    await assertValue(app, 'if_test', 26, 'HelloWorld');
     await assertList(app, '2_arg_lambda', 40, [10,12]);
     await assertValue(app, '!', 9, 40320);
     await assertValue(app, 'import_chain_test', 9, 15);
