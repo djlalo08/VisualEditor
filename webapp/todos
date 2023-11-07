@@ -1,19 +1,7 @@
 WORKING ON:
 
-- Functions sort of work!! We need in and outbounds to be a little nicer. 
-
-- Make functions as dicussed
-  MapDef[name:x]
-    Ins
-      InBound[]
-      InBound[]
-    Outs
-      OutBound[]
-      OutBound[]
-    Body
-      Map[name:+]
-        ...
-This defines function in the scope of current file. We'll have to think about exports and stuff soon...
+- Functions sort of work!! We need in and outbounds to be a little nicer. Decide if we like the 
+[Ins, Outs, Body] structure. Try to make it so that being a variable, being an inbound, and having an output nodes (that return the value) are all independent things. Maybe I need some general "Value" object or something like that, which could be constants, inbound, unbound, variable, etc
 
 
 -If/else is actually just boolean case structure.

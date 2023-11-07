@@ -5,8 +5,8 @@ export function MapDef(props){
     let [ins, outs, body] = children;
     return (<div style={{'textAlign': 'left'}}>
         <span style={{display: 'flex', justifyContent: 'space-between', alignItems:'center'}}>
-        {name}
         {ins}
+        {name}
         </span>
             <Node>
             {body}
