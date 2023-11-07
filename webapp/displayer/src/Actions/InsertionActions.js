@@ -1,6 +1,6 @@
 import { app, updateAST } from '../Actions';
 import { mapRepo } from '../MapRepo';
-import { addAttr, appendAttrObj, delAttr, getName, makeMap, makeNode } from '../Utils/NodeUtils';
+import { addAttr, appendAttrObj, delAttr, getName, makeMap, makeNode, maxId } from '../Utils/NodeUtils';
 import { handleClose, handleOpen } from './ModalActions';
 import { moveUpToVertical } from './NavigationActions';
 import { updateSelected } from './SelectionActions';
@@ -28,6 +28,8 @@ export function insertMapFromModal() {
     let name_split = name.split(' ');
     let m;
 
+    let id = maxId(app.state.AST) + 1;
+
     if (name_split[0] == 'c') {
         let objInfo = {
             className: 'constant',
@@ -36,12 +38,12 @@ export function insertMapFromModal() {
             hide_outs: 't', returnidx: 0, inline: 't',
             out_num:1,
         };
-        m = makeMap(selected, name_split[1], objInfo);
+        m = makeMap(selected, name_split[1], objInfo, id);
     } else if (name_split[0] == 'u') {
-        m = { value: 'UnBound', parent: selected, children: [] };
+        m = {id, value: 'UnBound', parent: selected, children: []};
         appendAttrObj(m, { className: 'unbound', name: name_split[1], getvalue: name_split[1] });
     } else {
-        m = makeMap(selected, name, otherData);
+        m = makeMap(selected, name, otherData, id);
     }
 
     switch (insertDir) {

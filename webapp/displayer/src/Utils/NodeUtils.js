@@ -78,22 +78,22 @@ export function getAttrs(node) {
     return { ...readAttrs(values[1]) };
 }
 
-export function makeMap(parent, name, mapData) {
+export function makeMap(parent, name, mapData, id) {
     let { in_num, out_num, ...otherData } = mapData;
 
-    let map = { value: `Map[name:${name}]`, idx: 0, parent };
+    let map = {id, value: `Map[name:${name}]`, idx: 0, parent };
     appendAttrObj(map, otherData);
 
-    let ins = { value: 'Ins', idx: 0, parent: map }
+    let ins = {id:++id, value: 'Ins', idx: 0, parent: map }
     let ins_nodes = [];
     for (let i = 0; i < in_num; i++) {
-        ins_nodes.push({ value: 'Node', idx: i, children: [], parent: ins });
+        ins_nodes.push({id:++id, value: 'Node', idx: i, children: [], parent: ins });
     }
 
-    let outs = { value: 'Outs', idx: 1, parent: map }
+    let outs = {id:++id, value: 'Outs', idx: 1, parent: map }
     let outs_nodes = [];
     for (let i = 0; i < out_num; i++) {
-        outs_nodes.push({ value: 'Node', idx: i, children: [], parent: outs });
+        outs_nodes.push({id: ++id, value: 'Node', idx: i, children: [], parent: outs });
     }
 
     map.children = [ins, outs];
@@ -222,6 +222,14 @@ class BoundsCounter {
             this.returns.add(attrs.name);
         forEach(node, this.countBounds);
     }
+}
+
+export function maxId(node){
+    let maxChildId = 0;
+    for (let child of node.children || []){
+        maxChildId = Math.max(maxChildId, maxId(child));
+    }
+    return Math.max(node.id, maxChildId);
 }
 
 export function forEach(root, fn) {
