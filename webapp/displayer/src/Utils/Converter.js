@@ -53,7 +53,6 @@ function treeToJsx(node){
             if (node.supplier)
                 props.className += ' simulated ';
         case 'Variable':
-        case 'Constant':
         case 'UnBound':
             return <Block {...props}></Block>
         case 'MapDef':

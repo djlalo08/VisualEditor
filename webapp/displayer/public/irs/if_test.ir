@@ -8,13 +8,13 @@ Root
                         Number[name:5, value:5]
                     Outs
                         Node
-                Constant[name:HelloWorld, value:HelloWorld, className:constant, type:String]
-                Constant[name:ByeWorld, value:ByeWorld, className:constant, type:String]
+                String[name:HelloWorld, value:HelloWorld]
+                String[name:ByeWorld, value:ByeWorld]
             Outs
                 Node
         Map[name:if, returnidx:0]
             Ins
-                Constant[name:T, value:t, className:constant, type:Boolean]
-                Constant[name:HelloWorld, value:HelloWorld, className:constant, type:String]
-                Constant[name:ByeWorld, value:ByeWorld, className:constant, type:String]
+                Boolean[name:T, value:t]
+                String[name:HelloWorld, value:HelloWorld]
+                String[name:ByeWorld, value:ByeWorld]
             Outs

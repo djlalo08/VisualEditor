@@ -2,8 +2,8 @@ Root
     Vertical
         Map[name:id, returnidx:1]
             Ins
-                Constant[name:a, value:3]
-                Constant[name:b, value:4]
+                Number[name:a, value:3]
+                Number[name:b, value:4]
             Outs
                 Node[setvalue:a]
                 Node[setvalue:b]

@@ -1,4 +1,4 @@
-import { addAttr, forEach, getName, getNameAndAttrsFromStr, updateName } from "./NodeUtils";
+import { getNameAndAttrsFromStr } from "./NodeUtils";
 import { indent_level, n_tabs } from "./StringUtils";
 
 export function parse(ir_text){
@@ -37,7 +37,7 @@ export function parse(ir_text){
     };
     root_node = root_node.parent.children[0];
     root_node.parent = null;
-    // post_expand(root_node);
+    post_expand(root_node);
     return root_node;
 }
 
@@ -55,30 +55,18 @@ function pre_expand(lines){
 
         let [name, attrs] = getNameAndAttrsFromStr(line.trim());
         let indent = indent_level(line);
-        if ('Number' == name){
-            new_lines.push(`${n_tabs(indent)}Map[name:${attrs.name}, value:${attrs.value}, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]`);
+        if (['Number', 'String', 'Boolean'].includes(name)){
+            new_lines.push(`${n_tabs(indent)}Map[name:${attrs.name}, value:${attrs.value}, className:constant, type:${name}, inline:t, hide_outs:t, returnidx:0]`);
             new_lines.push(`${n_tabs(indent+1)}Ins`);
             new_lines.push(`${n_tabs(indent+1)}Outs`);
             new_lines.push(`${n_tabs(indent+2)}Node`);
             continue;
         }
-
                      
         new_lines.push(line);
     }
     return new_lines;
 }
 
-function post_expand(node){
-    let name = getName(node);
-    if ('Constant' == name){
-        addAttr(node, 'className', 'constant');
-        updateName(node, 'Map');
-        let ins = { value: 'Ins', idx:0, parent:node, children:[]};
-        let outs = {value: 'Outs', idx:1, parent:node, children:node.children};
-        outs.children.forEach(child => child.parent=outs);
-        node.children = [ins, outs];
-        return;
-    }
-    forEach(node, post_expand);   
+function post_expand(node){  
 }

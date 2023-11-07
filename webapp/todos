@@ -4,7 +4,7 @@ WORKING ON:
 [Ins, Outs, Body] structure
 
 - All "boxes" are maps. Constants, variables, in/unbounds are just maps that take no args (suppliers), and have special props (value, type, assignName, etc). Thus there is a map [1] which is a standard library map, which simply takes no args, and always returns 1 (actually [1], but whatever).
-  1. Make maps work as constants. Remove all constants from code and replace with map constants
+  1. Make maps work as constants. Remove all constants from code and replace with map constants [Done]
   2. Make maps work as variables. Remove all variables from code and replace with map variables. This means anything can be an assigned variable!!
   3. Make maps work as inbounds. Remove all inbounds from code and replace with map inbounds
   4. Make maps works as unbounds. Remove all unbounds from code and replace with map unbounds
@@ -23,6 +23,7 @@ UP NEXT:
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
 TODOs: 
+- Constant maps should be linked to ConstantSidebar
 -We have some wrong assumptions/issues with lambdas. Look at map or 2map: the [0] parts are hacks; they assume that fn returns a list and then take te 0th element of that list. In reality, fn need not return a list (suppose it was an out node). Instead of passing function, we should be passing something more like a map.
 -Currently, anything that can evaluate can return.
   1. Make sure returns have a special appearance that makes it obvious that they return
