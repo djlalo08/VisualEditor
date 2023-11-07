@@ -2,6 +2,6 @@ Root[imports:fib x]
     Vertical
         Map[name:fib, import_from:./irs/]
             Ins
-                Constant[name:10, value:10, unwrap:t, className:constant, type:Number]
+                Number[name:10, value:10]
             Outs
                 Node[name:final_program_outs, setvalue:b1]

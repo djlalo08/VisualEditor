@@ -50,6 +50,7 @@ class Evaluationator {
             case 'Outs':
                 return this.evaluate(ast_node.parent);
             case 'Map':
+            case 'Constant':
                 if (this.cache[ast_node] && attrs.dont_cache != 't' && false){
                     console.log(`${name}: ${attrs.name} has already been evaluated. Using cache value: ${ast_node.cached_result}`);
                     return this.cache[ast_node];
@@ -59,21 +60,23 @@ class Evaluationator {
                 result = attrs.returnidx? result[attrs.returnidx]: result;
                 this.cache[ast_node] = result;
                 return result;
-            case 'Constant':
-                return eval_constant(attrs.type, attrs.value);
-            case 'UnBound':
-                return ['UNBOUND', attrs.getvalue];
-            case 'InBound':
-                if (ast_node.supplier)
-                    return ast_node.supplier();
-                if (attrs.bind_idx)
+                case 'UnBound':
+                    return ['UNBOUND', attrs.getvalue];
+                    case 'InBound':
+                        if (ast_node.supplier)
+                        return ast_node.supplier();
+                    if (attrs.bind_idx)
                     return this.inBounds[attrs.bind_idx];
                 return ['INBOUND', attrs.getvalue];
-        }
+            }
     }
     
     evaluate_map(attrs, ast_node){
         let [ins, outs] = ast_node.children;
+        if (attrs.value && attrs.type){
+            return [eval_constant(attrs.type, attrs.value)];
+        }
+
         if (attrs.name in mapRepo){
             ins = ins.children.map(this.evaluate);
             let { fn } = mapRepo[attrs.name];

@@ -5,7 +5,7 @@ Root
         Body
             Map[name:inc, import_from:./irs/inc_test]
                 Ins
-                    Constant[name:5, value:5, className:constant, type:Number]
+                    Number[name:5, value:5]
                 Outs
                     Node[setvalue:a]
 
@@ -16,6 +16,6 @@ Root
             Map[name:+, infix:t]
                 Ins
                     InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
-                    Constant[name:1, value:1, type:Number, unwrap:t, className:constant]
+                    Number[name:1, value:1]
                 Outs
                     Node[name:b, className:unbound, return:0]

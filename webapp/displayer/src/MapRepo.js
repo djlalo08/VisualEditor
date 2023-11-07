@@ -53,7 +53,7 @@ export const mapRepo = {
         const n = Math.min(as.length, bs.length);
         let result = [];
         for (let i=0; i<n; i++){
-            result.push(fn([as[i], bs[i]]));
+            result.push(fn([as[i], bs[i]])[0]);
         }
         return [result];
     } },

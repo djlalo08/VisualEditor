@@ -3,11 +3,11 @@ Root
         Ins
             Map[name:ls, prefix:t, returnidx:0, hide_outs:t, variableinput:t]
                 Ins
-                    Constant[name:5, value:5, className:constant, type:Number, unwrap:t]
-                    Constant[name:4, value:4, className:constant, type:Number, unwrap:t]
-                    Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
-                    Constant[name:8, value:8, className:constant, type:Number, unwrap:t]
-                    Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                    Number[name:5, value:5]
+                    Number[name:4, value:4]
+                    Number[name:2, value:2]
+                    Number[name:8, value:8]
+                    Number[name:6, value:6]
                 Outs
                     Node
         Outs

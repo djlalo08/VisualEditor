@@ -4,23 +4,23 @@ Root
             Ins
                 Map[name:id, returnidx:0]
                     Ins
-                        Constant[name:2, value:2, className:constant, type:Number]
+                        Number[name:2, value:2]
                     Outs
                 Map[name:id, returnidx:0]
                     Ins
-                        Constant[name:3, value:3, className:constant, type:Number]
+                        Number[name:3, value:3]
                     Outs
                 Map[name:id, returnidx:0]
                     Ins
-                        Constant[name:4, value:4, className:constant, type:Number]
+                        Number[name:4, value:4]
                     Outs
                 Map[name:id, returnidx:0]
                     Ins
-                        Constant[name:5, value:5, className:constant, type:Number]
+                        Number[name:5, value:5]
                     Outs
                 Map[name:id, returnidx:0]
                     Ins
-                        Constant[name:6, value:6, className:constant, type:Number]
+                        Number[name:6, value:6]
                     Outs
             Outs
                 Node[setvalue:o1]
@@ -32,7 +32,7 @@ Root
                         Map[name:>, infix:t]
                             Ins
                                 UnBound[name:x, getvalue:u1, className:unbound]
-                                Constant[name:3, value:3, className:constant, type:Number]
+                                Number[name:3, value:3]
                             Outs
                         Outs
                     Outs
@@ -51,6 +51,6 @@ Root
                 Map[name:+, infix:t]
                     Ins
                         UnBound[name:x, getvalue:u1, className:unbound]
-                        Constant[name:6, value:6, className:constant, type:Number, unwrap:t]
+                        Number[name:6, value:6]
                     Outs
             Outs

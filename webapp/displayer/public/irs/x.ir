@@ -9,6 +9,6 @@ Root[inc]
                         Ins
                             InBound[name:a1, className:unbound, bind_idx:0] 
                         Outs
-                    Constant[value:3, name:3, unwrap:t, className:constant, type:Number]
+                    Number[value:3, name:3]
                 Outs
                     Node[name:b1, return:0, className:unbound]

@@ -4,8 +4,8 @@ Root
             Ins
                 Map[name:>, infix:t, hide_outs:t, returnidx:0, inline:t]
                     Ins
-                        Constant[name:4, value:4, className:constant, type:Number]
-                        Constant[name:5, value:5, className:constant, type:Number]
+                        Number[name:4, value:4]
+                        Number[name:5, value:5]
                     Outs
                         Node
                 Constant[name:HelloWorld, value:HelloWorld, className:constant, type:String]

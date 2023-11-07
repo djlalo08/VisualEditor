@@ -2,11 +2,11 @@ Root
     Vertical
         Map[name:ls, prefix:t]
             Ins
-                Constant[name:A, value:2, className:constant, type:Number]
-                Constant[name:B, value:3, className:constant, type:Number]
-                Constant[name:C, value:4, className:constant, type:Number]            
-                Constant[name:D, value:5, className:constant, type:Number]
-                Constant[name:E, value:6, className:constant, type:Number]
+                Number[name:A, value:2]
+                Number[name:B, value:3]
+                Number[name:C, value:4]            
+                Number[name:D, value:5]
+                Number[name:E, value:6]
             Outs
                 Node[setvalue:o1]
         Map[name:+]

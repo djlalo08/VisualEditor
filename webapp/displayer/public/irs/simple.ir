@@ -2,9 +2,9 @@ Root
     Vertical
         Map[name:id2]
             Ins
-                Constant[name:A, value:2, className:constant, type:Number]
-                Constant[name:B, value:5, className:constant, type:Number]
-                Constant[name:C, value:2, className:constant, type:Number]
+                Number[name:A, value:2]
+                Number[name:B, value:5]
+                Number[name:C, value:2]
             Outs
                 Node[setvalue:a]
                 Node[setvalue:b]
@@ -20,7 +20,7 @@ Root
                                         Node[getvalue:b] 
                                 Map[name:*, infix:t, variableinput:t]
                                     Ins
-                                        Constant[name:4, value:4, className:constant, type:Number]
+                                        Number[name:4, value:4]
                                         Node[getvalue:a]
                                         Node[getvalue:c]
                     Outs[returnidx: 0]

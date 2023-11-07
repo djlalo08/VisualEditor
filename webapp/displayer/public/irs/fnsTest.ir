@@ -5,8 +5,8 @@ Root
             InBound[name:B, value:5, className:constant, type:Number]
             InBound[name:C, value:2, className:constant, type:Number]
         Outs
-            Constant[name:A, value:2, className:constant, type:Number]
-            Constant[name:B, value:5, className:constant, type:Number]
+            Number[name:A, value:2]
+            Number[name:B, value:5]
         Body
             Map[name:√, prefix:t, return:x]
                 Ins
@@ -16,12 +16,12 @@ Root
                                 Ins
                                     Map[name:^2, postfix:t]    
                                         Ins
-                                            Constant[name:B, value:5, className:constant, type:Number]
+                                            Number[name:B, value:5]
                                     Map[name:*, infix:t, variableinput:t, return:y]
                                         Ins
-                                            Constant[name:4, value:4, className:constant, type:Number]
-                                            Constant[name:A, value:2, className:constant, type:Number]
-                                            Constant[name:C, value:2, className:constant, type:Number]
+                                            Number[name:4, value:4]
+                                            Number[name:A, value:2]
+                                            Number[name:C, value:2]
 
                         Outs[returnidx: 0]
                 Outs
@@ -34,8 +34,8 @@ Root
             InBound[name:B, value:5, className:constant, type:Number]
             InBound[name:C, value:2, className:constant, type:Number]
         Outs
-            Constant[name:A, value:2, className:constant, type:Number]
-            Constant[name:B, value:5, className:constant, type:Number]
+            Number[name:A, value:2]
+            Number[name:B, value:5]
         Body
             Map[name:√, prefix:t]
                 Ins
@@ -48,7 +48,7 @@ Root
                                             InBound[name:B, value:5, className:constant, type:Number]
                                     Map[name:*, infix:t, variableinput:t]
                                         Ins
-                                            Constant[name:4, value:4, className:constant, type:Number]
+                                            Number[name:4, value:4]
                                             InBound[name:A, value:2, className:constant, type:Number]
                                             InBound[name:C, value:2, className:constant, type:Number]
                         Outs[returnidx: 0]

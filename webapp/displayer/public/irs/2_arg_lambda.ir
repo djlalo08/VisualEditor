@@ -4,14 +4,15 @@ Root
             Ins
                 Map[name:ls, prefix:t, dont_cache:t]
                     Ins
-                        Constant[name:2, value:2, className:constant, type:Number, unwrap:t]
-                        Constant[name:3, value:3, className:constant, type:Number, unwrap:t]
+                        Number[name:2, value:2]
+                        Number[name:3, value:3]
+
                     Outs
                         Node[setvalue:b1]
                 Map[name:ls, prefix:t, dont_cache:t]
                     Ins
-                        Constant[name:8, value:8, className:constant, type:Number, unwrap:t]
-                        Constant[name:9, value:9, className:constant, type:Number, unwrap:t]
+                        Number[name:8, value:8]
+                        Number[name:9, value:9]
                     Outs
                         Node[setvalue:b2]
             Outs

@@ -1,12 +1,15 @@
+import { addAttr, forEach, getName, getNameAndAttrsFromStr, updateName } from "./NodeUtils";
+import { indent_level, n_tabs } from "./StringUtils";
 
 export function parse(ir_text){
     let lines = ir_text.split("\n");
+    lines = pre_expand(lines);
     let last_indent = 0;
     let root_node = {value: "", children: [], parent: {children: []}, idx: 0};
     let last_node = root_node;
     let line_number = 0;
     for (let line of lines) {
-        if (line.trim().startsWith('//') || line.trim().length == 0){
+        if (ignore(line)){
             line_number++;
             continue;
         }
@@ -34,5 +37,48 @@ export function parse(ir_text){
     };
     root_node = root_node.parent.children[0];
     root_node.parent = null;
+    // post_expand(root_node);
     return root_node;
+}
+
+function ignore(line){
+    return line.trim().startsWith('//') || line.trim().length == 0;
+}
+
+function pre_expand(lines){
+    let new_lines = [];
+    for (let line of lines){
+        if (ignore(line)){
+            new_lines.push(line);
+            continue;
+        }
+
+        let [name, attrs] = getNameAndAttrsFromStr(line.trim());
+        let indent = indent_level(line);
+        if ('Number' == name){
+            new_lines.push(`${n_tabs(indent)}Map[name:${attrs.name}, value:${attrs.value}, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]`);
+            new_lines.push(`${n_tabs(indent+1)}Ins`);
+            new_lines.push(`${n_tabs(indent+1)}Outs`);
+            new_lines.push(`${n_tabs(indent+2)}Node`);
+            continue;
+        }
+
+                     
+        new_lines.push(line);
+    }
+    return new_lines;
+}
+
+function post_expand(node){
+    let name = getName(node);
+    if ('Constant' == name){
+        addAttr(node, 'className', 'constant');
+        updateName(node, 'Map');
+        let ins = { value: 'Ins', idx:0, parent:node, children:[]};
+        let outs = {value: 'Outs', idx:1, parent:node, children:node.children};
+        outs.children.forEach(child => child.parent=outs);
+        node.children = [ins, outs];
+        return;
+    }
+    forEach(node, post_expand);   
 }

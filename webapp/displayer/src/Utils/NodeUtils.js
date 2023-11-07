@@ -1,3 +1,5 @@
+import { n_tabs } from "./StringUtils";
+
 export function addAttr(node, key, value) {
     let [name, attrs] = getNameAndAttrs(node);
     attrs[key] = value;
@@ -38,14 +40,6 @@ export function _printAst(ast, depth) {
     return result;
 }
 
-function n_tabs(n) {
-    let tabs = '';
-    for (let i = 0; i < n; i++) {
-        tabs += '    ';
-    }
-    return tabs;
-}
-
 function len(obj) {
     return Object.keys(obj).length;
 }
@@ -61,13 +55,22 @@ export function readAttrs(attrStr) {
     return attrs;
 }
 
-export function getNameAndAttrs(node) {
-    let values = node.value.split(/[\[\]]/);
+export function getNameAndAttrsFromStr(str){
+    let values = str.split(/[\[\]]/);
     return [values[0], { ...readAttrs(values[1]) }];
+}
+
+export function getNameAndAttrs(node) {
+    return getNameAndAttrsFromStr(node.value);
 }
 
 export function getName(node) {
     return node.value.split(/[\[\]]/)[0];
+}
+
+export function updateName(node, newName){
+    let attrs = getAttrs(node);
+    node.value = newName + stringifyAttrs(attrs);
 }
 
 export function getAttrs(node) {

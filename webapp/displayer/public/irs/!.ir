@@ -2,7 +2,7 @@ Root
 
     Map[name:!, import_from:./irs/!]
         Ins
-            Constant[name:8, value:8, type:Number, className:constant]
+            Number[name:8, value:8]
         Outs
             Node            
 
@@ -15,7 +15,7 @@ Root
                     Map[name:>, infix:t, hide_outs:t, returnidx:0]
                         Ins
                             InBound[name:a, className:unbound, bind_idx:0]
-                            Constant[value:0, name:0, type:Number, unwrap:t, className:constant]
+                            Number[value:0, name:0]
                         Outs
                             Node
                     Map[name:*, infix:t, hide_outs:t, returnidx:0]
@@ -32,6 +32,6 @@ Root
                                     Node
                         Outs   
                             Node
-                    Constant[value:1, name:1, type:Number, className:constant]
+                    Number[value:1, name:1]
                 Outs
                     Node[return:0, name:b, className:unbound]

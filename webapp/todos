@@ -9,6 +9,7 @@ WORKING ON:
   3. Make maps work as inbounds. Remove all inbounds from code and replace with map inbounds
   4. Make maps works as unbounds. Remove all unbounds from code and replace with map unbounds
 
+-Consider something like a propsClass property, that assigns a group of props to map (e.g. propsClass:constant, would assign className:constant, inline:t, hide_outs:t, etc). Maybe this could also be the line name (so reinstate Constant[...props], but it's just a map with some pre-set attrs). See -- IrToAst for an example of how this could work
 
 -If/else is actually just boolean case structure.
   -Think about how pattern matching could work. Take quicksort as an example
@@ -22,6 +23,7 @@ UP NEXT:
 -Put homoiconicity to work -- make a (I,O) be able to be treated as a function
 
 TODOs: 
+-We have some wrong assumptions/issues with lambdas. Look at map or 2map: the [0] parts are hacks; they assume that fn returns a list and then take te 0th element of that list. In reality, fn need not return a list (suppose it was an out node). Instead of passing function, we should be passing something more like a map.
 -Currently, anything that can evaluate can return.
   1. Make sure returns have a special appearance that makes it obvious that they return
   2. Returns is index based, add return-name based returns (probably maps indices to names or something, since map alwasys still has to return a list -- unless we make maps return a hashmap instead...)

@@ -7,23 +7,24 @@ let total_tests = 0;
 
 export async function runTests(app){
 
-    await assertValue(app, 'inc_test', 9, 6);
-    await assertNestedList(app, 'lambda_nest', 28, [[3,4,5], [3,4,5], [3,4,5]]);
-    await assertList(app, 'lambdas', 11, [8,9,10,11,12]);
+    await assertValue(app, 'inc_test', 12, 6);
+    await assertNestedList(app, 'lambda_nest', 56, [[3,4,5], [6,7,8], [9,10,11]]);
+    await assertNestedList(app, 'lambda_nest', 76, [[41,42,43], [44,45,46], [47,48,49]]);
+    await assertList(app, 'lambdas', 26, [8,9,10,11,12]);
     await assertValue(app, 'lambdas', 4, 2);
     await assertValue(app, 'if_test', 2, 'ByeWorld');
-    await assertValue(app, 'if_test', 14, 'HelloWorld');
-    await assertList(app, '2_arg_lambda', 27, [10,12]);
-    await assertValue(app, '!', 6, 40320);
-    await assertValue(app, 'import_chain_test', 6, 15);
-    await assertValue(app, 'simple', 27, 3);
-    await assertValue(app, 'simple', 28, -3);
-    await assertList(app, 'filter_test', 11, [4,2]);
-    await assertValue(app, 'variable_test', 14, 7);
-    await assertValue(app, 'variable_test', 20, 10);
-    await assertValue(app, 'vertical_test', 28, 9);    
+    await assertValue(app, 'if_test', 20, 'HelloWorld');
+    await assertList(app, '2_arg_lambda', 40, [10,12]);
+    await assertValue(app, '!', 9, 40320);
+    await assertValue(app, 'import_chain_test', 9, 15);
+    await assertValue(app, 'simple', 39, 3);
+    await assertValue(app, 'simple', 40, -3);
+    await assertList(app, 'filter_test', 26, [4,2]);
+    await assertValue(app, 'variable_test', 23, 7);
+    await assertValue(app, 'variable_test', 32, 10);
+    await assertValue(app, 'vertical_test', 49, 9);    
     await assertList(app, 'quicksort', 1, [2,4,5,6,8]);
-    await assertValue(app, 'fib', 6, 89);
+    await assertValue(app, 'fib', 9, 89);
     await assertList(app, '2_outs_test', 1, [8,2]);
 
     console.log(`Testing completed. ${successful_tests}/${total_tests} tests successful`);
