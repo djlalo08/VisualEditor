@@ -3,33 +3,43 @@ Root
         Ins
             Map[name:ls, prefix:t, returnidx:0, hide_outs:t, variableinput:t]
                 Ins
-                    Number[name:5, value:5]
-                    Number[name:4, value:4]
-                    Number[name:2, value:2]
-                    Number[name:8, value:8]
-                    Number[name:6, value:6]
+                    Map[name:5, value:5, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                        Ins
+                        Outs
+                            Node
+                    Map[name:4, value:4, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                        Ins
+                        Outs
+                            Node
+                    Map[name:2, value:2, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                        Ins
+                        Outs
+                            Node
+                    Map[name:8, value:8, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                        Ins
+                        Outs
+                            Node
+                    Map[name:6, value:6, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                        Ins
+                        Outs
+                            Node
                 Outs
                     Node
         Outs
             Node
-
     MapDef[name:quicksort]
         Ins
         Outs
         Body
             Map[name:if]
                 Ins
-                    //cond
                     Map[name:l1, returnidx:0, hide_outs:t, prefix:t]
                         Ins
                             InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
                         Outs
                             Node
-                    //then
                     InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
-                    
-                    //else
-                    Vertical
+                    Vertical[selected:t]
                         Map[name:spl, prefix:t, inline:t]
                             Ins
                                 InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
@@ -38,12 +48,12 @@ Root
                                 Variable[name:t, setvalue:t, className:setvariable]
                         Map[name:++, infix:t, returnidx:0, hide_outs:t, inline:t]
                             Ins
-                                Map[name:quicksort, returnidx:0, hide_outs:t, prefix:t, import_from:./irs/quicksort, inline:t, className:inline]
+                                Map[name:quicksort, returnidx:0, hide_outs:t, prefix:t, import_from:./irs/quicksort, className:inline]
                                     Ins
-                                        Map[name:filter, returnidx:0, hide_outs:t, inline:t, className:inline, className:inline]
+                                        Map[name:filter, returnidx:0, hide_outs:t, className:inline]
                                             Ins
                                                 Variable[name:t, getvalue:t, className:getvariable]
-                                                Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0, inline:t]
+                                                Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0]
                                                     Ins
                                                         UnBound[className:unbound, name:x, getvalue:x]
                                                         Variable[name:h, getvalue:h, className:getvariable]
@@ -54,12 +64,12 @@ Root
                                     Outs
                                         Node
                                 Variable[name:h, getvalue:h, className:getvariable]
-                                Map[name:quicksort, returnidx:0, hide_outs:t, prefix:t, import_from:./irs/quicksort, inline:t, className:inline]
+                                Map[name:quicksort, returnidx:0, hide_outs:t, prefix:t, import_from:./irs/quicksort, className:inline]
                                     Ins
-                                        Map[name:filter, returnidx:0, hide_outs:t, inline:t, className:inline]
+                                        Map[name:filter, returnidx:0, hide_outs:t, className:inline]
                                             Ins
                                                 Variable[name:t, getvalue:t, className:getvariable]
-                                                Map[name:>, infix:t, variableinput:t, hide_outs:t, returnidx:0, inline:t, className:inline]
+                                                Map[name:>, infix:t, variableinput:t, hide_outs:t, returnidx:0, className:inline]
                                                     Ins
                                                         UnBound[className:unbound, name:x, getvalue:x]
                                                         Variable[name:h, getvalue:h, className:getvariable]

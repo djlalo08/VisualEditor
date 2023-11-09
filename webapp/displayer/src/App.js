@@ -28,7 +28,7 @@ let id = 0;
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
 // const FILE = 'vertical_test';
-// const FILE = 'quicksort';
+const FILE = 'quicksort';
 // const FILE = 'quicksort_test';
 // const FILE = 'fib';
 // const FILE = 'fnsTest';
@@ -36,7 +36,7 @@ let id = 0;
 // const FILE = 'fn_ex';
 // const FILE = 'if_test';
 // const FILE = 'first_index';
-const FILE = 'azure_example';
+// const FILE = 'azure_example';
 
 // const FILE = 'x';
 // const FILE = 'cacheing_test';
@@ -183,6 +183,7 @@ class App extends React.Component{
         <div>
           { JSX }
         </div>
+        <Button onClick={() => navigator.clipboard.writeText(printAst(AST))}>Copy AST</Button>
         <Button onClick={() => console.log(printAst(AST))}>Print AST</Button> 
         <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
         <Button onClick={callEval}>Eval</Button>
