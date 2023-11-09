@@ -1,0 +1,47 @@
+Root
+    MapDef[name:caller]
+        Ins
+        Outs
+        Body
+            Map[name:avg, import_from:./irs/fn_ex]
+                Ins
+                    Map[name:3, value:3, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:3]
+                        Ins
+                        Outs
+                            Node
+                    Map[name:4, value:4, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:4]
+                        Ins
+                        Outs
+                            Node
+                Outs
+                    Node[setvalue:o1]
+    MapDef[name:avg]
+        Ins
+            Map[name:A, className:constant, value:A, type:Number, inline:t, selected:t]
+                Ins
+                Outs
+                    Node
+            Map[name:B, className:constant, value:B, type:Number, inline:t]
+                Ins
+                Outs
+                    Node
+        Outs
+            Map[name:A, value:2, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                Ins
+                Outs
+                    Node
+        Body
+            Map[name:/, infix:t, inline:t, variableinput:t, result:2, hide_outs:t, returnidx:0]
+                Ins
+                    Map[name:+, infix:t, hide_outs:t, returnidx:0, inline:t, result:4]
+                        Ins
+                            Node
+                            Node
+                        Outs
+                            Node[return:0]
+                    Map[name:2, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2]
+                        Ins
+                        Outs
+                            Node
+                Outs[result:2]
+                    Node[result:2]

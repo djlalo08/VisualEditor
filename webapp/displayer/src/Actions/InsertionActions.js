@@ -24,6 +24,10 @@ export function insertMapFromModal() {
         mapData = mapRepo[name];
     }
 
+    if (!mapData.in_num){
+        mapData.variableinput = 't';
+    }
+
     let { fn, ...otherData } = mapData;
     let name_split = name.split(' ');
     let m;

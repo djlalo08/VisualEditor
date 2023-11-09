@@ -3,7 +3,7 @@ import Xarrow from "react-xarrows";
 export default function Wire(props){
 return (<>
     <Xarrow start={props.start} end={props.end}
-        color="black"
+        color="white"
         strokeWidth={2.4}
         headShape='circle'
         tailShape='circle'
@@ -16,7 +16,7 @@ return (<>
         endAnchor='top'
     />
     <Xarrow start={props.start} end={props.end}
-        color="green"
+        color="rgb(87, 162, 77)"
         strokeWidth={2}
         headShape='circle'
         tailShape='circle'

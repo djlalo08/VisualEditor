@@ -27,6 +27,7 @@ function InnerMap(props){
     let map = <table id={props.id} className={className} {...other}><tbody>
         {ins}
         {infix || prefix || postfix? null : <tr><td>{props.name}</td></tr>}
+        <tr style={{height:'4px'}}><td></td></tr>
         {hide_outs? null: outs}
     </tbody></table>
     

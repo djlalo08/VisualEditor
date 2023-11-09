@@ -33,14 +33,17 @@ let id = 0;
 // const FILE = 'fib';
 // const FILE = 'fnsTest';
 // const FILE = 'fnsTestSimpl';
+// const FILE = 'fn_ex';
 // const FILE = 'if_test';
+// const FILE = 'first_index';
+const FILE = 'azure_example';
 
 // const FILE = 'x';
 // const FILE = 'cacheing_test';
 
 // const FILE = 'empty';
 
-const FILE = 'test';
+// const FILE = 'test';
 
 export function nextId(){
   return ++id;

@@ -1,0 +1,128 @@
+public List<int> qsort(List<int> ls){
+    int firstVal = ls.get(0);
+    List<int> rest = ls.remove(0);
+    List<int> lessThanFirstVal = rest.filter((x) -> x < firstVal);
+    List<int> greaterThanFirstVal = rest.filter((x) -> x >= firstVal);
+    return qsort(lessThanFirstVal) + firstVal + qsort(greaterThanFirstVal);
+} 
+
+var myvar = {
+    x : 5,
+    y : 7
+}
+
+var myvar{x, y} = getMyvar();
+myvar
+x
+
+(x,y) = returnsTuple()
+a
+b
+
+Tuple ab = returnsTuple()
+a
+
+class QuickSort
+{
+    int partition(int arr[], int low, int high)
+    {
+        int pivot = arr[high]; 
+        int i = (low-1); // index of smaller element
+        for (int j=low; j<high; j++){
+            if (arr[j] <= pivot){
+                i++;
+ 
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+ 
+        int temp = arr[i+1];
+        arr[i+1] = arr[high];
+        arr[high] = temp;
+ 
+        return i+1;
+    }
+  
+    void sort(int arr[], int low, int high){
+        if (low < high){
+            int pi = partition(arr, low, high);
+ 
+            sort(arr, low, pi-1);
+            sort(arr, pi+1, high);
+        }
+    }
+ 
+    static void printArray(int arr[]){
+        int n = arr.length;
+        for (int i=0; i<n; ++i)
+            System.out.print(arr[i]+" ");
+        System.out.println();
+    }
+ 
+    public static void main(String args[]){
+        int arr[] = {10, 7, 8, 9, 1, 5};
+        int n = arr.length;
+ 
+        QuickSort ob = new QuickSort();
+        ob.sort(arr, 0, n-1);
+ 
+        System.out.println("sorted array");
+        printArray(arr);
+    }
+}
+
+fn(a, b){
+
+}
+
+fn<b,a> swap(fn<a,b> f){
+    return (a,b) -> f(b,a);
+}
+
+//Procedural
+List<Group> groups = getGroups();
+List<List<String>> result = new ArrayList<>();
+for (Group group: groups){
+    List<User> enabledMembers = new ArrayList<>();
+    for (User user: group.getGroupMembers()){
+        if (accountEnabled(user)){
+            enabledMembers.add(user);
+        }
+    }
+    List<String> userIds = new ArrayList<>();
+    for (User user: enabledMembers){
+        userIds.add(user.getUserId().toLowercase());
+    }
+    result.add(userIds);
+}
+List<List<String> nonEmptyResult = new ArrayList<>();
+for (List<String> idsInGroup: result){
+    if (nonEmpty(idsInGroup)){
+        nonEmptyResult.add(idsInGroup);
+    }
+
+}
+return nonEmptyResult;
+
+
+
+//Functional
+getGroups().stream()
+    .map(group-> 
+        group.getGroupMembers().stream()
+            .filter(accountService::accountEnabled)
+            .map(user -> user.getUserId().toLowercase())
+            .toList()
+    )
+    .filter(ListUtils::nonEmpty)
+    .toList();
+
+//Actual
+getGroups().stream()
+    .map(group -> getGroupMembers(group))
+    .map(groupMembers -> filter(groupMembers, UserService::getAccountEnabled))
+    .map(groupMembers -> map(groupMembers, user -> user.getUserId().toLowerCase()))
+    .filter(CollectionUtils:isNotEmpty)
+    .toList();

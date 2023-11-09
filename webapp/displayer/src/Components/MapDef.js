@@ -8,7 +8,7 @@ export function MapDef(props){
         {ins}
         {name}
         </span>
-            <Node>
+            <Node style={{borderStyle: 'inset'}}>
             {body}
             </Node>
         <div style={{display:'flex', justifyContent:'flex-end'}}>
