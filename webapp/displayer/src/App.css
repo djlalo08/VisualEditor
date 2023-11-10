@@ -174,3 +174,7 @@ td, tr, table {
 .getvariable {
   background: rgb(37, 194, 37);
 }
+
+.button {
+  margin: 3px;
+}

@@ -177,8 +177,8 @@ class App extends React.Component{
     </Modal>
 
     let demoButtons = (<>
-        <Button onClick={() => openFile('basic')}>basic</Button>
-        <Button onClick={() => openFile('discr')}>discr</Button>
+        <Button className='button' onClick={() => openFile('basic')}>basic</Button>
+        <Button className='button' onClick={() => openFile('discr')}>discr</Button>
     </>);
 
     return (
@@ -187,20 +187,23 @@ class App extends React.Component{
         <div>
           { JSX }
         </div>
-        <Button onClick={() => navigator.clipboard.writeText(printAst(AST))}>Copy AST</Button>
-        <Button onClick={() => console.log(printAst(AST))}>Print AST</Button> 
+        <p>Result: {eval_result}</p>
+        {/* <p>Selected Id: {selected ? selected.id : null}</p> */}
+        <Button className='button' onClick={() => navigator.clipboard.writeText(printAst(AST))}>Copy AST</Button>
+        <Button className='button' onClick={() => console.log(printAst(AST))}>Print AST</Button> 
         {/* <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button> */}
-        <Button onClick={callEval}>Eval</Button>
+        <Button className='button' onClick={callEval}>Eval</Button>
         {/* <Button onClick={this.getIRsList}>FileStuff</Button> */}
         {/* <Button onClick={() => runTests(this)}>Run Tests</Button> */}
         {/* <Button onClick={openFileFromDir}>Open</Button> */}
         {/* <Button onClick={save}>Save</Button> */}
 
-        <br/><br/>
+        <br/>
+        <br/>
+        Demo Pages
+        <br/>
         {demoButtons}
 
-        <p>Result: {eval_result}</p>
-        <p>Selected Id: {selected ? selected.id : null}</p>
         
         {modal}
         <Sidebar node={this.state.selected} AST={AST}/>
