@@ -87,10 +87,14 @@ html {
 }
 
 .selected {
+  border-radius: 7px;
+  border-style: solid;
   border-color: rgb(184, 88, 88) !important;
 }
 
 .secondSelect{
+  border-radius: 7px;
+  border-style: solid;
   border-color: rgb(48, 105, 225);
 }
 
