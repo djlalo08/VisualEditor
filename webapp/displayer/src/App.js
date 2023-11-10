@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import { callEval, setApp as setActions } from './Actions';
-import { openFile, openFileFromDir, save } from './Actions/FileActions';
+import { openFile } from './Actions/FileActions';
 import { handleClose } from './Actions/ModalActions';
 import './App.css';
 import { Sidebar } from './Components/Sidebar';
@@ -11,7 +11,6 @@ import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardControlle
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
 import { countBounds, printAst } from './Utils/NodeUtils';
-import { runTests } from './Utils/Tests';
 
 let devMode = true;
 let id = 0;
@@ -28,7 +27,7 @@ let id = 0;
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
 // const FILE = 'vertical_test';
-const FILE = 'quicksort';
+// const FILE = 'quicksort';
 // const FILE = 'quicksort_test';
 // const FILE = 'fib';
 // const FILE = 'fnsTest';
@@ -42,7 +41,7 @@ const FILE = 'quicksort';
 // const FILE = 'cacheing_test';
 
 // const FILE = 'empty';
-
+const FILE = 'basic1';
 // const FILE = 'test';
 
 export function nextId(){
@@ -177,6 +176,10 @@ class App extends React.Component{
       </Modal.Body>
     </Modal>
 
+    let demoButtons = (<>
+        <Button onClick={() => openFile('basic1')}>basic 1</Button>
+    </>);
+
     return (
       <div className="App" onMouseDown={this.requestDirHandler}> 
         <h1>{activeFile}.ir</h1>
@@ -185,12 +188,15 @@ class App extends React.Component{
         </div>
         <Button onClick={() => navigator.clipboard.writeText(printAst(AST))}>Copy AST</Button>
         <Button onClick={() => console.log(printAst(AST))}>Print AST</Button> 
-        <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
+        {/* <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button> */}
         <Button onClick={callEval}>Eval</Button>
-        <Button onClick={this.getIRsList}>FileStuff</Button>
-        <Button onClick={() => runTests(this)}>Run Tests</Button>
-        <Button onClick={openFileFromDir}>Open</Button>
-        <Button onClick={save}>Save</Button>
+        {/* <Button onClick={this.getIRsList}>FileStuff</Button> */}
+        {/* <Button onClick={() => runTests(this)}>Run Tests</Button> */}
+        {/* <Button onClick={openFileFromDir}>Open</Button> */}
+        {/* <Button onClick={save}>Save</Button> */}
+
+        <br/><br/>
+        {demoButtons}
 
         <p>Result: {eval_result}</p>
         <p>Selected Id: {selected ? selected.id : null}</p>
