@@ -31,7 +31,7 @@ let id = 0;
 // const FILE = 'quicksort_test';
 // const FILE = 'fib';
 // const FILE = 'fnsTest';
-// const FILE = 'fnsTestSimpl';
+const FILE = 'fnsTestSimpl';
 // const FILE = 'fn_ex';
 // const FILE = 'if_test';
 // const FILE = 'first_index';
@@ -41,7 +41,7 @@ let id = 0;
 // const FILE = 'cacheing_test';
 
 // const FILE = 'empty';
-const FILE = 'discr';
+// const FILE = 'fns';
 // const FILE = 'test';
 
 export function nextId(){
@@ -176,9 +176,12 @@ class App extends React.Component{
       </Modal.Body>
     </Modal>
 
+    let fileButton = fileName => <Button className='button' onClick={() => openFile(fileName)}>{fileName}</Button>;
+
     let demoButtons = (<>
-        <Button className='button' onClick={() => openFile('basic')}>basic</Button>
-        <Button className='button' onClick={() => openFile('discr')}>discr</Button>
+      {fileButton('basic')}
+      {fileButton('discr')}
+      {fileButton('fns')}
     </>);
 
     return (

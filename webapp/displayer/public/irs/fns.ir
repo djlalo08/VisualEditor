@@ -1,0 +1,36 @@
+Root
+    Vertical[invisible:t]
+        MapDef[name:caller]
+            Ins
+            Outs
+            Body
+                Node
+        MapDef[name:avg]
+            Ins
+                InBound[name:a, className:unbound, bind_idx:0]
+            Outs
+            Body
+                Map[name:/, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0, selected:t]
+                    Ins
+                        Map[name:+, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0]
+                            Ins
+                                Node
+                                Node
+                            Outs
+                                Node
+                        Map[name:2, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2]
+                            Ins
+                            Outs
+                                Node
+                    Outs
+                        Node
+        MapDef[name:map with lambda]
+            Ins
+            Outs
+            Body
+                Node
+        MapDef[name:filter with lambda]
+            Ins
+            Outs
+            Body
+                Node

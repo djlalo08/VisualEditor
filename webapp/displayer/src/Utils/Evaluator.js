@@ -59,12 +59,12 @@ class Evaluationator {
                 result = attrs.returnidx? result[attrs.returnidx]: result;
                 this.cache[ast_node] = result;
                 return result;
-                case 'UnBound':
-                    return ['UNBOUND', attrs.getvalue];
-                    case 'InBound':
-                        if (ast_node.supplier)
-                        return ast_node.supplier();
-                    if (attrs.bind_idx)
+            case 'UnBound':
+                return ['UNBOUND', attrs.getvalue];
+            case 'InBound':
+                if (ast_node.supplier)
+                    return ast_node.supplier();
+                if (attrs.bind_idx)
                     return this.inBounds[attrs.bind_idx];
                 return ['INBOUND', attrs.getvalue];
             }
