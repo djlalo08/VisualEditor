@@ -2,7 +2,7 @@ import { app } from '../Actions';
 import { getName } from '../Utils/NodeUtils';
 import { updateSelected } from './SelectionActions';
 
-let selectables = ['Map', 'Node', 'InBound'];
+let selectables = ['Map', 'Node', 'InBound', 'MapDef'];
 let horizontals = ['Map', 'Node', 'Ins', 'Outs', 'Horizontal', 'InBound'];
 
 export function moveRight(selected) {
@@ -57,6 +57,12 @@ export function moveDown() {
 export function moveDownFrom(elmt) {
     if (!hasChildren(elmt))
         return;
+
+    if (getName(elmt) == 'MapDef'){
+        let body = elmt.children[2];
+        moveDownFrom(body);
+        return;
+    }
 
     let child = elmt.children[0];
 

@@ -1,7 +1,11 @@
 export default function Vertical(props){
-    let children = props.children;
+    let {children, invisible} = props;
     if (!children || !children.length)
         return null;
+
+    if (invisible){
+        return children;
+    }
 
     let last_idx = children.length-1;
     children = children.map(
