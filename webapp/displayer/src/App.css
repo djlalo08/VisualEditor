@@ -23,8 +23,8 @@ html {
   border-radius: 7px;
   border-style: solid;
   border-color: #b4b09b;
-  border-top: none;
-  border-bottom: none;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-color: rgba(255, 255, 255, 0);
   text-align: center !important;
 }
 .Node {
@@ -76,8 +76,8 @@ html {
   border-radius: 7px;
   border-style: solid;
   border-color: #b4b09b;
-  border-top: none;
-  border-bottom: none;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-color: rgba(255, 255, 255, 0);
   text-align: center !important;
   background-color: #57bec3;
 }

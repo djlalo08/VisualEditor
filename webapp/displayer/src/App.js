@@ -41,7 +41,7 @@ let id = 0;
 // const FILE = 'cacheing_test';
 
 // const FILE = 'empty';
-const FILE = 'basic1';
+const FILE = 'basic';
 // const FILE = 'test';
 
 export function nextId(){
@@ -177,7 +177,8 @@ class App extends React.Component{
     </Modal>
 
     let demoButtons = (<>
-        <Button onClick={() => openFile('basic1')}>basic 1</Button>
+        <Button onClick={() => openFile('basic')}>basic</Button>
+        <Button onClick={() => openFile('discr')}>discr</Button>
     </>);
 
     return (
