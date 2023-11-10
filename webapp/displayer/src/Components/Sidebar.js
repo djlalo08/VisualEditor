@@ -25,9 +25,11 @@ export function Sidebar({node, AST}) {
 
 function body(name, attrs, node, AST){
     let props = {attrs, node, AST};
+    if (attrs.value)
+        return <ConstantSidebar {...props}/>;
+        
     switch(name){
         case 'Map':         return <MapSidebar {...props}/>;
-        case 'Constant':    return <ConstantSidebar {...props}/>;
         case 'InBound':     return <InBoundSidebar {...props}/>;
     }
 }
