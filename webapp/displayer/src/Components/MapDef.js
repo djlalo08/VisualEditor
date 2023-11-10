@@ -3,12 +3,13 @@ import Node from "./Node";
 export function MapDef(props){
     let {id, className, selected, children, other, name} = props;
     let [ins, outs, body] = children;
-    let nameStyle = {padding: '0px 2px', margin: '1px'};
+    let nameStyle = {padding: '0px 2px', margin: '1px', borderStyle: 'dashed'};
     if (selected){
-        nameStyle.borderStyle = 'dashed';
         nameStyle.borderColor = 'rgb(184, 88, 88)';
-        nameStyle.borderLeft = 'none';
-        nameStyle.borderRight = 'none';
+        nameStyle.borderLeftColor = 'rgba(184, 88, 88, 0)';
+        nameStyle.borderRightColor = 'rgba(184, 88, 88, 0)';
+    } else {
+        nameStyle.borderColor = 'rgba(184, 88, 88, 0)';
     }
 
     return (<div style={{'textAlign': 'left'}}>
