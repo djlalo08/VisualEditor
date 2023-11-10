@@ -58,10 +58,17 @@ export function moveDownFrom(elmt) {
     if (!hasChildren(elmt))
         return;
 
-    if (getName(elmt) == 'MapDef'){
-        let body = elmt.children[2];
-        moveDownFrom(body);
-        return;
+    switch (getName(elmt)){
+        case 'MapDef':
+            let body = elmt.children[2];
+            moveDownFrom(body);
+            return;
+        case 'Map':
+            let [ins, outs] = elmt.children;
+            if (ins.children.length == 0){
+                moveDownFrom(outs);
+                return;
+            }
     }
 
     let child = elmt.children[0];

@@ -41,7 +41,7 @@ let id = 0;
 // const FILE = 'cacheing_test';
 
 // const FILE = 'empty';
-const FILE = 'basic';
+const FILE = 'discr';
 // const FILE = 'test';
 
 export function nextId(){
