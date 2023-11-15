@@ -1,8 +1,5 @@
 WORKING ON:
 
-- Functions sort of work!! We need in and outbounds to be a little nicer. Decide if we like the 
-[Ins, Outs, Body] structure
-
 - All "boxes" are maps. Constants, variables, in/unbounds are just maps that take no args (suppliers), and have special props (value, type, assignName, etc). Thus there is a map [1] which is a standard library map, which simply takes no args, and always returns 1 (actually [1], but whatever).
   1. Make maps work as constants. Remove all constants from code and replace with map constants [Done]
   2. Make maps work as variables. Remove all variables from code and replace with map variables. This means anything can be an assigned variable!!

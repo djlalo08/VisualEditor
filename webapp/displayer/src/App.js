@@ -32,7 +32,7 @@ let id = 0;
 // const FILE = 'quicksort_test';
 // const FILE = 'fib';
 // const FILE = 'fnsTest';
-// const FILE = 'fnsTestSimpl';
+const FILE = 'fnsTestSimpl';
 // const FILE = 'fn_ex';
 // const FILE = 'if_test';
 // const FILE = 'first_index';
@@ -46,7 +46,7 @@ let id = 0;
 // const FILE = 'fns';
 // const FILE = 'test';
 
-const FILE = 'basic';
+// const FILE = 'basic';
 
 export function nextId(){
   return ++id;
