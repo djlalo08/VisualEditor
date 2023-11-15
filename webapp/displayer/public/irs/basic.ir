@@ -1,6 +1,6 @@
 Root
     Vertical[invisible:t]
-        MapDef[name:usingWires, className:selected]
+        MapDef[name:usingWires, className:selected, selected:t]
             Ins
             Outs
             Body
@@ -10,7 +10,7 @@ Root
                             Ins
                             Outs[result:5]
                                 Node[setvalue:12, result:5]
-                        Map[name:12, className:constant, value:12, type:Number, inline:t, result:12, selected:t]
+                        Map[name:12, className:constant, value:12, type:Number, inline:t, result:12]
                             Ins
                             Outs[result:12]
                                 Node[setvalue:16, result:12]

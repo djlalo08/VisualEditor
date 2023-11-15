@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import FormControl from 'react-bootstrap/FormControl';
 import Modal from 'react-bootstrap/Modal';
 import { callEval, setApp as setActions } from './Actions';
-import { openFile } from './Actions/FileActions';
+import { openFile, openFileFromDir, save } from './Actions/FileActions';
 import { handleClose } from './Actions/ModalActions';
 import './App.css';
 import { Sidebar } from './Components/Sidebar';
@@ -11,6 +11,7 @@ import { keypress, keyrelease, setApp as setKeyboard } from './KeyboardControlle
 import { ast_to_jsx } from './Utils/Converter';
 import { parse } from './Utils/IrToAst';
 import { countBounds, printAst } from './Utils/NodeUtils';
+import { runTests } from './Utils/Tests';
 
 let devMode = true;
 let id = 0;
@@ -31,11 +32,12 @@ let id = 0;
 // const FILE = 'quicksort_test';
 // const FILE = 'fib';
 // const FILE = 'fnsTest';
-const FILE = 'fnsTestSimpl';
+// const FILE = 'fnsTestSimpl';
 // const FILE = 'fn_ex';
 // const FILE = 'if_test';
 // const FILE = 'first_index';
 // const FILE = 'azure_example';
+// const FILE = 'parallel';
 
 // const FILE = 'x';
 // const FILE = 'cacheing_test';
@@ -43,6 +45,8 @@ const FILE = 'fnsTestSimpl';
 // const FILE = 'empty';
 // const FILE = 'fns';
 // const FILE = 'test';
+
+const FILE = 'basic';
 
 export function nextId(){
   return ++id;
@@ -96,6 +100,7 @@ class App extends React.Component{
     let AST = parse(fileText);
     let [JSX, selected] = ast_to_jsx(AST);
     return {
+
       ...this.emptyState(),
       AST, JSX, selected,
     } 
@@ -176,36 +181,39 @@ class App extends React.Component{
       </Modal.Body>
     </Modal>
 
-    let fileButton = fileName => <Button className='button' onClick={() => openFile(fileName)}>{fileName}</Button>;
+    let fileButton = fileName => <Button className='button' onClick={() => this.setState({activeFile:fileName}, () => openFile(fileName))}>{fileName}</Button>;
 
     let demoButtons = (<>
       {fileButton('basic')}
       {fileButton('discr')}
       {fileButton('fns')}
+      {fileButton('quicksort')}
+      {fileButton('user roles')}
     </>);
 
     return (
       <div className="App" onMouseDown={this.requestDirHandler}> 
+        <br/>
+        {demoButtons}
+        <br/>
         <h1>{activeFile}.ir</h1>
         <div>
           { JSX }
         </div>
         <p>Result: {eval_result}</p>
-        {/* <p>Selected Id: {selected ? selected.id : null}</p> */}
+        <p>Selected Id: {selected ? selected.id : null}</p>
         <Button className='button' onClick={() => navigator.clipboard.writeText(printAst(AST))}>Copy AST</Button>
         <Button className='button' onClick={() => console.log(printAst(AST))}>Print AST</Button> 
-        {/* <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button> */}
+        <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
         <Button className='button' onClick={callEval}>Eval</Button>
-        {/* <Button onClick={this.getIRsList}>FileStuff</Button> */}
-        {/* <Button onClick={() => runTests(this)}>Run Tests</Button> */}
-        {/* <Button onClick={openFileFromDir}>Open</Button> */}
-        {/* <Button onClick={save}>Save</Button> */}
+        <Button onClick={this.getIRsList}>FileStuff</Button>
+        <Button onClick={() => runTests(this)}>Run Tests</Button>
+        <Button onClick={openFileFromDir}>Open</Button>
+        <Button onClick={save}>Save</Button>
+        
 
         <br/>
         <br/>
-        Demo Pages
-        <br/>
-        {demoButtons}
 
         
         {modal}

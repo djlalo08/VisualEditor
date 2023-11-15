@@ -1,25 +1,26 @@
 Root
-    MapDef[name:caller]
-        Ins
-        Outs
-        Body
-            Map[name:addify, import_from:./irs/fnsTestSimpl]
-                Ins
-                    Number[name:3, value:3]
-                    Number[name:4, value:4]
-                Outs
-                    Node[setvalue:o1]
+    Vertical[invisible:t]
+        MapDef[name:caller]
+            Ins
+            Outs
+            Body
+                Map[name:addify, import_from:./irs/fnsTestSimpl]
+                    Ins
+                        Number[name:3, value:3]
+                        Number[name:4, value:4]
+                    Outs
+                        Node[setvalue:o1]
 
-    MapDef[name:addify]
-        Ins
-            InBound[name:a, className:unbound, bind_idx:0]
-            InBound[name:b, className:unbound, bind_idx:1]
-        Outs
-            Number[name:A, value:2]
-        Body
-            Map[name:+, infix:t]
-                Ins
-                    InBound[name:a, className:unbound, bind_idx:0]
-                    InBound[name:b, className:unbound, bind_idx:1]
-                Outs
-                    Node[return:0] 
+        MapDef[name:addify]
+            Ins
+                InBound[name:a, className:unbound, bind_idx:0]
+                InBound[name:b, className:unbound, bind_idx:1]
+            Outs
+                Number[name:A, value:2]
+            Body
+                Map[name:+, infix:t]
+                    Ins
+                        InBound[name:a, className:unbound, bind_idx:0]
+                        InBound[name:b, className:unbound, bind_idx:1]
+                    Outs
+                        Node[return:0] 

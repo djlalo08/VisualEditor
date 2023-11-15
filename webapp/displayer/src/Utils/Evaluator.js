@@ -64,8 +64,10 @@ class Evaluationator {
             case 'InBound':
                 if (ast_node.supplier)
                     return ast_node.supplier();
+
                 if (attrs.bind_idx)
                     return this.inBounds[attrs.bind_idx];
+                
                 return ['INBOUND', attrs.getvalue];
             }
     }
@@ -74,6 +76,10 @@ class Evaluationator {
         let [ins, outs] = ast_node.children;
         if (attrs.value && attrs.type){
             return [eval_constant(attrs.type, attrs.value)];
+        }
+
+        if (attrs.bind_idx){
+            return [this.inBounds[attrs.bind_idx]];
         }
 
         if (attrs.name in mapRepo){

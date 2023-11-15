@@ -1,6 +1,6 @@
 Root
     Vertical[invisible:t]
-        MapDef[name:discr1]
+        MapDef[name:discr1, selected:t]
             Ins
             Outs
             Body
@@ -83,7 +83,7 @@ Root
                         Outs
                             Node
                             Node
-        MapDef[name:discr3, selected:t]
+        MapDef[name:discr3]
             Ins
             Outs
             Body

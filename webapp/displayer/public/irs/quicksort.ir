@@ -1,5 +1,5 @@
 Root
-    Map[name:quicksort, import_from:./irs/quicksort, returnidx:0, hide_outs:t]
+    Map[name:quicksort, import_from:./irs/quicksort, returnidx:0, hide_outs:t, selected:t]
         Ins
             Map[name:ls, prefix:t, returnidx:0, hide_outs:t, variableinput:t]
                 Ins
@@ -39,7 +39,7 @@ Root
                         Outs
                             Node
                     InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
-                    Vertical[selected:t]
+                    Vertical[]
                         Map[name:spl, prefix:t, inline:t]
                             Ins
                                 InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]

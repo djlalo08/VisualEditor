@@ -28,6 +28,9 @@ function body(name, attrs, node, AST){
     if (attrs.value)
         return <ConstantSidebar {...props}/>;
         
+    if (attrs.bind_idx || attrs.supplier)
+        return <InBoundSidebar {...props}/>;
+
     switch(name){
         case 'Map':         return <MapSidebar {...props}/>;
         case 'InBound':     return <InBoundSidebar {...props}/>;

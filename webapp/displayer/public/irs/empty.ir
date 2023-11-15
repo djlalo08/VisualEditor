@@ -1,13 +1,16 @@
 Root
     Vertical
-        Map[name:+, returnidx:0, hide_outs:t, infix:t, inline:t, variableinput:t]
+        Map[name:double, variableinput:t, prefix:t]
             Ins
-                Map[name:+, returnidx:0, hide_outs:t, infix:t, inline:t, variableinput:t]
-                    Ins
-                        Number[name:2, value:2]
-                        Number[name:2, value:2]
-                    Outs
-                        Node
-                Number[name:2, value:2]
+                Node
+            Outs
+                Node[setvalue:7]
+        Map[name:X, className:constant, value:X, type:Number, inline:t]
+            Ins
+            Outs
+                Node[setvalue:NaN]
+        Map[name:expectsOdd, variableinput:t, underfix:t]
+            Ins
+                Node[getvalue:NaN]
             Outs
                 Node

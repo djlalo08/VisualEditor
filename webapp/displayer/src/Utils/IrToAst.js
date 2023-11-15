@@ -76,6 +76,13 @@ function pre_expand(lines){
             new_lines.push(`${n_tabs(indent+2)}Node`);       
             continue;     
         }
+        if ('InBound' == name){
+            new_lines.push(`${n_tabs(indent)}Map[name:${attrs.name}, setvalue:${attrs.name}, bind_idx:${attrs.bind_idx}, className:unbound, inline:t, hide_outs:t, returnidx:0]`);
+            new_lines.push(`${n_tabs(indent+1)}Ins`);
+            new_lines.push(`${n_tabs(indent+1)}Outs`);
+            new_lines.push(`${n_tabs(indent+2)}Node`);       
+            continue;     
+        }
                      
         new_lines.push(line);
     }

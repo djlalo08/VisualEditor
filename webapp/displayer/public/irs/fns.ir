@@ -1,21 +1,37 @@
 Root
     Vertical[invisible:t]
-        MapDef[name:caller]
+        MapDef[name:caller, selected:t]
             Ins
             Outs
             Body
-                Node
+                Map[name:avg, variableinput:t, import_from:./irs/fns, result:3.5, hide_outs:t, returnidx:0]
+                    Ins
+                        Map[name:3, className:constant, value:3, type:Number, hide_outs:t, returnidx:0, inline:t, result:3]
+                            Ins
+                            Outs
+                                Node
+                        Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, result:4]
+                            Ins
+                            Outs
+                                Node
+                    Outs
+                        Node
         MapDef[name:avg]
             Ins
-                InBound[name:a, className:unbound, bind_idx:0]
             Outs
             Body
-                Map[name:/, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0, selected:t]
+                Map[name:/, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0, return:t, result:NaN]
                     Ins
-                        Map[name:+, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0]
+                        Map[name:+, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0, result:NaN]
                             Ins
-                                Node
-                                Node
+                                Map[name:a, setvalue:a, bind_idx:0, className:unbound, inline:t, hide_outs:t, returnidx:0, result:undefined]
+                                    Ins
+                                    Outs
+                                        Node
+                                Map[name:b, setvalue:b, bind_idx:1, className:unbound, inline:t, hide_outs:t, returnidx:0, result:undefined]
+                                    Ins
+                                    Outs
+                                        Node
                             Outs
                                 Node
                         Map[name:2, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2]
@@ -28,9 +44,83 @@ Root
             Ins
             Outs
             Body
-                Node
+                Vertical
+                    Map[name:ls, prefix:t, inline:t, variableinput:t, result:2,3,4,5,6]
+                        Ins
+                            Map[name:2, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:3, className:constant, value:3, type:Number, hide_outs:t, returnidx:0, inline:t, result:3]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, result:4]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t, result:5]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:6, className:constant, value:6, type:Number, hide_outs:t, returnidx:0, inline:t, result:6]
+                                Ins
+                                Outs
+                                    Node
+                        Outs[result:2,3,4,5,6]
+                            Node[setvalue:54, result:2,3,4,5,6]
+                    Map[name:map, variableinput:t, result:8,9,10,11,12]
+                        Ins
+                            Node[getvalue:54, result:2,3,4,5,6]
+                            Map[name:+, infix:t, variableinput:t, hide_outs:t, returnidx:0]
+                                Ins
+                                    UnBound[className:unbound, name:x, getvalue:x, result:UNBOUND,x]
+                                    Map[name:6, className:constant, value:6, type:Number, hide_outs:t, returnidx:0, inline:t, result:6]
+                                        Ins
+                                        Outs
+                                            Node
+                                Outs
+                                    Node
+                        Outs
         MapDef[name:filter with lambda]
             Ins
             Outs
             Body
-                Node
+                Vertical
+                    Map[3:undefined, 4:undefined, 5:undefined, 6:undefined, name:ls, prefix:t, inline:t, variableinput:t, result:2]
+                        Ins
+                            Map[name:2, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:3, className:constant, value:3, type:Number, hide_outs:t, returnidx:0, inline:t, result:3]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, result:4]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t, result:5]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:6, className:constant, value:6, type:Number, hide_outs:t, returnidx:0, inline:t, result:6]
+                                Ins
+                                Outs
+                                    Node
+                        Outs[result:2,3,4,5,6]
+                            Node[setvalue:undefined]
+                    Map[9:undefined, 10:undefined, 11:undefined, 12:undefined, name:filter, variableinput:t, result:8]
+                        Ins
+                            Node[getvalue:undefined]
+                            Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0]
+                                Ins
+                                    UnBound[className:unbound, name:x, getvalue:x, result:UNBOUND,x]
+                                    Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t, result:6]
+                                        Ins
+                                        Outs
+                                            Node
+                                Outs
+                                    Node
+                        Outs

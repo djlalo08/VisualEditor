@@ -1,0 +1,21 @@
+Root
+    Vertical[invisible:t]
+        MapDef[name:parallelism]
+            Ins
+            Outs
+            Body
+                Vertical
+                    Horizontal
+                        Map[name:doThis, variableinput:t]
+                            Ins
+                            Outs
+                                Node[setvalue:12]
+                        Map[name:doThisAtTheSameTime, variableinput:t, selected:t]
+                            Ins
+                            Outs
+                                Node[setvalue:16]
+                    Map[name:onceBothAreCompleteUseTheirResults, variableinput:t]
+                        Ins
+                            Node[getvalue:12]
+                            Node[getvalue:16]
+                        Outs
