@@ -73,3 +73,4 @@ BUGS:
 - When a map has more than 1 output, and it is called twice, the second time it's called it will add the output value as an attribute
 - When a node is created using the side panel, it doesn't have an id
 - Can't navigate to output for nodes that don't have inputs
+- Inbounds' mock values don't work when done in the "new" way (i.e. when inbounds are maps)
