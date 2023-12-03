@@ -15,7 +15,7 @@ Root
                     Node[setvalue:40]
         Map[name:√, prefix:t, inline:t]
             Ins
-                Map[name:-, infix:t, variableinput:t, inline:t]
+                Map[name:-, infix:t, variableinput:t, inline:t, hide_outs:t, returnidx:0]
                     Ins
                         Map[name:^2, postfix:t, inline:t]
                             Ins
@@ -28,7 +28,8 @@ Root
                                         Node
                                 Node[getvalue:27]
                                 Node[getvalue:40]
-                Outs[returnidx: 0]
+                    Outs[returnidx: 0]
+                        Node
             Outs
                 Node[setvalue:o1]
                 Node[setvalue:o2]
@@ -38,7 +39,7 @@ Root
                     Map[name:B, className:constant, value:B, type:Number, hide_outs:t, returnidx:0, inline:t]
                         Ins
                         Outs
-                            Node[]
+                            Node
                 Outs
                     Node[setvalue:44]
             Map[name:*, infix:t, inline:t, variableinput:t]
@@ -67,43 +68,3 @@ Root
             Outs
                 Node[setvalue:o1]
                 Node[setvalue:o2]
-        Horizontal
-            Map[name:A, className:constant, value:A, type:Number, inline:t]
-                Ins
-                Outs
-                    Node[setvalue:73]
-            Map[name:B, className:constant, value:B, type:Number, inline:t]
-                Ins
-                Outs
-                    Node[setvalue:77]
-            Map[name:C, className:constant, value:C, type:Number, inline:t]
-                Ins
-                Outs
-                    Node[setvalue:81]
-        Horizontal
-            Map[name:^2, postfix:t, inline:t]
-                Ins
-                    Node[getvalue:77]
-                Outs
-                    Node[setvalue:87]
-            Map[name:*, infix:t, inline:t, variableinput:t]
-                Ins
-                    Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t]
-                        Ins
-                        Outs
-                            Node
-                    Node[getvalue:73]
-                    Node[getvalue:81]
-                Outs
-                    Node
-        Map[name:-, infix:t, inline:t, variableinput:t]
-            Ins
-                Node[to_connect:t]
-                Node
-            Outs
-                Node
-        Map[name:√, prefix:t, inline:t]
-            Ins
-                Node
-            Outs
-                Node

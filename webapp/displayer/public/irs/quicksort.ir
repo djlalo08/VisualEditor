@@ -1,5 +1,5 @@
 Root
-    Map[name:quicksort, import_from:./irs/quicksort, returnidx:0, hide_outs:t, selected:t]
+    Map[name:quicksort, import_from:./irs/quicksort, returnidx:0, hide_outs:t]
         Ins
             Map[name:ls, prefix:t, returnidx:0, hide_outs:t, variableinput:t]
                 Ins

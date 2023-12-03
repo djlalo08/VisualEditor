@@ -1,4 +1,4 @@
-import { callEval } from "../Actions";
+import { callEval } from '../Actions';
 import { openFile } from '../Actions/FileActions';
 import { setSelectedById } from '../Actions/SelectionActions';
 
@@ -17,8 +17,8 @@ export async function runTests(app){
     await assertList(app, '2_arg_lambda', 40, [10,12]);
     await assertValue(app, '!', 9, 40320);
     await assertValue(app, 'import_chain_test', 9, 15);
-    await assertValue(app, 'simple', 39, 3);
-    await assertValue(app, 'simple', 40, -3);
+    await assertValue(app, 'simple', 33, 3);
+    await assertValue(app, 'simple', 34, -3);
     await assertList(app, 'filter_test', 26, [4,2]);
     await assertValue(app, 'variable_test', 23, 7);
     await assertValue(app, 'variable_test', 32, 10);
