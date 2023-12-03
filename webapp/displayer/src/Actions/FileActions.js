@@ -4,9 +4,12 @@ import { getFunctions, getImports, printAst } from '../Utils/NodeUtils';
 
 
 export async function openFile(fileName) {
-    let response = await fetch(`./irs/${fileName}.ir`);
-    let text = await response.text();
-    app.setState(app.stateFromIR(text), () => loadImports(app.state.AST));
+    let openTheFile = async function(){
+        let response = await fetch(`./irs/${fileName}.ir`);
+        let text = await response.text();
+        app.setState(app.stateFromIR(text), () => loadImports(app.state.AST));
+    }
+    app.setState({activeFile: fileName}, openTheFile);
 }
 
 export async function openFileFromModal() {

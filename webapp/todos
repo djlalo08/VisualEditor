@@ -27,6 +27,7 @@ TODOs:
   2. Returns is index based, add return-name based returns (probably maps indices to names or something, since map alwasys still has to return a list -- unless we make maps return a hashmap instead...)
   3. Make tests to make sure that returning weird things (verticals, variables, etc.) does what we expect it to 
 -Can't type normally when using modal or other sidebar. Need to rethink how keyboard controls work
+-Make tests for navigation, and other user commands, to make sure it generates what we would expect
 -Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
 -Make maps for control flow:
     -For each

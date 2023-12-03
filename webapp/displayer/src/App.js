@@ -101,7 +101,8 @@ class App extends React.Component{
     let [JSX, selected] = ast_to_jsx(AST);
     return {
 
-      ...this.emptyState(),
+      ...this.emptyState(), 
+      activeFile:this.state.activeFile,
       AST, JSX, selected,
     } 
   }
@@ -181,7 +182,7 @@ class App extends React.Component{
       </Modal.Body>
     </Modal>
 
-    let fileButton = fileName => <Button className='button' onClick={() => this.setState({activeFile:fileName}, () => openFile(fileName))}>{fileName}</Button>;
+    let fileButton = fileName => <Button className='button' onClick={() => openFile(fileName)}>{fileName}</Button>;
 
     let demoButtons = (<>
       {fileButton('basic')}
