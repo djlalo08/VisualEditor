@@ -37,6 +37,7 @@ TODOs:
 -Adding a constant assumes it is a number. Make flexible for other constant types
 -Left/Right navigation in out nodes seems to not really work
 -Every time npm starts, app.css is changed or reverted. This probably has to do with LESS files. Maybe try actualy using app.less?
+-Add ability to create new maps (mapdef). Add sidebar for new maps (can determine map name, ins, outs, maybe?)
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side)
@@ -76,3 +77,4 @@ BUGS:
 - Can't navigate to output for nodes that don't have inputs
 - Inbounds' mock values don't work when done in the "new" way (i.e. when inbounds are maps)
 - When an IR has a value pre-selected, when You try to select an ID in tests, it actually deselects
+- Wires go all wacky whenever basically anything happens
