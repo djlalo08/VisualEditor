@@ -38,6 +38,7 @@ TODOs:
 -Left/Right navigation in out nodes seems to not really work
 -Every time npm starts, app.css is changed or reverted. This probably has to do with LESS files. Maybe try actualy using app.less?
 -Add ability to create new maps (mapdef). Add sidebar for new maps (can determine map name, ins, outs, maybe?)
+- .ir files can also use the .poo extension or even .💩
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side)
