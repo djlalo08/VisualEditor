@@ -79,3 +79,5 @@ flask-project/venv/lib/*
 .lsp/.cache/db.transit.json
 .lsp/.cache/db.transit.json
 .lsp/.cache/db.transit.json
+
+*/target
