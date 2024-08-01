@@ -48,7 +48,7 @@ Also remember something special happens when a lambda is called -- these unassig
 How are lambdas called? We have another special map call runlambda, which takes a lambda and takes the values which will be assigned to the inputs, and gives a list of ouputs as defined by the output section of the lambda.
 
 runlamda itself is defined using 2 more primitive functions: 
-First assign, which takes a lambda and some evaluables and gives a copy of that but lambda with some input (or all) to those evaluables.
+First assign, which takes a lambda and some evaluables and gives a copy of that lambda but with some input (or all) linked to those evaluables.
 And next eval which takes a lambda with no unlinked inputs and gives out ouputs based on the relevant output type.
 
 Now let's talk about data structures:
@@ -112,3 +112,8 @@ Crazy idea: what if my irs are actually just rust code defining rust data struct
 Only problem is that it then has to be translated to something webapp can read and interact with. Big sadge. Maybe webasm is the solution here to make _everything_ in rust...
 
 Let me quickly build a POC rust crate that would eval a lambda. Now 
+
+
+So I have a data structure now. I want to try to undestand how it would work...
+
+Rust types and matches and type-checking are awesome for building a proof of concept, but I'm really fighting the ownership system...
