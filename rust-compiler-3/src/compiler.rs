@@ -77,7 +77,9 @@ pub fn compile() {
         output_to_parent,
     };
 
-    world.evaluate(ExpressionId(3));
+    let mut results = HashMap::new();
+
+    world.evaluate(ExpressionId(3), &mut results);
 }
 
 struct World {
@@ -87,9 +89,12 @@ struct World {
 }
 
 impl World {
-    fn evaluate(mut self, id: ExpressionId) {
+    fn evaluate(&self, id: ExpressionId, results: &mut HashMap<OutputId, Value>) {
+        
+        let expr = self.exprs.get(&id).unwrap();
+
         let mut ins: Vec<&Value> = Vec::new();
-        for input_val in &self.exprs.get(&id).unwrap().ins.input_values {
+        for input_val in &expr.ins.input_values {
             let result = match input_val {
                 InputValue::ExpressionResult {
                     expression,
@@ -98,7 +103,7 @@ impl World {
                 InputValue::Value(val) => &val,
                 InputValue::OutputId(id) => {
                     let a = self.output_to_parent.get(&id).unwrap().to_owned();
-                    self.evaluate(a);
+                    self.evaluate(a, results);
                     let par = self.exprs.get(&a).unwrap();
                     let result = par.outs.output_values.get(&id).unwrap();
                     result
@@ -107,7 +112,7 @@ impl World {
             ins.push(result);
         }
 
-        match &self.exprs.get(&id).unwrap().body {
+        match &expr.body {
             ExpressionBody::Builtin(builtin) => match builtin {
                 BuiltIn::Add => todo!(),
             },
@@ -118,8 +123,6 @@ impl World {
             ExpressionBody::Passthrough => todo!(),
         };
 
-        let mut expr = self.exprs.get_mut(&id).unwrap();
-        expr.outs.output_values = HashMap::new();
     }
 }
 struct Expression {
