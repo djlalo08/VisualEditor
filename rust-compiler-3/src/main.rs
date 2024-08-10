@@ -1,4 +1,4 @@
-// mod compiler;
+mod compiler;
 mod tree_test;
 
 fn main() {
