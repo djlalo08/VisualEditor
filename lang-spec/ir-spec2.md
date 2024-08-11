@@ -232,3 +232,6 @@ First let's think about the fact that rust hates trees and evaluating parents an
 Since we pretty much have only expressions, this ends up fairly simple: expressions all have a unique id.We have a large global map of expressions, and they can freely reference each other. 
 We add in reference rules (only 1 parent, parent must exist, etc) to make sure we always construct a valid tree.
 
+Using trees in Rust is hard. In particular, it seems like navigating up to find parents is hard. One idea is we can invert the tree when we want to evaluate -- that is a make a copy with all ownership directions flipped... Problem is if node has 2 children, when flipped, who owns the parent?
+
+Second idea -- Make an n-ary expression tree. That way it's just a vec and we can just do math to locate parents/children...
