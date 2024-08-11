@@ -15,7 +15,6 @@ pub fn compile() {
             output_names: vec!["one".to_string()],
             output_ids: vec![OutputId(1)],
             output_associations: HashMap::from([(OutputId(1), OutputValue::Value)]),
-            output_values: HashMap::new(),
         },
     };
 
@@ -32,7 +31,6 @@ pub fn compile() {
             output_names: vec!["two".to_string()],
             output_ids: vec![OutputId(2)],
             output_associations: HashMap::from([(OutputId(2), OutputValue::Value)]),
-            output_values: HashMap::new(),
         },
     };
 
@@ -52,7 +50,6 @@ pub fn compile() {
             output_names: vec!["result".to_string()],
             output_ids: vec![OutputId(3)],
             output_associations: HashMap::from([(OutputId(3), OutputValue::BuiltIn)]),
-            output_values: HashMap::new(),
         },
     };
 
@@ -72,7 +69,6 @@ pub fn compile() {
             output_names: vec!["result".to_string()],
             output_ids: vec![OutputId(4)],
             output_associations: HashMap::from([(OutputId(4), OutputValue::BuiltIn)]),
-            output_values: HashMap::new(),
         },
     };
 
@@ -228,7 +224,6 @@ struct OutputBlock {
     output_ids: Vec<OutputId>,
     //Maps each output_id in output_ids to whatever other output location is it coming from
     output_associations: HashMap<OutputId, OutputValue>,
-    output_values: HashMap<OutputId, Value>,
 }
 
 #[derive(Debug)]

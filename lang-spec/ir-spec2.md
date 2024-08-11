@@ -11,8 +11,9 @@ struct Expression {
 }
 
 enum ExpressionBody {
+    Builtin(Builtin),
     FnCall {
-        fn_ref: String, //this could just be the function name or something like that
+        fn_ref: ExpressionId, //this could just be the function name or something like that
         //other metadata would be here
     },
     Dir {
@@ -20,12 +21,12 @@ enum ExpressionBody {
         body: ExpressionBody,
     },
     Expressions(Vec<Expression>),
-    Value,
+    Value(Value),
 }
 
 struct InputBlock {
     input_names: Vec<String>,
-    input_values: Vec<Expression>,
+    input_values: Vec<InputValue>,
     input_ids: Vec<InputId>
 }
 
