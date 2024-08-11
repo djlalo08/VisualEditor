@@ -26,6 +26,9 @@ fn main() {
         },
     };
 
+    let x1 = expr1.evaluate();
+    println!("{:?}", x1);
+
     let mut expr2 = Expression {
         reference: None,
         ins: InputBlock {
@@ -42,8 +45,9 @@ fn main() {
         },
     };
 
-    let x = expr2.evaluate();
-    println!("{:?}", x);
+    let x2 = expr2.evaluate();
+    println!("{:?}", x2);
+
 }
 
 #[derive(Debug)]
@@ -66,8 +70,10 @@ impl Expression<'_> {
                 InputValue::ExpressionResult {
                     expression,
                     output_idx,
-                } => todo!(),
-                InputValue::Value(val) => val,
+                } => {
+                    expression.evaluate()[*output_idx]
+                },
+                InputValue::Value(val) => *val,
                 InputValue::PackedExpression(_) => todo!(),
             })
             .collect();
@@ -83,11 +89,11 @@ impl Expression<'_> {
     }
 }
 
-fn builtin(builtin: &BuiltIn, ins: Vec<&Value>) -> Vec<Value> {
+fn builtin(builtin: &BuiltIn, ins: Vec<Value>) -> Vec<Value> {
     match builtin {
         BuiltIn::Add => vec![ins
             .iter()
-            .fold(Value::Int(0), |acc, x| acc + **x)
+            .fold(Value::Int(0), |acc, x| acc + *x)
         ],
     }
 }
@@ -138,7 +144,7 @@ enum InputValue<'a> {
     //It might make sense to consider having such thing as an ExpressionResult type
     ExpressionResult {
         expression: &'a mut Expression<'a>,
-        output_idx: i32,
+        output_idx: usize,
     },
     Value(Value),
     PackedExpression(&'a Expression<'a>),
