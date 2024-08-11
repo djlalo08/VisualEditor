@@ -56,6 +56,26 @@ pub fn compile() {
         },
     };
 
+    let myexpr2 = Expression {
+        reference: None,
+        id: ExpressionId(4),
+        ins: InputBlock {
+            input_names: vec!["".to_string(), "".to_string()],
+            input_values: vec![
+                InputValue::Value(Value::Int(4)),
+                InputValue::Value(Value::Int(4)),
+            ],
+            input_ids: vec![InputId(3), InputId(4)],
+        },
+        body: ExpressionBody::Builtin(BuiltIn::Add),
+        outs: OutputBlock {
+            output_names: vec!["result".to_string()],
+            output_ids: vec![OutputId(4)],
+            output_associations: HashMap::from([(OutputId(4), OutputValue::BuiltIn)]),
+            output_values: HashMap::new(),
+        },
+    };
+
     let mut exprs = HashMap::from([
         (ExpressionId(1), one),
         (ExpressionId(2), two),
@@ -92,6 +112,8 @@ impl World {
     fn evaluate(&self, id: ExpressionId, results: &mut HashMap<OutputId, Value>) {
         
         let expr = self.exprs.get(&id).unwrap();
+        let ExpressionId(id_num) = id;
+        println!("Evlauting {}", id_num);
 
         let mut ins: Vec<&Value> = Vec::new();
         for input_val in &expr.ins.input_values {
@@ -103,14 +125,19 @@ impl World {
                 InputValue::Value(val) => &val,
                 InputValue::OutputId(id) => {
                     let a = self.output_to_parent.get(&id).unwrap().to_owned();
+                    println!("a {:#?}", a);
                     self.evaluate(a, results);
                     let par = self.exprs.get(&a).unwrap();
-                    let result = par.outs.output_values.get(&id).unwrap();
+                    println!("par {:#?}", par);
+                    let result = results.get(&id).unwrap();
+                    println!("result {:#?}", result);
                     result
                 }
+                InputValue::PackedExpression(_) => todo!(),
             };
             ins.push(result);
         }
+        println!("{:#?}", ins);
 
         match &expr.body {
             ExpressionBody::Builtin(builtin) => match builtin {
@@ -125,6 +152,8 @@ impl World {
 
     }
 }
+
+#[derive(Debug)]
 struct Expression {
     //Basically if we reference an existing expression a bunch of values will be pre-filled. We need to know which is the relevant reference
     reference: Option<ExpressionId>,
@@ -135,9 +164,10 @@ struct Expression {
     outs: OutputBlock,
 }
 
-#[derive(PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 struct ExpressionId(i32);
 
+#[derive(Debug)]
 enum ExpressionBody {
     Builtin(BuiltIn),
     FnCall {
@@ -158,22 +188,25 @@ enum ExpressionBody {
     Passthrough,
 }
 
+#[derive(Debug)]
 enum BuiltIn {
     Add,
 }
 
+#[derive(Debug)]
 enum Dir {
     Hor,
     Ver,
 }
 
+#[derive(Debug)]
 struct InputBlock {
     input_names: Vec<String>,
     input_values: Vec<InputValue>,
     input_ids: Vec<InputId>,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 enum InputValue {
     //It might make sense to consider having such thing as an ExpressionResult type
     ExpressionResult {
@@ -182,11 +215,13 @@ enum InputValue {
     },
     Value(Value),
     OutputId(OutputId),
+    PackedExpression(ExpressionId),
 }
 
-#[derive(PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 struct InputId(i32);
 
+#[derive(Debug)]
 struct OutputBlock {
     output_names: Vec<String>,
     //these are global across the program
@@ -196,16 +231,17 @@ struct OutputBlock {
     output_values: HashMap<OutputId, Value>,
 }
 
+#[derive(Debug)]
 enum OutputValue {
     OutputId(OutputId),
     BuiltIn,
     Value,
 }
 
-#[derive(PartialEq, Eq, Hash, Clone, Copy)]
+#[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
 struct OutputId(i32);
 
-#[derive(Clone, Copy)]
+#[derive(Debug, Clone, Copy)]
 enum Value {
     Int(i32),
     // String(String),
