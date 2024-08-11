@@ -10,7 +10,7 @@ use std::ops::Add;
 //if we nest, we are just looking at children
 
 fn main() {
-    let mut expr1 = Expression {
+    let expr1 = Expression {
         reference: None,
         ins: InputBlock {
             input_names: vec!["".to_string(), "".to_string()],
@@ -29,13 +29,16 @@ fn main() {
     let x1 = expr1.evaluate();
     println!("{:?}", x1);
 
-    let mut expr2 = Expression {
+    let expr2 = Expression {
         reference: None,
         ins: InputBlock {
             input_names: vec!["".to_string(), "".to_string()],
             input_values: vec![
                 InputValue::Value(Value::Int(2)),
-                InputValue::ExpressionResult { expression: &mut expr1, output_idx: 0 }
+                InputValue::ExtExpressionResult {
+                    expression: &expr1,
+                    output_idx: 0,
+                },
             ],
         },
         body: ExpressionBody::Builtin(BuiltIn::Add),
@@ -48,6 +51,42 @@ fn main() {
     let x2 = expr2.evaluate();
     println!("{:?}", x2);
 
+    let expr3 = Expression {
+        reference: None,
+        ins: InputBlock {
+            input_names: vec!["".to_string(), "".to_string()],
+            input_values: vec![
+                InputValue::Value(Value::Int(2)),
+                InputValue::IntExpressionResult {
+                    expression: Expression {
+                        reference: None,
+                        ins: InputBlock {
+                            input_names: vec![],
+                            input_values: vec![
+                                InputValue::Value(Value::Int(5)),
+                                InputValue::Value(Value::Int(5)),
+                                InputValue::Value(Value::Int(5)),
+                            ],
+                        },
+                        body: ExpressionBody::Builtin(BuiltIn::Add),
+                        outs: OutputBlock {
+                            output_names: vec![],
+                            values: vec![],
+                        },
+                    },
+                    output_idx: 0,
+                },
+            ],
+        },
+        body: ExpressionBody::Builtin(BuiltIn::Add),
+        outs: OutputBlock {
+            output_names: vec!["result".to_string()],
+            values: vec![],
+        },
+    };
+
+    let x3 = expr3.evaluate();
+    println!("{:?}", x3);
 }
 
 #[derive(Debug)]
@@ -67,12 +106,14 @@ impl Expression<'_> {
             .input_values
             .iter()
             .map(|x| match x {
-                InputValue::ExpressionResult {
+                InputValue::ExtExpressionResult {
                     expression,
                     output_idx,
-                } => {
-                    expression.evaluate()[*output_idx]
-                },
+                } => expression.evaluate()[*output_idx],
+                InputValue::IntExpressionResult {
+                    expression,
+                    output_idx,
+                } => expression.evaluate()[*output_idx],
                 InputValue::Value(val) => *val,
                 InputValue::PackedExpression(_) => todo!(),
             })
@@ -91,10 +132,7 @@ impl Expression<'_> {
 
 fn builtin(builtin: &BuiltIn, ins: Vec<Value>) -> Vec<Value> {
     match builtin {
-        BuiltIn::Add => vec![ins
-            .iter()
-            .fold(Value::Int(0), |acc, x| acc + *x)
-        ],
+        BuiltIn::Add => vec![ins.iter().fold(Value::Int(0), |acc, x| acc + *x)],
     }
 }
 
@@ -142,8 +180,12 @@ struct InputBlock<'a> {
 #[derive(Debug)]
 enum InputValue<'a> {
     //It might make sense to consider having such thing as an ExpressionResult type
-    ExpressionResult {
-        expression: &'a mut Expression<'a>,
+    ExtExpressionResult {
+        expression: &'a Expression<'a>,
+        output_idx: usize,
+    },
+    IntExpressionResult {
+        expression: Expression<'a>,
         output_idx: usize,
     },
     Value(Value),
