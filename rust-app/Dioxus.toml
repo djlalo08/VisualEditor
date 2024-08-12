@@ -31,10 +31,14 @@ watch_path = ["src", "assets"]
 
 # CSS style file
 
-style = []
+style = [
+    "./assets/bootstrap-5.3.3-dist/css/bootstrap.css"
+]
 
 # Javascript code file
-script = []
+script = [
+    "./assets/bootstrap-5.3.3-dist/bootstrap.bundle.js"
+]
 
 [web.resource.dev]
 
