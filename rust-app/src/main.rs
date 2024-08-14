@@ -18,5 +18,16 @@ fn App() -> Element {
     rsx! {
         link { rel: "stylesheet", href: "main.css" }
         link { rel: "stylesheet", href: "bootstrap-5.3.3-dist/css/bootstrap.css" }
+        div { class: "App",
+            br {}
+            div {
+                button { class:"btn btn-primary button", "Button 1"}
+                button { class:"btn btn-primary button", "Button 1"}
+                button { class:"btn btn-primary button", "Button 1"}
+                button { class:"btn btn-primary button", "Button 1"}
+            }
+            br {}
+            h1 { "MyFile.ir" }
+        }
     }
 }
