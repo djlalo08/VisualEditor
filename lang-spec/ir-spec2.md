@@ -227,11 +227,20 @@ All we need to write then is:
 3. Unpack
 
 
-First let's think about the fact that rust hates trees and evaluating parents and such would suck.
+## Thoughts we didn't go with
+    First let's think about the fact that rust hates trees and evaluating parents and such would suck.
 
-Since we pretty much have only expressions, this ends up fairly simple: expressions all have a unique id.We have a large global map of expressions, and they can freely reference each other. 
-We add in reference rules (only 1 parent, parent must exist, etc) to make sure we always construct a valid tree.
+    Since we pretty much have only expressions, this ends up fairly simple: expressions all have a unique id.We have a large global map of expressions, and they can freely reference each other. 
+    We add in reference rules (only 1 parent, parent must exist, etc) to make sure we always construct a valid tree.
 
-Using trees in Rust is hard. In particular, it seems like navigating up to find parents is hard. One idea is we can invert the tree when we want to evaluate -- that is a make a copy with all ownership directions flipped... Problem is if node has 2 children, when flipped, who owns the parent?
+    Using trees in Rust is hard. In particular, it seems like navigating up to find parents is hard. One idea is we can invert the tree when we want to evaluate -- that is a make a copy with all ownership directions flipped... Problem is if node has 2 children, when flipped, who owns the parent?
 
-Second idea -- Make an n-ary expression tree. That way it's just a vec and we can just do math to locate parents/children...
+    Second idea -- Make an n-ary expression tree. That way it's just a vec and we can just do math to locate parents/children...
+
+## Separate compilation from IR AST
+
+We were successful in building an IR that is is Rust friendly. It uses references to expressions and it is all owned by a root expression. We like direct references for evaluation speed. However, this won't work. Using references results in lifetime pollution, which in turn doesn't play nice with dioxus
+
+Solution: 2 separate structures. 
+First structure everything is flat and based on id relations (or maybe a path, not sure which is better).
+Then compilation takes this tree and transforms it into a tree with direct ownership. Lifetime annotations are ok here. The other reason this is nice is that we can do _real_ compilation which can involve unpacking expressions and stuff like that. This will keep code reasonably fast.

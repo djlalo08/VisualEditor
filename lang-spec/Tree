@@ -1,0 +1,67 @@
+Expression
+    InputBlock
+        names: Vec<String>
+        input_values: Vec<InputValue>
+            ExtExpressionResult
+                Expression
+            IntExpressionResult
+                Expression
+            PackedExpression
+                Expression
+            Value
+
+    ExpressionBody
+        BuiltIn
+        FnCall
+            ExpressionId
+        Dir
+            ExpressionBody
+        Expressions
+            Expression
+        Value
+        Passthrough
+
+    OutputBlock
+        Value
+
+Value
+    Float
+    Int
+    Etc
+
+BuiltIn
+    Add
+    Sub
+    Etc
+
+
+
+Render Tree
+Expression
+    InputBlock
+        names: Vec<String>
+        input_values: Vec<InputValue>
+            ExtExpressionResult
+                expression: ExpressionId
+                output_idx: usize
+            IntExpressionResult
+                expression: ExpressionId
+                output_idx: usize
+            PackedExpression
+                expression: ExpressionId
+            Value
+
+    ExpressionBody
+        BuiltIn
+        FnCall
+            fn_ref: ExpressionId
+        Dir
+            dir: Dir
+            body: Box<ExpressionBody>
+        Expressions
+            Vec<Expression>
+        Value
+        Passthrough
+
+    OutputBlock
+        Value

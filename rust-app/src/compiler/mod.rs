@@ -98,7 +98,7 @@ pub fn builtin(builtin: &BuiltIn, ins: Vec<Value>) -> Vec<Value> {
 }
 
 #[derive(Debug, PartialEq, Eq, Hash, Clone, Copy)]
-pub struct ExpressionId(i32);
+pub struct ExpressionId(pub i32);
 
 #[derive(Debug)]
 pub enum ExpressionBody<'a> {
@@ -121,12 +121,12 @@ pub enum ExpressionBody<'a> {
     Passthrough,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum BuiltIn {
     Add,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Dir {
     Hor,
     Ver,
@@ -160,7 +160,7 @@ pub struct OutputBlock {
     values: Vec<Value>,
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Value {
     Int(i32),
     // String(String),
