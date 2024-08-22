@@ -20,6 +20,7 @@ fn main() {
 fn App() -> Element {
     // Build cool things ✌️
     let world = ir::render();
+    let mut z = use_signal(|| 0i32);
 
     // compiler::doit();
 
@@ -29,7 +30,7 @@ fn App() -> Element {
         div { class: "App",
             br {}
             div {
-                button { class:"btn btn-primary button", "Button 1"}
+                button { class:"btn btn-primary button", onclick: move |_| z += 1, "{z}"}
                 button { class:"btn btn-primary button", "Button 1"}
                 button { class:"btn btn-primary button", "Button 1"}
                 button { class:"btn btn-primary button", "Button 1"}
