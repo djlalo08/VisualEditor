@@ -211,11 +211,9 @@ class App extends React.Component{
         <Button onClick={() => runTests(this)}>Run Tests</Button>
         <Button onClick={openFileFromDir}>Open</Button>
         <Button onClick={save}>Save</Button>
-        
 
         <br/>
         <br/>
-
         
         {modal}
         <Sidebar node={this.state.selected} AST={AST}/>

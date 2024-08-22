@@ -3,6 +3,9 @@
 use dioxus::prelude::*;
 use dioxus_logger::tracing::{info, Level};
 
+mod compiler;
+mod Expression;
+
 fn main() {
     // Init logger
     dioxus_logger::init(Level::INFO).expect("failed to init logger");
@@ -14,6 +17,8 @@ fn main() {
 #[component]
 fn App() -> Element {
     // Build cool things ✌️
+
+    compiler::doit();
 
     rsx! {
         link { rel: "stylesheet", href: "main.css" }
