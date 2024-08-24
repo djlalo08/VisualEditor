@@ -45,12 +45,12 @@ pub enum ExpressionBodyR {
         //other metadata would be in this struct body too
         //this has to be a packed expression
         fn_ref: ExpressionId,
+        name: String,
     },
-    Dir {
+    Expressions {
         dir: Dir,
-        body: ExpressionId,
+        expressions: Vec<ExpressionId>,
     },
-    Expressions(Vec<ExpressionId>),
     Value(Value),
     //This just passes inputs out to outputs.
     //This exists as a way to account for input and output nodes in code
