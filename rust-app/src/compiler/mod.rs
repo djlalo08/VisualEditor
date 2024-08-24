@@ -2,7 +2,7 @@
 
 use std::{fmt::Display, ops::Add};
 
-use crate::Expression::Expression;
+use crate::ExpressionX::Expression;
 
 //KIDZ RULE! NO PARENTS ALLOWED
 //This is an attempt without any access to parents. It actually shouldn't be necessary?

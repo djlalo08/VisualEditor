@@ -5,7 +5,7 @@ use dioxus::prelude::*;
 use dioxus_logger::tracing::{info, Level};
 
 mod compiler;
-mod Expression;
+mod ExpressionX;
 mod ir;
 
 fn main() {
@@ -19,7 +19,7 @@ fn main() {
 #[component]
 fn App() -> Element {
     // Build cool things ✌️
-    let world = ir::render();
+    let world = ir::render::render();
     let mut z = use_signal(|| 0i32);
 
     // compiler::doit();
@@ -37,7 +37,7 @@ fn App() -> Element {
             }
             br {}
             h1 { "MyFile.ir" }
-            div { crate::ir::Expression {
+            div {  ir::components::Expression {
                 world, expression:ExpressionId(0),
             } }
         }
