@@ -1,6 +1,6 @@
 #![allow(dead_code, unused_variables)]
 
-use std::ops::Add;
+use std::{fmt::Display, ops::Add};
 
 use crate::Expression::Expression;
 
@@ -166,6 +166,15 @@ pub enum Value {
     // String(String),
     Float(f64),
     //...
+}
+
+impl Display for Value {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Value::Int(x) => write!(f, "{x}"),
+            Value::Float(x) => todo!(),
+        }
+    }
 }
 
 impl Add for Value {

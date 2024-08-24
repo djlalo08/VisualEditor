@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use crate::compiler::{BuiltIn, Dir, ExpressionId};
+use crate::compiler::{BuiltIn, Dir, ExpressionId, Value};
 
 mod Types;
 use dioxus::prelude::*;
@@ -54,7 +54,11 @@ pub fn render() -> World{
         reference: None,
         ins: InputBlockR {
             input_names: vec!["a".to_string(), "b".to_string()],
-            input_values: vec![],
+            input_values: vec![
+                InputValueR::Value(Value::Int(6)),
+                InputValueR::Value(Value::Int(6)),
+                InputValueR::Value(Value::Int(6)),
+            ],
         },
         body: ExpressionBodyR::FnCall { fn_ref: ExpressionId(-1), name: "Add".to_string() },
         outs: OutputBlockR { 
@@ -140,25 +144,23 @@ pub fn Expression(world: World, expression: ExpressionId) -> Element {
 
     //     }
     // )
-    rsx!{
-        Body { world, body}
-    }
-}
-
-
-#[component]
-pub fn Body(world: World, body: ExpressionBodyR) -> Element {
     match body {
         ExpressionBodyR::Builtin(func) => {
             let name = format!("{func:?}");
             rsx! { 
-                p { class:"Map", "{name}" }
+                Box { world, name }
             }
         },
         ExpressionBodyR::FnCall { fn_ref, name } => {
-            rsx! { 
-                p { class:"Map", "{name}" }
-            }
+            rsx! { table { class:"Map", 
+                tbody { tr { td { 
+                table { tbody { tr {
+                for i in x.ins.input_values.clone() {
+                    td {InputValue { val:i }}
+                }
+            }}}
+            p { "{name}" }
+            }}}}}
         },
         ExpressionBodyR::Expressions { dir, expressions } => {
             match dir {
@@ -189,5 +191,23 @@ pub fn Body(world: World, body: ExpressionBodyR) -> Element {
             }
         },
     }
+}
 
+#[component]
+pub fn Box(world: World, name: String) -> Element {
+    rsx! { 
+        table { class:"Map", "{name}" }
+    }
+}
+
+#[component]
+pub fn InputValue(val: InputValueR) -> Element {
+    match val {
+        InputValueR::ExtExpressionResult { expression, output_idx } => todo!(),
+        InputValueR::IntExpressionResult { expression, output_idx } => todo!(),
+        InputValueR::Value(x) => {
+            rsx! { div {class:"Map io", {format!("{x}")} }}
+        },
+        InputValueR::PackedExpression(_) => todo!(),
+    }
 }
