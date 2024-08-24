@@ -128,7 +128,7 @@ impl World {
 #[component]
 pub fn Expression(world: World, expression: ExpressionId) -> Element {
     let x = world.exprs.get(&expression).expect("Not found");
-    let b = x.body.clone();
+    let body = x.body.clone();
 
     // let z = Some(7i32);
     // rsx!(
@@ -140,36 +140,45 @@ pub fn Expression(world: World, expression: ExpressionId) -> Element {
 
     //     }
     // )
+    rsx!{
+        Body { world, body}
+    }
+}
 
-    match b {
+
+#[component]
+pub fn Body(world: World, body: ExpressionBodyR) -> Element {
+    match body {
         ExpressionBodyR::Builtin(func) => {
             let name = format!("{func:?}");
             rsx! { 
-                p { "This is my thing {name}" }
+                p { class:"Map", "{name}" }
             }
         },
         ExpressionBodyR::FnCall { fn_ref, name } => {
             rsx! { 
-                p { "{name}" }
+                p { class:"Map", "{name}" }
             }
         },
         ExpressionBodyR::Expressions { dir, expressions } => {
             match dir {
                 Dir::Hor => {
-                    rsx! { 
-                        p { "This is my thing" }
-                    }
+                    rsx! { table { tr {
+                        for ex in expressions {
+                            td { Expression { world:world.clone(), expression:ex} }
+                        }
+                    }}}
                 },
                 Dir::Ver => {
-                    rsx! { table {
+                    rsx! { table { tbody {
                         for ex in expressions {
-                            tbody { Expression { world:world.clone(), expression:ex} }
+                            tr{ td{ Expression { world:world.clone(), expression:ex} }}
                         }
-                    } }
+                    }}}
                 }
             }
         },
-        ExpressionBodyR::Value(_) => {
+        ExpressionBodyR::Value(x) => {
             rsx! { 
                 p { "This is my thing" }
             }
