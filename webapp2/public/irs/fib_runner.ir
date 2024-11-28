@@ -1,0 +1,7 @@
+Root[imports:fib x]
+    Vertical
+        Map[name:fib, import_from:./irs/]
+            Ins
+                Number[name:10, value:10]
+            Outs
+                Node[name:final_program_outs, setvalue:b1]

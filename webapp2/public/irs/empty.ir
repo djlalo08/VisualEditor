@@ -1,0 +1,16 @@
+Root
+    Vertical
+        Map[name:double, variableinput:t, prefix:t]
+            Ins
+                Node
+            Outs
+                Node[setvalue:7]
+        Map[name:X, className:constant, value:X, type:Number, inline:t]
+            Ins
+            Outs
+                Node[setvalue:NaN]
+        Map[name:expectsOdd, variableinput:t, underfix:t]
+            Ins
+                Node[getvalue:NaN]
+            Outs
+                Node

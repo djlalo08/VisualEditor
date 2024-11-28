@@ -1,0 +1,21 @@
+Root
+    MapDef[name:test]
+        Ins
+        Outs
+        Body
+            Map[name:inc, import_from:./irs/inc_test]
+                Ins
+                    Number[name:5, value:5]
+                Outs
+                    Node[setvalue:a]
+
+    MapDef[name:inc]
+        Ins
+        Outs
+        Body
+            Map[name:+, infix:t]
+                Ins
+                    InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                    Number[name:1, value:1]
+                Outs
+                    Node[name:b, className:unbound, return:0]

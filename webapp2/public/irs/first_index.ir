@@ -1,0 +1,25 @@
+Root
+    Vertical
+        Map[name:enumerate, inline:t]
+            Ins
+                Node
+            Outs
+                Node
+        Map[name:filter, underfix:t, inline:t]
+            Ins
+                Node
+                Node
+            Outs
+                Node
+        Map[name:map, inline:t]
+            Ins
+                Node
+                Node
+            Outs
+                Node
+        Map[name:take, inline:t]
+            Ins
+                Node
+                Node
+            Outs
+                Node

@@ -1,0 +1,88 @@
+Root
+    Vertical
+        Map[name:id] 
+            Ins
+                Map[name:1234, fileinput:t]
+                    Ins
+                    Outs
+                        Node
+                Map[name:bbb, fileinput:t]
+                    Ins
+                    Outs
+                        Node[setvalue:b]
+                Map[name:c, fileinput:t]
+                    Ins
+                    Outs
+                        Node[setvalue:c]
+            Outs
+        Vertical
+            Map[name:id] 
+                Ins
+                    Map[name:sqrt]
+                        Ins
+                            Node
+                                Map[name:-, infix:true]
+                                    Ins[infix:true]
+                                        Node
+                                            Map[name:sqr]
+                                                Ins
+                                                    Node[getvalue:b]
+                                                Outs
+                                        Node
+                                            Vertical
+                                                Map[name: WW]
+                                                    Ins
+                                                        Node[getvalue:b]
+                                                    Outs
+                                                        Node
+                                                Map[name:id]
+                                                    Ins
+                                                        Map[name:*, infix:true]
+                                                            Ins[infix:true]
+                                                                Node
+                                                                    Map[name:4, className:constant]
+                                                                Node
+                                                                Node[getvalue:c]
+                                                            Outs[infix:true]
+                                                                Node[setvalue:1]
+                                                        Vertical
+                                                            Map[name:id]
+                                                                Ins
+                                                                    Map[name:Z]
+                                                                        Ins
+                                                                        Outs
+                                                                            Node[setvalue:2]
+                                                            Map[name:id]
+                                                                Ins
+                                                                    Map[name:ZZ]
+                                                                        Ins
+                                                                        Outs
+                                                Map[name:W]
+                                                    Ins
+                                                        Node[getvalue:1]
+                                                        Node[getvalue:2]
+                                    Outs[infix:true]
+                        Outs
+                            Node[setvalue:discr]
+                Vertical
+                    Map[name:id]
+                        Ins
+                            Map[name:X, className:constant]
+                    Map[name:id]
+                        Ins
+                            Map[name:Y, className:constant]
+            Map[name:id]
+                Ins
+                    Map[name:123]
+                        Ins
+                            Node[getvalue:discr]
+                            Node
+                                Map[name:"x", className:constant]
+                        Outs
+                            Node[setvalue:end]
+        Map[name:id]
+            Ins
+                Map[name:, fileoutput:t]
+                    Ins
+                        Node[getvalue:end]
+                    Outs

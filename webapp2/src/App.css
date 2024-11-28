@@ -1,0 +1,183 @@
+html {
+  background-color: rgb(249, 248, 226);
+  font-family: courier;
+}
+
+.App {
+  float: left;
+  padding-left: 100px;
+  padding-top: 50px;
+  text-align: center;
+}
+.Vertical {
+  text-align: center;
+  float: right;
+  overflow: auto;
+}
+.Map {
+  background-color: gold;
+  /* display: inline-block; */
+  /* width: min-content; */
+  /* height: min-content; */
+  padding: 0px 3px;
+  margin: 3px 3px;
+  border-radius: 7px;
+  border-style: solid;
+  border-color: #b4b09b;
+  border-width: 2px;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-color: rgba(255, 255, 255, 0);
+  text-align: center !important;
+}
+.Node {
+  border-top: none;
+  background-color: #fcf5c9;
+  /* display: inline-block; */
+  /* width: auto; */
+  /* height: auto; */
+  /* width: min-content; */
+  /* height: min-content; */
+  min-width: 8px;
+  min-height: 8px;
+  padding: 1px;
+  margin: 0px 3px;
+  border-width: 1px;
+  border-radius: 4px;
+  border-style: none;
+  vertical-align: middle;
+}
+
+.Wired {
+  background-color: rgb(87, 162, 77);
+}
+
+.emptyNode {
+  border-style: inset;
+}
+
+.io {
+  background-color: gold;
+  /* display: inline-block; */
+  /* width: auto; */
+  /* height: auto; */
+  padding: 0px 3px;
+  margin: 3px 2px;
+  border-radius: 7px;
+  border-style: solid;
+  border-color: #b4b09b;
+  border-top: none;
+  border-bottom: none;
+  text-align: center !important;  background-color: #57c357;
+}
+.constant {
+  background-color: gold;
+  /* display: inline-block; */
+  /* width: auto; */
+  /* height: auto; */
+  padding: 1px 3px;
+  margin: 3px 3px;
+  border-radius: 7px;
+  border-style: solid;
+  border-color: #b4b09b;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-bottom-color: rgba(255, 255, 255, 0);
+  text-align: center !important;
+  background-color: #57bec3;
+}
+
+.Recursive{
+  background-color: #f6c3f4;  
+}
+
+.selected {
+  border-radius: 7px;
+  border-style: solid;
+  border-color: rgb(184, 88, 88) !important;
+}
+
+.secondSelect{
+  border-radius: 7px;
+  border-style: solid;
+  border-color: rgb(48, 105, 225);
+}
+
+.Horizontal{
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.186);
+}
+
+table {
+  border-collapse: separate !important;
+  border: none;
+  /* border-color: white; */
+}
+
+.row_ {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.186) !important;
+}
+
+.col_ {
+  /* border-right: 1px dashed rgba(0, 0, 0, 0.186); */
+}
+
+td {
+  /* vertical-align: top; */
+  padding: 0px;
+}
+
+tr {
+  text-align: center;
+}
+td, tr, table {
+  /* padding: 0px; */
+  /* margin: 0px; */
+  border-spacing: 0px;
+}
+
+.to_connect {
+  border: 2px solid rgb(106, 187, 106);
+}
+
+.id {
+  background-color: lemonchiffon;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(194, 218, 239);
+}
+
+.unbound {
+  background-color: rgb(208, 198, 198);
+  border-style: groove;
+}
+
+.supplier {
+  background-color: gray;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(194, 218, 239);
+}
+
+.inline {
+  margin: 1px 2px 1px 2px;
+  padding: 0px 2px 0px 2px;
+  border-radius: 7px;
+  border-style: solid;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.186) !important;
+  border-top: 1px dashed rgba(0, 0, 0, 0.186) !important;
+  text-align: center !important;
+}
+
+.simulated {
+  background: linear-gradient(#57bec3, rgb(208,198,198));
+}
+
+.setvariable {
+  background: linear-gradient(rgb(208, 198, 198), rgb(37, 194, 37));
+}
+
+.getvariable {
+  background: rgb(37, 194, 37);
+}
+
+.button {
+  margin: 3px;
+}

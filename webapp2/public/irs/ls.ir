@@ -1,0 +1,20 @@
+Root
+    Vertical
+        Map[name:ls, prefix:t]
+            Ins
+                Number[name:A, value:2]
+                Number[name:B, value:3]
+                Number[name:C, value:4]            
+                Number[name:D, value:5]
+                Number[name:E, value:6]
+            Outs
+                Node[setvalue:o1]
+        Map[name:+]
+            Ins
+                Node[getvalue:o1]
+            Outs
+                Node[setvalue:o2]
+
+//TODO This code is really work thinking about. How do we replace ins with a code-generated list
+//Some things to consider: how do we do default args?
+//How do we visually represent it?

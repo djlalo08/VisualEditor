@@ -1,0 +1,29 @@
+Root
+    Vertical
+        Map[name:id]
+            Ins
+                Map[name:ls, prefix:t, dont_cache:t]
+                    Ins
+                        Number[name:2, value:2]
+                        Number[name:3, value:3]
+
+                    Outs
+                        Node[setvalue:b1]
+                Map[name:ls, prefix:t, dont_cache:t]
+                    Ins
+                        Number[name:8, value:8]
+                        Number[name:9, value:9]
+                    Outs
+                        Node[setvalue:b2]
+            Outs
+        Map[name:2map]
+            Ins
+                Node[getvalue:b1]
+                Node[getvalue:b2]
+                Map[name:+, returnidx:0, infix:t]
+                    Ins
+                        UnBound[name:x, className:unbound, getvalue:u1]
+                        UnBound[name:y, className:unbound, getvalue:u2]
+                    Outs
+            Outs
+                Node[setvalue:b3]

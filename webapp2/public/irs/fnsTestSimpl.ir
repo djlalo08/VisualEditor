@@ -1,0 +1,40 @@
+Root
+    Vertical[invisible:t]
+        MapDef[name:caller]
+            Ins
+            Outs
+            Body
+                Map[name:addify, import_from:./irs/fnsTestSimpl, result:7]
+                    Ins
+                        Map[name:3, value:3, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:3]
+                            Ins
+                            Outs
+                                Node
+                        Map[name:4, value:4, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:4, selected:t]
+                            Ins
+                            Outs
+                                Node
+                    Outs
+                        Node[setvalue:o1]
+        MapDef[name:addify]
+            Ins
+                Map[name:a, setvalue:a, bind_idx:0, className:unbound, inline:t, result:]
+                    Ins
+                    Outs
+                        Node[setvalue:24]
+                Map[name:b, setvalue:b, bind_idx:1, className:unbound, inline:t, result:]
+                    Ins
+                    Outs
+                        Node[setvalue:28]
+            Outs
+                Map[name:A, value:2, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                    Ins
+                    Outs
+                        Node
+            Body
+                Map[name:+, infix:t, result:NaN]
+                    Ins
+                        Node[getvalue:24]
+                        Node[getvalue:28]
+                    Outs
+                        Node[return:0]

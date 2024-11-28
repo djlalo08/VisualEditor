@@ -1,0 +1,13 @@
+Root
+    Vertical
+        Map[name:spl]
+            Ins
+                Map[name:ls, hide_outs:t, returnidx:0]
+                    Ins
+                        Number[name:A, value:2]
+                        Number[name:B, value:5]
+                    Outs
+                        Node
+            Outs
+                Node[setvalue:a]
+                Node[setvalue:b]

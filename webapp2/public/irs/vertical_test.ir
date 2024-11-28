@@ -1,0 +1,29 @@
+Root
+    Vertical
+        Map[name:+, variableinput:t]
+            Ins
+                Vertical
+                    Map[5:undefined, name:ls, inline:t]
+                        Ins
+                            Number[name:5, value:5]
+                            Number[name:5, value:5]
+                            Number[name:5, value:5]
+                            Number[name:5, value:5]
+                            Number[name:5, value:5]
+                        Outs[]
+                            Node[setvalue:13]
+                    Map[5:undefined, name:spl, inline:t]
+                        Ins
+                            Node[getvalue:13]
+                        Outs
+                            Node[setvalue:18]
+                            Node
+                    Map[name:+, hide_outs:t, returnidx:0, inline:t, infix:t, selected:t]
+                        Ins
+                            Node[getvalue:18]
+                            Number[name:1, value:1]
+                        Outs
+                            Node
+                Number[name:3, value:3]
+            Outs
+                Node

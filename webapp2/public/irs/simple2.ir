@@ -1,0 +1,9 @@
+Root
+    Vertical
+        Map[name:id, returnidx:1]
+            Ins
+                Number[name:a, value:3]
+                Number[name:b, value:4]
+            Outs
+                Node[setvalue:a]
+                Node[setvalue:b]

@@ -1,0 +1,38 @@
+Root
+    Vertical[invisible:t]
+        MapDef[name:usingWires, className:selected, selected:t]
+            Ins
+            Outs
+            Body
+                Vertical
+                    Horizontal
+                        Map[name:5, className:constant, value:5, type:Number, inline:t, result:5]
+                            Ins
+                            Outs[result:5]
+                                Node[setvalue:12, result:5]
+                        Map[name:12, className:constant, value:12, type:Number, inline:t, result:12]
+                            Ins
+                            Outs[result:12]
+                                Node[setvalue:16, result:12]
+                    Map[name:+, infix:t, inline:t, variableinput:t, result:17]
+                        Ins[result:undefined]
+                            Node[getvalue:12, result:5]
+                            Node[getvalue:16, result:12]
+                        Outs
+                            Node
+        MapDef[name:inlining]
+            Ins
+            Outs
+            Body
+                Map[name:+, infix:t, inline:t, variableinput:t, result:17]
+                    Ins
+                        Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t, result:5]
+                            Ins
+                            Outs
+                                Node
+                        Map[name:10, className:constant, value:10, type:Number, hide_outs:t, returnidx:0, inline:t, result:12]
+                            Ins
+                            Outs
+                                Node
+                    Outs
+                        Node

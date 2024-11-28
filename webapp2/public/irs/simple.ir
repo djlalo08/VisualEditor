@@ -1,0 +1,70 @@
+Root
+    Vertical
+        Horizontal
+            Map[name:A, className:constant, value:2, type:Number, inline:t]
+                Ins
+                Outs
+                    Node[setvalue:27]
+            Map[name:B, className:constant, value:5, type:Number, inline:t]
+                Ins
+                Outs
+                    Node[setvalue:31]
+            Map[name:C, className:constant, value:2, type:Number, inline:t]
+                Ins
+                Outs
+                    Node[setvalue:40]
+        Map[name:√, prefix:t, inline:t]
+            Ins
+                Map[name:-, infix:t, variableinput:t, inline:t, hide_outs:t, returnidx:0]
+                    Ins
+                        Map[name:^2, postfix:t, inline:t]
+                            Ins
+                                Node[getvalue:31]
+                        Map[name:*, infix:t, variableinput:t, inline:t]
+                            Ins
+                                Map[name:4, value:4, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0]
+                                    Ins
+                                    Outs
+                                        Node
+                                Node[getvalue:27]
+                                Node[getvalue:40]
+                    Outs[returnidx: 0]
+                        Node
+            Outs
+                Node[setvalue:o1]
+                Node[setvalue:o2]
+        Horizontal
+            Map[name:^2, postfix:t, inline:t]
+                Ins
+                    Map[name:B, className:constant, value:B, type:Number, hide_outs:t, returnidx:0, inline:t]
+                        Ins
+                        Outs
+                            Node
+                Outs
+                    Node[setvalue:44]
+            Map[name:*, infix:t, inline:t, variableinput:t]
+                Ins
+                    Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t]
+                        Ins
+                        Outs
+                            Node
+                    Map[name:A, className:constant, value:A, type:Number, hide_outs:t, returnidx:0, inline:t]
+                        Ins
+                        Outs
+                            Node
+                    Map[name:C, className:constant, value:C, type:Number, hide_outs:t, returnidx:0, inline:t]
+                        Ins
+                        Outs
+                            Node
+                Outs
+                    Node[setvalue:60]
+        Map[name:√, prefix:t, inline:t]
+            Ins
+                Map[name:-, infix:t, variableinput:t, inline:t]
+                    Ins
+                        Node[getvalue:44]
+                        Node[getvalue:60]
+                Outs[returnidx: 0]
+            Outs
+                Node[setvalue:o1]
+                Node[setvalue:o2]

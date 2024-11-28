@@ -1,0 +1,54 @@
+Root
+    Map[name:if, returnidx:0, hide_outs:t]
+        Ins
+            //cond
+            Map[name:isEmpty, returnidx:0, hide_outs:t]
+                Ins
+                    InBound[name:a, getvalue:u1, className:unbound, bind_idx:0]
+                Outs
+                    Node
+            //then
+            Number[value:0, name:0]
+            
+            //else
+            Vertical
+                Map[name:spl, prefix:t]
+                    Ins
+                        Map[name:ls, hide_outs:t, returnidx:0]
+                            Ins
+                                Number[name:4, value:4]
+//                                Number[name:2, value:2]
+                            Outs
+                                Node
+                    Outs
+                        Variable[name:h, setvalue:h, className:setvariable]
+                        Variable[name:t, setvalue:t, className:setvariable]
+                Map[name:++, infix:t, returnidx:0, hide_outs:t]
+                    Ins
+                        Map[name:filter, returnidx:0, hide_outs:t, inline:t, className:inline]
+                            Ins
+                                Variable[name:t, getvalue:t, className:getvariable]
+                                Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0, inline:t]
+                                    Ins
+                                        UnBound[className:unbound, name:x, getvalue:x]
+                                        Variable[name:h, getvalue:h, className:getvariable]
+                                    Outs
+                                        Node
+                            Outs
+                                Node
+                        Variable[name:h, getvalue:h, className:getvariable]
+                        Map[name:filter, returnidx:0, hide_outs:t, inline:t]
+                            Ins
+                                Variable[name:t, getvalue:t, className:getvariable]
+                                Map[name:>, infix:t, variableinput:t, hide_outs:t, returnidx:0, inline:t]
+                                    Ins
+                                        UnBound[className:unbound, name:x, getvalue:x]
+                                        Variable[name:h, getvalue:h, className:getvariable]
+                                    Outs
+                                        Node
+                            Outs
+                                Node
+                    Outs
+                        Node
+        Outs
+            Node[name:b, return:0, className:unbound]

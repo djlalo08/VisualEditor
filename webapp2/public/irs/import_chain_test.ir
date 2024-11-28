@@ -1,0 +1,7 @@
+Root[x]
+    Vertical
+        Map[name:x, import_from:./irs/x]
+            Ins
+                Number[name:4, value:4]
+            Outs
+                Node

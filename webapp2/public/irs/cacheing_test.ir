@@ -1,0 +1,14 @@
+Root
+    Vertical
+        Map[name:+, infix:t]
+            Ins
+                Number[name:3, value:3]
+                Number[name:3, value:3]
+            Outs
+                Node[setvalue:o1]
+        Map[name:+, infix:t]
+            Ins
+                Node[getvalue:o1]
+                Node[getvalue:o1]
+            Outs
+                Node[setvalue:o2]

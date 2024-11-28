@@ -1,0 +1,122 @@
+Root
+    Vertical[invisible:t]
+        MapDef[name:discr1, selected:t]
+            Ins
+            Outs
+            Body
+                Vertical
+                    Horizontal
+                        Map[name:A, className:constant, value:2, type:Number, inline:t, result:2, isnamed:true]
+                            Ins
+                            Outs[result:2]
+                                Node[setvalue:10, result:2]
+                        Map[name:B, className:constant, value:5, type:Number, inline:t, result:5, isnamed:true]
+                            Ins
+                            Outs[result:5]
+                                Node[setvalue:14, result:5]
+                        Map[name:C, className:constant, value:2, type:Number, inline:t, result:2, isnamed:true]
+                            Ins
+                            Outs[result:2]
+                                Node[setvalue:18, result:2]
+                    Map[name:√, prefix:t, inline:t, result:3, -3:undefined]
+                        Ins
+                            Map[name:-, infix:t, variableinput:t, hide_outs:t, returnidx:0, result:9]
+                                Ins
+                                    Map[name:^2, postfix:t, hide_outs:t, returnidx:0, result:25]
+                                        Ins
+                                            Node[getvalue:14, result:5]
+                                        Outs
+                                            Node
+                                    Map[name:*, infix:t, variableinput:t, hide_outs:t, returnidx:0, result:16]
+                                        Ins
+                                            Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, result:4]
+                                                Ins
+                                                Outs
+                                                    Node
+                                            Node[getvalue:10, result:2]
+                                            Node[getvalue:18, result:2]
+                                        Outs
+                                            Node
+                                Outs
+                                    Node
+                        Outs[result:3,-3, -3:undefined]
+                            Node[result:3]
+                            Node[result:-3]
+        MapDef[name:discr2]
+            Ins
+            Outs
+            Body
+                Vertical
+                    Horizontal
+                        Map[name:^2, postfix:t, inline:t, result:25]
+                            Ins
+                                Map[name:B, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t, result:5, isnamed:true]
+                                    Ins
+                                    Outs
+                                        Node
+                            Outs[result:25]
+                                Node[setvalue:53, result:25]
+                        Map[name:*, infix:t, inline:t, variableinput:t, result:16]
+                            Ins
+                                Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, result:4]
+                                    Ins
+                                    Outs
+                                        Node
+                                Map[name:A, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2, isnamed:true]
+                                    Ins
+                                    Outs
+                                        Node
+                                Map[name:C, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2, isnamed:true]
+                                    Ins
+                                    Outs
+                                        Node
+                            Outs[result:16]
+                                Node[setvalue:NaN, result:16]
+                    Map[name:√, prefix:t, inline:t, result:3, -3:undefined, NaN:undefined]
+                        Ins
+                            Map[name:-, infix:t, variableinput:t, hide_outs:t, returnidx:0, result:9]
+                                Ins[result:undefined]
+                                    Node[getvalue:53, result:25]
+                                    Node[getvalue:NaN, result:16]
+                                Outs
+                                    Node
+                        Outs
+                            Node
+                            Node
+        MapDef[name:discr3]
+            Ins
+            Outs
+            Body
+                Map[name:√, prefix:t, inline:t, result:3, -3:undefined, NaN:undefined]
+                    Ins
+                        Map[name:-, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0, result:9]
+                            Ins
+                                Map[name:^2, postfix:t, inline:t, hide_outs:t, returnidx:0, result:25]
+                                    Ins
+                                        Map[name:B, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t, result:5, isnamed:true]
+                                            Ins
+                                            Outs
+                                                Node
+                                    Outs
+                                        Node
+                                Map[name:*, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0, result:16]
+                                    Ins
+                                        Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, result:4]
+                                            Ins
+                                            Outs
+                                                Node
+                                        Map[name:A, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2, isnamed:true]
+                                            Ins
+                                            Outs
+                                                Node
+                                        Map[name:C, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2, isnamed:true]
+                                            Ins
+                                            Outs
+                                                Node
+                                    Outs
+                                        Node
+                            Outs
+                                Node
+                    Outs
+                        Node
+                        Node

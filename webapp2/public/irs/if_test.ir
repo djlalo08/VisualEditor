@@ -1,0 +1,20 @@
+Root
+    Horizontal
+        Map[name:if, returnidx:0]
+            Ins
+                Map[name:>, infix:t, hide_outs:t, returnidx:0, inline:t]
+                    Ins
+                        Number[name:4, value:4]
+                        Number[name:5, value:5]
+                    Outs
+                        Node
+                String[name:HelloWorld, value:HelloWorld]
+                String[name:ByeWorld, value:ByeWorld]
+            Outs
+                Node
+        Map[name:if, returnidx:0]
+            Ins
+                Boolean[name:T, value:t]
+                String[name:HelloWorld, value:HelloWorld]
+                String[name:ByeWorld, value:ByeWorld]
+            Outs

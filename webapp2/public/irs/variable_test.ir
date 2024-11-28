@@ -1,0 +1,21 @@
+Root
+    Vertical
+        Map[name:+, infix:t]
+            Ins 
+                Number[name:2, value:2]
+                Number[name:3, value:3]
+            Outs
+                Variable[name:x, setvalue:x, className:setvariable]
+        Horizontal
+            Map[name:+, infix:t]
+                Ins
+                    Variable[name:x, getvalue:x, className:getvariable]
+                    Number[name:2, value:2]
+                Outs
+                    Node
+            Map[name:*, infix:t]
+                Ins
+                    Variable[name:x, getvalue:x, className:getvariable]
+                    Number[name:2, value:2]
+                Outs
+                    Node

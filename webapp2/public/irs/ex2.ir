@@ -1,0 +1,19 @@
+Root
+    Vertical
+        Map[name:Id, fileinput:t]
+            Ins
+                Map[name:4, className:constant]
+                Map[name:5, className:constant]
+            Outs
+                Node[setvalue:A]
+                Node[setvalue:B]
+        Map[name:sum]
+            Ins
+                Node[getvalue:A]
+                Node[getvalue:B]
+            Outs
+                Node[setvalue:c]
+        Map[name:print]
+            Ins
+                Node[getvalue:c]
+            Outs
