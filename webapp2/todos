@@ -1,0 +1,81 @@
+WORKING ON:
+
+- All "boxes" are maps. Constants, variables, in/unbounds are just maps that take no args (suppliers), and have special props (value, type, assignName, etc). Thus there is a map [1] which is a standard library map, which simply takes no args, and always returns 1 (actually [1], but whatever).
+  1. Make maps work as constants. Remove all constants from code and replace with map constants [Done]
+  2. Make maps work as variables. Remove all variables from code and replace with map variables. This means anything can be an assigned variable!!
+  3. Make maps work as inbounds. Remove all inbounds from code and replace with map inbounds
+  4. Make maps works as unbounds. Remove all unbounds from code and replace with map unbounds
+
+-Consider something like a propsClass property, that assigns a group of props to map (e.g. propsClass:constant, would assign className:constant, inline:t, hide_outs:t, etc). Maybe this could also be the line name (so reinstate Constant[...props], but it's just a map with some pre-set attrs). See -- IrToAst for an example of how this could work
+
+-If/else is actually just boolean case structure.
+  -Think about how pattern matching could work. Take quicksort as an example
+  -This will set the basis for object decomposition, case structures, etc (think Haskell polymorphism)
+
+-UI. Try to build a program from scratch in editor and get a feel for what works, what doesn't, and what do we need to add/fix/change?
+-Maybe try to build out both quicksort and quadratic formula as exercises
+
+UP NEXT:
+
+-Put homoiconicity to work -- make a (I,O) be able to be treated as a function
+
+TODOs: 
+- Constant maps should be linked to ConstantSidebar
+-We have some wrong assumptions/issues with lambdas. Look at map or 2map: the [0] parts are hacks; they assume that fn returns a list and then take te 0th element of that list. In reality, fn need not return a list (suppose it was an out node). Instead of passing function, we should be passing something more like a map.
+-Currently, anything that can evaluate can return.
+  1. Make sure returns have a special appearance that makes it obvious that they return
+  2. Returns is index based, add return-name based returns (probably maps indices to names or something, since map alwasys still has to return a list -- unless we make maps return a hashmap instead...)
+  3. Make tests to make sure that returning weird things (verticals, variables, etc.) does what we expect it to 
+-Can't type normally when using modal or other sidebar. Need to rethink how keyboard controls work. Note: it seems like normal typing works when not connected to internet (i.e. when bootstrap is deactivated). This might be a bootstrap issue.
+-Make tests for navigation, and other user commands, to make sure it generates what we would expect
+-Add more imported knowledge when maps are added (variable arg count, nfix, recursive, inline, etc)
+-Make maps for control flow:
+    -For each
+-Constants should have output nodes (and thus outBindings) [by default we can do hide_outs, returnidx:0]
+-Update readme
+-Add left_out, right_out inserts
+-Adding a constant assumes it is a number. Make flexible for other constant types
+-Left/Right navigation in out nodes seems to not really work
+-Every time npm starts, app.css is changed or reverted. This probably has to do with LESS files. Maybe try actualy using app.less?
+-Add ability to create new maps (mapdef). Add sidebar for new maps (can determine map name, ins, outs, maybe?)
+- .ir files can also use the .poo extension or even .💩
+
+VISUAL/AESTHETIC:
+-Make if look better (condition on top, then/else side-by-side)
+-If doesn't highlight when selected 
+
+
+IMPROVENTS/OPTIMIZATIONS IVE IGNORED:
+-Hashing doesn't work on recursive fn calls
+-Data unpacking (output node can return components of a result obj, rather than the obj itself, if user wants)
+-Shouldn't be rerendering _everything_ every time
+
+Notes:
+-InBinding and OutBinding, can be deleted and don't need to exist. We can just use nodes and check for the setvalue/getvalue attrs
+-Elements' unique IDs are line number in IR. Since there can only be 1 element per line, we know id is unique
+
+THINK ABOUT:
+-Maybe we do need nodes after all: 1) consider homoiconicity. 2) Say You want to select, or delete, or replace entire contents of a Node, You need to be able to select the Node, which means Node needs to exist
+-Code has race conditions? See runTest having to call sleep() for more info
+-IR Representation need not be in text to be parsed. This might make representation easier (of course, repr should still be one-to-one with a text version). Now that I'm back, I like textual IR again. Could be possible to compress it, but not necessary atm. Parsing is relatively trivial and already take care of -- not a major issue
+
+Q and A:
+-What is the difference between In/OutBinding and In/OutBound? 
+  • In/OutBinding no longer exist. They used to represent nodes connected by wires. They are replaced with Node[set/getvalue:x]
+  • OutBound has been replaced with the [return:idx] attr
+  • Currently thinking about the InBound situtation. InBound represents unspecified input parameters
+  • Not super clear on unbound, but they seem to be similar to InBounds. Maybe UnBounds are specifically used in lambdas? Have to think about this a bit more too...
+
+
+-What does unwrap attr in constants mean?
+
+APPARENT INCONSISTENCIES:
+-It seems that in some places InBound is characterized by getvalue, and in other cases by bind_idx. In yet other cases by name?
+
+BUGS:
+- When a map has more than 1 output, and it is called twice, the second time it's called it will add the output value as an attribute
+- When a node is created using the side panel, it doesn't have an id
+- Can't navigate to output for nodes that don't have inputs
+- Inbounds' mock values don't work when done in the "new" way (i.e. when inbounds are maps)
+- When an IR has a value pre-selected, when You try to select an ID in tests, it actually deselects
+- Wires go all wacky whenever basically anything happens
