@@ -15,6 +15,7 @@ const ENTER = 13;
 const SHIFT = 16;
 const COMMAND_L = 91;
 const COMMAND_R = 93
+const COMMAND = 224;
 const CTRL = 17;
 
 const PLUS = 187;
@@ -56,7 +57,7 @@ export function keypress(e){
     if (!selected) return;
 
     let shift = held_down.has(SHIFT);
-    let command = held_down.has(COMMAND_L) || held_down.has(COMMAND_R);
+    let command = held_down.has(COMMAND_L) || held_down.has(COMMAND_R) || held_down.has(COMMAND);
     let ctrl = held_down.has(CTRL);
     let i_key = held_down.has(I);
     let o_key = held_down.has(O);
