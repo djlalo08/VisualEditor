@@ -24,7 +24,8 @@ let id = 0;
 // const FILE = '2_arg_lambda';
 // const FILE = '!';
 // const FILE = 'import_chain_test';
-const FILE = 'simple';
+// const FILE = 'simple';
+const FILE = 'apples';
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';
 // const FILE = 'vertical_test';
@@ -185,6 +186,7 @@ class App extends React.Component{
     let fileButton = fileName => <Button className='button' onClick={() => openFile(fileName)}>{fileName}</Button>;
 
     let demoButtons = (<>
+      {fileButton('apples')}
       {fileButton('basic')}
       {fileButton('discr')}
       {fileButton('fns')}
