@@ -12,13 +12,11 @@ import Vertical from '../Components/Vertical';
 import Wire from '../Components/Wire';
 import { getNameAndAttrs } from './NodeUtils';
 
-
 function treeToJsx(node){
     let id = nextId() + '';
     let [nodeName, props]= getNameAndAttrs(node);
 
     props.id = id;
-    props.key = id;
     props.ast_node = node;
     
     if (props['selected']) selected = node;
@@ -28,13 +26,13 @@ function treeToJsx(node){
     switch (nodeName) {
         case 'Body':
         case 'Root':
-            return <Root {...props}>{children}</Root>;
+            return <Root key={id} {...props}>{children}</Root>;
         case 'Vertical':
-            return <Vertical {...props}>{children}</Vertical>;
+            return <Vertical key={id} {...props}>{children}</Vertical>;
         case 'Ins':
-            return <Ins {...props}>{children}</Ins>;
+            return <Ins key={id} {...props}>{children}</Ins>;
         case 'Outs':
-            return <Outs {...props}>{children}</Outs>;
+            return <Outs key={id} {...props}>{children}</Outs>;
         case 'Node':
             if (props.setvalue){
                 if (wires_map[props.setvalue])
@@ -48,19 +46,19 @@ function treeToJsx(node){
 
                 wires_map[props.getvalue][1].push(props.id);
             }
-            return <Node {...props}>{children}</Node>;
+            return <Node key={id} {...props}>{children}</Node>;
         case 'InBound':
             if (node.supplier)
                 props.className += ' simulated ';
         case 'Variable':
         case 'UnBound':
-            return <Block {...props}></Block>
+            return <Block key={id} {...props}></Block>
         case 'MapDef':
-            return <MapDef {...props}>{children}</MapDef>
+            return <MapDef key={id} {...props}>{children}</MapDef>
         case 'Map':
-            return <Mapx {...props}>{children}</Mapx>;
+            return <Mapx key={id} {...props}>{children}</Mapx>;
         case 'Horizontal':
-            return <Horizontal {...props}>{children}</Horizontal>;
+            return <Horizontal key={id} {...props}>{children}</Horizontal>;
         default:
             return nodeName;
     }
