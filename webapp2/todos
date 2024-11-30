@@ -40,6 +40,8 @@ TODOs:
 -Add ability to create new maps (mapdef). Add sidebar for new maps (can determine map name, ins, outs, maybe?)
 - .ir files can also use the .poo extension or even .💩
 
+- rebuild button
+
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side)
 -If doesn't highlight when selected 
@@ -79,3 +81,4 @@ BUGS:
 - Inbounds' mock values don't work when done in the "new" way (i.e. when inbounds are maps)
 - When an IR has a value pre-selected, when You try to select an ID in tests, it actually deselects
 - Wires go all wacky whenever basically anything happens
+- When a fn is updated and then called, the called version is still using old code (probably fns are only updated when IR is read)
