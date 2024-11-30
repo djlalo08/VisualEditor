@@ -45,8 +45,14 @@ function loadImports(node) {
 }
 export async function save() {
     console.log(`${app.state.activeFile} saved!`);
-    let fileHandle = await app.state.irDirHandle.getFileHandle(`${app.state.activeFile}.ir`);
+    let handle = app.state.irDirHandle || await window.showDirectoryPicker();
+    let fileHandle = await handle.getFileHandle(`${app.state.activeFile}.ir`);
     let writable = await fileHandle.createWritable();
     await writable.write(printAst(app.state.AST));
     await writable.close();
+}
+
+export async function rebuild(){
+    let text = printAst(app.state.AST);
+    app.setState(app.stateFromIR(text), () => loadImports(app.state.AST));
 }

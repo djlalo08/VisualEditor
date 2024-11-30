@@ -207,12 +207,16 @@ class App extends React.Component{
         <p>Selected Id: {selected ? selected.id : null}</p>
         <Button className='button' onClick={() => navigator.clipboard.writeText(printAst(AST))}>Copy AST</Button>
         <Button className='button' onClick={() => console.log(printAst(AST))}>Print AST</Button> 
-        <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button>
+        {/* <Button onClick={() => this.download('file.ir', printAst(AST))}>Save</Button> */}
         <Button className='button' onClick={() => callEval()}>Eval</Button>
+        <br/>
+        <br/>
         <Button onClick={this.getIRsList}>FileStuff</Button>
-        <Button onClick={() => runTests(this)}>Run Tests</Button>
         <Button onClick={openFileFromDir}>Open</Button>
         <Button onClick={save}>Save</Button>
+        <br/>
+        <br/>
+        <Button onClick={() => runTests(this)}>Run Tests</Button>
 
         <br/>
         <br/>

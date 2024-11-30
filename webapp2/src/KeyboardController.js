@@ -1,4 +1,5 @@
 import * as a from "./Actions";
+import { save } from "./Actions/FileActions";
 import * as insert_element from './Actions/InsertionActions';
 import * as moveUpToVertical from './Actions/NavigationActions';
 import * as updateSelected from './Actions/SelectionActions';
@@ -85,7 +86,10 @@ export function keypress(e){
         app.setState({modalAction: insert_element.insertMapFromModal, insertDir: 'Up'}, insert_element.insert_element);
         break;
     case S:
-        app.setState({modalAction: insert_element.insertMapFromModal, insertDir: 'Down'}, insert_element.insert_element);
+        if (command)
+            save()
+        else
+            app.setState({modalAction: insert_element.insertMapFromModal, insertDir: 'Down'}, insert_element.insert_element);
         break;
     case D:
         app.setState({modalAction: insert_element.insertMapFromModal, insertDir: shift? 'Right_Out' : 'Right_In'}, insert_element.insert_element);
