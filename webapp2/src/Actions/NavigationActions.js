@@ -88,9 +88,12 @@ export function nextLine() {
 }
 function _nextLine(selected) {
     let curr = moveUpToVertical(selected);
+
+    if (!curr.parent)
+        return;
+
     if (curr.idx >= curr.parent.children.length - 1) {
-        if (curr.parent)
-            _nextLine(curr.parent);
+        _nextLine(curr.parent);
         return;
     }
 
