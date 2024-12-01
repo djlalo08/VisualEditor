@@ -25,6 +25,7 @@ let id = 0;
 // const FILE = '!';
 // const FILE = 'import_chain_test';
 // const FILE = 'simple';
+// const FILE = 'palindrome_solution';
 const FILE = 'apples';
 // const FILE = 'filter_test';
 // const FILE = 'variable_test';

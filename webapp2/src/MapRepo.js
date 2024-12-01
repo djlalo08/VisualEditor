@@ -25,7 +25,7 @@ export const mapRepo = {
     '√': { fn: ins => {let abs = ins.map(x=>Math.sqrt(x)); return [abs, -abs]},
         in_num: 1, out_num: 1, prefix:'t', inline:'t',
     },
-    'id': { fn: ins => ins },
+    'id': { fn: ins => ins, in_num:1, out_num:1 },
     'id2': { fn: ins => ins } ,
     'print': { fn:  ins => ins.forEach(x =>  console.log(x))},
     '>': { fn:  ins => [ins[0]>ins[1]],
@@ -40,6 +40,9 @@ export const mapRepo = {
     '<=': { fn:  ins => [ins[0]<=ins[1]],
         in_num: 2, out_num: 1, infix:'t', inline:'t', variableinput:'t',
     },
+    '==': { fn:  ins => [ins[0]==ins[1]],
+        in_num: 2, out_num: 1, infix:'t', inline:'t', variableinput:'t',
+    },
     'ls': { fn:  ins => [ins],
         in_num: 2, out_num: 1, prefix:'t', inline:'t', variableinput:'t',
     },
@@ -52,14 +55,16 @@ export const mapRepo = {
         }
     },
     '2map': { fn:  ins => {
-        let [as, bs, fn] = ins;
-        const n = Math.min(as.length, bs.length);
-        let result = [];
-        for (let i=0; i<n; i++){
-            result.push(fn([as[i], bs[i]])[0]);
-        }
-        return [result];
-    } },
+            let [as, bs, fn] = ins;
+            const n = Math.min(as.length, bs.length);
+            let result = [];
+            for (let i=0; i<n; i++){
+                result.push(fn([as[i], bs[i]])[0]);
+            }
+            return [result];
+        },
+        in_num:3, out_num:1
+    },
     'filter': { fn:  ins => {
             let [ls, f] = ins;
             return [ls.filter(x => f([x])[0])];
@@ -87,7 +92,22 @@ export const mapRepo = {
     },
     'l1': { fn: ([ls]) => [ls.length <= 1],
         in_num:1, out_num:1, prefix:'t', inline:'t',
-    }
+    },
+    'sort': { fn: ([ls]) => {
+            ls.sort()
+            return [ls];
+        },
+        in_num:1, out_num:1, postfix:'t'
+    },
+    'reverse': { fn : ([ls]) => [[...ls].reverse()],
+        in_num:1, out_num:1, prefix:'t'
+    },
+    'if': {fn: 'special', 
+        in_num:3, out_num:1
+    },
+    '!': { fn: ([obj]) => [!obj],
+        in_num:1, out_num:1, prefix:'t'
+    },
     // 'inc': { fn:  ins => [ins.map(x => x+1)] },
 }
 

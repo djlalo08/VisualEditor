@@ -39,8 +39,8 @@ TODOs:
 -Every time npm starts, app.css is changed or reverted. This probably has to do with LESS files. Maybe try actualy using app.less?
 -Add ability to create new maps (mapdef). Add sidebar for new maps (can determine map name, ins, outs, maybe?)
 - .ir files can also use the .poo extension or even .💩
-
-- rebuild button
+- every time You go to nxt line and nothing is there, program crashes...annoying
+- shift + space (wrap) doesn't work on objects that are at root, or under vert
 
 VISUAL/AESTHETIC:
 -Make if look better (condition on top, then/else side-by-side)

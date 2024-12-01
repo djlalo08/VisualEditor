@@ -1,5 +1,5 @@
 import { mapRepo, specialMapsRepo } from "../MapRepo";
-import { addAttr, getAttrs, getNameAndAttrs, getReturns } from "./NodeUtils";
+import { getAttrs, getNameAndAttrs, getReturns } from "./NodeUtils";
 
 const VERBOSE = false;
 
@@ -22,7 +22,7 @@ class Evaluationator {
 
     evaluate(ast_node){
         let result = this.evaluate_(ast_node);
-        addAttr(ast_node, 'result', result);
+        // addAttr(ast_node, 'result', result);
         let [name, attrs] = getNameAndAttrs(ast_node);
         if (VERBOSE) {
             console.log(ast_node.value);
@@ -82,6 +82,13 @@ class Evaluationator {
             return [this.inBounds[attrs.bind_idx]];
         }
 
+        let specialMaps = specialMapsRepo(this);
+        if (attrs.name in specialMaps){
+            let fn = specialMaps[attrs.name];
+            return fn(ins.children);
+        }
+
+
         if (attrs.name in mapRepo){
             ins = ins.children.map(this.evaluate);
             let { fn } = mapRepo[attrs.name];
@@ -92,12 +99,6 @@ class Evaluationator {
 
             let unbounds = ins.filter(x => x && x.length && x[0] == 'UNBOUND');
             return unbounds.length? [getFunctionPendingBindings(ins, fn)]: fn(ins);
-        }
-
-        let specialMaps = specialMapsRepo(this);
-        if (attrs.name in specialMaps){
-            let fn = specialMaps[attrs.name];
-            return fn(ins.children);
         }
 
         if (attrs.import_from){

@@ -45,7 +45,13 @@ export function insertMapFromModal() {
         m = makeMap(selected, name_split[1], objInfo, id);
     } else if (name_split[0] == 'u') {
         m = {id, value: 'UnBound', parent: selected, children: []};
-        appendAttrObj(m, { className: 'unbound', name: name_split[1], getvalue: name_split[1] });
+        appendAttrObj(m, { className: 'unbound', name: name_split[1]});
+    } else if (name_split[0] == 'i') {
+        m = {id, value: 'InBound', parent: selected, children: []};
+        appendAttrObj(m, { className: 'unbound', name: name_split[1], bind_idx: 0 });
+    } else if (name_split[0] == 'r') {
+        m = {id, value: 'Node', parent: selected, children: []};
+        appendAttrObj(m, { className: 'return', name: name_split[1], return: 0 });
     } else {
         m = makeMap(selected, name, otherData, id);
     }

@@ -1,0 +1,95 @@
+Root
+    Vertical[invisible:t]
+        Horizontal
+            Map[name:palindrome, variableinput:t, import_from:./irs/palindrome_solution, selected:t]
+                Ins
+                    Map[name:ls, prefix:t, variableinput:t, hide_outs:t, returnidx:0]
+                        Ins
+                            Map[name:3, className:constant, value:3, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:8, className:constant, value:8, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:6, className:constant, value:6, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                        Outs
+                            Node
+                Outs
+                    Node
+            Map[name:palindrome, variableinput:t, import_from:./irs/palindrome_solution]
+                Ins
+                    Map[name:ls, prefix:t, variableinput:t, hide_outs:t, returnidx:0]
+                        Ins
+                            Map[name:3, className:constant, value:3, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:8, className:constant, value:8, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:8, className:constant, value:8, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                            Map[name:3, className:constant, value:3, type:Number, hide_outs:t, returnidx:0, inline:t]
+                                Ins
+                                Outs
+                                    Node
+                        Outs
+                            Node
+                Outs
+                    Node
+        MapDef[name:palindrome]
+            Ins
+            Outs
+            Body
+                Vertical
+                    Map[name:2map]
+                        Ins
+                            Map[name:ls, bind_idx:0, className:unbound, inline:t, hide_outs:t, returnidx:0]
+                            Map[name:reverse, prefix:t, hide_outs:t, returnidx:0]
+                                Ins
+                                    Map[name:ls, bind_idx:0, className:unbound, inline:t, hide_outs:t, returnidx:0]
+                                Outs
+                                    Node
+                            Map[name:==, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0]
+                                Ins
+                                    UnBound[className:unbound, name:a]
+                                    UnBound[className:unbound, name:b]
+                                Outs
+                                    Node
+                        Outs
+                            Node[setvalue:41]
+                    Map[name:filter, underfix:t]
+                        Ins
+                            Node[getvalue:41]
+                            Map[name:!, prefix:t, hide_outs:t, returnidx:0]
+                                Ins
+                                    UnBound[className:unbound, name:a]
+                                Outs
+                                    Node
+                        Outs
+                            Node[setvalue:51]
+                    Map[name:isEmpty, prefix:t, inline:t]
+                        Ins
+                            Node[getvalue:51]
+                        Outs
+                            Node[className:return, name:o, return:0]

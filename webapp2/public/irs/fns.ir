@@ -1,10 +1,10 @@
 Root
     Vertical[invisible:t]
-        MapDef[name:caller, selected:t]
+        MapDef[name:caller]
             Ins
             Outs
             Body
-                Map[name:avg, variableinput:t, import_from:./irs/fns, result:3.5, hide_outs:t, returnidx:0]
+                Map[name:avg, variableinput:t, import_from:./irs/fns, result:1.75, hide_outs:t, returnidx:0]
                     Ins
                         Map[name:3, className:constant, value:3, type:Number, hide_outs:t, returnidx:0, inline:t, result:3]
                             Ins
@@ -34,7 +34,7 @@ Root
                                         Node
                             Outs
                                 Node
-                        Map[name:2, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, result:2]
+                        Map[name:2, className:constant, value:2, type:Number, hide_outs:t, returnidx:0, inline:t, selected:t]
                             Ins
                             Outs
                                 Node
@@ -116,7 +116,7 @@ Root
                             Node[getvalue:undefined]
                             Map[name:<, infix:t, variableinput:t, hide_outs:t, returnidx:0]
                                 Ins
-                                    UnBound[className:unbound, name:x, getvalue:x, result:UNBOUND,x]
+                                    UnBound[className:unbound, name:x]
                                     Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t, result:6]
                                         Ins
                                         Outs

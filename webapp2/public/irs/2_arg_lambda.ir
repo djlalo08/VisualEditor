@@ -22,8 +22,8 @@ Root
                 Node[getvalue:b2]
                 Map[name:+, returnidx:0, infix:t]
                     Ins
-                        UnBound[name:x, className:unbound, getvalue:u1]
-                        UnBound[name:y, className:unbound, getvalue:u2]
+                        UnBound[name:x, className:unbound]
+                        UnBound[name:y, className:unbound]
                     Outs
             Outs
                 Node[setvalue:b3]

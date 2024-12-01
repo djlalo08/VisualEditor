@@ -1,57 +1,26 @@
 Root
-    Map[name:apples, import_from:./irs/apples, returnidx:0, hide_outs:t, result:10]
-        Ins
-            Map[name:ls, prefix:t, returnidx:0, hide_outs:t, variableinput:t, result:5,4,2,8,6]
-                Ins
-                    Map[name:5, value:5, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:5]
-                        Ins
-                        Outs
-                            Node
-                    Map[name:4, value:4, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:4]
-                        Ins
-                        Outs
-                            Node
-                    Map[name:2, value:2, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:2]
-                        Ins
-                        Outs
-                            Node
-                    Map[name:8, value:8, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:8]
-                        Ins
-                        Outs
-                            Node
-                    Map[name:6, value:6, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:6]
-                        Ins
-                        Outs
-                            Node
-                Outs
-                    Node
-        Outs
-            Node
-    MapDef[name:apples]
-        Ins
-        Outs
-        Body
-            Map[name:if, result:10]
-                Ins
-                    Map[name:<, infix:t, inline:t, variableinput:t, hide_outs:t, returnidx:0, result:true]
-                        Ins
-                            Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, selected:t]
-                                Ins
-                                Outs
-                                    Node
-                            Map[name:7, className:constant, value:7, type:Number, hide_outs:t, returnidx:0, inline:t, result:7]
-                                Ins
-                                Outs
-                                    Node
-                        Outs
-                            Node
-                    Map[name:10, className:constant, value:10, type:Number, hide_outs:t, returnidx:0, inline:t, result:10]
-                        Ins
-                        Outs
-                            Node
-                    Map[name:20, className:constant, value:20, type:Number, hide_outs:t, returnidx:0, inline:t]
-                        Ins
-                        Outs
-                            Node
-                Outs
-                    Node[name:b, return:0, className:unbound]
+    Vertical[invisible:t]
+        Map[2:undefined, 4:undefined, 6:undefined, 8:undefined, name:ls, prefix:t, variableinput:t, result:5]
+            Ins
+                Map[name:6, className:constant, value:6, type:Number, hide_outs:t, returnidx:0, inline:t]
+                    Ins
+                    Outs
+                        Node
+                Map[name:4, className:constant, value:4, type:Number, hide_outs:t, returnidx:0, inline:t, selected:t]
+                    Ins
+                    Outs
+                        Node
+                Map[name:2, value:2, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:2]
+                    Ins
+                    Outs
+                        Node
+                Map[name:8, value:8, className:constant, type:Number, inline:t, hide_outs:t, returnidx:0, result:8]
+                    Ins
+                    Outs
+                        Node
+                Map[name:5, className:constant, value:5, type:Number, hide_outs:t, returnidx:0, inline:t]
+                    Ins
+                    Outs
+                        Node
+            Outs
+                Node
