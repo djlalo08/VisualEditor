@@ -1,0 +1,172 @@
+Box: scope | Position: bottom_left: (4, 21), top_right: (37, 2)
+Token[ 0]: :1    | Position: bottom_left: (27, 4), top_right: (28, 4)
+Token[ 1]: 1     | Position: bottom_left: (30, 4), top_right: (30, 4)
+Token[ 2]: :1    | Position: bottom_left: (13, 5), top_right: (14, 5)
+Token[ 3]: 1     | Position: bottom_left: (17, 5), top_right: (17, 5)
+Token[ 4]: -     | Position: bottom_left: (29, 5), top_right: (29, 5)
+Token[ 5]: <=    | Position: bottom_left: (15, 6), top_right: (16, 6)
+Token[ 6]: 1     | Position: bottom_left: (22, 6), top_right: (22, 6)
+Token[ 7]: fac   | Position: bottom_left: (28, 7), top_right: (30, 7)
+Token[ 8]: if    | Position: bottom_left: (22, 8), top_right: (23, 8)
+Token[ 9]: :1    | Position: bottom_left: (27, 10), top_right: (28, 10)
+Token[10]: *     | Position: bottom_left: (25, 11), top_right: (25, 11)
+Token[11]: :fac  | Position: bottom_left: (26, 13), top_right: (29, 13)
+Token[12]: 6     | Position: bottom_left: (15, 15), top_right: (15, 15)
+Token[13]: fac   | Position: bottom_left: (14, 17), top_right: (16, 17)
+Token[14]: print | Position: bottom_left: (13, 19), top_right: (17, 19)
+
+Edges for token ':1': 
+Edges for token '1': 
+Edges for token ':1': 
+Edges for token '1': 
+Edges for token '-': :1[0], 1[0]
+Edges for token '<=': :1[0], 1[0]
+Edges for token '1': 
+Edges for token 'fac': -[0]
+Edges for token 'if': <=[0], 1[0], fac[0]
+Edges for token ':1': 
+Edges for token '*': if[0], :1[0]
+Edges for token ':fac': *[0]
+Edges for token '6': 
+Edges for token 'fac': 6[0]
+Edges for token 'print': fac[0]
+
+Parsed!
+
+0:14
+ ┃ 0:13
+ ┃  ┃ 0:12
+ ┃  ┃  ┗Int(6)
+ ┃  ┃ 0:10
+ ┃  ┃  ┃ 0:8
+ ┃  ┃  ┃  ┃ 0:5
+ ┃  ┃  ┃  ┃  ┃ 0:2
+ ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(6)]
+ ┃  ┃  ┃  ┃  ┃  ┗Int(6)
+ ┃  ┃  ┃  ┃  ┃ 0:3
+ ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┗Bool(false)
+ ┃  ┃  ┃  ┃ 0:7
+ ┃  ┃  ┃  ┃  ┃ 0:4
+ ┃  ┃  ┃  ┃  ┃  ┃ 0:0
+ ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(6)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(6)
+ ┃  ┃  ┃  ┃  ┃  ┃ 0:1
+ ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┗Int(5)
+ ┃  ┃  ┃  ┃  ┃ 0:10
+ ┃  ┃  ┃  ┃  ┃  ┃ 0:8
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:5
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:2
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(5)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(5)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:3
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Bool(false)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:7
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:4
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:0
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(5)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(5)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:1
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(4)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:10
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:8
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:5
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:2
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(4)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(4)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:3
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Bool(false)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:7
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:4
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:0
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(4)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(4)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:1
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(3)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:10
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:8
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:5
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:2
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(3)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(3)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:3
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Bool(false)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:7
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:4
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:0
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(3)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(3)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:1
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(2)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:10
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:8
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:5
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:2
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(2)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(2)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:3
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Bool(false)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:7
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:4
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:0
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(2)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(2)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:1
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:10
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:8
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:5
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:2
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(1)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:3
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Bool(true)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:6
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:9
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(1)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(1)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(1.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(1.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(1.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:9
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(2)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(2)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(2.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(2.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(2.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:9
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(3)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(3)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(6.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(6.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(6.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃ 0:9
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(4)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(4)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(24.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(24.0)
+ ┃  ┃  ┃  ┃  ┃  ┃  ┗Float(24.0)
+ ┃  ┃  ┃  ┃  ┃  ┃ 0:9
+ ┃  ┃  ┃  ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(5)]
+ ┃  ┃  ┃  ┃  ┃  ┃  ┗Int(5)
+ ┃  ┃  ┃  ┃  ┃  ┗Float(120.0)
+ ┃  ┃  ┃  ┃  ┗Float(120.0)
+ ┃  ┃  ┃  ┗Float(120.0)
+ ┃  ┃  ┃ 0:9
+ ┃  ┃  ┃   arg_order: ArgOrder(0), args: [Int(6)]
+ ┃  ┃  ┃  ┗Int(6)
+ ┃  ┃  ┗Float(720.0)
+ ┃  ┗Float(720.0)
+ ┗Empty

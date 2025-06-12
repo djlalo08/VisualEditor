@@ -1,0 +1,29 @@
+1. Cacheing
+2. Branch-out
+3. Spaces next to nodes: (i.e. ┗ + ┛ )
+4. Unops can go above each other
+5. Arg order doesn't work
+    - This is kind of resolved. Arg order is left, top, right.
+    - We should have availability for:
+            a b c d e 
+            ┗━┻━╋━┻━┛
+                +
+    - Variable arg order is important. Currently works for inputs, but not in general
+6. Type system (compile time checks)
+7. Scopes can be parsed, but not much else
+8. Probably a left-right issue: a━━b, I think a and b end up both referencing each other?
+                          b
+                        a━┛  b is arg for a here
+9. Inlining. Being able to say 5+5 is nice
+10. This kinda thing:
+       12            12  (Don't have to specify unassigned vals) 
+        ┗ +   or   + ┛
+          ┃        ┃
+
+
+       ━━━━━━┓                
+       ━━━━━┓┃                
+       ━━━━┓┃┃              
+       ━━━┓┃┃┃          
+       ━━┓┃┃┃┃               
+        ━xxxxxxxx
