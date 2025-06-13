@@ -7,12 +7,14 @@ macro_rules! log {
         log!(0; $m, $($args),*);
     };
     ($depth:expr; $m:expr, $($args:expr),*) => {
-        let mut file = std::fs::OpenOptions::new()
+        if $crate::LOG {
+            let mut file = std::fs::OpenOptions::new()
             .create(true)
             .append(true)
-            .open("log.txt")
+            .open($crate::LOGFILE)
             .unwrap();
-        writeln!(file, "{}{}", $crate::utils::tab($depth), format!($m, $($args),*)).unwrap();
+            writeln!(file, "{}{}", $crate::utils::tab($depth), format!($m, $($args),*)).unwrap();
+        }
     };
 }
 

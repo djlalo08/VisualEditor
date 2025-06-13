@@ -1,7 +1,7 @@
 #[derive(Debug)]
 pub(crate) struct Dag {
     pub nodes: Vec<Node>,
-    pub edges: Vec<Vec<(NodeIndex, OutputIndex)>>,
+    pub edges: Vec<Vec<(NodeIndex, OutputIndex)>>, // node_idx -> input_idx -> (output_node, output_idx)
 }
 
 #[derive(Debug)]
@@ -9,13 +9,13 @@ pub(crate) enum Node {
     FnCall(ScopeIdx, NodeIndex),
     Value(Value),
     BuiltIn(String),
-    Input(ScopeIdx, NodeIndex, ArgOrder),
+    Arg(ArgOrder),
     Defn,
 }
 
 #[derive(Debug)]
 pub(crate) struct Frame {
-    pub inputs: Vec<Value>,
+    pub args: Vec<Value>,
     pub cache: Vec<Value>,
 }
 
@@ -26,6 +26,9 @@ impl From<usize> for OutputIndex {
         OutputIndex(value)
     }
 }
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub(crate) struct InputIndex(pub usize);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub(crate) struct OutputIndex(pub usize);

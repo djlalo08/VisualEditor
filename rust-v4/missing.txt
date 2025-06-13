@@ -1,5 +1,6 @@
 1. Cacheing
 2. Branch-out
+  In progress -- Need to make everything that returns value, return Vec<Value>. Need to actually use OutputIndex
 3. Spaces next to nodes: (i.e. ┗ + ┛ )
 4. Unops can go above each other
 5. Arg order doesn't work
@@ -19,7 +20,10 @@
        12            12  (Don't have to specify unassigned vals) 
         ┗ +   or   + ┛
           ┃        ┃
-
+11. Input/output labelling
+    a
+    ┃:1->2 //or something like that, specifies which output args goes to which input arg
+    b
 
        ━━━━━━┓                
        ━━━━━┓┃                
@@ -27,3 +31,4 @@
        ━━━┓┃┃┃          
        ━━┓┃┃┃┃               
         ━xxxxxxxx
+  

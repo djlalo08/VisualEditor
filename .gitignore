@@ -78,3 +78,5 @@ flask-project/venv/lib/*
 .lsp/.cache/db.transit.json
 
 target/
+
+log.txt

@@ -1,13 +1,16 @@
 use crate::{
     builtins::{BUILTIN_FNS, SPECIAL_BUILTIN_FNS},
     log,
-    runtime_types::{ArgOrder, Dag, Node, NodeIndex, OutputIndex, ScopeIdx, Value},
+    runtime_types::{ArgOrder, Dag, InputIndex, Node, NodeIndex, OutputIndex, ScopeIdx, Value},
 };
-use std::{collections::vec_deque, io::Write};
+use std::io::Write;
 use std::{
     collections::{HashSet, VecDeque},
     fs, usize,
 };
+
+type OutInMap = String;
+type Pos = (usize, usize); // x, y
 
 #[derive(Debug)]
 pub enum ParseError {
@@ -52,50 +55,18 @@ pub(crate) fn parse(file: &str) -> Result<Vec<Dag>, ParseError> {
 
     let mut dags = vec![];
     // For every box, find tokens inside it
+    // Note: This assumes boxes are non-overlapping
+    // and that tokens are not inside top-level scope
     for (box_num, box_item) in boxes.iter().enumerate() {
         let inside_tokens: Vec<&Token> = tokens.iter().filter(|t| is_inside(t, box_item)).collect();
         let nodes: Vec<Node> = inside_tokens
             .iter()
-            .map(|t| {
-                if let Ok(val) = t.name.parse() {
-                    return Node::Value(Value::Int(val));
-                };
-                if BUILTIN_FNS.contains(&t.name.as_str())
-                    || SPECIAL_BUILTIN_FNS.contains(&t.name.as_str())
-                {
-                    return Node::BuiltIn(t.name.clone());
-                }
-                if t.name.starts_with(':') {
-                    let i = tokens
-                        .iter()
-                        .position(|x| x.name == t.name)
-                        .ok_or_else(|| ParseError::Other(format!("Token '{}' not found", t.name)))
-                        .unwrap();
-                    return if let Ok(arg_order) = t.name.strip_prefix(":").unwrap().parse::<usize>()
-                    {
-                        Node::Input(
-                            ScopeIdx(box_num as usize),
-                            NodeIndex(i),
-                            ArgOrder(arg_order - 1),
-                        )
-                    } else {
-                        Node::Defn
-                    };
-                };
-
-                let target_name = ":".to_string() + &t.name;
-                let i = tokens
-                    .iter()
-                    .position(|x| x.name == target_name)
-                    .ok_or_else(|| ParseError::Other(format!("Token '{}' not found", target_name)))
-                    .unwrap();
-                Node::FnCall(ScopeIdx(box_num as usize), NodeIndex(i))
-            })
+            .map(|t| token_to_node(t, &tokens, box_num))
             .collect();
         let edges = inside_tokens
             .iter()
             .map(|t| follow_paths(t, &grid, &tokens).unwrap())
-            .map(|idxs| idxs.into_iter().map(|i| (i.into(), 0.into())).collect())
+            .map(sort_and_map_inputs)
             .collect();
         print_edges(&edges, &tokens);
         let graph = Dag {
@@ -108,6 +79,45 @@ pub(crate) fn parse(file: &str) -> Result<Vec<Dag>, ParseError> {
     Ok(dags)
 }
 
+fn sort_and_map_inputs(inputs: Vec<(TokenIndex, String)>) -> Vec<(NodeIndex, OutputIndex)> {
+    let mut inputs = inputs
+        .iter()
+        .flat_map(|(input_token_idx, map)| {
+            parse_out_in_map(map)
+                .iter()
+                .map(|(input_idx, output_idx)| (*input_token_idx, *output_idx, *input_idx))
+                .collect::<Vec<_>>()
+        })
+        .collect::<Vec<_>>();
+    inputs.sort_by_key(|(_, _, input_index)| input_index.0);
+    inputs
+        .iter()
+        .map(|(token_idx, output_idx, _)| (NodeIndex(token_idx.0), *output_idx))
+        .collect()
+}
+
+fn parse_out_in_map(map: &str) -> Vec<(InputIndex, OutputIndex)> {
+    map.trim()
+        .strip_prefix(":")
+        .unwrap()
+        .split(',')
+        .map(|mapping| {
+            let (output, input) = mapping
+                .trim()
+                .split_once("->")
+                .expect(&format!("Invalid mapping format, {mapping}"));
+            let output_idx = output
+                .trim()
+                .parse::<usize>()
+                .expect("Invalid output index");
+            // Note that this assumes mappings look like 1->2 and does not handle 1:2->3
+            // TODO: Handle nested mappings
+            let input_idx = input.trim().parse::<usize>().expect("Invalid input index");
+            (InputIndex(input_idx - 1), OutputIndex(output_idx - 1))
+        })
+        .collect()
+}
+
 fn is_inside(token: &Token, bx: &Box) -> bool {
     let token_pos = &token.position;
     let box_pos = &bx.position;
@@ -117,21 +127,96 @@ fn is_inside(token: &Token, bx: &Box) -> bool {
         && token_pos.top_right.1 >= box_pos.top_right.1
 }
 
-fn follow_paths(
+fn find_out_in_map(
     token: &Token,
     char_grid: &Vec<Vec<char>>,
-    tokens: &[Token],
-) -> Result<Vec<TokenIndex>, ParseError> {
+    valid_path: &HashSet<Pos>,
+) -> Result<OutInMap, ParseError> {
     let x0 = token.position.bottom_left.0;
     let xf = token.position.top_right.0;
     let y = token.position.bottom_left.1;
 
-    let left_ins = follow_paths_dir(token, char_grid, tokens, VecDeque::from([(x0 - 1, y)]))?;
+    let bottoms = (x0..=xf).map(|x| (x, y + 1));
+    let starting_positions: VecDeque<_> = VecDeque::from([(x0 - 1, y), (xf + 1, y)])
+        .into_iter()
+        .chain(bottoms)
+        .collect();
 
-    let aboves = (x0..xf).map(|x| (x, y - 1));
-    let mut above_ins = follow_paths_dir(token, char_grid, tokens, VecDeque::from_iter(aboves))?;
+    let mut queue = starting_positions;
+    while let Some((x, y)) = queue.pop_front() {
+        let width = char_grid[y].len();
 
-    let mut right_ins = follow_paths_dir(token, char_grid, tokens, VecDeque::from([(xf + 1, y)]))?;
+        // Bounds check
+        if y == 0 || y >= char_grid.len() || x == 0 || x >= width {
+            continue;
+        }
+        let ch = char_grid[y][x];
+
+        if ch == '┃' && char_grid[y][x + 1] == ':' {
+            return Ok(char_grid[y][(x + 1)..width]
+                .iter()
+                .take_while(|&&c| c != ' ')
+                .collect::<String>());
+        }
+
+        // Otherwise, keep following the path
+        for (nx, ny) in steps_down(char_grid, (x, y)) {
+            if valid_path.contains(&(nx, ny)) {
+                queue.push_back((nx, ny));
+            }
+        }
+    }
+    Err(ParseError::Other(format!(
+        "No valid out-in map found for token {}",
+        token.name
+    )))
+}
+
+fn follow_paths(
+    token: &Token,
+    char_grid: &Vec<Vec<char>>,
+    tokens: &[Token],
+) -> Result<Vec<(TokenIndex, OutInMap)>, ParseError> {
+    let x0 = token.position.bottom_left.0;
+    let xf = token.position.top_right.0;
+    let y = token.position.bottom_left.1;
+
+    let (left_ins, path) =
+        follow_paths_dir(token, char_grid, tokens, VecDeque::from([(x0 - 1, y)]))?;
+    let left_ins: Vec<_> = left_ins
+        .iter()
+        .map(|t_i| {
+            (
+                *t_i,
+                find_out_in_map(&tokens[t_i.0], char_grid, &path).unwrap(),
+            )
+        })
+        .collect();
+
+    let aboves = (x0..=xf).map(|x| (x, y - 1));
+    let (above_ins, path) =
+        follow_paths_dir(token, char_grid, tokens, VecDeque::from_iter(aboves))?;
+    let mut above_ins = above_ins
+        .iter()
+        .map(|t_i| {
+            (
+                *t_i,
+                find_out_in_map(&tokens[t_i.0], char_grid, &path).unwrap(),
+            )
+        })
+        .collect();
+
+    let (right_ins, path) =
+        follow_paths_dir(token, char_grid, tokens, VecDeque::from([(xf + 1, y)]))?;
+    let mut right_ins: Vec<_> = right_ins
+        .iter()
+        .map(|t_i| {
+            (
+                *t_i,
+                find_out_in_map(&tokens[t_i.0], char_grid, &path).unwrap(),
+            )
+        })
+        .collect();
 
     let mut result = left_ins;
     result.append(&mut above_ins);
@@ -143,15 +228,17 @@ fn follow_paths_dir(
     token: &Token,
     char_grid: &Vec<Vec<char>>,
     tokens: &[Token],
-    starting_positions: VecDeque<(usize, usize)>,
-) -> Result<Vec<TokenIndex>, ParseError> {
+    starting_positions: VecDeque<Pos>,
+) -> Result<(Vec<TokenIndex>, HashSet<Pos>), ParseError> {
     let mut found_indices = Vec::new();
     let mut visited = HashSet::new();
     let mut queue = starting_positions;
 
     // Mark all positions of the token itself as visited so it can't visit itself
     let y = token.position.bottom_left.1;
-    for x in token.position.bottom_left.0..=token.position.top_right.0 {
+    let x0 = token.position.bottom_left.0;
+    let xf = token.position.top_right.0;
+    for x in x0..=xf {
         visited.insert((x, y));
     }
 
@@ -186,17 +273,20 @@ fn follow_paths_dir(
         }
 
         // Otherwise, keep following the path
-        for (nx, ny) in next_steps(char_grid, x, y) {
+        for (nx, ny) in steps_up(char_grid, (x, y)) {
             if !visited.contains(&(nx, ny)) {
                 queue.push_back((nx, ny));
             }
         }
     }
+    visited.retain(|&(x_vis, y_vis)| y != y_vis || x_vis < x0 || x_vis > xf);
+    visited.retain(|&(x_vis, y_vis)| char_grid[y_vis][x_vis] != ' ');
 
-    Ok(found_indices)
+    Ok((found_indices, visited))
 }
 
-fn safe_access(grid: &Vec<Vec<char>>, x: usize, y: usize) -> Option<char> {
+fn safe_access(grid: &Vec<Vec<char>>, pos: Pos) -> Option<char> {
+    let (x, y) = pos;
     if y > 0 && y < grid.len() && x > 0 && x < grid[y].len() {
         Some(grid[y][x])
     } else {
@@ -204,7 +294,7 @@ fn safe_access(grid: &Vec<Vec<char>>, x: usize, y: usize) -> Option<char> {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Copy)]
 pub struct TokenIndex(pub usize);
 impl Into<NodeIndex> for TokenIndex {
     fn into(self) -> NodeIndex {
@@ -218,14 +308,15 @@ impl From<usize> for TokenIndex {
 }
 
 //Only include steps that stay horizontal or move up (towards y = 0)
-fn next_steps(grid: &Vec<Vec<char>>, x: usize, y: usize) -> Vec<(usize, usize)> {
+fn steps_up(grid: &Vec<Vec<char>>, pos: Pos) -> Vec<(Pos)> {
+    let (x, y) = pos;
     match grid[y][x] {
         '┏' => vec![(x + 1, y)],
         '┓' => vec![(x - 1, y)],
         '┛' | '┗' => vec![(x, y - 1)],
-        '┣' => vec![(x + 1, y), (x, y - 1)],
+        '┣' => vec![(x, y - 1), (x + 1, y)],
         '┫' => vec![(x - 1, y), (x, y - 1)],
-        '┻' | '╋' => vec![(x - 1, y), (x + 1, y), (x, y - 1)],
+        '┻' | '╋' => vec![(x - 1, y), (x, y - 1), (x + 1, y)],
         '┳' => vec![(x - 1, y), (x + 1, y)],
         '━' => vec![(x - 1, y), (x + 1, y)],
         '┃' => vec![(x, y - 1)],
@@ -233,12 +324,33 @@ fn next_steps(grid: &Vec<Vec<char>>, x: usize, y: usize) -> Vec<(usize, usize)> 
     }
 }
 
+fn steps_down(grid: &Vec<Vec<char>>, pos: Pos) -> Vec<(Pos)> {
+    let (x, y) = pos;
+    match grid[y][x] {
+        '┏' => vec![(x, y + 1)],
+        '┓' => vec![(x, y + 1)],
+        '┛' => vec![(x - 1, y)],
+        '┗' => vec![(x + 1, y)],
+        '┣' => vec![(x, y + 1), (x + 1, y)],
+        '┫' => vec![(x - 1, y), (x, y + 1)],
+        '┻' => vec![(x - 1, y), (x + 1, y)],
+        '╋' => vec![(x - 1, y), (x, y + 1), (x + 1, y)],
+        '┳' => vec![(x - 1, y), (x + 1, y), (x, y + 1)],
+        '━' => vec![(x - 1, y), (x + 1, y)],
+        '┃' => vec![(x, y + 1)],
+        _ => vec![], // No valid moves for other characters
+    }
+}
+
 fn find_tokens(data: &str, row: usize) -> Result<Vec<Token>, ParseError> {
     let mut tokens = Vec::new();
-    let re = regex::Regex::new(r"[:\w\-\+\*(<=)]+")?;
+    let re = regex::Regex::new(r"[ ━┃┓┏┛┗┣┫┳┻╋][:\w\-\+\*(<=)]+[ ━┃┓┏┛┗┣┫┳┻╋]")?;
     for mat in re.find_iter(data) {
-        let token_str = mat.as_str().to_string();
-        let start_col = data[..mat.start()].chars().count() + 1;
+        let mut token_str: Vec<char> = mat.as_str().chars().skip(1).collect();
+        token_str.pop();
+        let token_str: String = token_str.into_iter().collect();
+
+        let start_col = data[..mat.start()].chars().count() + 1 + 1;
         let end_col = start_col + token_str.chars().count() - 1;
         tokens.push(Token {
             name: token_str.clone(),
@@ -257,7 +369,8 @@ fn parse_box_tops(
     char_grid: &Vec<Vec<char>>,
 ) -> Result<Vec<Box>, ParseError> {
     let mut result = Vec::new();
-    let box_top_re = regex::Regex::new(r"┏━*(?P<token>[:\w\-\+]+)━*┓")?;
+    let box_top_re = regex::Regex::new(r"┏━*\{(?P<token>[:\w\-]+)\}━*┓")?;
+    //TODO: These are only potential boxes. Need to confirm they go all the way around. This could just be a fn with 2 outputs
     for mat in box_top_re.find_iter(data) {
         let start = data[..mat.start()].chars().count() + 1;
         let end = start + mat.as_str().chars().count() - 1;
@@ -331,7 +444,7 @@ fn print_edges(edges: &Vec<Vec<(NodeIndex, OutputIndex)>>, tokens: &[Token]) {
         let token_name = &tokens[i].name;
         let edge_str = edge
             .iter()
-            .map(|(from, to)| format!("{}[{}]", tokens.get(from.0).unwrap().name, to.0))
+            .map(|(node, output)| format!("{}[{}]", tokens.get(node.0).unwrap().name, output.0))
             .collect::<Vec<_>>()
             .join(", ");
         log!("Edges for token '{}': {}", token_name, edge_str);
@@ -352,11 +465,12 @@ pub struct Box {
 
 #[derive(Debug)]
 pub struct Position {
-    pub bottom_left: (usize, usize),
-    pub top_right: (usize, usize),
+    pub bottom_left: Pos,
+    pub top_right: Pos,
 }
 
 static SYMBOLS: &[&str] = &["━", "┃", "┓", "┏", "┛", "┗", "┣", "┫", "┳", "┻", "╋"];
+// ━┃┓┏┛┗┣┫┳┻╋
 static ABOVE: &[&str] = &["┃", "┏", "┓", "┳", "╋"];
 static LEFT: &[&str] = &["━", "┗", "┣", "┳", "┻", "╋"];
 static RIGHT: &[&str] = &["━", "┛", "┫", "┳", "┻", "╋"];
@@ -382,4 +496,23 @@ fn create_grid(lines: &[&str]) -> Vec<Vec<char>> {
         .collect();
     grid.insert(0, vec![' '; max_width]);
     grid
+}
+
+fn token_to_node(t: &Token, tokens: &[Token], box_num: usize) -> Node {
+    if let Ok(val) = t.name.parse() {
+        return Node::Value(Value::Int(val));
+    }
+    if BUILTIN_FNS.contains(&t.name.as_str()) || SPECIAL_BUILTIN_FNS.contains(&t.name.as_str()) {
+        return Node::BuiltIn(t.name.clone());
+    }
+    if t.name.starts_with(':') {
+        return if let Ok(arg_order) = t.name.strip_prefix(":").unwrap().parse::<usize>() {
+            Node::Arg(ArgOrder(arg_order - 1))
+        } else {
+            Node::Defn
+        };
+    }
+    let target_name = ":".to_string() + &t.name;
+    let i = tokens.iter().position(|x| x.name == target_name).unwrap();
+    Node::FnCall(ScopeIdx(box_num as usize), NodeIndex(i))
 }
